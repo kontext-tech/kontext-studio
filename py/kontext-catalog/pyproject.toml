@@ -40,7 +40,7 @@ dependencies = [
     "oracledb>=26.0.0",
     "sqlalchemy>=2.1.6",
     "tantivy>=0.27.0",
-    "teradatasql>=20.0.0.72",
+    "teradatasql>=20.0.0.74",
     "teradatasqlalchemy>=20.0.0.7",
     "fastembed>=0.4.2",
 ]
