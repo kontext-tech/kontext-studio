@@ -1,0 +1,15 @@
+{
+   "extends": ["./tsconfig.json", "../../ts/build-config/tsconfig/test.json"],
+   "compilerOptions": {
+      "moduleResolution": "bundler"
+   },
+   "include": [
+      "src/**/*",
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/*.spec.ts",
+      "**/*.spec.tsx",
+      "**/__tests__/**/*"
+   ],
+   "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,10 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src"
+   },
+   "references": [{ "path": "../common" }],
+   "include": ["src"],
+   "exclude": ["node_modules", "dist"]
+}

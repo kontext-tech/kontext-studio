@@ -1,0 +1,10 @@
+{
+   "$schema": "https://json.schemastore.org/tsconfig",
+   "description": "Shared options for per-package tsconfig.test.json files (consumed by ts-jest). Packages extend their own tsconfig.json first, then this file via the extends array, and keep only package-specific options locally.",
+   "compilerOptions": {
+      "types": ["node", "jest"],
+      "noEmit": true,
+      "composite": false,
+      "ignoreDeprecations": "6.0"
+   }
+}

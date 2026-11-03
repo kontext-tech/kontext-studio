@@ -1,0 +1,55 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "allowJs": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "inlineSources": true,
+      "types": ["node"],
+      "paths": {
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/file": ["../file/src/index.ts"],
+         "@kontext-tech/file/*": ["../file/src/*"],
+         "@kontext-tech/query": ["../query/src/index.ts"],
+         "@kontext-tech/query/*": ["../query/src/*"],
+         "@kontext-tech/theme": ["../theme/src/index.ts"],
+         "@kontext-tech/icons": ["../icons/src/index.ts"],
+         "@kontext-tech/schema": ["../schema/src/index.ts"],
+         "@kontext-tech/ui": ["../ui/src/index.ts"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../file"
+      },
+      {
+         "path": "../icons"
+      },
+      {
+         "path": "../query"
+      },
+      {
+         "path": "../schema"
+      },
+      {
+         "path": "../theme"
+      },
+      {
+         "path": "../ui"
+      }
+   ],
+   "include": ["src/**/*"],
+   "exclude": [
+      "node_modules",
+      "dist",
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "**/__tests__/**/*"
+   ]
+}

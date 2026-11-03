@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+_app_dist/
+coverage/
+*.tsbuildinfo
+
+# Generated code (owned by generators / CI freshness checks)
+ts/schema/src/generated/
+ts/schema/src/schemas/
+
+# Lockfiles
+pnpm-lock.yaml
+uv.lock
+
+# Python is formatted by ruff, not prettier
+py/
+
+# Markdown is owned by markdownlint
+*.md
+
+# Repo tooling and CI config are not prettier-managed
+.github/
+tools/
+docs-site/
+eslint.config.js
+*.yml
+*.yaml
+
+# Cache
+.eslintcache
+
+# Local agent settings
+.claude/

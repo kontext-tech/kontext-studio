@@ -1,0 +1,68 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "noEmitOnError": true,
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": false,
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "composite": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noFallthroughCasesInSwitch": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "declaration": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "paths": {
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/app-runtime": ["../app-runtime/src/index.ts"],
+         "@kontext-tech/app-runtime/*": ["../app-runtime/src/*"],
+         "@kontext-tech/schema": ["../schema/src/index.ts"],
+         "@kontext-tech/schema/*": ["../schema/src/*"],
+         "@kontext-tech/auth": ["../auth/src/index.ts"],
+         "@kontext-tech/auth/*": ["../auth/src/*"],
+         "@kontext-tech/identity": ["../identity/src/index.ts"],
+         "@kontext-tech/identity/*": ["../identity/src/*"],
+         "@kontext-tech/icons": ["../icons/src/index.ts"],
+         "@kontext-tech/ui": ["../ui/src/index.ts"],
+         "@kontext-tech/icons/*": ["../icons/src/*"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../app-runtime"
+      },
+      {
+         "path": "../auth"
+      },
+      {
+         "path": "../identity"
+      },
+      {
+         "path": "../schema"
+      },
+      {
+         "path": "../icons"
+      },
+      {
+         "path": "../ui"
+      }
+   ],
+   "include": ["src"],
+   "exclude": ["node_modules", "dist"]
+}

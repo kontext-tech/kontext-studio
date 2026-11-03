@@ -1,0 +1,89 @@
+# Single source of truth for Python linting and formatting across the
+# kontext-* workspace. Ruff resolves this file for every package under `py/`
+# because all packages live beneath this directory. Per-package `[tool.ruff]`
+# tables have been removed in favour of this shared configuration so every
+# package is held to the same standard.
+#
+# Run `ruff check .` / `ruff format .` from the repo root, or let the local
+# pre-commit hook (which runs `uv run ruff`) do it for you.
+
+target-version = "py312"
+line-length = 100
+extend-exclude = [
+    # Generated code: the schema models are committed verbatim and are formatted
+    # by the generator itself. The hand-written package files (`base.py`,
+    # `__init__.py`) and tests are linted normally.
+    "py/kontext-schema/src/kontext/schema/_generated/**",
+    ".venv",
+]
+
+[lint]
+# A deliberately opinionated but pragmatic set. Everything here is auto-fixable
+# or has a well-understood safe fix; the goal is to keep the codebase consistent
+# and surface real bugs rather than accumulate suppressions.
+#
+# Rules deliberately left out of `select` (documented so they can be adopted in
+# a follow-up hardening pass without rediscovering the rationale):
+#   TCH  - typing-only import classification: noisy in a codebase where FastAPI
+#          `Depends` / Pydantic models are evaluated at import time.
+#   FBT  - boolean-trap: would require sweeping signature changes; address
+#          opportunistically instead.
+#   RET  - flake8-return: style; adopt after the larger files are decomposed.
+#   PTH  - use-pathlib: the `os.path` usage is intentional in several
+#          performance-sensitive paths.
+#   PT   - pytest-style: adopt as tests are touched.
+#   ASYNC- async best practices: valuable but needs a dedicated pass to avoid
+#          masking real blocking-I/O calls with blanket suppressions.
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "N",     # pep8-naming
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "SIM",   # flake8-simplify
+    "RUF",   # ruff-specific rules
+]
+
+ignore = [
+    # Handled by the formatter.
+    "E501",
+    # Function calls in argument defaults (FastAPI `Depends`, Pydantic fields,
+    # etc.) are idiomatic in this codebase.
+    "B008",
+    # The codebase uses `datetime.UTC`-style explicit constructors in places
+    # where `zoneinfo` is the modern equivalent; allow both while migrating.
+    "UP017",
+    # Mutable class-level defaults are idiomatic here: SQLAlchemy/Pydantic
+    # models copy defaults per-instance, and enum-style permission/constant
+    # classes deliberately declare shared `list`/`dict` values.
+    "RUF012",
+    # The established API error convention is `*Exception` (mirroring the
+    # FastAPI/JWT error surface), not the `*Error` suffix `N818` wants.
+    "N818",
+    # `N806`/`N801` false-positive on lazy `from x import Y` aliases (kept
+    # CamelCase intentionally, e.g. otel `Resource`, ctypes struct names).
+    "N806",
+    "N801",
+]
+
+[lint.per-file-ignores]
+"**/tests/**" = [
+    "ARG",  # unused function arguments in test fixtures
+    "PLR2004", # magic values in tests
+    "S101", # use of assert in tests is expected
+]
+"__init__.py" = ["F401"]  # re-exporting symbols is the point of __init__.py
+"py/kontext-auth/src/kontext/auth/authentication/interactive_auth.py" = ["N802"]  # do_GET is a required http.server handler name
+
+[lint.isort]
+known-first-party = ["kontext"]
+
+[lint.pydocstyle]
+convention = "google"
+
+[format]
+# Match the line-length above so formatting and linting agree.
+line-ending = "lf"

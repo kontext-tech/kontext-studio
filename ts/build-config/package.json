@@ -1,0 +1,39 @@
+{
+   "name": "@kontext-tech/build-config",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared Vite and TypeScript configuration for frontend packages",
+   "license": "MIT",
+   "files": [
+      "dist",
+      "tsconfig/*.json"
+   ],
+   "main": "./dist/vite/index.js",
+   "types": "./dist/vite/index.d.ts",
+   "exports": {
+      "./vite": {
+         "import": "./dist/vite/index.js",
+         "types": "./dist/vite/index.d.ts"
+      },
+      "./tsconfig/library-package": "./tsconfig/library-package.json",
+      "./tsconfig/library-package.json": "./tsconfig/library-package.json",
+      "./tsconfig/react-app": "./tsconfig/react-app.json",
+      "./tsconfig/react-app.json": "./tsconfig/react-app.json",
+      "./tsconfig/vite-node": "./tsconfig/vite-node.json",
+      "./tsconfig/vite-node.json": "./tsconfig/vite-node.json"
+   },
+   "scripts": {
+      "build": "rm -rf dist tsconfig.build.tsbuildinfo && tsc -p tsconfig.build.json"
+   },
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   },
+   "devDependencies": {
+      "typescript": "~6.0.3",
+      "vite": "^8.3.5"
+   },
+   "peerDependencies": {
+      "vite": "^7.0.0 || ^8.0.0"
+   }
+}

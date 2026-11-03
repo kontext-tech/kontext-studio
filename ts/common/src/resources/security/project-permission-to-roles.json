@@ -1,0 +1,29 @@
+{
+   "projects.read": ["owner", "admin", "contributor", "reader"],
+   "projects.update": ["owner", "admin"],
+   "projects.delete": ["owner"],
+
+   "resources.create": ["owner", "admin", "contributor"],
+   "resources.read": ["owner", "admin", "contributor", "reader"],
+   "resources.update": ["owner", "admin", "contributor"],
+   "resources.delete": ["owner", "admin", "contributor"],
+
+   "jobs.create": ["owner", "admin", "contributor"],
+   "jobs.read": ["owner", "admin"],
+   "jobs.update": ["owner", "admin"],
+   "jobs.delete": ["owner", "admin"],
+   "jobs.execute": ["owner", "admin"],
+
+   "querysessions.create": ["owner", "admin", "contributor"],
+   "querysessions.read": ["owner", "admin", "contributor"],
+   "querysessions.update": ["owner", "admin", "contributor"],
+   "querysessions.delete": ["owner", "admin", "contributor"],
+   "querysessions.execute": ["owner", "admin", "contributor"],
+
+   "chatsessions.create": ["owner", "admin", "contributor"],
+   "chatsessions.read": ["owner", "admin", "contributor"],
+   "chatsessions.update": ["owner", "admin", "contributor"],
+   "chatsessions.delete": ["owner", "admin", "contributor"],
+
+   "events.read": ["owner", "admin"]
+}

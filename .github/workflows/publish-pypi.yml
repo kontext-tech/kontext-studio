@@ -1,0 +1,259 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Publish Python Package
+
+# One definition, two indexes. Dispatch with `target: testpypi` for the sandbox
+# or `target: pypi` for production; each target runs in its own GitHub
+# environment (`testpypi` / `pypi`), so protection rules are per-index.
+#
+# The upload MUST stay in this top-level workflow. PyPI trusted publishing does
+# not support reusable workflows (pypi/warehouse#11096), so a `workflow_call`
+# wrapper would fail with `invalid-publisher`. Both pending publishers must
+# name this file:
+#
+#   TestPyPI  -> workflow publish-pypi.yml, environment testpypi
+#   PyPI      -> workflow publish-pypi.yml, environment pypi
+#
+# Production sequencing: run release.yml first (it validates the version/tag
+# and creates the GitHub Release), then dispatch this workflow with
+# `target: pypi`, `version: <same version>`, and `confirm: <same version>`.
+# This workflow is the single wheel build: it verifies, checksums, and
+# smoke-tests the wheel, uploads to PyPI, then attaches the wheel and
+# SHA256SUMS to the release.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Index to publish to"
+        required: true
+        type: choice
+        options:
+          - testpypi
+          - pypi
+        default: testpypi
+      version:
+        description: "Version to publish (empty = workspace version; TestPyPI derives a .devN version)"
+        required: false
+        type: string
+        default: ""
+      confirm:
+        description: "Production only: retype the exact version to confirm"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-pypi-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and verify wheel
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Resolve publish version
+        id: version
+        env:
+          TARGET: ${{ inputs.target }}
+          INPUT_VERSION: ${{ inputs.version }}
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          set -euo pipefail
+          case "$TARGET" in
+            testpypi|pypi) ;;
+            *)
+              echo "::error::target must be testpypi or pypi (got '$TARGET')"
+              exit 1
+              ;;
+          esac
+
+          BASE=$(node -p "require('./package.json').version")
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="$INPUT_VERSION"
+          elif [ "$TARGET" = "pypi" ]; then
+            VERSION="$BASE"
+          else
+            # TestPyPI rejects re-uploads of an existing version. Combine the
+            # run number and attempt so manual re-runs also get a fresh
+            # PEP 440 dev release.
+            VERSION="${BASE}.dev$(( GITHUB_RUN_NUMBER * 1000 + GITHUB_RUN_ATTEMPT ))"
+          fi
+
+          if [ "$TARGET" = "pypi" ]; then
+            if [ "$VERSION" != "$BASE" ]; then
+              echo "::error::Production version '$VERSION' must match the workspace version '$BASE'."
+              exit 1
+            fi
+            # This repo's plan does not support required reviewers on private
+            # repos, so make a production publish take a deliberate,
+            # version-specific action.
+            if [ "$CONFIRM" != "$VERSION" ]; then
+              echo "::error::Production publish requires confirm='$VERSION' (got '$CONFIRM')."
+              exit 1
+            fi
+          fi
+
+          echo "Publishing version $VERSION to $TARGET"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build unified wheel
+        env:
+          NODE_ENV: production
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          python scripts/uv/build-kontext-studio-wheel.py \
+            --build-app \
+            --version "$VERSION" \
+            --out-dir dist/python
+
+      - name: Verify wheel
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
+          echo "Built wheel: $WHEEL"
+          case "$WHEEL" in
+            *"kontext_studio-${VERSION}-"*) echo "Wheel version matches $VERSION" ;;
+            *)
+              echo "::error::Wheel version does not match $VERSION"
+              exit 1
+              ;;
+          esac
+          cd dist/python
+          # Keep checksums next to, not inside, the publish directory: the
+          # upload action expects packages-dir to contain only distributions.
+          sha256sum ./*.whl > ../SHA256SUMS
+          cat ../SHA256SUMS
+
+      - name: Smoke test CLI entry points
+        run: |
+          set -euo pipefail
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
+          uv tool install --force "$WHEEL"
+          kontext --help
+          kontext serve --help
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: kontext-studio-wheel
+          path: |
+            dist/python/
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: build
+    if: inputs.target == 'testpypi'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: kontext-studio-wheel
+          path: dist
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist/python
+          skip-existing: true
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Verify install from TestPyPI
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          set -euo pipefail
+          uv tool install --force \
+            --index-url https://test.pypi.org/simple/ \
+            --extra-index-url https://pypi.org/simple \
+            "kontext-studio==${VERSION}"
+          kontext --help
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    if: inputs.target == 'pypi'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: pypi
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: kontext-studio-wheel
+          path: dist
+
+      - name: Verify GitHub Release exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          set -euo pipefail
+          gh release view "v${VERSION}" --json tagName --jq .tagName >/dev/null
+          echo "GitHub Release v${VERSION} exists"
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/python
+          # Makes a rerun after a failed post-publish step idempotent; the
+          # attach step below can then retry without republishing.
+          skip-existing: true
+
+      - name: Attach wheel to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          set -euo pipefail
+          gh release upload "v${VERSION}" dist/python/*.whl dist/SHA256SUMS --clobber
+          echo "Attached wheel and SHA256SUMS to v${VERSION}"

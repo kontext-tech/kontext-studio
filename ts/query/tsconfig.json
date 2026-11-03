@@ -1,0 +1,40 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "declaration": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "composite": true,
+      "noEmit": false,
+      "paths": {
+         "@kontext-tech/ui": ["../ui/src/index.ts"],
+         "@kontext-tech/ui/*": ["../ui/src/*"],
+         "@kontext-tech/identity": ["../identity/src/index.ts"],
+         "@kontext-tech/identity/*": ["../identity/src/*"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../schema"
+      },
+      {
+         "path": "../icons"
+      },
+      {
+         "path": "../identity"
+      },
+      {
+         "path": "../app-runtime"
+      },
+      {
+         "path": "../ui"
+      }
+   ],
+   "include": ["src"],
+   "exclude": ["node_modules", "dist"]
+}

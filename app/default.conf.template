@@ -1,0 +1,123 @@
+# Production nginx configuration
+# This file is used for production deployments and CI/CD pipelines
+# Note: This configuration assumes SSL termination is handled by a load balancer or ingress controller.
+# If direct SSL termination by Nginx is needed, add SSL certificate configurations here.
+
+# Hide nginx version and server header
+server_tokens off;
+
+# Custom JSON log format for Application Insights integration
+log_format json_combined escape=json
+    '{'
+    '"timestamp":"$time_iso8601",'
+    '"remote_addr":"$remote_addr",'
+    '"remote_user":"$remote_user",'
+    '"request":"$request",'
+    '"status":$status,'
+    '"body_bytes_sent":$body_bytes_sent,'
+    '"http_referer":"$http_referer",'
+    '"http_user_agent":"$http_user_agent",'
+    '"http_x_forwarded_for":"$http_x_forwarded_for",'
+    '"request_time":$request_time,'
+    '"upstream_response_time":"$upstream_response_time",'
+    '"server_name":"$server_name",'
+    '"request_uri":"$request_uri",'
+    '"args":"$args",'
+    '"scheme":"$scheme",'
+    '"request_method":"$request_method",'
+    '"http_host":"$http_host",'
+    '"bytes_sent":$bytes_sent,'
+    '"gzip_ratio":"$gzip_ratio",'
+    '"http_cf_ray":"$http_cf_ray",'
+    '"http_x_real_ip":"$http_x_real_ip"'
+    '}';
+
+# Gzip configuration for improved performance
+gzip on;
+gzip_comp_level 5;
+gzip_min_length 1024; # Match Vite's threshold of 1KB
+gzip_proxied any;
+gzip_vary on;
+gzip_types
+  application/javascript
+  application/json
+  application/xml
+  application/xml+rss
+  text/css
+  text/javascript
+  text/plain
+  text/xml;
+
+# Enable serving pre-compressed files
+gzip_static on;
+
+# Define URL path mappings outside the server block
+# Increase map_hash_bucket_size for handling many redirect entries (875+ redirects)
+map_hash_bucket_size 256;
+
+# Map to handle CORS origins for production only
+# Only allows requests from kontext.tech and app.kontext.tech
+map $http_origin $cors_origin {
+    default "";  # Reject all other origins
+
+    # Production domains only
+    "https://kontext.tech" $http_origin;
+    "https://app.kontext.tech" $http_origin;
+}
+
+# Fallback origin for requests without Origin header (same-origin requests)
+# Production domains including API subdomain
+map $host $fallback_origin {
+    default "";  # Reject unknown hosts
+    "kontext.tech" "https://kontext.tech";
+    "app.kontext.tech" "https://app.kontext.tech";
+    "api.kontext.tech" "https://app.kontext.tech";  # API requests should allow app origin
+}
+
+# Final CORS origin - use detected origin if allowed, otherwise use fallback for same-origin requests
+map $cors_origin $final_cors_origin {
+    default $fallback_origin;
+    "~.+" $cors_origin;  # If cors_origin is not empty (origin was allowed), use it
+}
+
+# Map to dynamically set Access-Control-Allow-Headers
+# If the client sends Access-Control-Request-Headers, use that value.
+# Otherwise, fall back to a comprehensive default list.
+map $http_access_control_request_headers $cors_allowed_headers {
+    default 'accept,accept-encoding,accept-language,authorization,cache-control,content-type,content-length,dnt,if-modified-since,origin,range,referer,user-agent,x-requested-with,x-csrf-token,x-api-key,x-client-version,x-real-ip,x-forwarded-for,x-forwarded-proto,access-control-request-method,access-control-request-headers'; # Default comprehensive list
+    ~.+     $http_access_control_request_headers; # If Access-Control-Request-Headers is present and not empty, use its value
+}
+
+# This server block is for the production labs app (e.g., app.kontext.tech)
+# It serves the labs app from /
+server {
+    listen       $ENV_NGINX_PORT;
+    listen  [::]:$ENV_NGINX_PORT;
+    server_name  $ENV_NGINX_HOST_PROD_APP;
+
+    access_log  /var/log/nginx/labs.access.log  json_combined;
+    error_log   /var/log/nginx/labs.error.log   warn;
+    client_max_body_size 50M;
+
+    # Prevent indexing of the authenticated app.
+    add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;
+
+    location /health {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 'OK';
+    }
+
+    # Serve static files for the React app from root
+    root   /usr/share/nginx/html/labs;
+    index  index.html;
+
+    # Fallback for SPA routing (React Router)
+    location / {
+        try_files $uri /index.html;
+    }
+
+    # Logging
+    access_log  /var/log/nginx/labs.access.log;
+    error_log   /var/log/nginx/labs.error.log;
+}

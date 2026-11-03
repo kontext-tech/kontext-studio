@@ -1,0 +1,17 @@
+{
+   "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "ecmel.vscode-html-css",
+      "ms-python.python",
+      "ms-python.debugpy",
+      "ms-python.vscode-pylance",
+      "charliermarsh.ruff",
+      "redhat.vscode-yaml",
+      "github.vscode-github-actions",
+      "GitHub.copilot",
+      "GitHub.copilot-chat",
+      "DavidAnson.vscode-markdownlint"
+   ],
+   "unwantedRecommendations": []
+}

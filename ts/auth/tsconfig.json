@@ -1,0 +1,51 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "noEmitOnError": true,
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": false,
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "composite": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noFallthroughCasesInSwitch": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "declaration": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "paths": {
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/host-api": ["../host-api/src/index.ts"],
+         "@kontext-tech/ui": ["../ui/src/index.ts"],
+         "@kontext-tech/schema": ["../schema/src/index.ts"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../host-api"
+      },
+      {
+         "path": "../schema"
+      },
+      {
+         "path": "../ui"
+      }
+   ],
+   "include": ["src", "src/**/*.json"],
+   "exclude": ["node_modules", "dist"]
+}

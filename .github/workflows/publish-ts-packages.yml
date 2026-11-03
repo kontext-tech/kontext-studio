@@ -1,0 +1,65 @@
+name: Publish TypeScript Packages
+
+# Publishing is driven by the `ts-packages-v*` git tag created by
+# `pnpm run version:labs` (`uv run cz bump`). No changesets PR flow: the bump
+# commit and tag are created locally and pushed by a maintainer.
+#
+# The packages publish under the `@kontext-tech` scope, matching the repository
+# owner, so the workflow's GITHUB_TOKEN (`packages: write`) can publish them.
+# No PAT is needed; cross-org consumers still need `read:packages` access.
+on:
+  push:
+    tags:
+      - "ts-packages-v*"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          registry-url: https://npm.pkg.github.com
+          scope: "@kontext-tech"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Verify package versions are in lockstep
+        run: pnpm run validate:workspace-versions
+
+      - name: Verify tag matches package versions
+        env:
+          TAG_REF: ${{ github.ref_name }}
+        run: |
+          expected="ts-packages-v$(node -p "require('./package.json').version")"
+          if [ "$TAG_REF" != "$expected" ]; then
+            echo "::error::Tag $TAG_REF does not match the workspace version (expected $expected). Run 'pnpm run version:labs' and push the tag it creates."
+            exit 1
+          fi
+
+      - name: Publish packages
+        run: pnpm --filter "./ts/*" publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

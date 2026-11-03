@@ -1,0 +1,492 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  # The `changes` job runs `dorny/paths-filter`, which lists the PR's changed
+  # files through the REST API on `pull_request` events. Without this the step
+  # fails with "Resource not accessible by integration" and every downstream job
+  # is skipped, so the PR run reports no real result.
+  pull-requests: read
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      typescript: ${{ steps.filter.outputs.typescript }}
+      python: ${{ steps.filter.outputs.python }}
+      generated: ${{ steps.filter.outputs.generated }}
+      wheel: ${{ steps.filter.outputs.wheel }}
+      toolpins: ${{ steps.filter.outputs.toolpins }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            typescript:
+              - "app/**"
+              - "ts/**"
+              - "tools/**"
+              - "examples/**"
+              - "package.json"
+              - "pnpm-lock.yaml"
+              - "pnpm-workspace.yaml"
+              - "eslint.config.js"
+              - "tsconfig*.json"
+              - ".github/workflows/ci.yml"
+            python:
+              - "py/**"
+              - "pyproject.toml"
+              - "uv.lock"
+              - "pyrightconfig.json"
+              - ".github/workflows/ci.yml"
+            generated:
+              - "ts/schema/src/**"
+              - "ts/schema/scripts/**"
+              - "ts/schema/package.json"
+              - "scripts/generate-api-types.sh"
+              - "scripts/lib/**"
+              - "py/kontext-api/**"
+              - "py/kontext-schema/**"
+              # `check:contract-parity` pins this Python mirror of the
+              # generated `SiteFeature` enum.
+              - "py/kontext-common/src/kontext/common/constants/site_features.py"
+              - "pyproject.toml"
+              - "uv.lock"
+              - "pnpm-lock.yaml"
+              - ".github/workflows/ci.yml"
+            wheel:
+              - "app/**"
+              - "ts/**"
+              - "py/**"
+              - "package.json"
+              - "pnpm-lock.yaml"
+              - "pnpm-workspace.yaml"
+              - "pyproject.toml"
+              - "uv.lock"
+              - "scripts/uv/build-kontext-studio-wheel.py"
+              - ".github/workflows/ci.yml"
+            toolpins:
+              - "pyproject.toml"
+              - ".pre-commit-config.yaml"
+              - "tools/validate-tool-pins.mjs"
+              - "package.json"
+              - ".github/workflows/ci.yml"
+            docs:
+              - "docs/**"
+              - "docs-site/**"
+              - "tools/docs-capture/**"
+              # The route table is the source of truth for documentation coverage.
+              - "app/src/routing/routes.ts"
+              - "app/src/types/routeTypes.ts"
+              - "package.json"
+              - "pnpm-lock.yaml"
+              - ".github/workflows/ci.yml"
+              - ".github/workflows/publish-docs.yml"
+
+  tool-pins:
+    name: Tool pin parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: changes
+    if: ${{ needs.changes.outputs.toolpins == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+
+      - name: Validate tool pins
+        # Guards the "pin once, or pin in lockstep" contract for external tool
+        # versions; see tools/validate-tool-pins.mjs.
+        run: node tools/validate-tool-pins.mjs
+
+  typescript-lint:
+    name: TypeScript lint & validations
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate workspace graph
+        run: pnpm run validate:workspace-graph
+
+      - name: Validate workspace versions
+        run: pnpm run validate:workspace-versions
+
+      - name: Validate agent docs topology
+        run: pnpm run validate:agent-docs
+
+      - name: Validate environment docs
+        run: pnpm run validate:env-docs
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check formatting
+        # Prettier otherwise only runs as an auto-fixing pre-commit hook, so
+        # contributors without hooks could merge unformatted code.
+        run: pnpm format:check
+
+      - name: Check contracts (Node-side)
+        # Models spec snapshot, OpenAPI validity, and TS/Python contract parity.
+        # The API spec snapshot is excluded here because it re-exports the
+        # FastAPI app and therefore needs `uv`; the generated-code job runs the
+        # full `check:contracts` suite where both toolchains are installed.
+        run: pnpm --filter @kontext-tech/schema run check:contracts:ts
+
+  docs:
+    name: User guide coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: changes
+    if: ${{ needs.changes.outputs.docs == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Structural only: no browser, no Python, no secrets. It fails when a route
+      # is unclaimed, a page is missing or unpublished, an image link is broken,
+      # a generated block was hand-edited, or the committed route inventory is
+      # stale.
+      - name: Check guide coverage
+        run: pnpm docs:check --strict
+
+      - name: Lint guide markdown
+        run: pnpm docs:lint
+
+      # Proves the Starlight build used by publish-docs.yml still succeeds.
+      - name: Build docs site
+        env:
+          DOCS_REPO_URL: https://github.com/kontext-tech/kontext-studio
+        run: pnpm docs:site:build
+
+  typescript-test:
+    name: TypeScript tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Test shared packages
+        run: pnpm run test:ts
+
+  typescript-build:
+    name: TypeScript typecheck & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Type check app
+        # `tsc --noEmit` against the solution tsconfig checks zero files
+        # because `app/tsconfig.json` only lists project references. Build
+        # mode follows the references and actually type-checks app sources.
+        run: pnpm --filter @kontext-tech/app exec tsc -b
+
+      - name: Build app
+        env:
+          NODE_ENV: production
+        run: pnpm --filter @kontext-tech/app build
+
+      - name: Build notebook demo
+        run: pnpm run build:notebook-demo
+
+  python-lint:
+    name: Python lint & typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Sync workspace
+        run: uv sync --frozen
+
+      - name: Lint and format check
+        # Ruff owns Python linting and formatting; `ruff.toml` at the repo root
+        # is the single source of truth for every package under `py/` and for
+        # the release scripts under `scripts/`.
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Type check
+        # `scripts/run-pyright.sh` runs pyright with the repo's pyrightconfig.json,
+        # which covers `py` and `scripts/uv`. Pyright is a pinned dev dependency.
+        # Only the generated `_generated/` subpackage is excluded; the
+        # hand-written schema package files are type-checked normally.
+        run: bash scripts/run-pyright.sh
+
+  python-test:
+    name: Python tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Sync workspace
+        run: uv sync --frozen
+
+      - name: Run tests with coverage
+        # `[tool.coverage.report] fail_under` enforces a conservative floor that
+        # ratchets upward as the suite grows; see the coverage job for details.
+        run: uv run pytest --cov --cov-report=term-missing --cov-fail-under=40
+
+  generated-code:
+    name: Generated code freshness
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.generated == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate TypeScript API types
+        run: pnpm run generate:api-types
+
+      - name: Regenerate Pydantic schema models
+        run: pnpm run generate:models
+
+      - name: Verify regenerated artifacts are unchanged
+        # Covers the committed API types and Pydantic models plus the lockfiles the
+        # generators touch. `git status --porcelain` also catches untracked files
+        # a generator may add, which the previous per-path `git diff` checks
+        # missed.
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            echo "::error::Regenerated artifacts are out of date. Run 'pnpm run generate:api-types' and 'pnpm run generate:models', then commit the result."
+            exit 1
+          fi
+
+      - name: Generator smoke checks
+        run: pnpm --filter @kontext-tech/schema run check:generator-smoke
+
+      - name: Check contracts
+        # Full suite, including the API spec snapshot re-exported from the
+        # FastAPI app. It needs `uv`, which the Node-only lint job does not
+        # have, so this job owns it.
+        run: pnpm --filter @kontext-tech/schema run check:contracts
+
+  wheel-smoke:
+    name: Unified wheel smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.wheel == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Build unified wheel
+        env:
+          NODE_ENV: production
+        run: python scripts/uv/build-kontext-studio-wheel.py --build-app --out-dir dist/python
+
+      - name: Verify wheel contents
+        run: |
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
+          echo "Built wheel: $WHEEL"
+          python - "$WHEEL" <<'PY'
+          import sys
+          import zipfile
+
+          wheel = sys.argv[1]
+          with zipfile.ZipFile(wheel) as archive:
+              names = archive.namelist()
+
+          required = [
+              "kontext/labs/cli.py",
+          ]
+          missing = [entry for entry in required if not any(n.startswith(entry) for n in names)]
+          if missing:
+              print(f"::error::Wheel is missing expected entries: {missing}", file=sys.stderr)
+              sys.exit(1)
+
+          print(f"Wheel contains {len(names)} entries including the local server and app assets.")
+          PY
+
+      - name: Install wheel with uv tool install
+        run: |
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
+          uv tool install --force "$WHEEL"
+
+      - name: Smoke test CLI entry points
+        run: |
+          kontext --help
+          kontext serve --help

@@ -1,0 +1,54 @@
+{
+   "name": "@kontext-tech/icons",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared Icon wrappers linking Lucide to Ant Design for Kontext",
+   "main": "./dist/index.js",
+   "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+      ".": {
+         "import": "./dist/index.js",
+         "types": "./dist/index.d.ts"
+      }
+   },
+   "scripts": {
+      "build": "pnpm run type-check && tsc --build",
+      "type-check": "tsc --noEmit",
+      "dev": "tsc --watch",
+      "lint": "eslint src/**/*.{ts,tsx}",
+      "lint:fix": "eslint src/**/*.{ts,tsx} --fix"
+   },
+   "keywords": [
+      "icons",
+      "kontext",
+      "react",
+      "ant-design",
+      "lucide"
+   ],
+   "author": "Kontext Tech",
+   "license": "MIT",
+   "dependencies": {
+      "@ant-design/icons": "^6.3.4",
+      "@kontext-tech/common": "workspace:*",
+      "antd": "^6.6.7",
+      "lucide": "1.61.0",
+      "react": "^19.3.1"
+   },
+   "devDependencies": {
+      "@types/node": "^26.6.5",
+      "@types/react": "^19.3.0",
+      "eslint": "^10.13.0",
+      "typescript": "~6.0.3"
+   },
+   "peerDependencies": {
+      "react": ">=18.3.1"
+   },
+   "files": [
+      "dist"
+   ],
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

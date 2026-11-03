@@ -1,0 +1,279 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+      {
+         "label": "setup: pnpm install",
+         "type": "shell",
+         "command": "pnpm install --frozen-lockfile",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Installs Node dependencies for the pnpm workspace.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "setup: uv sync",
+         "type": "shell",
+         "command": "uv sync",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Syncs the Python uv workspace.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "validate: workspace graph",
+         "type": "shell",
+         "command": "pnpm run validate:workspace-graph",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Checks that TS workspace dependencies use valid workspace links.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "lint",
+         "type": "shell",
+         "command": "pnpm lint",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs ESLint across the labs workspace.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "typecheck: python",
+         "type": "shell",
+         "command": "pnpm run typecheck:python",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs Pyright through the repo script.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "test: python",
+         "type": "shell",
+         "command": "uv run pytest",
+         "group": {
+            "kind": "test",
+            "isDefault": true
+         },
+         "problemMatcher": [],
+         "detail": "Runs all Python tests through uv.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "shared"
+         }
+      },
+      {
+         "label": "test: ts",
+         "type": "shell",
+         "command": "pnpm --recursive --if-present test",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs package-level TypeScript tests where test scripts exist.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "test: schema",
+         "type": "shell",
+         "command": "pnpm --filter @kontext-tech/schema test",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs tests for the schema package.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: shared",
+         "type": "shell",
+         "command": "pnpm run build:shared",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds shared TS workspace packages in dependency order.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: all",
+         "type": "shell",
+         "command": "pnpm run build",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds shared packages and the labs app.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: app",
+         "type": "shell",
+         "command": "pnpm run build:app",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds the labs app.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: app analyze",
+         "type": "shell",
+         "command": "pnpm --filter @kontext-tech/app build:analyze",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds the labs app with bundle analysis enabled.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: notebook demo",
+         "type": "shell",
+         "command": "pnpm run build:notebook-demo",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds the standalone notebook demo.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "generate: api-types",
+         "type": "shell",
+         "command": "pnpm run generate:api-types",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Regenerates the committed TypeScript API types from the OpenAPI spec.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "generate: models",
+         "type": "shell",
+         "command": "pnpm run generate:models",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Refreshes schema-derived models from @kontext-tech/schema.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "refresh: api schema",
+         "type": "shell",
+         "command": "pnpm run refresh:api-schema",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Generates the API OpenAPI schema offline.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "check: contracts",
+         "type": "shell",
+         "command": "pnpm run check:contracts",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs schema contract checks.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "check: generator smoke",
+         "type": "shell",
+         "command": "pnpm run check:generator-smoke",
+         "group": "test",
+         "problemMatcher": [],
+         "detail": "Runs schema generator smoke checks.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "start: notebook demo",
+         "type": "shell",
+         "command": "pnpm run dev:notebook",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Starts the standalone notebook demo app.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "presentation": {
+            "reveal": "always",
+            "panel": "new"
+         },
+         "isBackground": false
+      },
+      {
+         "label": "start: docs site",
+         "type": "shell",
+         "command": "pnpm docs:site:dev",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Regenerates the Starlight content from docs/ and starts the docs site (default http://localhost:4321).",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "presentation": {
+            "reveal": "always",
+            "panel": "new"
+         },
+         "isBackground": false
+      },
+      {
+         "label": "start: local stack",
+         "type": "process",
+         "command": "node",
+         "args": ["${workspaceFolder}/tools/start-local-mode.mjs"],
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Runs `pnpm run dev:local`: kontext-studio API on :8000 plus the app on :8002. Use the Debug panel for either process on its own.",
+         "presentation": {
+            "reveal": "always",
+            "panel": "new"
+         }
+      },
+      {
+         "label": "build: labs wheel",
+         "type": "shell",
+         "command": "uv run python scripts/uv/build-kontext-studio-wheel.py",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds the kontext-studio Python wheel.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      },
+      {
+         "label": "build: app image",
+         "type": "shell",
+         "command": "bash ./scripts/build-app-image.sh",
+         "group": "build",
+         "problemMatcher": [],
+         "detail": "Builds the labs app container image.",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         }
+      }
+   ]
+}

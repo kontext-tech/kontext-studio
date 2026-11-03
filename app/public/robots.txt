@@ -1,0 +1,7 @@
+# robots.txt for app.kontext.tech
+# This is an authenticated web app and should not be indexed.
+User-agent: *
+Disallow: /
+
+# Non-standard, but supported by some crawlers.
+Noindex: /

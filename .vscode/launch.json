@@ -1,0 +1,53 @@
+{
+   "version": "0.2.0",
+   "configurations": [
+      {
+         "name": "debug: kontext-studio server",
+         "type": "debugpy",
+         "request": "launch",
+         "program": "${workspaceFolder}/.venv/bin/kontext",
+         "args": ["serve", "--host", "0.0.0.0", "--port", "8000"],
+         "cwd": "${workspaceFolder}",
+         "envFile": "${workspaceFolder}/.env.local",
+         "env": {
+            "STORAGE_PROVIDER": "local",
+            "KONTEXT_LOCAL_MODE": "true"
+         },
+         "justMyCode": false,
+         "console": "integratedTerminal"
+      },
+      {
+         "name": "debug: app dev server",
+         "type": "node-terminal",
+         "request": "launch",
+         "command": "pnpm run dev:app",
+         "cwd": "${workspaceFolder}",
+         "env": {
+            "VITE_PORT": "8002",
+            "BROWSER": "none",
+            "PUBLIC_KONTEXT_URL": "http://localhost:8002",
+            "PUBLIC_KONTEXT_API_URL": "http://localhost:8000",
+            "PUBLIC_KONTEXT_DATA_API_URL": "http://localhost:8000",
+            "KONTEXT_LOCAL_MODE": "true"
+         }
+      },
+      {
+         "name": "debug: notebook demo",
+         "type": "node-terminal",
+         "request": "launch",
+         "command": "pnpm run dev:notebook",
+         "cwd": "${workspaceFolder}"
+      },
+      {
+         "name": "debug: python tests",
+         "type": "debugpy",
+         "request": "launch",
+         "module": "pytest",
+         "args": [],
+         "cwd": "${workspaceFolder}",
+         "envFile": "${workspaceFolder}/.env.local",
+         "justMyCode": false,
+         "console": "integratedTerminal"
+      }
+   ]
+}

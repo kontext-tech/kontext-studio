@@ -1,0 +1,82 @@
+{
+   "name": "@kontext-tech/notebook",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Notebook editor library for Kontext",
+   "license": "MIT",
+   "files": [
+      "dist"
+   ],
+   "main": "dist/index.js",
+   "module": "dist/index.js",
+   "types": "dist/index.d.ts",
+   "exports": {
+      ".": {
+         "import": "./dist/index.js",
+         "types": "./dist/index.d.ts"
+      },
+      "./styles/*": "./dist/styles/*"
+   },
+   "scripts": {
+      "build": "rm -rf dist tsconfig.tsbuildinfo && tsc --build --force && tsc-alias -p tsconfig.json && mkdir -p dist/styles && cp -R src/styles/. dist/styles/",
+      "test": "jest",
+      "lint": "eslint src/**/*.{ts,tsx}",
+      "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
+      "prepare": "pnpm run build"
+   },
+   "keywords": [
+      "notebook",
+      "kontext",
+      "sql",
+      "markdown",
+      "editor"
+   ],
+   "author": "Kontext Team",
+   "dependencies": {
+      "@ant-design/x": "^2.9.0",
+      "@codemirror/lang-python": "^6.2.1",
+      "@codemirror/view": "^6.43.15",
+      "@editorjs/delimiter": "^1.4.2",
+      "@editorjs/editorjs": "^2.31.7",
+      "@editorjs/header": "^2.8.9",
+      "@editorjs/image": "^2.10.3",
+      "@editorjs/list": "^2.0.9",
+      "@editorjs/paragraph": "^2.11.7",
+      "@editorjs/quote": "^2.7.6",
+      "@editorjs/table": "^2.4.6",
+      "@kontext-tech/chart": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
+      "@kontext-tech/file": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
+      "@kontext-tech/query": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
+      "@kontext-tech/theme": "workspace:*",
+      "@kontext-tech/ui": "workspace:*",
+      "@uiw/react-codemirror": "^4.25.12",
+      "antd": "^6.6.7",
+      "react": "^19.3.1",
+      "react-dom": "^19.3.1",
+      "react-error-boundary": "^6.1.5",
+      "zod": "^4.6.7",
+      "zustand": "^5.0.15"
+   },
+   "devDependencies": {
+      "@types/jest": "^30.0.0",
+      "@types/node": "^26.6.5",
+      "@types/react": "^19.3.0",
+      "@types/react-dom": "^19.3.0",
+      "eslint": "^10.13.0",
+      "jest": "^30.5.2",
+      "ts-jest": "^29.4.15",
+      "tsc-alias": "^1.9.8",
+      "typescript": "~6.0.3"
+   },
+   "peerDependencies": {
+      "react": ">=18.3.1",
+      "react-dom": ">=18.3.1"
+   },
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

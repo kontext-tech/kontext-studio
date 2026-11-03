@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kontext-engine"
+version = "0.261.0"
+description = "In-process engine implementations for Kontext"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "Kontext Team", email = "hello@kontext.tech" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "kontext-common",
+    "kontext-data",
+    "kontext-storage",
+    "duckdb>=2.0.0",
+    # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp);
+    # without it queries raise "Required module 'pytz' failed to import".
+    "pytz>=2025.2",
+    "sqlalchemy>=2.1.6",
+    "kontext-schema",
+    "psycopg[binary]>=3.3.6",
+    "pymysql>=1.2.3",
+    "pyodbc>=5.2.0",
+    "oracledb>=26.0.0",
+    "teradatasql>=20.0.0.72",
+    "teradatasqlalchemy>=20.0.0.7",
+]
+
+[project.urls]
+Repository = "https://github.com/kontext-tech/kontext-studio"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kontext"]

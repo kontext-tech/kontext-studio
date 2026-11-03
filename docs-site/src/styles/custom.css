@@ -1,0 +1,83 @@
+/* Align the docs theme with the Kontext platform site. */
+:root[data-theme="light"] {
+   --sl-color-white: #111827;
+   --sl-color-gray-1: #1f2937;
+   --sl-color-gray-2: #374151;
+   --sl-color-gray-3: #6b7280;
+   --sl-color-gray-4: #9ca3af;
+   --sl-color-gray-5: #d1d5db;
+   --sl-color-gray-6: #e5e7eb;
+   --sl-color-gray-7: #f3f4f6;
+   --sl-color-black: #ffffff;
+
+   --sl-color-accent-high: #003d99;
+   --sl-color-accent: #0052cc;
+   --sl-color-accent-low: #dbeafe;
+   --sl-color-text-accent: #0052cc;
+
+   --sl-color-bg-nav: #ffffff;
+   --sl-color-bg-sidebar: #ffffff;
+}
+
+:root[data-theme="dark"] {
+   --sl-color-white: #f8fafc;
+   --sl-color-gray-1: #e2e8f0;
+   --sl-color-gray-2: #cbd5e1;
+   --sl-color-gray-3: #94a3b8;
+   --sl-color-gray-4: #64748b;
+   --sl-color-gray-5: #334155;
+   --sl-color-gray-6: #1e293b;
+   --sl-color-black: #0f172a;
+
+   --sl-color-accent-high: #67e8f9;
+   --sl-color-accent: #06b6d4;
+   --sl-color-accent-low: #164e63;
+   --sl-color-text-accent: #06b6d4;
+
+   --sl-color-bg-nav: #0f172a;
+   --sl-color-bg-sidebar: #0f172a;
+}
+
+/* Match the platform header logo, which renders at 24px. */
+.site-title img {
+   height: 1.5rem;
+}
+
+/* Home page workflow steps, aligned with the platform home page. */
+.home-steps {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+   gap: 1rem;
+   margin: 2.5rem 0 1rem;
+}
+
+.home-step {
+   display: flex;
+   flex-direction: column;
+   gap: 0.35rem;
+   padding: 1.25rem;
+   border: 1px solid var(--sl-color-gray-6);
+   border-radius: 0.75rem;
+   color: inherit;
+   text-decoration: none;
+}
+
+.home-step:hover {
+   border-color: var(--sl-color-accent);
+}
+
+.home-step-number {
+   font-size: var(--sl-text-xs);
+   font-weight: 600;
+   letter-spacing: 0.08em;
+   color: var(--sl-color-accent);
+}
+
+.home-step strong {
+   font-size: var(--sl-text-lg);
+}
+
+.home-step span:last-child {
+   font-size: var(--sl-text-sm);
+   color: var(--sl-color-gray-3);
+}

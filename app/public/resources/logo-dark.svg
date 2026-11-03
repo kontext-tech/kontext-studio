@@ -1,0 +1,17 @@
+<svg width="324" height="60" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  @font-face {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-style: normal;
+    src: url(data:font/woff2;base64,d09GMgABAAAAAAYYAA4AAAAADXAAAAW/AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABlYAVDObCBxuUABkARgCcAgIDYMgBwgcGwV6V7NAnAtYAbAAYwBhGvU7AByM57u/p/1zVvK6H6Z6f7oT9mU0REpEZETpDkR0RCREREpERERkYm8/SMREREpEREREpESUpG9iIu6+p9fP/n7vYF3p2T6u7m6XhEImKUIlO7W9nKk2M5O1Zf5qO+1Xv+2d37cO28z9/3/8//Nf///2A8Y9oHGP/W7oG9B3YF+g8m8s0CmwL9A9oG/AfmBfYA8XvD12A/YDe/y//v/5/7f/PwfG3uG/Wz607386z/5+H4eAsD0Y84n5xWvP98OAn993f7x8iNf+X/vOn/Of/v85F2C846Of9NPP9m22D30T9k3Yl2i7uK7u/2X60OebGPiXf986mI/+v/f/f/0A4B3/B4H76Kdf9NuYvqn/m/687W/BfID9yL7v0Pfvf4F936H9C/p9mX6D/YH+H97bE/D2BLy5YF6u8P1wUuG7CHv4p8IXyPz/8v/v/y///97fL4F9W2E/onHeJ8YvXvX8YRT8/P8A8PPvN7X8mNf+f3vHz7kv/z8HIYxwPPWtfvqVvs32qW+K6YfO+eW+19/p966DeW/4Xv+Yp8JHeK/8X/Gv+Ef8/9D/H/3/Y/v/+z/vP/X9p/+A8QGf/uRPoL/pA/1LH9i/+D8InAnAgQAn4P1Bf09APwE8AXzB/P8E/B+YPyB/IP8//n/+/+///YF/wX9bgn3T777pD8O0Fv7x/wPgp//O2+zHvPZf+3Z+XFf+fw/BGPF4/7O/87f8NturfijmD879yv7uof/v9PcczHvL9/q3/Ct8hPfKvw3/NvxH/P/Q/x/9/2P7//s/7z/1/af/gPEBn/7kT6C/6QP9Sx/Yv/g7ArwWfAHWv78/6O+P9N5W8u0UfIWPX/AVPnjBT/iEn/AJP+EVPuEnfIJP+An5Scm3CvmC6atR8BOf6K+Fv/WJ/mYofvA5X7H/4v//7f8v/f99f78Etm2F7f8f/s8AfvrvS20/5rX/X9/xs678/z0EY8Tn/Y1/+rW+zfWp3xfTB53zx77T7+3reW/5Xv+Wf8VP8F75f8O/4l/x/0P/f/T/j+3/7/+8/9T3n/4DxAd8+pM/gf6mD/QvfeAnuG8K9xN/EbiOfozYv2u9WbB9UfG1R/Y9XlffO9tH/360/H/9/7v99wVvT8DbC/XmSt8Pd0p9F3EP/0z4ApmrU/AbfF297+E/9u/2f1f8vPpfvNfC/Rbu9/C8P+P9vC/O9/mC/9/v4zgQthevPd+HAt9BvPf6veD947Xn69f+f2v3H3X4dzr8O38XyI/Xnu/fgX6D+F+Xf/r9O/5Ofv526O/v/L0R7P8Pfv08e9+B/vR6+7v/H+D+AnA/6L/5P8m+Ofv9037/8f7O87/T59f37+z37/+H7D8A+e3v/L8X7pD8O0Fv78/6O/X9/xs667/v5/3f8Hwf37+2/S/9/390tg21bYZ/v/9/p99vE9v98/+t/7/v75fAtq2wX/7/X/v/vf99fP/n9pXf/3v++5/7+/f359H33/9P3n/+8/O/8///6wPgf/x3CPpB/03S3xDofvU3P7vX76m/P9x/f6T7/r3/f5T//+v/7/1/E/+Hwd8G7vPP/17/f9/fL4FtW2G//P+//v97//v4/s/tK7///99vAA==) format('woff2');
+  }
+</style>
+<g transform="translate(0, 4) scale(2.3)">
+<path d="M6.05 21.22A14 14 0 0 1 21.22 6.05" stroke="#6366F1" stroke-width="5" stroke-linecap="round" fill="none"/>
+<circle cx="29.9" cy="10.1" r="4.5" fill="#6366F1"/>
+<path d="M33.95 18.78A14 14 0 0 1 18.78 33.95" stroke="#06B6D4" stroke-width="5" stroke-linecap="round" fill="none"/>
+<circle cx="10.1" cy="29.9" r="4.5" fill="#06B6D4"/>
+</g>
+<text x="115" y="89" font-family="'Open Sans', sans-serif" font-weight="600" font-size="110" letter-spacing="-3" fill="#F8FAFC">kontext</text>
+</svg>
