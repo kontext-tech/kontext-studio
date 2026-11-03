@@ -26,7 +26,7 @@ dependencies = [
     "duckdb>=2.0.0",
     # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp);
     # without it queries raise "Required module 'pytz' failed to import".
-    "pytz>=2025.2",
+    "pytz>=2026.6",
     "sqlalchemy>=2.1.6",
     "kontext-schema",
     "psycopg[binary]>=3.3.6",
