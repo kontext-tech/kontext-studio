@@ -1,0 +1,45 @@
+{
+   "name": "@kontext-labs/auth",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared authentication and permission components for Kontext",
+   "license": "MIT",
+   "main": "./dist/index.js",
+   "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+      ".": {
+         "types": "./dist/index.d.ts",
+         "import": "./dist/index.js"
+      }
+   },
+   "scripts": {
+      "build": "tsc --build",
+      "type-check": "tsc --build && tsc --noEmit",
+      "dev": "tsc --watch"
+   },
+   "dependencies": {
+      "@kontext-labs/common": "workspace:*",
+      "@kontext-labs/host-api": "workspace:*",
+      "@kontext-labs/schema": "workspace:*",
+      "@kontext-labs/ui": "workspace:*",
+      "antd": "^6.6.7",
+      "react": "^19.3.1"
+   },
+   "devDependencies": {
+      "@types/react": "^19.3.0",
+      "react-router-dom": "^7.18.4",
+      "typescript": "~6.0.3"
+   },
+   "peerDependencies": {
+      "react": ">=18.3.1",
+      "react-router-dom": ">=6.0.0"
+   },
+   "files": [
+      "dist"
+   ],
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

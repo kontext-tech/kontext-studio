@@ -1,0 +1,13 @@
+# Cline Project Rules
+
+This file is an adapter for Cline. The canonical agent guide is **AGENTS.md**
+(repo root); longer workflows live in `.github/skills/<name>/SKILL.md`. Keep
+adapter-specific notes below; everything else stays in the canonical sources.
+
+## Commit Message Skill
+
+Commit messages are handled by the shared `commit-message` skill. See
+`.github/skills/commit-message/SKILL.md` for the canonical definition (workflow,
+guardrails, types, rules, and examples).
+
+Commit messages follow the Conventional Commits specification.

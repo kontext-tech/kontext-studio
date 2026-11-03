@@ -1,0 +1,11 @@
+{
+   "$comment": "Hand-maintained guards for generated code. Consumed by generator-smoke.sh. Add a symbol here when a new schema must remain importable from kontext.schema, rather than editing the smoke-check script.",
+   "requiredPythonSchemaExports": [
+      "AttachedDataSource",
+      "AttachedDataTable",
+      "ChatAttachmentContext",
+      "ChatUploadPreparationAcceptedFile",
+      "ChatUploadPreparationStatus",
+      "SeedChatAttachmentContextRequest"
+   ]
+}

@@ -1,0 +1,46 @@
+{
+   "venvPath": ".",
+   "venv": ".venv",
+   "pythonVersion": "3.12",
+   "typeCheckingMode": "basic",
+   "useLibraryCodeForTypes": true,
+   "reportMissingTypeStubs": "none",
+   "reportPrivateImportUsage": "none",
+   "include": ["conftest.py", "py", "scripts/uv"],
+   "exclude": [
+      "**/.*",
+      "**/__pycache__",
+      ".venv",
+      "node_modules",
+      "py/kontext-schema/src/kontext/schema/_generated"
+   ],
+   "executionEnvironments": [
+      {
+         "root": "py",
+         "extraPaths": [
+            "py/kontext-account/src",
+            "py/kontext-agent/src",
+            "py/kontext-agentic/src",
+            "py/kontext-api/src",
+            "py/kontext-auth/src",
+            "py/kontext-catalog/src",
+            "py/kontext-chat/src",
+            "py/kontext-common/src",
+            "py/kontext-data/src",
+            "py/kontext-engine/src",
+            "py/kontext-execution/src",
+            "py/kontext-file/src",
+            "py/kontext-harness-agno/src",
+            "py/kontext-job/src",
+            "py/kontext-labs/src",
+            "py/kontext-llm/src",
+            "py/kontext-okf/src",
+            "py/kontext-project/src",
+            "py/kontext-query/src",
+            "py/kontext-runtime/src",
+            "py/kontext-schema/src",
+            "py/kontext-storage/src"
+         ]
+      }
+   ]
+}

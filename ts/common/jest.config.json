@@ -1,0 +1,22 @@
+{
+   "preset": "ts-jest",
+   "testEnvironment": "node",
+   "extensionsToTreatAsEsm": [".ts"],
+   "transform": {
+      "^.+\\.ts$": [
+         "ts-jest",
+         {
+            "useESM": true,
+            "tsconfig": "tsconfig.test.json"
+         }
+      ]
+   },
+   "moduleNameMapper": {
+      "^(\\.\\.?/.*)\\.js$": "$1",
+      "^@kontext-labs/(.*)$": "<rootDir>/../$1/src"
+   },
+   "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"],
+   "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts"],
+   "coverageDirectory": "coverage",
+   "coverageReporters": ["text", "lcov", "html"]
+}

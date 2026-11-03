@@ -1,0 +1,159 @@
+# Ignore local build artifacts
+build
+tsconfig.tsbuildinfo
+dist
+data/kontext
+_app_dist/
+
+# Ignore python virtual environments
+.venv
+venv
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+# Ignore Drawio bkp files
+*.drawio.bkp
+
+# Node.js
+node_modules/
+
+# Python packaging and type-checker artifacts
+*.egg-info/
+htmlcov/
+.mypy_cache/
+
+# Test and coverage output
+coverage/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# Logs and temp files
+*.log
+*.tmp
+logs/
+
+# Cache
+.sass-cache/
+
+# Stray directories created by mocked storage paths in tests
+MagicMock/
+
+# dotenv files
+.env
+# Ignore environment variables file
+.env.*
+# ...but keep the documented template tracked
+!.env.example
+!.env.docs.example
+
+# VS Code files for those working on multiple tools
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Local History for Visual Studio Code
+.history/
+
+# JetBrains
+*.sln.iml
+.idea/
+
+# globs
+Makefile.in
+*.userprefs
+*.usertasks
+config.make
+config.status
+aclocal.m4
+install-sh
+autom4te.cache/
+*.tar.gz
+tarballs/
+test-results/
+
+# Mac bundle stuff
+*.dmg
+*.app
+
+# content below from: https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# content below from: https://github.com/github/gitignore/blob/main/Global/Windows.gitignore
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Vim temporary swap files
+*.swp
+
+# npm lockfile (this repo uses pnpm)
+package-lock.json
+
+# Generated SDK clients are committed to the repo (see
+# docs/development/generated-code.md). Do not ignore them.
+
+# Fetched, pre-normalization OpenAPI snapshot; regenerated on demand and never
+# committed (see docs/development/openapi-workflow.md).
+ts/schema/src/schemas/*.raw.json
+
+# DuckDB WASM assets – copied from pnpm store at build time by Vite copy-duckdb-assets plugin
+app/public/duckdb/
+
+# Local engine data (stored in ~/.kontext, not in the repo)
+.kontext/
+tsconfig.*.tsbuildinfo
+
+# Generated docs capture output
+tools/docs-capture/report/

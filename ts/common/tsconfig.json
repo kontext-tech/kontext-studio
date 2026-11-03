@@ -1,0 +1,21 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "types": ["node"],
+
+      /* Linting (strictening beyond the shared library preset) */
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "erasableSyntaxOnly": false,
+      "noUncheckedSideEffectImports": true
+   },
+   "references": [
+      {
+         "path": "../schema"
+      }
+   ],
+   "include": ["src", "src/**/*.json"],
+   "exclude": ["node_modules", "dist", "src/**/__tests__/*", "src/**/*.test.ts"]
+}

@@ -1,0 +1,75 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "noEmitOnError": true,
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": false,
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "composite": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noFallthroughCasesInSwitch": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "declaration": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "paths": {
+         "@kontext-labs/chart": ["../chart/src/index.ts"],
+         "@kontext-labs/chat": ["../chat/src/index.ts"],
+         "@kontext-labs/common": ["../common/src/index.ts"],
+         "@kontext-labs/identity": ["../identity/src/index.ts"],
+         "@kontext-labs/theme": ["../theme/src/index.ts"],
+         "@kontext-labs/ui": ["../ui/src/index.ts"],
+         "@kontext-labs/common/*": ["../common/src/*"],
+         "@kontext-labs/host-api": ["../host-api/src/index.ts"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../host-api"
+      },
+      {
+         "path": "../auth"
+      },
+      {
+         "path": "../chart"
+      },
+      {
+         "path": "../chat"
+      },
+      {
+         "path": "../identity"
+      },
+      {
+         "path": "../icons"
+      },
+      {
+         "path": "../app-runtime"
+      },
+      {
+         "path": "../schema"
+      },
+      {
+         "path": "../ui"
+      },
+      {
+         "path": "../theme"
+      }
+   ],
+   "include": ["src"],
+   "exclude": ["node_modules", "dist"]
+}

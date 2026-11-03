@@ -1,0 +1,47 @@
+{
+   "name": "@kontext-labs/account",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared account management UI for Kontext",
+   "license": "MIT",
+   "main": "./dist/index.js",
+   "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+      ".": {
+         "types": "./dist/index.d.ts",
+         "import": "./dist/index.js"
+      }
+   },
+   "scripts": {
+      "build": "tsc --build",
+      "type-check": "tsc --build && tsc --noEmit",
+      "dev": "tsc --watch"
+   },
+   "dependencies": {
+      "@kontext-labs/auth": "workspace:*",
+      "@kontext-labs/common": "workspace:*",
+      "@kontext-labs/icons": "workspace:*",
+      "@kontext-labs/identity": "workspace:*",
+      "@kontext-labs/app-runtime": "workspace:*",
+      "@kontext-labs/schema": "workspace:*",
+      "@kontext-labs/ui": "workspace:*",
+      "antd": "^6.6.7",
+      "react": "^19.3.1"
+   },
+   "devDependencies": {
+      "@types/node": "^26.6.5",
+      "@types/react": "^19.3.0",
+      "typescript": "~6.0.3"
+   },
+   "peerDependencies": {
+      "react": ">=18.3.1"
+   },
+   "files": [
+      "dist"
+   ],
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

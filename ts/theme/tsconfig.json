@@ -1,0 +1,40 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "noEmitOnError": true,
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": false,
+      "jsx": "react-jsx",
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
+      "sourceMap": true,
+      "strict": true,
+      "composite": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "paths": {
+         "@kontext-labs/common": ["../common/src/index.ts"],
+         "@kontext-labs/common/*": ["../common/src/*"],
+         "@kontext-labs/icons": ["../icons/src/index.ts"]
+      }
+   },
+   "references": [
+      {
+         "path": "../common"
+      },
+      {
+         "path": "../icons"
+      }
+   ],
+   "include": ["src"],
+   "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,149 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Release Wheel
+
+# Dispatch-only by design. Do NOT add `push: tags: ["v*"]` here:
+# build-app.yml already owns that trigger and creates the draft release plus the
+# app bundle, while this workflow publishes the wheel and promotes the release.
+# Running both on the same tag races on `gh release create`/`edit` and on which
+# assets exist when. The intended sequence is:
+#
+#   1. push a v* tag            -> build-app.yml creates the draft + app zip
+#   2. dispatch this workflow   -> uploads the wheel + SHA256SUMS, publishes
+#
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the leading v (e.g. 0.259.0)"
+        required: true
+        type: string
+      release_tag:
+        description: "GitHub Release tag to create or update (e.g. v0.259.0)"
+        required: true
+        type: string
+      prerelease:
+        description: "Mark the GitHub Release as a prerelease"
+        required: false
+        type: boolean
+        default: false
+
+concurrency: release-${{ inputs.release_tag }}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish wheel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm run build:shared
+
+      - name: Build unified wheel
+        env:
+          NODE_ENV: production
+        run: |
+          python scripts/uv/build-kontext-labs-wheel.py \
+            --build-app \
+            --out-dir dist/python
+
+      - name: Verify wheel version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          echo "Built wheel: $WHEEL"
+          case "$WHEEL" in
+            *"kontext_labs-${VERSION}-"*) echo "Wheel version matches $VERSION" ;;
+            *)
+              echo "::error::Wheel version does not match requested version $VERSION"
+              exit 1
+              ;;
+          esac
+
+      - name: Verify release tag matches version
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [ "$RELEASE_TAG" != "v${VERSION}" ]; then
+            echo "::error::release_tag '$RELEASE_TAG' must be 'v${VERSION}'"
+            exit 1
+          fi
+          echo "Release tag matches version: $RELEASE_TAG"
+
+      - name: Generate checksums
+        run: |
+          cd dist/python
+          sha256sum ./*.whl > SHA256SUMS
+
+      - name: Smoke test CLI entry points
+        run: |
+          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          uv tool install --force "$WHEEL"
+          kontext-labs --help
+          kontext-labs-serve --help
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          PRERELEASE: ${{ inputs.prerelease }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release view "$RELEASE_TAG" --json assets --jq '.assets[].apiUrl' \
+              | while read -r asset_api_url; do
+                  gh api -X DELETE "$asset_api_url"
+                done
+            gh release upload "$RELEASE_TAG" dist/python/*.whl dist/python/SHA256SUMS --clobber
+            if [ "$PRERELEASE" = "true" ]; then
+              gh release edit "$RELEASE_TAG" --prerelease
+            else
+              gh release edit "$RELEASE_TAG" --latest
+            fi
+          else
+            args=(
+              "$RELEASE_TAG"
+              dist/python/*.whl
+              dist/python/SHA256SUMS
+              --target "$GITHUB_SHA"
+              --title "Kontext $VERSION"
+              --notes "Kontext $VERSION. Install with: uv tool install \"kontext-labs @ https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG/kontext_labs-${VERSION}-py3-none-any.whl\""
+            )
+            if [ "$PRERELEASE" = "true" ]; then
+              args+=(--prerelease)
+            else
+              args+=(--latest)
+            fi
+            gh release create "${args[@]}"
+          fi

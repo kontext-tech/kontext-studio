@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kontext-catalog"
+version = "0.261.0"
+description = "Catalog indexing and retrieval services for Kontext"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "Kontext Team", email = "hello@kontext.tech" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "kontext-common",
+    "kontext-data",
+    "kontext-okf",
+    "kontext-schema",
+    "kontext-storage",
+    "duckdb>=2.0.0",
+    # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp).
+    "pytz>=2025.2",
+    "lancedb>=0.38.0",
+    "kontext-execution",
+    "kontext-job",
+    "markitdown[pdf]>=0.1.9",
+    "openpyxl>=3.1.0",
+    "pyarrow>=26.0.0",
+    "pyiceberg>=0.11.1",
+    "pymysql>=1.1.1",
+    "pyodbc>=5.2.0",
+    "oracledb>=26.0.0",
+    "sqlalchemy>=2.1.6",
+    "tantivy>=0.27.0",
+    "teradatasql>=20.0.0.72",
+    "teradatasqlalchemy>=20.0.0.7",
+    "fastembed>=0.4.2",
+]
+
+[project.urls]
+Repository = "https://github.com/kontext-labs/kontext-labs"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.0",
+    "pytest-asyncio>=1.3.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kontext"]

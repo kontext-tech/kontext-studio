@@ -1,0 +1,110 @@
+# Local development nginx configuration
+# This is used for local development with docker-compose or when running the container with --env LOCAL=true
+
+# Hide nginx version and server header
+server_tokens off;
+
+# Custom JSON log format for Application Insights integration
+log_format json_combined escape=json
+    '{'
+    '"timestamp":"$time_iso8601",'
+    '"remote_addr":"$remote_addr",'
+    '"remote_user":"$remote_user",'
+    '"request":"$request",'
+    '"status":$status,'
+    '"body_bytes_sent":$body_bytes_sent,'
+    '"http_referer":"$http_referer",'
+    '"http_user_agent":"$http_user_agent",'
+    '"http_x_forwarded_for":"$http_x_forwarded_for",'
+    '"request_time":$request_time,'
+    '"upstream_response_time":"$upstream_response_time",'
+    '"server_name":"$server_name",'
+    '"request_uri":"$request_uri",'
+    '"args":"$args",'
+    '"scheme":"$scheme",'
+    '"request_method":"$request_method",'
+    '"http_host":"$http_host",'
+    '"bytes_sent":$bytes_sent,'
+    '"gzip_ratio":"$gzip_ratio",'
+    '"http_cf_ray":"$http_cf_ray",'
+    '"http_x_real_ip":"$http_x_real_ip"'
+    '}';
+
+# Gzip configuration for improved performance
+gzip on;
+gzip_comp_level 5;
+gzip_min_length 1024; # Match Vite's threshold of 1KB
+gzip_proxied any;
+gzip_vary on;
+gzip_types
+  application/javascript
+  application/json
+  application/xml
+  application/xml+rss
+  text/css
+  text/javascript
+  text/plain
+  text/xml;
+
+# Enable serving pre-compressed files
+gzip_static on;
+
+# Map to handle CORS origins dynamically for local development
+# This allows testing the same CORS approach as production
+map $http_origin $cors_origin {
+    default "*"; # Allow all origins for local development
+    # If you need to test specific origins locally, you can add them here:
+    # "http://localhost:8002" $http_origin; # Example for local frontend
+}
+
+# Map to dynamically set Access-Control-Allow-Headers
+# If the client sends Access-Control-Request-Headers, use that value.
+# Otherwise, fall back to a comprehensive default list.
+map $http_access_control_request_headers $cors_allowed_headers {
+    default 'accept,accept-encoding,accept-language,authorization,cache-control,content-type,content-length,dnt,if-modified-since,origin,range,referer,user-agent,x-requested-with,x-csrf-token,x-api-key,x-client-version,x-real-ip,x-forwarded-for,x-forwarded-proto,access-control-request-method,access-control-request-headers'; # Default comprehensive list
+    ~.+     $http_access_control_request_headers; # If Access-Control-Request-Headers is present and not empty, use its value
+}
+
+# This server block is for the labs app
+server {
+    listen       ${ENV_NGINX_PORT} default_server;
+    listen  [::]:${ENV_NGINX_PORT} default_server;
+    server_name  _;  # Use wildcard to match any hostname for local dev
+    port_in_redirect off;  # Prevent Nginx from adding its own port to redirects
+    server_name_in_redirect off;  # Use the original request's hostname in redirects
+
+    # Explicitly disable absolute_redirect for all redirects, use relative paths
+    absolute_redirect off;
+
+    access_log  /var/log/nginx/labs.access.log  json_combined;
+    error_log   /var/log/nginx/labs.error.log   warn;
+    client_max_body_size 50M;
+
+    # Prevent indexing of the authenticated app.
+    add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;
+
+    location /health {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 'OK';
+    }
+
+    # Kontext app (served from root)
+    location / {
+        root /usr/share/nginx/html/labs;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+
+        location ~* \.(?:js|css|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot)$ {
+            expires 30d;
+            add_header Cache-Control "public, max-age=2592000";
+            access_log off;
+        }
+    }
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+        root /usr/share/nginx/html/labs;
+    }
+}
