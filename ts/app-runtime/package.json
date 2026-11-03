@@ -1,0 +1,55 @@
+{
+   "name": "@kontext-labs/app-runtime",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared React service-context and lazy-loading helpers for Kontext",
+   "license": "MIT",
+   "main": "./dist/index.js",
+   "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+      ".": {
+         "import": "./dist/index.js",
+         "types": "./dist/index.d.ts"
+      },
+      "./context": {
+         "import": "./dist/context/index.js",
+         "types": "./dist/context/index.d.ts"
+      },
+      "./hooks": {
+         "import": "./dist/hooks/index.js",
+         "types": "./dist/hooks/index.d.ts"
+      },
+      "./router": {
+         "import": "./dist/router/index.js",
+         "types": "./dist/router/index.d.ts"
+      }
+   },
+   "scripts": {
+      "build": "tsc --build",
+      "type-check": "tsc --build && tsc --noEmit",
+      "dev": "tsc --watch"
+   },
+   "dependencies": {
+      "@kontext-labs/common": "workspace:*",
+      "@tanstack/react-query": "^5.104.5",
+      "react": "^19.3.1"
+   },
+   "devDependencies": {
+      "@types/node": "^26.6.5",
+      "@types/react": "^19.3.0",
+      "react-router-dom": "^7.18.4",
+      "typescript": "~6.0.3"
+   },
+   "peerDependencies": {
+      "react": ">=18.3.1",
+      "react-router-dom": ">=6.0.0"
+   },
+   "files": [
+      "dist"
+   ],
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

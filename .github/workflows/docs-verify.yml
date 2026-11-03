@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Docs verify
+
+on:
+  schedule:
+    # Weekly, so a docs capture that silently depends on the calendar is caught
+    # even when nobody touches the guide.
+    - cron: "17 7 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: docs-verify
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Re-capture and compare
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Python dependencies
+        run: uv sync --frozen
+
+      - name: Build shared packages
+        # The capture starts the app through Vite, whose config is loaded from
+        # the built `@kontext-labs/build-config` package.
+        run: pnpm run build:shared
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Re-capture and compare
+        # Fails on changed generated blocks, new or deleted files, broken
+        # selectors, and coverage regressions. The committed screenshots were
+        # captured on macOS, where font rasterization differs from this Linux
+        # runner, so modified PNGs are reported instead of failing the job.
+        env:
+          DOCS_VERIFY_SCREENSHOTS: warn
+        run: pnpm docs:verify
+
+      - name: Upload capture report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-capture
+          path: |
+            tools/docs-capture/report
+            docs/user-guide/assets
+          retention-days: 7
+          if-no-files-found: ignore

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g><g transform="matrix(15.625,0,0,15.625,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64"><svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.05 21.22A14 14 0 0 1 21.22 6.05" stroke="#0052CC" stroke-width="5" stroke-linecap="round" fill="none"></path>
+<circle cx="29.9" cy="10.1" r="4.5" fill="#0052CC"></circle>
+<path d="M33.95 18.78A14 14 0 0 1 18.78 33.95" stroke="#06B6D4" stroke-width="5" stroke-linecap="round" fill="none"></path>
+<circle cx="10.1" cy="29.9" r="4.5" fill="#06B6D4"></circle>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1040)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(10.9375,0,0,10.9375,150,150)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64"><svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.05 21.22A14 14 0 0 1 21.22 6.05" stroke="#0052CC" stroke-width="5" stroke-linecap="round" fill="none"></path>
+<circle cx="29.9" cy="10.1" r="4.5" fill="#0052CC"></circle>
+<path d="M33.95 18.78A14 14 0 0 1 18.78 33.95" stroke="#06B6D4" stroke-width="5" stroke-linecap="round" fill="none"></path>
+<circle cx="10.1" cy="29.9" r="4.5" fill="#06B6D4"></circle>
+</svg></svg></g></g><defs><clipPath id="SvgjsClipPath1040"><rect width="1000" height="1000" x="0" y="0" rx="300" ry="300"></rect></clipPath></defs></svg></g></svg>

@@ -1,0 +1,73 @@
+{
+   "name": "@kontext-labs/schema",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Shared domain schemas and API type generation for Kontext",
+   "main": "dist/index.js",
+   "module": "dist/index.js",
+   "types": "dist/index.d.ts",
+   "exports": {
+      ".": {
+         "types": "./dist/index.d.ts",
+         "import": "./dist/index.js",
+         "require": "./dist/index.js",
+         "default": "./dist/index.js"
+      },
+      "./api": {
+         "types": "./dist/generated/api.d.ts",
+         "import": "./dist/generated/api.js",
+         "default": "./dist/generated/api.js"
+      },
+      "./specs/core": "./src/schemas/kontext.api.core.openapi.json",
+      "./specs/api": "./src/schemas/kontext.api.openapi.json"
+   },
+   "files": [
+      "dist",
+      "src/schemas/*.json"
+   ],
+   "scripts": {
+      "build": "tsc --build && tsc-alias -p tsconfig.json && node scripts/rewrite-esm-extensions.mjs",
+      "prepare": "pnpm run build",
+      "dev": "tsc --watch",
+      "lint": "eslint src/**/*.ts",
+      "test": "jest",
+      "refresh-schemas": "node --import tsx scripts/export-schemas.mjs",
+      "check:snapshots": "node scripts/check-snapshots.cjs",
+      "check:schema-snapshot": "node scripts/check-snapshots.cjs models",
+      "check:api-snapshot": "node scripts/check-snapshots.cjs api",
+      "check:openapi": "node scripts/validate-openapi.cjs",
+      "check:contract-parity": "node scripts/check-contract-parity.cjs",
+      "check:contracts": "pnpm run check:snapshots && pnpm run check:openapi && pnpm run check:contract-parity",
+      "check:contracts:ts": "pnpm run check:schema-snapshot && pnpm run check:openapi && pnpm run check:contract-parity",
+      "check:generator-smoke": "bash scripts/generator-smoke.sh",
+      "generate:models": "bash ./scripts/generate-models.sh",
+      "refresh-api-schema": "node ./scripts/fetch-api-openapi.cjs"
+   },
+   "keywords": [
+      "schemas",
+      "zod",
+      "json-schema",
+      "kontext",
+      "openapi"
+   ],
+   "author": "Kontext Team",
+   "license": "MIT",
+   "dependencies": {
+      "zod": "^4.6.7"
+   },
+   "devDependencies": {
+      "@types/jest": "^30.0.0",
+      "@types/node": "^26.6.5",
+      "eslint": "^10.13.0",
+      "jest": "^30.5.2",
+      "openapi-typescript": "^7.13.0",
+      "ts-jest": "^29.4.15",
+      "tsc-alias": "^1.9.8",
+      "tsx": "^4.23.13",
+      "typescript": "~6.0.3"
+   },
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

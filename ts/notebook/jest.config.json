@@ -1,0 +1,33 @@
+{
+   "preset": "ts-jest",
+   "testEnvironment": "node",
+   "extensionsToTreatAsEsm": [".ts"],
+   "transform": {
+      "^.+\\.ts$": [
+         "ts-jest",
+         {
+            "useESM": true,
+            "tsconfig": {
+               "ignoreDeprecations": "6.0",
+               "types": ["node", "jest"]
+            }
+         }
+      ]
+   },
+   "moduleNameMapper": {
+      "^(\\.\\.?/.*)\\.js$": "$1",
+      "^@notebook/(.*)$": "<rootDir>/src/$1",
+      "^@kontext-labs/query/(.*)$": "<rootDir>/../query/src/$1",
+      "^@kontext-labs/(.*)$": "<rootDir>/../$1/src",
+      "^.+\\.(svg|png)$": "<rootDir>/src/test/fileMock.ts"
+   },
+   "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"],
+   "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/dev.ts",
+      "!src/examples/**/*"
+   ],
+   "coverageDirectory": "coverage",
+   "coverageReporters": ["text", "lcov", "html"]
+}

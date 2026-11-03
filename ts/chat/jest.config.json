@@ -1,0 +1,30 @@
+{
+   "preset": "ts-jest/presets/default-esm",
+   "testEnvironment": "jsdom",
+   "extensionsToTreatAsEsm": [".ts", ".tsx"],
+   "transform": {
+      "^.+\\.(ts|tsx)$": [
+         "ts-jest",
+         {
+            "useESM": true,
+            "tsconfig": "tsconfig.test.json"
+         }
+      ]
+   },
+   "moduleNameMapper": {
+      "^.+\\.(svg|png)$": "<rootDir>/src/test/fileMock.ts",
+      "^(\\.\\.?/.*)\\.js$": "$1",
+      "^@kontext-labs/([^/]+)$": "<rootDir>/../$1/src/index.ts",
+      "^@kontext-labs/([^/]+)/(.*)$": "<rootDir>/../$1/src/$2"
+   },
+   "setupFilesAfterEnv": ["<rootDir>/src/test/setupTests.ts"],
+   "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/__tests__/**/*.test.tsx",
+      "**/?(*.)+(spec|test).ts",
+      "**/?(*.)+(spec|test).tsx"
+   ],
+   "collectCoverageFrom": ["src/**/*.ts", "src/**/*.tsx", "!src/**/*.d.ts"],
+   "coverageDirectory": "coverage",
+   "coverageReporters": ["text", "lcov", "html"]
+}

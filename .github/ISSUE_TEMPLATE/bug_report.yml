@@ -1,0 +1,67 @@
+name: Bug report
+description: Report something that is broken or not working as documented.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please search existing issues
+        first to avoid duplicates.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal, ordered steps that reliably reproduce the issue.
+      placeholder: |
+        1. Run `...`
+        2. Open `...`
+        3. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the project is affected?
+      options:
+        - App (React / Vite)
+        - TypeScript package
+        - Python package
+        - API / backend
+        - Generated API types / models
+        - Documentation
+        - Build / CI / tooling
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or output
+      description: Paste any error output. Redact secrets and personal data.
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Release version, commit SHA, or branch.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node/pnpm version, Python/uv version, and how you installed.
+      placeholder: macOS 15, Node 22.23.2, pnpm 10.24.0, Python 3.12, uv sync
+    validations:
+      required: true

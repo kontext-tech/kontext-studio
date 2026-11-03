@@ -1,0 +1,19 @@
+{
+   "extends": "../build-config/tsconfig/library-package.json",
+   "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "lib": ["ESNext"],
+      "types": ["jest", "node"],
+      "paths": {
+         "@kontext-labs/schema/*": ["./src/*"]
+      }
+   },
+   "include": ["src/**/*.ts"],
+   "exclude": [
+      "dist",
+      "node_modules",
+      "src/**/__tests__/**",
+      "src/**/*.test.ts"
+   ]
+}

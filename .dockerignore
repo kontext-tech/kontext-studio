@@ -1,0 +1,76 @@
+# Node.js dependencies (will be handled specifically per stage)
+**/node_modules
+tsconfig.tsbuildinfo
+
+# Build outputs
+**/dist
+**/build
+
+# Directories not needed for app image builds
+docs/
+# Keep the scripts the app image actually runs: build-shared-packages.sh calls
+# sync-app-assets.sh, so both must be present in the build context.
+scripts/*
+!scripts/build-shared-packages.sh
+!scripts/sync-app-assets.sh
+# tools/ is required: build-shared-packages.sh runs `validate:workspace-graph`,
+# which executes tools/validate-workspace-graph.mjs. Do not exclude it.
+
+# Generated API types live in the workspace and are needed for builds
+# (ts/schema/src/generated) - do not exclude them.
+# Ensure the notebook runtime shim is available for frontend builds
+
+# Exclude shared directories that are not needed for the frontend build
+ts/common/node_modules
+ts/common/dist
+ts/common/tsconfig.tsbuildinfo
+ts/notebook/node_modules
+ts/notebook/dist
+ts/notebook/tsconfig.tsbuildinfo
+
+# Environment and config files
+**/.env
+**/.env.*
+**/secrets.dev.yaml
+**/values.dev.yaml
+
+# Git and version control
+**/.git
+**/.gitignore
+!**/.gitignore
+!.git/HEAD
+!.git/config
+!.git/packed-refs
+!.git/refs/heads/**
+
+# Docker files
+**/docker-compose*
+**/Dockerfile*
+**/.dockerignore
+
+# IDE and editor files
+**/.vs
+**/.vscode
+**/.idea
+
+# Logs and debug files
+**/npm-debug.log
+**/yarn-debug.log*
+**/yarn-error.log*
+logs
+*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Azure Dev Spaces
+**/azds.yaml
+
+# Database files
+**/*.dbmdl
+
+# Project files
+LICENSE
+README.md
+CHANGELOG.md

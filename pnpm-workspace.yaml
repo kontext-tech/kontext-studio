@@ -1,0 +1,21 @@
+packages:
+   - "ts/*"
+   - "app"
+   - "docs-site"
+   - "examples/*"
+
+# Force a single copy of CodeMirror's core packages.
+#
+# @codemirror/lang-sql / lang-python pin @codemirror/state to an older range than
+# @codemirror/view / @uiw/react-codemirror, otherwise pnpm installs two
+# @codemirror/state copies. That breaks CodeMirror's `instanceof` checks at
+# runtime ("Unrecognized extension value in extension set") whenever an
+# extension built against one copy is passed to an EditorView built against the
+# other. These overrides (and the matching Vite `resolve.dedupe`) keep the whole
+# graph on one version.
+overrides:
+   "@codemirror/state": "6.7.6"
+   "@codemirror/view": "6.43.13"
+   "@codemirror/language": "6.12.4"
+   "@lezer/common": "1.5.3"
+   "@lezer/highlight": "1.2.4"

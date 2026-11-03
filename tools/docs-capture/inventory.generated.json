@@ -1,0 +1,368 @@
+{
+  "generatedFrom": "app/src/routing/routes.ts",
+  "sourceHash": "6f6e5f669524bcf0ae54e61afce79863f8108fd7e49c4ab2c17ebc4808ea96d5",
+  "routeCount": 25,
+  "routes": [
+    {
+      "name": "LOGIN",
+      "pathPattern": "/login",
+      "label": "Sign In",
+      "layout": "AuthLayout",
+      "public": true,
+      "hidden": false,
+      "sidebar": false,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "LOCAL_SETUP",
+      "pathPattern": "/setup",
+      "label": "Local Setup",
+      "layout": "AuthLayout",
+      "public": true,
+      "hidden": false,
+      "sidebar": false,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "CLIENT_LOGIN",
+      "pathPattern": "/client-login",
+      "label": "Client Authentication",
+      "layout": "AuthLayout",
+      "public": true,
+      "hidden": false,
+      "sidebar": false,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "HOME",
+      "pathPattern": "/",
+      "label": "User Console",
+      "layout": "UserLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "PROJECTS",
+      "pathPattern": "/projects",
+      "label": "Projects",
+      "layout": "UserLayout",
+      "public": false,
+      "hidden": true,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "ACCOUNT_SETTINGS",
+      "pathPattern": "/account",
+      "label": "Account Settings",
+      "layout": "UserLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "USER_MODEL_CONNECTIONS",
+      "pathPattern": "/llm-providers",
+      "label": "LLM Providers",
+      "layout": "UserLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "USER_PYTHON_ENVIRONMENT",
+      "pathPattern": "/python-environment",
+      "label": "Python Environment",
+      "layout": "UserLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    },
+    {
+      "name": "PROJECT",
+      "pathPattern": "/project/:projectCode",
+      "label": "New Chat",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_CONSOLE",
+      "pathPattern": "/project/:projectCode/console",
+      "label": "Overview",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_CATALOGS",
+      "pathPattern": "/project/:projectCode/catalogs",
+      "label": "Data Sources",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_SETTINGS",
+      "pathPattern": "/project/:projectCode/settings",
+      "label": "Settings",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_UPDATE"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_CHAT_SESSIONS",
+      "pathPattern": "/project/:projectCode/chats",
+      "label": "Chats",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "CHATSESSIONS_READ"
+      ],
+      "features": [
+        "Chat"
+      ],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_CHAT_SESSION_DETAIL",
+      "pathPattern": "/project/:projectCode/chat/:chatSessionId",
+      "label": null,
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "CHATSESSIONS_READ"
+      ],
+      "features": [
+        "Chat"
+      ],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_FILES",
+      "pathPattern": "/project/:projectCode/files",
+      "label": "Files",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "RESOURCES_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_KNOWLEDGE",
+      "pathPattern": "/project/:projectCode/knowledge",
+      "label": "Knowledge",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_KNOWLEDGE_DETAIL",
+      "pathPattern": "/project/:projectCode/knowledge/*",
+      "label": "Concept",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "PROJECTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_JOBS",
+      "pathPattern": "/project/:projectCode/jobs",
+      "label": "Jobs",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "JOBS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_QUERY_SESSIONS",
+      "pathPattern": "/project/:projectCode/queries",
+      "label": "Query Session History",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": true,
+      "permissions": [
+        "QUERYSESSIONS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_EVENTS",
+      "pathPattern": "/project/:projectCode/activity",
+      "label": "Activity Log",
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": true,
+      "permissions": [
+        "EVENTS_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_FILE_DETAIL",
+      "pathPattern": "/project/:projectCode/file/:fileId",
+      "label": null,
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "RESOURCES_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_NOTEBOOK_DETAIL",
+      "pathPattern": "/project/:projectCode/notebook/:fileId",
+      "label": null,
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "RESOURCES_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_CHART_DETAIL",
+      "pathPattern": "/project/:projectCode/chart/:fileId",
+      "label": null,
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "RESOURCES_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "PROJECT_DATA_TABLE_DETAIL",
+      "pathPattern": "/project/:projectCode/data-table/:fileId",
+      "label": null,
+      "layout": "ProjectLayout",
+      "public": false,
+      "hidden": false,
+      "sidebar": true,
+      "adminOnly": false,
+      "permissions": [
+        "RESOURCES_READ"
+      ],
+      "features": [],
+      "dynamic": true
+    },
+    {
+      "name": "NOT_FOUND",
+      "pathPattern": "*",
+      "label": "Page Not Found",
+      "layout": "AuthLayout",
+      "public": true,
+      "hidden": false,
+      "sidebar": false,
+      "adminOnly": false,
+      "permissions": [],
+      "features": [],
+      "dynamic": false
+    }
+  ]
+}

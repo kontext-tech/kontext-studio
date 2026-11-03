@@ -1,0 +1,35 @@
+{
+   "name": "@kontext-labs/host-api",
+   "version": "0.261.0",
+   "type": "module",
+   "description": "Host API for Kontext local and hosted runtimes",
+   "license": "MIT",
+   "main": "./dist/index.js",
+   "module": "./dist/index.js",
+   "types": "./dist/index.d.ts",
+   "exports": {
+      ".": {
+         "types": "./dist/index.d.ts",
+         "import": "./dist/index.js"
+      }
+   },
+   "scripts": {
+      "build": "tsc --build",
+      "type-check": "tsc --noEmit",
+      "dev": "tsc --watch"
+   },
+   "dependencies": {
+      "@kontext-labs/schema": "workspace:*"
+   },
+   "devDependencies": {
+      "@types/node": "^26.6.5",
+      "typescript": "~6.0.3"
+   },
+   "files": [
+      "dist"
+   ],
+   "publishConfig": {
+      "registry": "https://npm.pkg.github.com",
+      "access": "public"
+   }
+}

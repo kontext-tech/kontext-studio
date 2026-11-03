@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kontext-project"
+version = "0.261.0"
+description = "Project domain package for Kontext"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "Kontext Team", email = "hello@kontext.tech" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "kontext-account",
+    "kontext-catalog",
+    "kontext-common",
+    "kontext-data",
+    "kontext-file",
+    "kontext-job",
+    "kontext-schema",
+    "kontext-storage",
+]
+
+[project.urls]
+Repository = "https://github.com/kontext-labs/kontext-labs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kontext"]

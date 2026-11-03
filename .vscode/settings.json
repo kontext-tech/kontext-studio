@@ -1,0 +1,163 @@
+{
+   "js/ts.tsdk.path": "node_modules/typescript/lib",
+   "eslint.useFlatConfig": true,
+   "eslint.options": {
+      "overrideConfigFile": "eslint.config.js"
+   },
+   "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+   ],
+   "eslint.workingDirectories": [
+      "./app",
+      "./examples/notebook-demo",
+      "./ts/account",
+      "./ts/auth",
+      "./ts/build-config",
+      "./ts/chart",
+      "./ts/chat",
+      "./ts/common",
+      "./ts/event",
+      "./ts/file",
+      "./ts/host-api",
+      "./ts/icons",
+      "./ts/identity",
+      "./ts/job",
+      "./ts/layout",
+      "./ts/notebook",
+      "./ts/project",
+      "./ts/query",
+      "./ts/app-runtime",
+      "./ts/schema",
+      "./ts/site",
+      "./ts/theme",
+      "./ts/ui"
+   ],
+   "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always",
+      "source.fixAll.markdownlint": "always",
+      "source.organizeImports": "explicit"
+   },
+   "editor.formatOnSave": true,
+   "editor.wordWrap": "on",
+   "editor.formatOnPaste": false,
+   "editor.formatOnType": false,
+   "editor.defaultFormatter": "esbenp.prettier-vscode",
+   "eslint.format.enable": true,
+   "prettier.useEditorConfig": false,
+   "scss.lint.unknownAtRules": "ignore",
+   "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[json]": {
+      "editor.quickSuggestions": {
+         "strings": true
+      },
+      "editor.suggest.insertMode": "replace",
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 3
+   },
+   "[jsonc]": {
+      "editor.tabSize": 3,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[python]": {
+      "editor.defaultFormatter": "charliermarsh.ruff",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+         "source.organizeImports.ruff": "always",
+         "source.fixAll.ruff": "always",
+         "source.fixAll": "explicit"
+      }
+   },
+   "[markdown]": {
+      "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": true,
+      "editor.codeActionsOnSave": {
+         "source.fixAll.markdownlint": "always"
+      }
+   },
+   "[yaml]": {
+      "editor.formatOnSave": false
+   },
+   "yaml.format.enable": false,
+   "markdownlint.configFile": ".markdownlint.json",
+   "markdownlint.run": "onSave",
+   "ruff.nativeServer": "on",
+   "python.languageServer": "Pylance",
+   "python.analysis.typeCheckingMode": "standard",
+   "python.analysis.diagnosticsSource": "Pylance",
+   "python.analysis.diagnosticMode": "workspace",
+   "python.defaultInterpreterPath": ".venv/bin/python",
+   "python.testing.pytestEnabled": false,
+   "python.testing.unittestEnabled": false,
+   "python.testing.autoTestDiscoverOnSaveEnabled": false,
+   "python.analysis.include": [
+      "py/kontext-agentic",
+      "py/kontext-api",
+      "py/kontext-labs",
+      "py/kontext-job"
+   ],
+   "python.analysis.exclude": [
+      "py/kontext-schema",
+      "**/.venv/**",
+      "**/node_modules/**",
+      "**/__pycache__/**",
+      "**/.*/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/*.egg-info/**"
+   ],
+   "python.analysis.extraPaths": [
+      "py/kontext-account/src",
+      "py/kontext-agent/src",
+      "py/kontext-auth/src",
+      "py/kontext-catalog/src",
+      "py/kontext-chat/src",
+      "py/kontext-common/src",
+      "py/kontext-data/src",
+      "py/kontext-engine/src",
+      "py/kontext-execution/src",
+      "py/kontext-file/src",
+      "py/kontext-job/src",
+      "py/kontext-agentic/src",
+      "py/kontext-api/src",
+      "py/kontext-labs/src",
+      "py/kontext-llm/src",
+      "py/kontext-okf/src",
+      "py/kontext-project/src",
+      "py/kontext-query/src",
+      "py/kontext-runtime/src",
+      "py/kontext-schema/src",
+      "py/kontext-storage/src"
+   ],
+   "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/*/**": true,
+      "**/.hg/store/**": true
+   },
+   "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+         "text": "Use Conventional Commits for generated commit messages: <type>(<scope>): <subject>\nAllowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert\nUse a scope when it clarifies the affected area, usually a package or surface such as app, schema, notebook, chart, chat, api, runtime, or labs\nWrite the subject in imperative mood, present tense, lowercase start, with no trailing period\nKeep the first line to 72 characters or fewer\nGenerate exactly one commit message, not a list of options\nAdd a body only when it adds useful context, separated by a blank line"
+      }
+   ]
+}
