@@ -3,6 +3,13 @@ name: Publish TypeScript Packages
 # Publishing is driven by the `ts-packages-v*` git tag created by
 # `pnpm run version:labs` (`uv run cz bump`). No changesets PR flow: the bump
 # commit and tag are created locally and pushed by a maintainer.
+#
+# The packages keep the `@kontext-labs` npm scope while the repo lives under
+# `kontext-tech`. KONTEXT_PACKAGES_TOKEN must be a PAT with `write:packages`
+# access to whichever account owns that scope; the workflow's GITHUB_TOKEN only
+# covers the `kontext-tech` owner and cannot publish the `@kontext-labs` scope.
+# Moving the scope to `@kontext-tech` is a breaking rename of every package and
+# must update `setup-node.scope` here in the same change.
 on:
   push:
     tags:
@@ -45,10 +52,9 @@ jobs:
       - name: Check package publish token
         env:
           PACKAGE_TOKEN: ${{ secrets.KONTEXT_PACKAGES_TOKEN }}
-          REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: |
-          if [ "$REPOSITORY_OWNER" != "kontext-labs" ] && [ -z "$PACKAGE_TOKEN" ]; then
-            echo "::error::KONTEXT_PACKAGES_TOKEN is required to publish @kontext-labs/* packages from ${REPOSITORY_OWNER}/${{ github.event.repository.name }}. Transfer the repo to kontext-labs or add a token with write:packages access to the kontext-labs GitHub organization."
+          if [ -z "$PACKAGE_TOKEN" ]; then
+            echo "::error::KONTEXT_PACKAGES_TOKEN is required to publish @kontext-labs/* packages from ${{ github.repository }}. Add a PAT with write:packages access to the account that owns the @kontext-labs scope."
             exit 1
           fi
 
@@ -68,4 +74,4 @@ jobs:
       - name: Publish packages
         run: pnpm --filter "./ts/*" publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.KONTEXT_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.KONTEXT_PACKAGES_TOKEN }}

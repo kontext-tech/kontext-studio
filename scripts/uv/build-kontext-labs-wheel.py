@@ -136,6 +136,13 @@ def main() -> None:
         action="store_true",
         help="Build frontend app with pnpm before packaging",
     )
+    parser.add_argument(
+        "--version",
+        help=(
+            "Override the packaged version without editing committed files. "
+            "Used for TestPyPI repeat uploads, which reject an existing version."
+        ),
+    )
     args = parser.parse_args()
 
     out_dir = args.out_dir.resolve()
@@ -183,6 +190,8 @@ def main() -> None:
         # 4. Construct staged pyproject.toml
         staged_project = labs_toml["project"].copy()
         staged_project["dependencies"] = aggregated_deps
+        if args.version:
+            staged_project["version"] = args.version
 
         staged_pyproject = {
             "project": staged_project,
@@ -236,7 +245,10 @@ def main() -> None:
         staged_toml_path.write_text(format_toml(staged_pyproject), encoding="utf-8")
 
         print("🚀 Building wheel distribution with uv...")
-        subprocess.run(["uv", "build", str(staging_dir), "--out-dir", str(out_dir)], check=True)
+        subprocess.run(
+            ["uv", "build", str(staging_dir), "--wheel", "--out-dir", str(out_dir)],
+            check=True,
+        )
 
         print(f"✨ Successfully built unified kontext-labs distribution in {out_dir}:")
         for dist_file in sorted(out_dir.glob("kontext_labs*")):

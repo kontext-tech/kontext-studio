@@ -98,8 +98,8 @@ TypeScript package versioning and publishing uses Commitizen
 (`pnpm run version:labs`) and publishes to GitHub Packages under the
 `@kontext-labs/*` scope. See
 [docs/development/releasing.md](docs/development/releasing.md) for the full
-flow. Python distributions are published as GitHub Release assets, and the
-unified `kontext-labs` wheel is the end-user install path described above.
+flow. The unified `kontext-labs` wheel is published to PyPI and attached to the
+matching GitHub Release; it is the end-user install path described above.
 
 ## License
 

@@ -1,35 +1,44 @@
 # Releasing
 
-There are three independent release paths. They use separate triggers and
+There are two independent release paths. They use separate triggers and
 separate tag namespaces, so they never contend for the same GitHub Release.
 
 | Artifact | Workflow | Trigger | Release tag |
 | -------- | -------- | ------- | ----------- |
-| Web app bundle (`app-dist-<version>.zip`) | `build-app.yml` | `push: tags: ["v*"]`, or `workflow_dispatch` | `v<version>` |
-| Unified Python wheel (`kontext_labs-<version>-py3-none-any.whl`) | `release.yml` | `workflow_dispatch` only | `v<version>` |
+| Unified Python wheel (`kontext_labs-<version>-py3-none-any.whl`) | `publish-pypi.yml` | `workflow_dispatch` only | `v<version>` (GitHub Release + PyPI) |
 | `@kontext-labs/*` TypeScript packages (GitHub Packages) | `publish-ts-packages.yml` | `push: tags: ["ts-packages-v*"]` | `ts-packages-v<version>` |
 
-## Releasing a `v*` version
+## Releasing a `v<version>` version
 
-`build-app.yml` and `release.yml` share the `v<version>` tag, but they are
-**complementary and explicitly ordered** — `build-app.yml` creates the release,
-`release.yml` promotes it. They are deliberately not both wired to
-`push: tags`, because running them concurrently on the same tag would race on
-`gh release create`/`gh release edit` and on which assets exist when.
+The unified wheel is built once, by `publish-pypi.yml`. `release.yml` only
+creates or promotes the GitHub Release, so the two dispatch steps are
+deliberately ordered: the release exists before anything reaches PyPI.
 
-The sequence is:
+1. Dispatch `release.yml` with `version=<version>` and
+   `release_tag=v<version>`. It validates `release_tag == "v" + version`, then
+   creates the release (the tag is created from the dispatched commit if it
+   does not exist) or promotes an existing one (`--latest`, or `--prerelease`
+   when that input is set).
+2. Dispatch `publish-pypi.yml` with `target=pypi`, `version=<version>`, and
+   `confirm=<version>`. It builds the wheel, verifies its version, writes
+   `SHA256SUMS`, smoke-tests both CLI entry points, publishes to PyPI, then
+   attaches the wheel and `SHA256SUMS` to the release.
 
-1. Push a `v<version>` tag. `build-app.yml` builds the web app, creates the
-   GitHub Release as a **draft**, and uploads `app-dist-<version>.zip`.
-   (You can also run it manually with `workflow_dispatch`.)
-2. Dispatch `release.yml` with `version=<version>` and
-   `release_tag=v<version>`. It builds the unified wheel, uploads the wheel and
-   `SHA256SUMS`, then flips the release to published (`--latest`, or
-   `--prerelease` when that input is set).
+`publish-pypi.yml` refuses a production publish when `version` differs from the
+workspace version or `confirm` differs from `version`, so a typo fails the run
+instead of publishing the wrong artifact.
 
-`release.yml` verifies both that the built wheel's version matches the
-`version` input and that `release_tag == "v" + version` before it touches the
-release, so a typo fails the run instead of producing a mismatched release.
+### TestPyPI
+
+Dispatch `publish-pypi.yml` with `target=testpypi`. It derives a
+`<version>.dev<run><attempt>` version so repeat uploads do not collide,
+publishes, then reinstalls from TestPyPI and runs `kontext-labs --help`.
+
+Both indexes authenticate with PyPI trusted publishing (OIDC); no API token is
+stored. The upload job must stay in this top-level workflow because PyPI does
+not support reusable workflows as a trusted publisher. Both pending publishers
+name `publish-pypi.yml` and use the matching `testpypi` / `pypi` environment;
+both environments only allow deployments from `main`.
 
 ## Releasing the TypeScript packages
 
@@ -116,6 +125,13 @@ git push --follow-tags
 `publish-ts-packages.yml` triggers on `ts-packages-v*`, builds the shared
 packages, and runs `pnpm --filter "./ts/*" publish` against
 `npm.pkg.github.com`.
+
+The packages keep the `@kontext-labs` scope while the repository lives under
+`kontext-tech`. Publishing therefore needs `KONTEXT_PACKAGES_TOKEN`, a PAT with
+`write:packages` access to the account that owns that scope; the workflow's
+`GITHUB_TOKEN` only covers the `kontext-tech` owner. Renaming the scope to
+`@kontext-tech` is a breaking change for consumers and must update every
+package name together with `setup-node.scope` in the workflow.
 
 Commitizen replaces the previous Changesets flow. The package versions were
 normalized to a single lockstep version before the switch, because Commitizen
