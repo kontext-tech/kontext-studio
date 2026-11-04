@@ -27,12 +27,6 @@ Release also carries the matching wheel.
 uv tool install kontext-labs
 ```
 
-To pin a specific release:
-
-```bash
-uv tool install "kontext-labs==0.261.0"
-```
-
 Then start the local server from the directory that holds your project:
 
 ```bash
@@ -45,26 +39,38 @@ local worker. `kontext-labs-serve` is the legacy alias for the same command.
 > Requires Python 3.12 or newer. [Install `uv`](https://docs.astral.sh/uv/) if
 > you do not have it yet.
 
+Continue with the [user guide](https://docs.kontext.tech/user-guide/) to create
+a project, connect data, and start a notebook.
+
+## Documentation
+
+- [User guide](https://docs.kontext.tech/user-guide/) — install, projects, data
+  sources, notebooks, charts, Python, agents, and settings.
+- [Developer guide](https://docs.kontext.tech/develop/) — architecture, package
+  boundaries, and the generation and release workflows.
+- [docs/](docs/README.md) — the Markdown sources published as
+  [docs.kontext.tech](https://docs.kontext.tech).
+
 ## Development
 
 This repository is a `pnpm` + `uv` workspace containing the app, TypeScript
-packages, Python packages, and the generated TypeScript API types.
+packages, Python packages, and the committed generated API types and Pydantic
+models.
 
 ```bash
-pnpm install          # install Node/TypeScript workspace dependencies
-uv sync               # create the Python environment
-
-pnpm run build:shared # build shared TypeScript packages
-pnpm run build        # build shared packages and the app
-pnpm run test:python  # run the Python workspace test suite
+pnpm install          # Node/TypeScript workspace dependencies
+uv sync               # Python environment
+pnpm run dev:local    # local API server and web app
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow and
+[AGENTS.md](AGENTS.md) for the canonical architecture and conventions.
 
 ## Repository layout
 
 - `app/`: React + Vite labs application (Ant Design v6).
-- `ts/`: TypeScript packages published as `@kontext-labs/*`.
+- `ts/`: TypeScript packages published as `@kontext-labs/*`; `ts/schema` is the
+  contract hub and `ts/schema/src/generated/` holds the committed API types.
 - `py/`: Python packages built as `kontext-*`.
 - `examples/`: development-only sample apps that consume the packages and are
   not distributed (e.g. the notebook demo).
@@ -74,47 +80,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow.
 - `docs-site/`: Astro Starlight site built from `docs/`; see
   [docs-site/README.md](docs-site/README.md).
 - `scripts/`: build, test, image, and release helpers.
-   - `scripts/uv/`: the Python (uv) helper that builds the unified
-     `kontext-labs` wheel.
-- `ts/schema/src/generated/`: the generated TypeScript API types, committed
-  and consumed by the shared services (see
-  [docs/development/generated-code.md](docs/development/generated-code.md)).
-
-## Generated API types
-
-The TypeScript API types are generated from the OpenAPI spec at
-`ts/schema/src/schemas/kontext.api.openapi.json` with `openapi-typescript` and
-**committed to this repository** so a clone is buildable without any bootstrap
-step. Regenerate them after changing schema inputs:
-
-```bash
-pnpm run generate:api-types     # TypeScript API types
-pnpm run generate:models        # Pydantic models
-```
-
-Continuous integration verifies that the committed output matches the spec, so
-always commit the regenerated files.
-
-The generated types back the `openapi-fetch` client used by the shared service
-packages; no TypeScript client package is published from this repository
-anymore. Python and other-language consumers generate their own client from the
-spec published by
-`@kontext-labs/schema` (`./specs/api`). See
-[docs/development/generated-code.md](docs/development/generated-code.md).
-
-## Release
-
-TypeScript package versioning and publishing uses Commitizen
-(`pnpm run version:labs`) and publishes to GitHub Packages under the
-`@kontext-labs/*` scope. See
-[docs/development/releasing.md](docs/development/releasing.md) for the full
-flow. The unified `kontext-labs` wheel is published to PyPI and attached to the
-matching GitHub Release; it is the end-user install path described above.
-
-The docs site is published by `.github/workflows/publish-docs.yml` on each
-release (and on demand). It uploads `docs-site/dist` to the S3 + CloudFront
-infrastructure defined in `kontext-tech/kontext-platform` and serves it at
-`https://docs.kontext.tech`.
 
 ## License
 
