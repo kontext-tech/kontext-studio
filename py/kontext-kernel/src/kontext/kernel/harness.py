@@ -1142,7 +1142,16 @@ def _payload_to_dataframe(payload: Any) -> Any:
     return records
 
 
+def _install_sigint_handler() -> None:
+    # A parent process may launch us with SIGINT ignored (CI runners do), and
+    # exec preserves SIG_IGN. The control channel interrupts a running cell with
+    # os.kill(SIGINT), so restore the default handler or interrupts are no-ops.
+    signal.signal(signal.SIGINT, signal.default_int_handler)
+
+
 def main() -> int:
+    _install_sigint_handler()
+
     connection_path = Path(sys.argv[1]).resolve()
 
     with contextlib.suppress(Exception):

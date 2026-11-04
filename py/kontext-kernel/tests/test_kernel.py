@@ -174,6 +174,20 @@ def test_connection_file_is_owner_only(tmp_path: Path) -> None:
     assert mode == 0o600
 
 
+async def test_kernel_restores_sigint_handler_when_parent_ignores_it() -> None:
+    import signal
+
+    from kontext.kernel.harness import _install_sigint_handler
+
+    original = signal.getsignal(signal.SIGINT)
+    try:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        _install_sigint_handler()
+        assert signal.getsignal(signal.SIGINT) is signal.default_int_handler
+    finally:
+        signal.signal(signal.SIGINT, original)
+
+
 async def test_kernel_rejects_wrong_token(tmp_path: Path) -> None:
     """The kernel refuses to serve a client that does not present the key."""
     import socket
