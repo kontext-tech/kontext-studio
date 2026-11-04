@@ -69,8 +69,7 @@ export default defineConfig({
                   { label: "Overview", link: "/develop/" },
                   ...developerGroupsConfig
                ]
-            },
-            { label: "Platform docs", link: "https://kontext.tech/docs" }
+            }
          ]
       })
    ]
