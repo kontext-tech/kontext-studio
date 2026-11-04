@@ -1,10 +1,11 @@
 ---
 import Default from "@astrojs/starlight/components/Footer.astro";
 
+const isSplash = Astro.locals.starlightRoute.entry.data.template === "splash";
 const year = new Date().getFullYear();
 ---
 
-<Default />
+{!isSplash && <Default />}
 <div class="site-footer">
    <span>&copy; {year} Kontext</span>
    <nav aria-label="Site links">
