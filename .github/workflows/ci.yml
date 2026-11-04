@@ -115,7 +115,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
 
       - name: Validate tool pins
         # Guards the "pin once, or pin in lockstep" contract for external tool
@@ -140,7 +140,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
@@ -189,7 +189,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
@@ -230,7 +230,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
@@ -261,7 +261,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
@@ -371,7 +371,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
@@ -429,7 +429,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 

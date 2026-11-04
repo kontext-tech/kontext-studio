@@ -36,7 +36,7 @@ Tool-specific entry points are thin adapters with no unique content:
 
 ## Package managers and setup
 
-- Node engines: `node >=22.12.0`, `pnpm >=10.0.0`.
+- Node engines: `node >=22.23.4`, `pnpm >=10.0.0`.
 
 ```bash
 pnpm install

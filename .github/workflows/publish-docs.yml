@@ -47,7 +47,7 @@ concurrency:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  NODE_VERSION: "22"
+  NODE_VERSION: "22.23.4"
   AWS_REGION: us-east-1
   # Source links and the GitHub icon point at the live repository, not the
   # archived kontext-labs/kontext-labs history.
