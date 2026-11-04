@@ -172,8 +172,8 @@ hero:
   title: Kontext Labs Docs
   tagline: Connect your data, bring your own LLM provider, and go from data questions to SQL, charts, and automated workflows — all in one workspace.
   actions:
-    - text: User guide
-      link: user-guide/
+    - text: Get started
+      link: user-guide/install-and-start/
       icon: right-arrow
       variant: primary
     - text: Developer guide

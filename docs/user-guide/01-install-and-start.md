@@ -20,6 +20,12 @@ To pin a specific release, use the version number, for example `0.261.0`:
 uv tool install "kontext-labs==0.261.0"
 ```
 
+To upgrade later:
+
+```bash
+uv tool upgrade kontext-labs
+```
+
 ## Start the server
 
 Run the server from the directory that should hold your workspace:

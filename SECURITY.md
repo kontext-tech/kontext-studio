@@ -7,7 +7,7 @@ release only.
 
 | Version | Supported |
 | ------- | --------- |
-| latest release on GitHub | ✅ |
+| latest release on PyPI or GitHub | ✅ |
 | older releases | ❌ |
 
 ## Reporting a Vulnerability
