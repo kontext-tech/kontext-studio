@@ -1143,9 +1143,11 @@ def _payload_to_dataframe(payload: Any) -> Any:
 
 
 def _install_sigint_handler() -> None:
-    # A parent process may launch us with SIGINT ignored (CI runners do), and
-    # exec preserves SIG_IGN. The control channel interrupts a running cell with
-    # os.kill(SIGINT), so restore the default handler or interrupts are no-ops.
+    # A parent process may launch us with SIGINT ignored or blocked (CI runners
+    # do), and exec preserves both. The control channel interrupts a running
+    # cell with os.kill(SIGINT), so restore delivery before serving.
+    if hasattr(signal, "pthread_sigmask"):
+        signal.pthread_sigmask(signal.SIG_UNBLOCK, {signal.SIGINT})
     signal.signal(signal.SIGINT, signal.default_int_handler)
 
 

@@ -188,6 +188,23 @@ async def test_kernel_restores_sigint_handler_when_parent_ignores_it() -> None:
         signal.signal(signal.SIGINT, original)
 
 
+async def test_kernel_unblocks_sigint_when_parent_blocks_it() -> None:
+    import signal
+
+    if not hasattr(signal, "pthread_sigmask"):
+        pytest.skip("pthread_sigmask is not available on this platform")
+
+    from kontext.kernel.harness import _install_sigint_handler
+
+    original = signal.pthread_sigmask(signal.SIG_BLOCK, [])
+    try:
+        signal.pthread_sigmask(signal.SIG_SETMASK, original | {signal.SIGINT})
+        _install_sigint_handler()
+        assert signal.SIGINT not in signal.pthread_sigmask(signal.SIG_BLOCK, [])
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, original)
+
+
 async def test_kernel_rejects_wrong_token(tmp_path: Path) -> None:
     """The kernel refuses to serve a client that does not present the key."""
     import socket
