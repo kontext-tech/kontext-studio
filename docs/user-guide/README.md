@@ -10,7 +10,7 @@ jump to the page for the task you are doing.
 
 ## Get started
 
-- [Install and start Kontext](01-install-and-start.md) — Install the released wheel, start the local server, and replace the placeholder profile.
+- [Install and start Kontext Labs](01-install-and-start.md) — Install the `kontext-labs` package, start the local server, and replace the placeholder profile.
 - [Open or create a project](02-create-a-project.md) — Projects hold data sources, files, chats, and settings.
 
 ## Data

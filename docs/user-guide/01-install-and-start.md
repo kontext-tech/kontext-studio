@@ -1,23 +1,24 @@
-# Install and start Kontext
+# Install and start Kontext Labs
 
-Kontext runs on your own machine. The local server, the data engine, and the web
-app all start together, and everything you create stays in a workspace directory
-on disk.
+Kontext Labs runs on your own machine. The local server, the data engine, and
+the web app all start together, and everything you create stays in a workspace
+directory on disk.
 
 ## Before you start
 
-You need Python 3.12 or newer and [`uv`](https://docs.astral.sh/uv/). Install the
-wheel from the project's
-[releases page](https://github.com/kontext-tech/kontext-labs/releases), or use
-the command below with a release tag.
+You need Python 3.12 or newer and [`uv`](https://docs.astral.sh/uv/).
 
 ## Install
 
 ```bash
-uv tool install "kontext-labs @ https://github.com/kontext-tech/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
+uv tool install kontext-labs
 ```
 
-Replace `<version>` with the version number, for example `0.261.0`.
+To pin a specific release, use the version number, for example `0.261.0`:
+
+```bash
+uv tool install "kontext-labs==0.261.0"
+```
 
 ## Start the server
 

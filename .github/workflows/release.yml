@@ -86,7 +86,7 @@ jobs:
               "$RELEASE_TAG"
               --target "$GITHUB_SHA"
               --title "Kontext $VERSION"
-              --notes "Kontext $VERSION. Install with: uv tool install \"kontext-labs @ https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG/kontext_labs-${VERSION}-py3-none-any.whl\""
+              --notes "Kontext $VERSION. Install with: uv tool install kontext-labs==${VERSION}"
             )
             if [ "$PRERELEASE" = "true" ]; then
               args+=(--prerelease)

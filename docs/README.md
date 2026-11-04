@@ -12,8 +12,8 @@ and numbered steps.
   work with projects, data sources, notebooks, and chats.
 - [Install Kontext](../README.md#install) in the repository README.
 
-The user guide assumes the released wheel and `kontext-labs serve`; it does not
-require a repository checkout.
+The user guide assumes the installed `kontext-labs` package and
+`kontext-labs serve`; it does not require a repository checkout.
 
 ## Understand Kontext
 

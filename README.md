@@ -20,11 +20,17 @@ agents — all running on your own machine, over your own files and databases.
 
 ## Install
 
-Kontext Labs ships as a single Python wheel attached to each GitHub Release.
+Kontext Labs is published to PyPI as the `kontext-labs` package. Each GitHub
+Release also carries the matching wheel.
 
 ```bash
-# Install the CLI + local runtime (replace <version> with a release tag)
-uv tool install "kontext-labs @ https://github.com/kontext-tech/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
+uv tool install kontext-labs
+```
+
+To pin a specific release:
+
+```bash
+uv tool install "kontext-labs==0.261.0"
 ```
 
 Then start the local server from the directory that holds your project:
