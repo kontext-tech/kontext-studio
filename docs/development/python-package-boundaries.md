@@ -35,12 +35,13 @@ Those layers are complementary, not competing:
 | `kontext-job` | Job framework and job registry | Job contracts, job context, scheduling, registry, job execution service | Central home for every domain-specific job definition |
 | `kontext-execution` | Durable long-running run orchestration | `ExecutionRun` projection/services, events/log shaping, run lifecycle helpers, worker coordination contracts | Concrete DuckDB engines, API bootstrap |
 | `kontext-engine` | In-process compute implementations | DuckDB engines, live-SQL engine, in-process chat/job adapters, in-process dispatchers | Deployment bootstrap, API transport, importing `kontext-query`/`kontext-catalog` |
-| `kontext-kernel` | Separate-process Python execution topology | Execution contracts, validation policy, child harness, wire protocol, kernel manager/pool, runner backends | Deployment composition, other Kontext deps, provider selection |
+| `kontext-kernel` | Separate-process Python execution topology | Execution contracts, validation policy, child harness, wire protocol, kernel manager/pool, runner backends | Deployment composition, other Kontext domain deps, provider selection |
 | `kontext-runtime` | Deployment composition/bootstrap | Provider/backend selection, local process composition, managed Python environment, startup glue | Domain logic, heavy compute engines, API router logic |
 | `kontext-api` | HTTP/SSE/WebSocket transport | Routers, dependencies, request/auth context, thin application services, transport mapping | Direct persistence internals in routers, heavy compute implementations |
 | `kontext-labs` | Local shell/bootstrap application | Local CLI/server composition, developer workflows | Reusable domain logic that belongs in packages above |
 | `kontext-agentic` | Agent application layer | Blueprints, blueprint registry, domain tools, chat workflow, `create_agentic_system` composition | Generic API routing, relational persistence internals, harness SPI definitions |
 | `kontext-agent` | Agent contracts + harness SPI | `BaseAgenticSystem`, harness SPI, run-state port, tool/streaming/client-policy primitives | LLM wiring, domain tools, blueprints, imports of `agentic`/`chat`/`data` |
+| `kontext-harness-agno` | Agno harness adapter (plugin) | `AgentSpec` materialization, native model construction, event translation, Agno-specific storage bridging | Domain policy, blueprints, imports of `kontext-agentic`/`kontext-data` |
 | `kontext-chat` | Chat-session application workflows | Session CRUD/listing flows, chat continuation streaming orchestration | Agent runtime internals, generic API transport |
 | `kontext-llm` | LLM catalog and service wiring | Foundation model metadata, language model service wiring, the `ModelConnectionStore` resolution seam | Generic agent runtime, importing `kontext-account`/`kontext-runtime` |
 | `kontext-account` | Account/profile concerns | Local account/profile models and services, the local model-connection store | Generic auth/JWT infrastructure |
@@ -51,11 +52,12 @@ Those layers are complementary, not competing:
 ## Import Name Divergences
 
 Most `py/*` distributions map to an identically named import package
-(`kontext-account` → `kontext.account`). One intentionally diverges:
+(`kontext-account` → `kontext.account`). Two intentionally diverge:
 
 | Distribution | Import package | Why |
 | --- | --- | --- |
 | `kontext-job` | `kontext.jobs` | The import path is plural to avoid shadowing the common English word `job` in call sites such as `from kontext.jobs import ...`. |
+| `kontext-harness-agno` | `kontext.harness.agno` | Harness adapters live under one `kontext.harness` namespace so additional adapters can coexist without claiming top-level package names. |
 
 Do not "fix" this to match the distribution name; it is part of the published
 import contract.
@@ -216,7 +218,8 @@ sockets, publishes a connection file, and accepts the supervisor's connection:
 - `control` — `interrupt_request`, `shutdown_request`, `host_call_request/reply`
 - `heartbeat` — liveness echo
 
-The kernel is stdlib-only and imports no `kontext` code. Platform capabilities
+The child harness (`harness.py`) is stdlib-only and imports no `kontext` code;
+the rest of `kontext-kernel` uses `kontext-common` contracts. Platform capabilities
 (SQL, files, models) are reached through `host_call`, which the supervisor
 services using its `RuntimeProvider`. This keeps the kernel portable: it runs
 unchanged in local and hosted modes.

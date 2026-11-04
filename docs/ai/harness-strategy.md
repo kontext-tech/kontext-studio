@@ -7,7 +7,7 @@ keeps the decision and the conditions that would reopen it.
 
 ## Why the decision was worth reviewing
 
-`py/kontext-harness-agno` is about 2.9k lines of adapter code plus 1.2k lines of
+`py/kontext-harness-agno` is about 3.1k lines of adapter code plus 1.8k lines of
 tests. Agno provides four things the product consumes:
 
 - the agent loop and tool calling (all tools are first-party `KontextToolkit`s;

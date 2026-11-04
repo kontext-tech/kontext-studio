@@ -62,7 +62,7 @@ and tool composition only, never framework-specific code.
 
 ## Tools
 
-Tools are typed methods on `KontextToolkit` subclasses in
+Tools are typed methods on toolkit classes in
 `py/kontext-agentic/src/kontext/agentic/tools/`:
 
 | Toolkit | Responsibility |

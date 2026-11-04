@@ -23,6 +23,7 @@ by an AST-based test:
 | `kontext-query` | query orchestration | resolves engines only via `QueryRuntimeProviderProtocol` |
 | `kontext-execution` | job definitions + run orchestration | never `query`/`engine` |
 | `kontext-llm` | model resolution | never `runtime`/`account` |
+| `kontext-harness-agno` | Agno adapter plugin | `agent`/`common`/`llm`/`schema` + `agno`; never `agentic`/`data` |
 | `kontext-okf` | knowledge format | never `catalog` |
 | `kontext-runtime`, `kontext-labs` | composition roots | may wire everything |
 
