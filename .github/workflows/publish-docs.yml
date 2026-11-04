@@ -1,0 +1,221 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Publish Docs
+
+# Builds docs-site/ and deploys the static output to the S3 bucket behind
+# docs.kontext.tech. The AWS infrastructure (DocsCloudFrontStack) and the
+# Route53 record live in kontext-tech/kontext-platform; this workflow only
+# publishes content.
+#
+# Dispatch manually for a first publish or a docs hotfix. release.yml calls
+# this as a reusable workflow so a normal release also refreshes the docs.
+#
+# Required repository configuration:
+#   secret AWS_DEPLOYMENT_ROLE_ARN_GLOBAL = ARN of kontext-production-cicd-global
+#   environment production                = optional protection rules
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "Release version label (display only)"
+        required: false
+        type: string
+        default: ""
+    secrets:
+      AWS_DEPLOYMENT_ROLE_ARN_GLOBAL:
+        required: true
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version label (optional, display only)"
+        required: false
+        type: string
+        default: ""
+
+concurrency:
+  group: publish-docs
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  NODE_VERSION: "22"
+  AWS_REGION: us-east-1
+  # Source links and the GitHub icon point at the live repository, not the
+  # archived kontext-labs/kontext-labs history.
+  DOCS_REPO_URL: https://github.com/kontext-tech/kontext-labs
+
+jobs:
+  build:
+    name: Build docs site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      # docs-site depends only on public Astro/Starlight packages, so no
+      # private @kontext-labs registry token is needed.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build docs site
+        run: pnpm docs:site:build
+
+      - name: Verify build output
+        run: |
+          set -euo pipefail
+          test -f docs-site/dist/index.html
+          test -f docs-site/dist/404.html
+          test -f docs-site/dist/sitemap-index.xml
+          echo "Docs build output:"
+          find docs-site/dist -maxdepth 1 -mindepth 1 | sort | head -20
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-site-dist
+          path: docs-site/dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy docs to CloudFront
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download docs artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: docs-site-dist
+          path: docs-site/dist
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOYMENT_ROLE_ARN_GLOBAL }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: GitHubActions-Docs-Deploy
+
+      - name: Resolve stack outputs
+        id: stack
+        run: |
+          set -euo pipefail
+          STACK=DocsCloudFrontStack
+
+          output() {
+            aws cloudformation describe-stacks \
+              --region "$AWS_REGION" \
+              --stack-name "$STACK" \
+              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" \
+              --output text
+          }
+
+          BUCKET=$(output DocsBucketName)
+          DIST_ID=$(output DocsDistributionId)
+          DOMAIN=$(output DocsDistributionDomainName)
+
+          for value in "$BUCKET" "$DIST_ID" "$DOMAIN"; do
+            if [ -z "$value" ] || [ "$value" = "None" ]; then
+              echo "::error::Missing output from $STACK. Deploy kontext-platform's DocsCloudFrontStack first."
+              exit 1
+            fi
+          done
+
+          {
+            echo "bucket=$BUCKET"
+            echo "distribution-id=$DIST_ID"
+            echo "distribution-domain=$DOMAIN"
+          } >> "$GITHUB_OUTPUT"
+          echo "Bucket: $BUCKET"
+          echo "Distribution: $DIST_ID"
+          echo "Domain: $DOMAIN"
+
+      - name: Sync docs to S3
+        env:
+          BUCKET: ${{ steps.stack.outputs.bucket }}
+        run: |
+          set -euo pipefail
+          # Full sync first so removed pages are deleted. HTML gets a short TTL.
+          aws s3 sync docs-site/dist/ "s3://${BUCKET}/" \
+            --delete \
+            --cache-control "public,max-age=300,must-revalidate"
+
+          # Hashed Astro assets can be cached indefinitely. Use cp so the
+          # metadata is rewritten even when the object already exists.
+          if [ -d docs-site/dist/_astro ]; then
+            aws s3 cp docs-site/dist/_astro "s3://${BUCKET}/_astro" \
+              --recursive \
+              --cache-control "public,max-age=31536000,immutable"
+          fi
+
+      - name: Invalidate CloudFront cache
+        env:
+          DIST_ID: ${{ steps.stack.outputs.distribution-id }}
+        run: |
+          set -euo pipefail
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id "$DIST_ID" \
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
+          echo "Invalidation: $INVALIDATION_ID"
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "$DIST_ID" \
+            --id "$INVALIDATION_ID"
+
+      - name: Smoke test
+        env:
+          DOMAIN: ${{ steps.stack.outputs.distribution-domain }}
+        run: |
+          set -euo pipefail
+          # The distribution domain works before the docs.kontext.tech DNS
+          # record exists, so this validates the deploy independently of DNS.
+          check() {
+            local path="$1" expected="$2"
+            local code
+            code=$(curl -sS -o /dev/null -w '%{http_code}' \
+              "https://${DOMAIN}${path}")
+            echo "${path} -> ${code}"
+            [ "$code" = "$expected" ] || {
+              echo "::error::${path} returned ${code}, expected ${expected}"
+              exit 1
+            }
+          }
+
+          check / 200
+          check /user-guide/ 200
+          check /user-guide/install-and-start 200
+          check /does-not-exist 404
+
+          curl -fsS "https://${DOMAIN}/" | grep -q "Kontext Docs"
+
+      - name: Deployment summary
+        run: |
+          {
+            echo "## Docs deployment"
+            echo ""
+            echo "| Setting | Value |"
+            echo "|---------|-------|"
+            echo "| Version | ${{ inputs.version || 'latest' }} |"
+            echo "| Bucket | ${{ steps.stack.outputs.bucket }} |"
+            echo "| Distribution | ${{ steps.stack.outputs.distribution-id }} |"
+            echo "| URL | https://docs.kontext.tech |"
+          } >> "$GITHUB_STEP_SUMMARY"

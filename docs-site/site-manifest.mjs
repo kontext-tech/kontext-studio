@@ -11,7 +11,7 @@ import {
 } from "../tools/docs-capture/pages.mjs";
 
 export const repoUrl =
-   process.env.DOCS_REPO_URL ?? "https://github.com/kontext-labs/kontext-labs";
+   process.env.DOCS_REPO_URL ?? "https://github.com/kontext-tech/kontext-labs";
 
 export function cleanUserGuideSlug(slug) {
    return slug.replace(/^\d+-/, "");

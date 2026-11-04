@@ -24,7 +24,7 @@ Kontext ships as a single Python wheel attached to each GitHub Release.
 
 ```bash
 # Install the CLI + local runtime (replace <version> with a release tag)
-uv tool install "kontext-labs @ https://github.com/kontext-labs/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
+uv tool install "kontext-labs @ https://github.com/kontext-tech/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
 ```
 
 Then start the local server from the directory that holds your project:
@@ -63,6 +63,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow.
 - `examples/`: private sample apps that consume the packages and are not
   distributed (e.g. the notebook demo).
 - `tools/`: repo-level validators and local development helpers.
+- `docs-site/`: Astro Starlight site published to
+  [docs.kontext.tech](https://docs.kontext.tech); see
+  [docs-site/README.md](docs-site/README.md).
 - `scripts/`: build, test, image, and release helpers.
    - `scripts/uv/`: the Python (uv) helper that builds the unified
      `kontext-labs` wheel.
@@ -100,6 +103,11 @@ TypeScript package versioning and publishing uses Commitizen
 [docs/development/releasing.md](docs/development/releasing.md) for the full
 flow. The unified `kontext-labs` wheel is published to PyPI and attached to the
 matching GitHub Release; it is the end-user install path described above.
+
+The docs site is published by `.github/workflows/publish-docs.yml` on each
+release (and on demand). It uploads `docs-site/dist` to the S3 + CloudFront
+infrastructure defined in `kontext-tech/kontext-platform` and serves it at
+`https://docs.kontext.tech`.
 
 ## License
 

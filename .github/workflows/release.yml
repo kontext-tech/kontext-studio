@@ -10,10 +10,15 @@ name: Create GitHub Release
 # Intended sequence:
 #
 #   1. dispatch this workflow       -> validates version/tag, creates or promotes
-#                                      the GitHub Release
+#                                      the GitHub Release, and (by default)
+#                                      publishes the docs site
 #   2. dispatch publish-pypi.yml    -> target=pypi, version=<version>,
 #                                      confirm=<version>; publishes and attaches
 #                                      the assets
+#
+# Docs are published by calling publish-docs.yml as a reusable workflow rather
+# than relying on a tag push event: tags created by gh release create with
+# GITHUB_TOKEN do not start new workflow runs.
 #
 # Do NOT add `push: tags: ["v*"]`: gh release create without --verify-tag
 # creates the tag from --target, so a dispatch is the deliberate act that cuts
@@ -34,6 +39,11 @@ on:
         required: false
         type: boolean
         default: false
+      publish_docs:
+        description: "Build and publish docs-site to docs.kontext.tech"
+        required: false
+        type: boolean
+        default: true
 
 concurrency: release-${{ inputs.release_tag }}
 
@@ -85,3 +95,15 @@ jobs:
             fi
             gh release create "${args[@]}"
           fi
+
+  publish-docs:
+    name: Publish Docs
+    needs: release
+    if: inputs.publish_docs
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/publish-docs.yml
+    with:
+      version: ${{ inputs.version }}
+    secrets: inherit

@@ -92,6 +92,7 @@ jobs:
               - ".github/workflows/ci.yml"
             docs:
               - "docs/**"
+              - "docs-site/**"
               - "tools/docs-capture/**"
               # The route table is the source of truth for documentation coverage.
               - "app/src/routing/routes.ts"
@@ -99,6 +100,7 @@ jobs:
               - "package.json"
               - "pnpm-lock.yaml"
               - ".github/workflows/ci.yml"
+              - ".github/workflows/publish-docs.yml"
 
   tool-pins:
     name: Tool pin parity
@@ -203,6 +205,12 @@ jobs:
 
       - name: Lint guide markdown
         run: pnpm docs:lint
+
+      # Proves the Starlight build used by publish-docs.yml still succeeds.
+      - name: Build docs site
+        env:
+          DOCS_REPO_URL: https://github.com/kontext-tech/kontext-labs
+        run: pnpm docs:site:build
 
   typescript-test:
     name: TypeScript tests
