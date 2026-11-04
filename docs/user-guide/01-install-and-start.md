@@ -8,13 +8,13 @@ on disk.
 
 You need Python 3.12 or newer and [`uv`](https://docs.astral.sh/uv/). Install the
 wheel from the project's
-[releases page](https://github.com/kontext-labs/kontext-labs/releases), or use
+[releases page](https://github.com/kontext-tech/kontext-labs/releases), or use
 the command below with a release tag.
 
 ## Install
 
 ```bash
-uv tool install "kontext-labs @ https://github.com/kontext-labs/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
+uv tool install "kontext-labs @ https://github.com/kontext-tech/kontext-labs/releases/download/v<version>/kontext_labs-<version>-py3-none-any.whl"
 ```
 
 Replace `<version>` with the version number, for example `0.261.0`.
@@ -30,6 +30,15 @@ kontext-labs serve
 The first start creates a workspace in `.kontext/` and prints the URL to open.
 Kontext seeds a placeholder profile called **Local Admin** and one project
 called **Local Project**, so you can start working immediately.
+
+To open the browser automatically:
+
+```bash
+kontext-labs serve --open
+```
+
+Use `--host`, `--port`, or `--lake-path` to bind a different address, change
+the port, or keep the workspace somewhere other than `.kontext/`.
 
 ## Replace the placeholder profile
 
@@ -47,3 +56,38 @@ as the app, for example <http://localhost:8000/setup>.
 4. Kontext opens your workspace with one project and the local profile you created.
    ![Kontext opens your workspace with one project and the local profile you created.](assets/01-install-and-start/landing.png)
 <!-- /docs:capture -->
+
+## Connect a model provider
+
+Kontext does not bundle a model. After signing in, open **Model providers** and
+add a local or cloud provider, then choose the default model for your work. See
+[Connect a model provider](10-connect-a-model-provider.md) for the supported
+providers and settings.
+
+## CLI commands
+
+Most work happens in the browser, but `kontext-labs` also exposes the local
+workspace from the terminal:
+
+| Command | Description |
+| --- | --- |
+| `kontext-labs serve` | Start the local server and UI |
+| `kontext-labs project list` | List projects in the local workspace |
+| `kontext-labs project create <name>` | Create a project |
+| `kontext-labs project import <files…>` | Import data files into a project |
+| `kontext-labs job list` | List available job types |
+| `kontext-labs job run <type>` | Run a job synchronously |
+
+`project import` accepts CSV, Parquet, JSON, and other data files. Pass
+`--project` to target a project other than the first one, and `--subdir` to
+choose where the files land under the project's data directory.
+
+## Supported platforms
+
+| Platform | Architecture |
+| --- | --- |
+| macOS | arm64, x86_64 |
+| Linux | x86_64 |
+| Windows | x86_64 |
+
+Python 3.12 or newer is required.

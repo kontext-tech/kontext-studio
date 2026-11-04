@@ -31,7 +31,7 @@ dependencies = [
 kontext_settings_isolation = "kontext.common.pytest_plugin"
 
 [project.urls]
-Repository = "https://github.com/kontext-labs/kontext-labs"
+Repository = "https://github.com/kontext-tech/kontext-labs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/kontext"]

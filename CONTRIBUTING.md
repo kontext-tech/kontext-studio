@@ -19,7 +19,7 @@ do not use `npm`, `yarn`, `pip`, or ad-hoc virtualenv workflows.
 ## Local setup
 
 ```bash
-git clone https://github.com/kontext-labs/kontext-labs.git
+git clone https://github.com/kontext-tech/kontext-labs.git
 cd kontext-labs
 
 pnpm install      # Node/TypeScript workspace dependencies

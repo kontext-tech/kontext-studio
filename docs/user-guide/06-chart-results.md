@@ -37,6 +37,18 @@ notebook query points at that result table.
    ![Open a .chart file and select Edit to change its type, fields, palette, and number format.](assets/06-chart-results/edit-chart.png)
 <!-- /docs:capture -->
 
+## Export a chart
+
+Select the download icon in the chart's top-right corner to open the export
+menu:
+
+- **Export as Image → PNG Image** saves the rendered chart. The file is named
+  after the chart title and uses a white background.
+- **Export Data → CSV File** saves the rows behind the chart for a spreadsheet.
+- **Export Data → JSON File** saves the same rows as structured JSON.
+
+The data options are disabled when the chart has no rows to export.
+
 ## Every chart type
 
 The gallery below uses the Chinook store data. Each block keeps its own data

@@ -28,7 +28,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/kontext-labs/kontext-labs"
+Repository = "https://github.com/kontext-tech/kontext-labs"
 
 [project.entry-points."kontext.agent_harnesses"]
 agno = "kontext.harness.agno.factory:AgnoAgentFrameworkAdapter"

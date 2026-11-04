@@ -71,3 +71,11 @@ describes, who generated it, who verified it, and when it was last checked. The
 **Import** reads a bundle into the current project; the result reports how many
 concepts were imported and any conformance warnings. This is the supported way to
 promote a reviewed set of concepts from one project to another.
+
+## Project documents
+
+Knowledge search also covers uploaded project documents. Kontext extracts text
+from Markdown (`.md`, `.markdown`), PDF, plain text (`.txt`), SQL, and YAML
+(`.yaml`, `.yml`) files. Data-lake files (CSV, TSV, Parquet, JSON, JSONL, Excel)
+and binary files such as images, Draw.io files, notebooks, charts, and data
+tables are stored in the project but not indexed as knowledge documents.

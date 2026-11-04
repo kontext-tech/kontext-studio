@@ -68,7 +68,7 @@ existing manifest rather than only the fields you happen to need:
 
 - `description`, `readme`, `requires-python = ">=3.12"`, `license = { text = "MIT" }`, `authors`
 - `classifiers` including `License :: OSI Approved :: MIT License` and `Programming Language :: Python :: 3.12`
-- `[project.urls]` with `Repository = "https://github.com/kontext-labs/kontext-labs"`
+- `[project.urls]` with `Repository = "https://github.com/kontext-tech/kontext-labs"`
 
 Two placement rules matter because TOML tables are positional:
 
