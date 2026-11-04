@@ -13,7 +13,7 @@ It consumes the shared workspace packages (`@kontext-labs/*`) built by
 (`uv run --env-file .env.local kontext-labs serve --reload`).
 
 You can also start the app together with the local server via
-`pnpm run dev:local` (see the repository [CONTRIBUTING.md](../../CONTRIBUTING.md)).
+`pnpm run dev:local` (see the repository [CONTRIBUTING.md](../CONTRIBUTING.md)).
 
 ## Runtime environment configuration
 

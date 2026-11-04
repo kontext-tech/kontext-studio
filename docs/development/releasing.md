@@ -1,12 +1,14 @@
 # Releasing
 
-There are two independent release paths. They use separate triggers and
-separate tag namespaces, so they never contend for the same GitHub Release.
+There are three release artifacts. They use separate triggers and tag
+namespaces, so they never contend for the same GitHub Release. The docs site
+piggybacks on the `v<version>` release and has no tag of its own.
 
 | Artifact | Workflow | Trigger | Release tag |
 | -------- | -------- | ------- | ----------- |
 | Unified Python wheel (`kontext_labs-<version>-py3-none-any.whl`) | `publish-pypi.yml` | `workflow_dispatch` only | `v<version>` (GitHub Release + PyPI) |
 | `@kontext-labs/*` TypeScript packages (GitHub Packages) | `publish-ts-packages.yml` | `push: tags: ["ts-packages-v*"]` | `ts-packages-v<version>` |
+| Docs site (`docs.kontext.tech`) | `publish-docs.yml` | `workflow_call` from `release.yml`, or `workflow_dispatch` | none |
 
 ## Releasing a `v<version>` version
 
@@ -18,7 +20,8 @@ deliberately ordered: the release exists before anything reaches PyPI.
    `release_tag=v<version>`. It validates `release_tag == "v" + version`, then
    creates the release (the tag is created from the dispatched commit if it
    does not exist) or promotes an existing one (`--latest`, or `--prerelease`
-   when that input is set).
+   when that input is set). Unless `publish_docs` is false, it then publishes
+   the docs site.
 2. Dispatch `publish-pypi.yml` with `target=pypi`, `version=<version>`, and
    `confirm=<version>`. It builds the wheel, verifies its version, writes
    `SHA256SUMS`, smoke-tests both CLI entry points, publishes to PyPI, then
@@ -27,6 +30,17 @@ deliberately ordered: the release exists before anything reaches PyPI.
 `publish-pypi.yml` refuses a production publish when `version` differs from the
 workspace version or `confirm` differs from `version`, so a typo fails the run
 instead of publishing the wrong artifact.
+
+### Docs site
+
+`release.yml` calls the reusable `publish-docs.yml` workflow when `publish_docs`
+is true (the default). The workflow builds `docs-site/dist`, syncs it to the S3
+bucket behind `docs.kontext.tech`, invalidates CloudFront, and smoke-tests the
+distribution. Dispatch `publish-docs.yml` directly for a docs-only change.
+
+It needs the `AWS_DEPLOYMENT_ROLE_ARN_GLOBAL` secret and the `production`
+environment. The S3 bucket, distribution, and Route53 record are defined in
+`kontext-tech/kontext-platform` as `DocsCloudFrontStack`.
 
 ### TestPyPI
 

@@ -1,4 +1,4 @@
-# Kontext docs site
+# Kontext Labs docs site
 
 Astro Starlight site that publishes the user guide and selected developer
 reference pages. The Markdown under `docs/` remains the source of truth; the

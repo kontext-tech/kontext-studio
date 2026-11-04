@@ -35,13 +35,13 @@ export default defineConfig({
    base,
    integrations: [
       starlight({
-         title: "Kontext Docs",
+         title: "Kontext Labs Docs",
          description:
-            "The AI-native workspace for data analysis. Connect your lakehouse, securely choose your LLM provider, and turn data into actionable insights with agentic workflows.",
+            "Kontext Labs documentation: install the local workspace, connect data and model providers, and work with notebooks, agents, and jobs.",
          logo: {
             light: "./src/assets/logo.svg",
             dark: "./src/assets/logo-dark.svg",
-            alt: "Kontext Docs",
+            alt: "Kontext Labs Docs",
             replacesTitle: true
          },
          favicon: "/favicon.svg",
@@ -66,7 +66,8 @@ export default defineConfig({
                   { label: "Overview", link: "/develop/" },
                   ...developerGroupsConfig
                ]
-            }
+            },
+            { label: "Platform docs", link: "https://kontext.tech/docs" }
          ]
       })
    ]

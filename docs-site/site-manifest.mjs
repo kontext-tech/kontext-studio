@@ -112,7 +112,7 @@ export const developerDocs = [
       route: "develop/workflows/releasing",
       title: "Releasing",
       description:
-         "The app, wheel, and TypeScript package release paths.",
+         "The app, wheel, TypeScript package, and docs publishing paths.",
       group: "workflows",
       order: 4
    }

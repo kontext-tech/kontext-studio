@@ -1,6 +1,6 @@
-# Kontext
+# Kontext Labs
 
-**Kontext is a local, open-source data and AI workspace.** It gives you a
+**Kontext Labs is a local, open-source data and AI workspace.** It gives you a
 notebook-style environment for querying data, running Python, and working with AI
 agents — all running on your own machine, over your own files and databases.
 
@@ -20,7 +20,7 @@ agents — all running on your own machine, over your own files and databases.
 
 ## Install
 
-Kontext ships as a single Python wheel attached to each GitHub Release.
+Kontext Labs ships as a single Python wheel attached to each GitHub Release.
 
 ```bash
 # Install the CLI + local runtime (replace <version> with a release tag)
@@ -63,8 +63,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow.
 - `examples/`: private sample apps that consume the packages and are not
   distributed (e.g. the notebook demo).
 - `tools/`: repo-level validators and local development helpers.
-- `docs-site/`: Astro Starlight site published to
-  [docs.kontext.tech](https://docs.kontext.tech); see
+- `docs/`: user guide and developer reference sources published to
+  [docs.kontext.tech](https://docs.kontext.tech).
+- `docs-site/`: Astro Starlight site built from `docs/`; see
   [docs-site/README.md](docs-site/README.md).
 - `scripts/`: build, test, image, and release helpers.
    - `scripts/uv/`: the Python (uv) helper that builds the unified

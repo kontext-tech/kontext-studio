@@ -205,7 +205,7 @@ jobs:
           check /user-guide/install-and-start 200
           check /does-not-exist 404
 
-          curl -fsS "https://${DOMAIN}/" | grep -q "Kontext Docs"
+          curl -fsS "https://${DOMAIN}/" | grep -q "Kontext Labs Docs"
 
       - name: Deployment summary
         run: |

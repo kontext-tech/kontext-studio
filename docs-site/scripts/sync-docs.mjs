@@ -166,10 +166,10 @@ function writeEntry(entry) {
 function writeHomePage() {
    const body = `---
 title: Home
-description: The AI-native workspace for data analysis. Connect your lakehouse, securely choose your LLM provider, and turn data into actionable insights with agentic workflows.
+description: "Kontext Labs documentation: install the local workspace, connect data and model providers, and work with notebooks, agents, and jobs."
 template: splash
 hero:
-  title: Kontext Docs
+  title: Kontext Labs Docs
   tagline: Connect your data, bring your own LLM provider, and go from data questions to SQL, charts, and automated workflows — all in one workspace.
   actions:
     - text: User guide
@@ -181,9 +181,9 @@ hero:
       icon: open-book
 ---
 
-Kontext is the AI-native workspace for data analysis. Connect your data, bring
-your own LLM provider, and go from data questions to SQL, charts, and automated
-workflows — all in one workspace.
+Kontext Labs is the AI-native workspace for data analysis. Connect your data,
+bring your own LLM provider, and go from data questions to SQL, charts, and
+automated workflows — all in one workspace.
 `;
 
    fs.writeFileSync(path.join(contentRoot, "index.md"), body);

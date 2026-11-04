@@ -1,6 +1,6 @@
-# Kontext user guide
+# Kontext Labs user guide
 
-Kontext is the AI-native workspace for data analysis. Connect your data,
+Kontext Labs is the AI-native workspace for data analysis. Connect your data,
 bring your own LLM provider, and go from data questions to SQL, charts,
 and automated workflows — all in one workspace.
 
