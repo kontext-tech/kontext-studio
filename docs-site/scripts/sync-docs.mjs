@@ -223,9 +223,11 @@ hero:
 }
 
 function writeDeveloperIndex() {
-   const agentGuide = docsPreview
-      ? "`AGENTS.md`"
-      : `[agent guide](${repoUrl}/blob/main/AGENTS.md)`;
+   // Preview builds do not link out to GitHub while the repository is private.
+   const repoLink = (label, file) =>
+      docsPreview
+         ? `\`${file}\``
+         : `[${label}](${repoUrl}/blob/main/${file})`;
    const lines = [
       "---",
       'title: "Developer guide"',
@@ -236,8 +238,12 @@ function writeDeveloperIndex() {
       "---",
       "",
       "These pages explain how Kontext is put together and how to work in this",
-      "repository. They assume a checkout and the toolchains described in the",
-      `${agentGuide}.`,
+      "repository. They assume a checkout.",
+      "",
+      "## Getting started",
+      "",
+      `- ${repoLink("Contributing guide", "CONTRIBUTING.md")} — prerequisites, local setup, common commands, and the pull request process.`,
+      `- ${repoLink("Agent guide", "AGENTS.md")} — the canonical architecture and conventions reference.`,
       ""
    ];
 
