@@ -1,6 +1,8 @@
 ---
 import Default from "@astrojs/starlight/components/Footer.astro";
 
+import { docsPreview } from "../../site-manifest.mjs";
+
 const isSplash = Astro.locals.starlightRoute.entry.data.template === "splash";
 const year = new Date().getFullYear();
 ---
@@ -9,7 +11,11 @@ const year = new Date().getFullYear();
 <div class="site-footer">
    <span>&copy; {year} Kontext</span>
    <nav aria-label="Site links">
-      <a href="https://github.com/kontext-tech/kontext-labs">GitHub</a>
+      {
+         !docsPreview && (
+            <a href="https://github.com/kontext-tech/kontext-labs">GitHub</a>
+         )
+      }
       <a href="https://kontext.tech/contact">Contact</a>
    </nav>
 </div>

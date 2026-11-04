@@ -20,6 +20,11 @@ on:
         required: false
         type: string
         default: ""
+      preview:
+        description: "Hide repository links and show a launch banner"
+        required: false
+        type: boolean
+        default: false
     secrets:
       AWS_DEPLOYMENT_ROLE_ARN_GLOBAL:
         required: true
@@ -30,6 +35,11 @@ on:
         required: false
         type: string
         default: ""
+      preview:
+        description: "Hide repository links and show a launch banner"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: publish-docs
@@ -72,6 +82,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build docs site
+        env:
+          DOCS_PREVIEW: ${{ inputs.preview }}
         run: pnpm docs:site:build
 
       - name: Verify build output
@@ -215,6 +227,7 @@ jobs:
             echo "| Setting | Value |"
             echo "|---------|-------|"
             echo "| Version | ${{ inputs.version || 'latest' }} |"
+            echo "| Preview | ${{ inputs.preview }} |"
             echo "| Bucket | ${{ steps.stack.outputs.bucket }} |"
             echo "| Distribution | ${{ steps.stack.outputs.distribution-id }} |"
             echo "| URL | https://docs.kontext.tech |"

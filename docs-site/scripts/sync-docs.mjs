@@ -20,6 +20,7 @@ import {
    cleanUserGuideSlug,
    developerDocs,
    developerPagesByGroup,
+   docsPreview,
    publishedUserGuidePages,
    repoUrl
 } from "../site-manifest.mjs";
@@ -29,6 +30,8 @@ const siteRoot = path.resolve(scriptDir, "..");
 const repoRoot = path.resolve(siteRoot, "..");
 const docsRoot = path.join(repoRoot, "docs");
 const contentRoot = path.join(siteRoot, "src", "content", "docs");
+const PREVIEW_BANNER =
+   "Preview: Kontext Labs launches soon. Install commands will work once the package is published.";
 
 const entries = [
    {
@@ -108,6 +111,9 @@ function rewriteTarget(sourceFile, sourceRoute, href) {
    }
 
    if (fs.existsSync(target)) {
+      if (docsPreview) {
+         return null;
+      }
       const repoPath = path.relative(repoRoot, target).split(path.sep).join("/");
       return `${repoUrl}/blob/main/${repoPath}${hash}`;
    }
@@ -143,6 +149,9 @@ function frontmatter({ title, description }) {
       "---",
       `title: ${JSON.stringify(title)}`,
       `description: ${JSON.stringify(description)}`,
+      ...(docsPreview
+         ? ["banner:", `  content: ${JSON.stringify(PREVIEW_BANNER)}`]
+         : []),
       "---",
       ""
    ].join("\n");
@@ -164,16 +173,26 @@ function writeEntry(entry) {
 }
 
 function writeHomePage() {
+   const primaryAction = docsPreview
+      ? { text: "Read the user guide", link: "user-guide/" }
+      : { text: "Get started", link: "user-guide/install-and-start/" };
+   const connectHref = docsPreview
+      ? "user-guide/"
+      : "user-guide/install-and-start/";
+   const banner = docsPreview
+      ? `banner:\n  content: ${JSON.stringify(PREVIEW_BANNER)}\n`
+      : "";
+
    const body = `---
 title: Home
 description: "Kontext Labs documentation: install the local workspace, connect data and model providers, and work with notebooks, agents, and jobs."
-template: splash
+${banner}template: splash
 hero:
   title: Kontext Labs Docs
   tagline: Connect your data, bring your own LLM provider, and go from data questions to SQL, charts, and automated workflows — all in one workspace.
   actions:
-    - text: Get started
-      link: user-guide/install-and-start/
+    - text: ${primaryAction.text}
+      link: ${primaryAction.link}
       icon: right-arrow
       variant: primary
     - text: Developer guide
@@ -182,7 +201,7 @@ hero:
 ---
 
 <div class="home-steps">
-  <a class="home-step" href="user-guide/install-and-start/">
+  <a class="home-step" href="${connectHref}">
     <span class="home-step-number">01</span>
     <strong>Connect</strong>
     <span>Install locally, then connect files, databases, and a model provider.</span>
@@ -204,15 +223,21 @@ hero:
 }
 
 function writeDeveloperIndex() {
+   const agentGuide = docsPreview
+      ? "`AGENTS.md`"
+      : `[agent guide](${repoUrl}/blob/main/AGENTS.md)`;
    const lines = [
       "---",
       'title: "Developer guide"',
       'description: "Architecture and repository workflows for people contributing to Kontext."',
+      ...(docsPreview
+         ? ["banner:", `  content: ${JSON.stringify(PREVIEW_BANNER)}`]
+         : []),
       "---",
       "",
       "These pages explain how Kontext is put together and how to work in this",
       "repository. They assume a checkout and the toolchains described in the",
-      `[agent guide](${repoUrl}/blob/main/AGENTS.md).`,
+      `${agentGuide}.`,
       ""
    ];
 

@@ -10,6 +10,8 @@ import {
    pages
 } from "../tools/docs-capture/pages.mjs";
 
+export const docsPreview = process.env.DOCS_PREVIEW === "true";
+
 export const repoUrl =
    process.env.DOCS_REPO_URL ?? "https://github.com/kontext-tech/kontext-labs";
 

@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import {
    cleanUserGuideSlug,
    developerPagesByGroup,
+   docsPreview,
    repoUrl,
    userGuidePagesByGroup
 } from "./site-manifest.mjs";
@@ -53,7 +54,9 @@ export default defineConfig({
             themes: ["github-dark", "github-light"],
             defaultProps: { wrap: true }
          },
-         social: [{ icon: "github", label: "GitHub", href: repoUrl }],
+         social: docsPreview
+            ? []
+            : [{ icon: "github", label: "GitHub", href: repoUrl }],
          sidebar: [
             { label: "Home", link: "/" },
             {
