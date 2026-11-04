@@ -36,6 +36,10 @@ if [ -d "$APP_DIST" ]; then
     rm -rf "$LABS_DIST_TARGET"
     mkdir -p "$LABS_DIST_TARGET"
     cp -R "$APP_DIST"/* "$LABS_DIST_TARGET/"
+    cp "$LABS_DIR/LICENSE" "$LABS_DIST_TARGET/LICENSE"
+    cp "$LABS_DIR/THIRD_PARTY_NOTICES.md" "$LABS_DIST_TARGET/THIRD_PARTY_NOTICES.md"
+    cp "$LABS_DIR/TERMS.md" "$LABS_DIST_TARGET/TERMS.md"
+    cp "$LABS_DIR/PRIVACY.md" "$LABS_DIST_TARGET/PRIVACY.md"
     echo "✅ Synced app/dist to $LABS_DIST_TARGET"
 else
     echo "ℹ️  Note: app/dist not built yet. Run 'pnpm --filter @kontext-labs/app build' to bundle frontend UI."

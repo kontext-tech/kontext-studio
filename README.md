@@ -66,8 +66,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow.
 - `app/`: React + Vite labs application (Ant Design v6).
 - `ts/`: TypeScript packages published as `@kontext-labs/*`.
 - `py/`: Python packages built as `kontext-*`.
-- `examples/`: private sample apps that consume the packages and are not
-  distributed (e.g. the notebook demo).
+- `examples/`: development-only sample apps that consume the packages and are
+  not distributed (e.g. the notebook demo).
 - `tools/`: repo-level validators and local development helpers.
 - `docs/`: user guide and developer reference sources published to
   [docs.kontext.tech](https://docs.kontext.tech).
@@ -118,4 +118,7 @@ infrastructure defined in `kontext-tech/kontext-platform` and serves it at
 
 ## License
 
-[MIT](LICENSE)
+Kontext Labs is released under the [MIT License](LICENSE). Third-party
+dependencies and their licenses are listed in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). See [TERMS.md](TERMS.md) for
+the AI usage terms and [PRIVACY.md](PRIVACY.md) for the privacy notice.

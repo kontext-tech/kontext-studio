@@ -180,12 +180,19 @@ def main() -> None:
         # 1. Copy all namespace packages
         copy_namespace_packages(py_dir, staged_src_kontext)
 
-        # 2. Copy README.md
+        # 2. Copy README.md and the license/notice files the wheel distributes.
         labs_readme = py_dir / "kontext-labs" / "README.md"
         if labs_readme.is_file():
             shutil.copy2(labs_readme, staging_dir / "README.md")
         else:
             (staging_dir / "README.md").write_text("# Kontext\n\nUnified Kontext distribution.\n")
+
+        license_file = ROOT_DIR / "LICENSE"
+        if license_file.is_file():
+            shutil.copy2(license_file, staging_dir / "LICENSE")
+        notices_file = ROOT_DIR / "THIRD_PARTY_NOTICES.md"
+        if notices_file.is_file():
+            shutil.copy2(notices_file, staging_dir / "THIRD_PARTY_NOTICES.md")
 
         # 4. Construct staged pyproject.toml
         staged_project = labs_toml["project"].copy()

@@ -32,3 +32,6 @@ eslint.config.js
 
 # Cache
 .eslintcache
+
+# Local agent settings
+.claude/

@@ -138,5 +138,6 @@ trailing period.
    the unified-wheel smoke test.
 
 By participating you agree to abide by our
-[Code of Conduct](CODE_OF_CONDUCT.md). For security issues, follow
+[Code of Conduct](CODE_OF_CONDUCT.md) and that your contributions are licensed
+under the repository's [MIT License](LICENSE). For security issues, follow
 [SECURITY.md](SECURITY.md) instead of opening a public issue.

@@ -4,5 +4,5 @@ contact_links:
     url: https://github.com/kontext-tech/kontext-labs/security/advisories/new
     about: Report security issues privately instead of opening a public issue.
   - name: Questions and ideas
-    url: https://github.com/kontext-tech/kontext-labs/discussions
-    about: Ask questions or discuss ideas with the community.
+    url: mailto:hello@kontext.tech
+    about: Ask questions or discuss ideas with the maintainers.
