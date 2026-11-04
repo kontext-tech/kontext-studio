@@ -123,6 +123,10 @@ verification matrix, see `.github/skills/verify-workspace`.
 - Internal cross-package DTOs (e.g. `QueryEngineRequest`, `PythonRunnerResult`)
   live in `kontext-common`; wire payloads live in the `ts/schema` pipeline.
   Crossing the HTTP boundary is the trigger to add a type to the schema hub.
+- Documentation architecture and flow diagrams use fenced `mermaid` blocks, not
+  ASCII art. Step-by-step procedures stay as numbered prose. The docs site
+  renders Mermaid with `astro-mermaid`; keep directory trees and literal
+  command output in `text` blocks.
 
 ## Skills
 

@@ -108,14 +108,17 @@ Examples:
 
 ### Execution-stack dependency direction
 
-```text
-kontext-common   (ports + session primitives)   ← nothing above it
-     ▲
-kontext-query    (orchestration; imports ports only)
-     ▲  (calls get_query_execution_engine via port)
-kontext-engine   (compute adapters; imports ports + resolver seam, NOT query)
-     ▲
-kontext-runtime  (provider selection + composition)
+```mermaid
+flowchart BT
+    runtime["kontext-runtime<br/>provider selection + composition"]
+    engine["kontext-engine<br/>compute adapters; imports ports + resolver seam, NOT query"]
+    query["kontext-query<br/>orchestration; imports ports only<br/>calls get_query_execution_engine via port"]
+    common["kontext-common<br/>ports + session primitives"]
+
+    runtime --> query
+    runtime --> engine
+    query --> common
+    engine --> common
 ```
 
 - `kontext-query` must not import `kontext-engine`.

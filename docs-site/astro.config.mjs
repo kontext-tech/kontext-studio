@@ -1,4 +1,5 @@
 import starlight from "@astrojs/starlight";
+import mermaid from "astro-mermaid";
 import { defineConfig } from "astro/config";
 
 import {
@@ -35,6 +36,15 @@ export default defineConfig({
    site,
    base,
    integrations: [
+      // Must precede starlight so mermaid fences are claimed before Starlight
+      // hands code blocks to Expressive Code.
+      mermaid({
+         autoTheme: true,
+         enableLog: false,
+         mermaidConfig: {
+            flowchart: { curve: "basis" }
+         }
+      }),
       starlight({
          title: "Kontext Labs Docs",
          description:
@@ -54,9 +64,21 @@ export default defineConfig({
             themes: ["github-dark", "github-light"],
             defaultProps: { wrap: true }
          },
-         social: docsPreview
-            ? []
-            : [{ icon: "github", label: "GitHub", href: repoUrl }],
+         social: [
+            ...(docsPreview
+               ? []
+               : [{ icon: "github", label: "GitHub", href: repoUrl }]),
+            {
+               icon: "linkedin",
+               label: "LinkedIn",
+               href: "https://www.linkedin.com/company/kontext-labs"
+            },
+            {
+               icon: "reddit",
+               label: "Reddit",
+               href: "https://www.reddit.com/r/kontext/"
+            }
+         ],
          sidebar: [
             { label: "Home", link: "/" },
             {

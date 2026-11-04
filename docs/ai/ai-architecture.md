@@ -7,14 +7,17 @@ implementation detail; see [Harness abstraction](harness-abstraction.md).
 
 ## Layer map
 
-```text
-app (React) -> kontext-api -> kontext-chat -> kontext-agentic
-                                               |-> kontext-agent        contracts + harness SPI
-                                               |-> kontext-harness-agno  the active adapter
-                                               |-> kontext-llm           provider catalog + resolution
-                                               |-> kontext-query         SQL sessions -> kontext-engine
-                                               |-> kontext-catalog/okf   catalog + knowledge retrieval
-                                               |-> kontext-file/data     artifacts + run state
+```mermaid
+flowchart LR
+    app["app (React)"] --> api["kontext-api"] --> chat["kontext-chat"] --> agentic["kontext-agentic"]
+
+    agentic --> agent["kontext-agent<br/>contracts + harness SPI"]
+    agentic --> agno["kontext-harness-agno<br/>the active adapter"]
+    agentic --> llm["kontext-llm<br/>provider catalog + resolution"]
+    agentic --> query["kontext-query<br/>SQL sessions"]
+    query --> engine["kontext-engine"]
+    agentic --> catalog["kontext-catalog / okf<br/>catalog + knowledge retrieval"]
+    agentic --> file["kontext-file / data<br/>artifacts + run state"]
 ```
 
 - `kontext-agent` is the framework-agnostic contract layer: `AgentSpec`,

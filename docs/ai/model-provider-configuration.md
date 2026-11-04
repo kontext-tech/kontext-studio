@@ -99,22 +99,20 @@ It is **advisory**. Resolution rules:
 
 ## Resolution flow
 
-```text
-UI (ModelProviderSettingsPanel)
-  -> POST/PUT /model-connections  (ModelProviderService)
-  -> kontext.account.create/update_model_connection
-       - validate provider requirements (config fields + credentials)
-       - curated check is advisory
-       - persist config + secrets (secret refs), reasoningEffort
-  -> GET /models/catalog          (ModelCatalogService)
-  -> kontext.llm.resolve_model_selection(selection_id)
-       -> ResolvedModelConfig (secret-safe, flattened)
-  -> composition: ModelRuntime(binding, credentials)
-       -> agentic.model_runtime.build_model_runtime
-  -> AgentConfigBuilder.from_runtime_provider(reasoning_effort=...)
-       -> AgentConfig (behaviour knobs only)
-  -> active harness (kontext.harness.agno.models.create_model)
-       -> Agno Model
+```mermaid
+flowchart TD
+    UI["UI: ModelProviderSettingsPanel"]
+    API["ModelProviderService<br/>POST/PUT /model-connections"]
+    Account["kontext.account<br/>validate and persist<br/>config + secret refs"]
+    Catalog["ModelCatalogService<br/>GET /models/catalog"]
+    Resolve["kontext.llm<br/>resolve_model_selection"]
+    Runtime["composition<br/>ModelRuntime(binding, credentials)"]
+    Builder["AgentConfigBuilder<br/>→ AgentConfig"]
+    Harness["active harness<br/>→ Agno Model"]
+
+    UI --> API --> Account --> Resolve
+    Catalog --> Resolve
+    Resolve --> Runtime --> Builder --> Harness
 ```
 
 `ResolvedModelConfig` flattens provider config and credential refs into scalar

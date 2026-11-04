@@ -11,14 +11,22 @@ on drift. The pre-commit hook only prints a reminder.
 
 ## Source-of-truth loop
 
-```text
-ts/schema/src/**/*.ts  (Zod models, hand-authored)
-    → ts/schema/scripts/export-schemas.mjs → src/schemas/kontext.models.openapi.json
-    → datamodel-codegen → py/kontext-schema (Pydantic)
+```mermaid
+flowchart LR
+    zod["ts/schema/src/**/*.ts<br/>Zod models (hand-authored)"]
+    export["ts/schema/scripts/export-schemas.mjs"]
+    modelsSpec["src/schemas/kontext.models.openapi.json"]
+    codegen["datamodel-codegen"]
+    pydantic["py/kontext-schema<br/>Pydantic models"]
 
-py/kontext-api FastAPI app
-    → ts/schema/scripts/fetch-api-openapi.cjs → src/schemas/kontext.api.openapi.json
-    → openapi-typescript → ts/schema/src/generated/api.ts (TS types)
+    fastapi["py/kontext-api FastAPI app"]
+    fetch["ts/schema/scripts/fetch-api-openapi.cjs"]
+    apiSpec["src/schemas/kontext.api.openapi.json"]
+    openapiTS["openapi-typescript"]
+    tsTypes["ts/schema/src/generated/api.ts<br/>TypeScript types"]
+
+    zod --> export --> modelsSpec --> codegen --> pydantic
+    fastapi --> fetch --> apiSpec --> openapiTS --> tsTypes
 ```
 
 Both committed specs are inputs to the generators; treat them as source, never

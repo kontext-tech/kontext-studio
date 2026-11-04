@@ -18,18 +18,26 @@ neutral wire schema in `kontext-schema`. This is enforced by
 
 ## Layers
 
-```text
-kontext-schema     neutral wire events (SimpleRunEvent, RunEvent, ToolCall)
-kontext-agent      neutral core + harness SPI: AgentSpec, BaseAgenticSystem,
-                   FrameworkToolkit, ToolRegistry, AgentKind, SharedSessionStore,
-                   SessionPersistence, AgentFrameworkAdapter               <- no harness
-kontext-llm        model catalog + resolution only                         <- no harness
-kontext-agentic         application layer: blueprints (kind -> AgentSpec), domain
-                   tools, chat_handler, blueprint registry                 <- no harness
-kontext-harness-agno (kontext.harness.agno)
-                             Agno adapter: spec -> Agent/Team, models, events, tools
-        ^ implements the harness SPI and registers through entry points
-kontext-runtime / entry points   select the default harness
+```mermaid
+flowchart BT
+    subgraph neutral["Neutral packages — no harness imports"]
+        agentic["kontext-agentic<br/>blueprints + domain tools"]
+        llm["kontext-llm<br/>model catalog + resolution"]
+        agent["kontext-agent<br/>core contracts + harness SPI"]
+        schema["kontext-schema<br/>neutral wire events"]
+    end
+
+    subgraph harness["Harness adapter"]
+        agno["kontext-harness-agno<br/>Agno adapter: spec → Agent/Team"]
+    end
+
+    runtime["kontext-runtime / entry points<br/>select the default harness"]
+
+    agentic --> agent
+    agentic --> llm
+    agent --> schema
+    agno --> agent
+    runtime --> agno
 ```
 
 ## Composition is a field, not a type

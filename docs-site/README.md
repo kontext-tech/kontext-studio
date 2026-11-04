@@ -25,6 +25,23 @@ Plans, decision records, and roadmaps are deliberately excluded, even when they
 live under `docs/`. To publish another reference page, add it to
 `site-manifest.mjs`; it appears in the sidebar and the developer index.
 
+## Diagrams
+
+Pages rendered by the site can embed Mermaid diagrams in a standard fence:
+
+````markdown
+```mermaid
+flowchart LR
+    app --> api
+```
+````
+
+`astro-mermaid` is registered before the Starlight integration in
+`astro.config.mjs`, so it claims `mermaid` fences before Expressive Code sees
+them. Diagrams are rendered client-side and follow the site's light/dark theme.
+Use Mermaid for architecture and flow diagrams; keep step-by-step prose,
+directory trees, and literal command output as text.
+
 ## Configuration
 
 | Variable | Default | Purpose |
