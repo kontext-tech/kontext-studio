@@ -20,8 +20,10 @@ You can also start the app together with the local server via
 Public runtime URLs (`PUBLIC_KONTEXT_API_URL`, `PUBLIC_KONTEXT_DATA_API_URL`,
 `PUBLIC_KONTEXT_URL`, `PUBLIC_KONTEXT_APP_URL`) are intentionally **empty** in
 production builds. The Vite build config only falls back to `localhost` defaults
-when these variables are *unset* — not when they are empty — so release
-artifacts ship without baked-in `localhost` URLs.
+when these variables are _unset_ — not when they are empty — so release
+artifacts ship without baked-in `localhost` URLs. The docs URL
+(`PUBLIC_KONTEXT_DOCS_URL`) is separate and defaults to
+`https://docs.kontext.tech` for the Help menu.
 
 Local `pnpm run dev:app` and `pnpm run dev:local` set these for you. To override
 them (for example to point at a non-default API), set the `PUBLIC_KONTEXT_*`

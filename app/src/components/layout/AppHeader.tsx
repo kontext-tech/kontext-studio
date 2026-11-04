@@ -3,7 +3,7 @@ import { useProject } from "@kontext-labs/project";
 import { useUser } from "@kontext-labs/identity";
 import { getBaseUrl } from "@kontext-labs/common/utils";
 import { MenuOutlined, QuestionCircleOutlined } from "@kontext-labs/icons";
-import { getHelpMenuItems, getLegalMenuItems } from "@kontext-labs/layout";
+import { getHelpMenuItems } from "@kontext-labs/layout";
 import { ThemeSelector } from "@kontext-labs/theme";
 import { Button, Dropdown, Flex, Layout, theme } from "antd";
 import { Suspense } from "react";
@@ -35,11 +35,7 @@ const AppHeader = ({
    const { isAuthenticated, user } = useUser();
    const { currentProject } = useProject();
 
-   const helpMenuItems = [
-      ...(getHelpMenuItems() ?? []),
-      { type: "divider" as const },
-      ...(getLegalMenuItems() ?? [])
-   ];
+   const helpMenuItems = getHelpMenuItems() ?? [];
 
    return (
       <>

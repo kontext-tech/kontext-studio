@@ -1,6 +1,6 @@
 import { Space, Typography, theme } from "antd";
 import React from "react";
-import { getPlatformVersion } from "./PlatformLegalLinks";
+import { getPlatformVersion } from "./platformInfo";
 
 const { Text } = Typography;
 const { useToken } = theme;

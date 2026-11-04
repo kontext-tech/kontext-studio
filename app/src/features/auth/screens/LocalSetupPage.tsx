@@ -8,11 +8,17 @@ import { MetaTags } from "@kontext-labs/site";
 import { useIsLocalMode, useSiteConfigStore } from "@kontext-labs/site";
 import { useUiApp } from "@kontext-labs/ui";
 import { useUserStore } from "@kontext-labs/identity";
-import { Button, Flex, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const { Paragraph } = Typography;
+
+const TERMS_VERSION = "1.0";
+const TERMS_URL =
+   "https://github.com/kontext-tech/kontext-labs/blob/main/TERMS.md";
+const PRIVACY_URL =
+   "https://github.com/kontext-tech/kontext-labs/blob/main/PRIVACY.md";
 
 const LocalSetupPage = () => {
    const [loading, setLoading] = useState(false);
@@ -72,10 +78,16 @@ const LocalSetupPage = () => {
       firstName: string;
       lastName?: string;
       email: string;
+      acceptTerms: boolean;
    }) => {
       setLoading(true);
       try {
-         const tokens = await service.completeSetup(values);
+         const setupValues = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email
+         };
+         const tokens = await service.completeSetup(setupValues);
          setTokens(tokens);
          const loadedUser = await fetchUser(apiErrorHandler);
          if (!loadedUser) {
@@ -83,6 +95,13 @@ const LocalSetupPage = () => {
                "Local setup completed, but the user profile could not be loaded."
             );
          }
+         window.localStorage.setItem(
+            "kontext.terms.accepted",
+            JSON.stringify({
+               version: TERMS_VERSION,
+               acceptedAt: new Date().toISOString()
+            })
+         );
          message.success("Local setup complete");
          const returnUrl = searchParams.get(K_RETURN_URL);
          if (returnUrl) {
@@ -108,15 +127,15 @@ const LocalSetupPage = () => {
       <Flex vertical gap="middle">
          <MetaTags
             title="Local Setup"
-            description="Create your local Kontext profile"
+            description="Create your local Kontext Labs profile"
             type="website"
             canonicalUrl={window.location.href}
          />
-         <h1>Set up local Kontext access</h1>
+         <h1>Set up Kontext Labs</h1>
          <Paragraph type="secondary">
-            Kontext local mode now expects a local JWT-backed profile instead of
-            an email/password sign-in flow. Create the local profile once and
-            the app will reuse it on subsequent launches.
+            Kontext Labs uses a local profile instead of an email/password
+            sign-in flow. Create it once and the app will reuse it on subsequent
+            launches.
          </Paragraph>
          <Form layout="vertical" onFinish={onFinish} requiredMark={false}>
             <Form.Item
@@ -138,6 +157,42 @@ const LocalSetupPage = () => {
                ]}
             >
                <Input autoComplete="email" />
+            </Form.Item>
+            <Form.Item
+               name="acceptTerms"
+               valuePropName="checked"
+               rules={[
+                  {
+                     validator: (_, value) =>
+                        value
+                           ? Promise.resolve()
+                           : Promise.reject(
+                                new Error("Accept the terms to continue.")
+                             )
+                  }
+               ]}
+            >
+               <Checkbox>
+                  I agree to the{" "}
+                  <a
+                     href={TERMS_URL}
+                     target="_blank"
+                     rel="noreferrer"
+                     onClick={(event) => event.stopPropagation()}
+                  >
+                     Terms of Use
+                  </a>{" "}
+                  and acknowledge the{" "}
+                  <a
+                     href={PRIVACY_URL}
+                     target="_blank"
+                     rel="noreferrer"
+                     onClick={(event) => event.stopPropagation()}
+                  >
+                     Privacy Notice
+                  </a>
+                  .
+               </Checkbox>
             </Form.Item>
             <Form.Item style={{ marginBottom: 0 }}>
                <Button type="primary" htmlType="submit" loading={loading} block>

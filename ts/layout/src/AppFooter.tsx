@@ -1,10 +1,9 @@
 import { Flex, Layout, Typography, theme } from "antd";
 import React from "react";
-import { PlatformLegalLinks } from "./PlatformLegalLinks";
-import { getPlatformVersion } from "./PlatformLegalLinks";
+import { getPlatformVersion } from "./platformInfo";
 
 const { Footer } = Layout;
-const { Text } = Typography;
+const { Link, Text } = Typography;
 const { useToken } = theme;
 
 export interface AppFooterProps {
@@ -32,7 +31,25 @@ const AppFooter: React.FC<AppFooterProps> = ({ showDetails = false }) => {
                {version}
             </Text>
 
-            <PlatformLegalLinks linkStyle={linkStyle} separator={null} />
+            <Flex gap="small" align="center">
+               <Link
+                  href="https://github.com/kontext-tech/kontext-labs/blob/main/LICENSE"
+                  target="_blank"
+                  style={linkStyle}
+               >
+                  License
+               </Link>
+               <Text type="secondary" style={linkStyle}>
+                  ·
+               </Text>
+               <Link
+                  href="https://github.com/kontext-tech/kontext-labs/blob/main/THIRD_PARTY_NOTICES.md"
+                  target="_blank"
+                  style={linkStyle}
+               >
+                  Third-party notices
+               </Link>
+            </Flex>
          </Flex>
       </Footer>
    ) : null;

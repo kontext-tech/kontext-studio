@@ -4,10 +4,9 @@ import {
    InfoCircleOutlined,
    UserOutlined
 } from "@kontext-labs/icons";
-import { getFullUrl } from "@kontext-labs/common/utils";
+import { getDocsUrl, getFullUrl } from "@kontext-labs/common/utils";
 import type { MenuProps } from "antd/es/menu";
 import React from "react";
-import { getPlatformLegalMenuItems } from "./PlatformLegalLinks";
 
 export interface HelpLink {
    key: string;
@@ -22,7 +21,7 @@ export const getHelpLinks = (): HelpLink[] => [
       key: "docs",
       icon: React.createElement(BookOutlined),
       label: "Docs",
-      url: getFullUrl("docs"),
+      url: getDocsUrl(),
       description: "Access comprehensive documentation and guides"
    },
    {
@@ -38,6 +37,20 @@ export const getHelpLinks = (): HelpLink[] => [
       label: "Contact",
       url: getFullUrl("contact"),
       description: "Get in touch with our support team"
+   },
+   {
+      key: "license",
+      icon: React.createElement(FileTextOutlined),
+      label: "License",
+      url: "https://github.com/kontext-tech/kontext-labs/blob/main/LICENSE",
+      description: "Kontext Labs is released under the MIT License"
+   },
+   {
+      key: "notices",
+      icon: React.createElement(FileTextOutlined),
+      label: "Third-party notices",
+      url: "https://github.com/kontext-tech/kontext-labs/blob/main/THIRD_PARTY_NOTICES.md",
+      description: "Licenses for the open-source packages Kontext Labs uses"
    }
 ];
 
@@ -48,12 +61,3 @@ export const getHelpMenuItems = (): MenuProps["items"] =>
       label: link.label,
       onClick: () => window.open(link.url, "_blank")
    }));
-
-export const getLegalMenuItems = (): MenuProps["items"] => [
-   {
-      key: "legal",
-      icon: React.createElement(FileTextOutlined),
-      label: "Legal",
-      children: getPlatformLegalMenuItems()
-   }
-];

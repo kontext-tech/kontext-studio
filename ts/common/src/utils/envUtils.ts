@@ -29,6 +29,12 @@ function getEnvVar(key: string): string | undefined {
 export const DEFAULT_PLATFORM_URL = "https://kontext.tech";
 
 /**
+ * Canonical documentation site for the Kontext Labs product. Kept separate
+ * from the platform URL so Help links land on product docs, not platform docs.
+ */
+export const DEFAULT_DOCS_URL = "https://docs.kontext.tech";
+
+/**
  * Gets the base URL for the public Kontext site from environment variables.
  * Falls back to the canonical public site so links to public pages (docs,
  * about, contact) always resolve to a real destination.
@@ -36,6 +42,13 @@ export const DEFAULT_PLATFORM_URL = "https://kontext.tech";
  */
 export const getBaseUrl = (): string => {
    return getEnvVar("PUBLIC_KONTEXT_URL") || DEFAULT_PLATFORM_URL;
+};
+
+export const getDocsUrl = (path = ""): string => {
+   const base = (
+      getEnvVar("PUBLIC_KONTEXT_DOCS_URL") || DEFAULT_DOCS_URL
+   ).replace(/\/$/, "");
+   return path ? `${base}/${path.replace(/^\//, "")}` : base;
 };
 
 /**

@@ -11,6 +11,6 @@ export * from "./constants";
 export * from "./helpLinks";
 export { default as PageHeaderBase } from "./PageHeaderBase";
 export type { PageHeaderBaseProps } from "./PageHeaderBase";
-export * from "./PlatformLegalLinks";
+export * from "./platformInfo";
 export * from "./SidebarFooter";
 export * from "./stores/layoutStore";

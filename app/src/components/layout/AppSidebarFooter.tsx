@@ -3,7 +3,6 @@ import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
 import {
    DownOutlined,
-   FileTextOutlined,
    HomeOutlined,
    LogoutOutlined,
    QuestionCircleOutlined,
@@ -11,11 +10,7 @@ import {
    UserOutlined
 } from "@kontext-labs/icons";
 import { UserAvatar, useUser } from "@kontext-labs/identity";
-import {
-   SidebarFooter,
-   getHelpMenuItems,
-   getPlatformLegalMenuItems
-} from "@kontext-labs/layout";
+import { SidebarFooter, getHelpMenuItems } from "@kontext-labs/layout";
 import { SiteFeature } from "@kontext-labs/schema";
 import { useIsLocalMode, useSiteConfigStore } from "@kontext-labs/site";
 import {
@@ -48,7 +43,6 @@ const AppSidebarFooter = ({ collapsed }: AppSidebarFooterProps) => {
    const siteConfig = useSiteConfigStore((state) => state.siteConfig);
    const isLocalMode = useIsLocalMode();
    const helpMenuItems = getHelpMenuItems();
-   const legalMenuItems = getPlatformLegalMenuItems();
 
    const hasModelConnections =
       siteConfig?.features?.includes(SiteFeature.MODEL_CONNECTIONS) ?? false;
@@ -134,12 +128,6 @@ const AppSidebarFooter = ({ collapsed }: AppSidebarFooterProps) => {
             children: helpMenuItems ?? []
          },
          {
-            key: "legal",
-            icon: <FileTextOutlined />,
-            label: "Legal",
-            children: legalMenuItems ?? []
-         },
-         {
             key: "theme",
             icon: <SunMoonOutlined />,
             label: `Theme: ${themeLabel}`,
@@ -162,7 +150,6 @@ const AppSidebarFooter = ({ collapsed }: AppSidebarFooterProps) => {
          hasPythonEnvironment,
          helpMenuItems,
          isLocalMode,
-         legalMenuItems,
          navigate,
          themeLabel,
          themeMenuOptions,

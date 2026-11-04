@@ -4,12 +4,14 @@ export * from "./dateUtils";
 export {
    API_BASE_PATH,
    CAPTCHA_PATH,
+   DEFAULT_DOCS_URL,
    DEFAULT_PLATFORM_URL,
    getApiBasePath,
    getApiUrl,
    getAppUrl,
    getBaseUrl,
    getDataApiUrl,
+   getDocsUrl,
    getKontextUpdatesProjectId,
    isLocalMode,
    isDevelopment

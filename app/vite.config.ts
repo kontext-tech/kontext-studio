@@ -21,6 +21,7 @@ export default createFrontendViteConfig({
       PUBLIC_KONTEXT_DATA_API_URL: "http://localhost:8000",
       PUBLIC_KONTEXT_URL: "http://localhost:8006",
       PUBLIC_KONTEXT_APP_URL: "http://localhost:8002",
+      PUBLIC_KONTEXT_DOCS_URL: "https://docs.kontext.tech",
       KONTEXT_LOCAL_MODE: "false",
       IS_DEVELOPMENT: true,
       VERSION: "development"
