@@ -459,6 +459,8 @@ class _Kernel:
         self._host_call_results: dict[str, dict[str, Any]] = {}
         self._shutdown = threading.Event()
         self._execution_count = 0
+        # Interrupts must reach the thread running user code (the main thread).
+        self._main_thread_id = threading.main_thread().ident
         # One reader per socket, shared by every consumer: ``_MessageReader``
         # keeps the partial-frame buffer on the instance so an asynchronous
         # ``KeyboardInterrupt`` cannot drop bytes already read from the socket.
@@ -530,8 +532,15 @@ class _Kernel:
                 # blocking call (e.g. time.sleep) raises KeyboardInterrupt
                 # promptly. Windows cannot signal this way and falls back to the
                 # supervisor killing the process tree.
+                # Target the main thread: a process-directed signal can be
+                # delivered to this control thread on Linux, where it only sets
+                # a flag in a thread that is not running the cell, so the
+                # sleeping main thread never sees it.
                 with contextlib.suppress(Exception):
-                    os.kill(os.getpid(), signal.SIGINT)
+                    if hasattr(signal, "pthread_kill") and self._main_thread_id is not None:
+                        signal.pthread_kill(self._main_thread_id, signal.SIGINT)
+                    else:  # pragma: no cover - Windows
+                        os.kill(os.getpid(), signal.SIGINT)
                 self._reply(
                     INTERRUPT_REPLY, {"status": "interrupting"}, request=message, channel="control"
                 )
