@@ -1,4 +1,11 @@
-# Kontext Labs
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="app/public/resources/logo-dark-small.svg">
+    <img src="app/public/resources/logo-small.svg" alt="Kontext Labs logo" width="72" height="72">
+  </picture>
+</p>
+
+<h1 align="center">Kontext Labs</h1>
 
 **Kontext Labs is a local, open-source data and AI workspace.** It gives you a
 notebook-style environment for querying data, running Python, and working with AI
