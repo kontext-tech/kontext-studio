@@ -184,6 +184,24 @@ hero:
 Kontext Labs is the AI-native workspace for data analysis. Connect your data,
 bring your own LLM provider, and go from data questions to SQL, charts, and
 automated workflows — all in one workspace.
+
+<div class="home-steps">
+  <a class="home-step" href="user-guide/install-and-start/">
+    <span class="home-step-number">01</span>
+    <strong>Connect</strong>
+    <span>Install locally, then connect files, databases, and a model provider.</span>
+  </a>
+  <a class="home-step" href="user-guide/work-with-notebooks/">
+    <span class="home-step-number">02</span>
+    <strong>Analyze</strong>
+    <span>Ask questions, write SQL, and build notebooks, charts, and Python.</span>
+  </a>
+  <a class="home-step" href="user-guide/jobs/">
+    <span class="home-step-number">03</span>
+    <strong>Automate</strong>
+    <span>Run background jobs and keep their results with the project.</span>
+  </a>
+</div>
 `;
 
    fs.writeFileSync(path.join(contentRoot, "index.md"), body);

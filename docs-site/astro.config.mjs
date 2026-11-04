@@ -46,6 +46,9 @@ export default defineConfig({
          },
          favicon: "/favicon.svg",
          customCss: ["./src/styles/custom.css"],
+         components: {
+            Footer: "./src/components/SiteFooter.astro"
+         },
          expressiveCode: {
             themes: ["github-dark", "github-light"],
             defaultProps: { wrap: true }

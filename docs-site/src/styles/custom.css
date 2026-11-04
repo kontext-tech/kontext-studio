@@ -42,3 +42,42 @@
 .site-title img {
    height: 1.5rem;
 }
+
+/* Home page workflow steps, aligned with the platform home page. */
+.home-steps {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+   gap: 1rem;
+   margin: 2.5rem 0 1rem;
+}
+
+.home-step {
+   display: flex;
+   flex-direction: column;
+   gap: 0.35rem;
+   padding: 1.25rem;
+   border: 1px solid var(--sl-color-gray-6);
+   border-radius: 0.75rem;
+   color: inherit;
+   text-decoration: none;
+}
+
+.home-step:hover {
+   border-color: var(--sl-color-accent);
+}
+
+.home-step-number {
+   font-size: var(--sl-text-xs);
+   font-weight: 600;
+   letter-spacing: 0.08em;
+   color: var(--sl-color-accent);
+}
+
+.home-step strong {
+   font-size: var(--sl-text-lg);
+}
+
+.home-step span:last-child {
+   font-size: var(--sl-text-sm);
+   color: var(--sl-color-gray-3);
+}
