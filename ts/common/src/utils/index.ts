@@ -13,6 +13,7 @@ export {
    getDataApiUrl,
    getDocsUrl,
    getKontextUpdatesProjectId,
+   getPlatformPageUrl,
    isLocalMode,
    isDevelopment
 } from "./envUtils";

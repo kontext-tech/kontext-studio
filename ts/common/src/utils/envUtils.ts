@@ -51,6 +51,36 @@ export const getDocsUrl = (path = ""): string => {
    return path ? `${base}/${path.replace(/^\//, "")}` : base;
 };
 
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "0.0.0.0", "::1"]);
+
+const isLocalHostname = (hostname: string) => {
+   const normalized = hostname.replace(/^\[|\]$/g, "").toLowerCase();
+   return LOCAL_HOSTNAMES.has(normalized) || normalized.endsWith(".localhost");
+};
+
+/**
+ * Gets a page on the public Kontext platform (about, contact, ...). In local
+ * mode PUBLIC_KONTEXT_URL points at the app itself, which does not serve those
+ * pages, so a local URL falls back to the canonical public site.
+ */
+export const getPlatformPageUrl = (path = ""): string => {
+   const configured = getEnvVar("PUBLIC_KONTEXT_URL");
+   let base = DEFAULT_PLATFORM_URL;
+
+   if (configured) {
+      try {
+         const url = new URL(configured);
+         if (!isLocalHostname(url.hostname)) {
+            base = configured.replace(/\/$/, "");
+         }
+      } catch {
+         // A malformed override should not produce a broken link.
+      }
+   }
+
+   return path ? `${base}/${path.replace(/^\//, "")}` : base;
+};
+
 /**
  * Gets the API URL for the application from environment variables
  * @returns The API URL for the application

@@ -4,7 +4,7 @@ import {
    InfoCircleOutlined,
    UserOutlined
 } from "@kontext-labs/icons";
-import { getDocsUrl, getFullUrl } from "@kontext-labs/common/utils";
+import { getDocsUrl, getPlatformPageUrl } from "@kontext-labs/common/utils";
 import type { MenuProps } from "antd/es/menu";
 import React from "react";
 
@@ -28,14 +28,14 @@ export const getHelpLinks = (): HelpLink[] => [
       key: "about",
       icon: React.createElement(InfoCircleOutlined),
       label: "About",
-      url: getFullUrl("about"),
+      url: getPlatformPageUrl("about"),
       description: "Learn more about Kontext"
    },
    {
       key: "contact",
       icon: React.createElement(UserOutlined),
       label: "Contact",
-      url: getFullUrl("contact"),
+      url: getPlatformPageUrl("contact"),
       description: "Get in touch with our support team"
    },
    {
