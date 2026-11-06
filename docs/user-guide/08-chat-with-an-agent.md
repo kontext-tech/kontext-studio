@@ -36,7 +36,7 @@ The same conversation can explore a project, write SQL, and build output. Some
 prompts to start from:
 
 - **Suggest an agenda** — "Suggest three questions based on the data in the project."
-- **Inspect the project** — "How many tables are in the data lake?"
+- **Inspect the project** — "How many tables are in the lakehouse?"
 - **Write SQL** — "Write a query to show transaction volume by year and month."
 - **Run the query** — "Execute the above query with a reasonable limit for previewing results."
 - **Ask a data question** — "Which age group has the highest number of customers?"

@@ -1,11 +1,11 @@
 # Connect a data source
 
-A project reads data through data sources. Every project has one internal
+A project reads data through data sources. Every project has one default
 lakehouse, and you can add external databases beside it.
 
-## The internal lakehouse
+## The default lakehouse
 
-**Default Lakehouse** is an Iceberg catalog that Kontext manages for the
+**Default Lakehouse** is an Iceberg catalog that Kontext Labs manages for the
 project. It needs no credentials, it is always present, and it is where imported
 files and generated artifacts are registered. Agents and the query editor can
 read it without extra setup, which is why a new project can answer questions
@@ -15,7 +15,7 @@ before you connect anything else.
 
 | Source | Type | Notes |
 | --- | --- | --- |
-| Internal Iceberg | Lakehouse | Managed by Kontext; always present |
+| Default Lakehouse | Lakehouse | Managed Iceberg catalog; always present |
 | DuckDB | SQL, file-based | Point it at a `.duckdb` file |
 | SQLite | SQL, file-based | Point it at a `.db` file |
 | PostgreSQL | SQL, server | Host, port, database, credentials |
@@ -27,8 +27,8 @@ before you connect anything else.
 | BigQuery | SQL, cloud | Definition only in this runtime; queries are not executed yet |
 | HTTP API | API | Definition only in this runtime; queries are not executed yet |
 
-Internal Iceberg, DuckDB, SQLite, PostgreSQL, and MySQL are fully usable in local
-mode. SQL Server, Oracle, Teradata, Snowflake, BigQuery, and HTTP API can be
+Default Lakehouse (Iceberg), DuckDB, SQLite, PostgreSQL, and MySQL are fully
+usable in local mode. SQL Server, Oracle, Teradata, Snowflake, BigQuery, and HTTP API can be
 registered so the project records how they are reached, but this runtime does
 not yet run queries against them.
 

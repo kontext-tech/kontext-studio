@@ -54,7 +54,7 @@ export const pages = [
       group: "data",
       order: 3,
       status: "published",
-      summary: "Connect an external database or inspect the internal lakehouse.",
+      summary: "Connect an external database or inspect the default lakehouse.",
       routes: ["PROJECT_CATALOGS"],
       flow: "first-data-source"
    },

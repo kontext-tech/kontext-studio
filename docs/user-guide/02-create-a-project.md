@@ -15,11 +15,11 @@ details tabs.
 ## Find a project
 
 The search box matches project names, and **Filter by role** narrows the list to
-the projects where you have a chosen role. **Reset** clears both filters.
+the projects where you have a chosen role. **Clear** removes both filters.
 
-<!-- docs:capture 02-create-a-project#2 hash=561ec1548040 -->
-1. The search box filters the project list by name. **Reset** clears the search and role filters.
-   ![The search box filters the project list by name. Reset clears the search and role filters.](assets/02-create-a-project/project-search.png)
+<!-- docs:capture 02-create-a-project#2 hash=51519e286b72 -->
+1. The search box filters the project list by name. **Clear** removes the search and role filters.
+   ![The search box filters the project list by name. Clear removes the search and role filters.](assets/02-create-a-project/project-search.png)
 2. **Filter by role** limits the list to projects where you have a given role, such as owner, admin, contributor, or reader.
    ![Filter by role limits the list to projects where you have a given role, such as owner, admin, contributor, or reader.](assets/02-create-a-project/project-role-filter.png)
 <!-- /docs:capture -->

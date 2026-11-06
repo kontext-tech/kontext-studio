@@ -15,7 +15,7 @@ export default {
       {
          id: "project-search",
          caption:
-            "The search box filters the project list by name. **Reset** clears the search and role filters.",
+            "The search box filters the project list by name. **Clear** removes the search and role filters.",
          before: async (page) => {
             await page.getByRole("heading", { name: /^Hello, / }).waitFor();
             const search = page.getByPlaceholder("Search projects...");

@@ -7,7 +7,7 @@
 
 <h1 align="center">Kontext Labs</h1>
 
-**Kontext Labs is a local, open-source AI data workspace.** Ask questions in
+**Kontext Labs is a local-first, open-source AI data workspace.** Ask questions in
 plain language and a team of agents queries your files and databases, then
 returns SQL results, charts, and reproducible notebooks. Bring your own model —
 local or cloud — and keep the workspace on your machine.

@@ -68,7 +68,7 @@ as the app, for example <http://localhost:8000/setup>.
 
 ## Connect a model provider
 
-Kontext does not bundle a model. After signing in, open **Model providers** and
+Kontext Labs does not bundle a model. After signing in, open **LLM Providers** and
 add a local or cloud provider, then choose the default model for your work. See
 [Connect a model provider](10-connect-a-model-provider.md) for the supported
 providers and settings.

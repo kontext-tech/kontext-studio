@@ -16,7 +16,7 @@ jump to the page for the task you are doing.
 
 ## Data
 
-- [Connect a data source](03-connect-a-data-source.md) — Connect an external database or inspect the internal lakehouse.
+- [Connect a data source](03-connect-a-data-source.md) — Connect an external database or inspect the default lakehouse.
 - [Browse and manage files](04-browse-and-open-files.md) — Upload, organize, search, and open project files.
 
 ## Notebooks

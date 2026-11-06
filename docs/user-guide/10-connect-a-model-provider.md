@@ -32,7 +32,7 @@ can tell two connections to the same provider apart.
 
 ## Add or edit a provider
 
-Open **LLM Providers** from the user console and select **Add Provider**. Choose
+Open **LLM Providers** from **Home** and select **Add Provider**. Choose
 the provider type, pick or type the model, give the connection a name, then fill
 in the endpoint or credentials that provider requires. **Enabled** makes the
 connection usable; **Default Provider** makes it the first choice for new chats.

@@ -20,7 +20,7 @@ export default {
          caption:
             "Kontext starts with a placeholder profile. Open `/setup` before you add any data to replace it with your own name and email.",
          target: (page) =>
-            page.getByRole("heading", { name: "Set up local Kontext access" })
+            page.getByRole("heading", { name: "Set up Kontext Labs" })
       },
       {
          id: "profile",
