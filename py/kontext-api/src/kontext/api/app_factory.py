@@ -20,6 +20,7 @@ from .helpers import (
     register_local_platform_routers,
     register_standard_api_routers,
 )
+from .middleware import LocalRequestGuard
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +95,7 @@ def build_app(
     cors_origins: list[str],
     cors_allow_credentials: bool = True,
     include_local_platform_routers: bool = False,
+    local_request_guard: bool = False,
 ) -> FastAPI:
     """Build the FastAPI application shared by hosted and local entrypoints."""
     app = FastAPI(
@@ -106,6 +108,15 @@ def build_app(
         docs_url="/docs" if openapi_enabled else None,
         redoc_url="/redoc" if openapi_enabled else None,
     )
+
+    # The launch-token gate follows the composition, not the environment: a
+    # local app must never be able to lose the gate by inheriting
+    # ``KONTEXT_LOCAL_MODE=false``.
+    app.state.local_auth_required = include_local_platform_routers
+
+    if local_request_guard:
+        # Added before CORS so CORS stays outermost and still answers preflight.
+        app.add_middleware(LocalRequestGuard)
 
     app.add_middleware(
         CORSMiddleware,

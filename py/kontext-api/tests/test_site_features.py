@@ -26,6 +26,12 @@ from kontext.runtime.profiles import (
     get_local_runtime_profile,
 )
 
+TEST_LAUNCH_TOKEN = "test-launch-token"
+
+
+def _launch_headers() -> dict[str, str]:
+    return {"X-Kontext-Launch-Token": TEST_LAUNCH_TOKEN}
+
 
 def _clear_db_caches() -> None:
     get_engine.cache_clear()
@@ -56,7 +62,7 @@ def _local_app(tmp_path, extra_env: dict[str, str] | None = None):
 
 
 def _get_access_token(client: TestClient) -> str:
-    bootstrap = client.get("/host/auth/bootstrap").json()
+    bootstrap = client.get("/host/auth/bootstrap", headers=_launch_headers()).json()
     if bootstrap.get("accessToken"):
         return bootstrap["accessToken"]["accessToken"]
 
@@ -67,6 +73,7 @@ def _get_access_token(client: TestClient) -> str:
             "lastName": "Tester",
             "email": "feature-gating@example.com",
         },
+        headers=_launch_headers(),
     )
     assert setup_response.status_code == 200
     return setup_response.json()["accessToken"]

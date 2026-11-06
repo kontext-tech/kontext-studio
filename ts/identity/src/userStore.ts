@@ -334,7 +334,9 @@ export const useUserStore = create<UserState>()(
          name: "user-storage",
          partialize: (state) => ({
             user: state.user,
-            tokens: state.tokens
+            // Local JWTs stay in memory: the launch token in sessionStorage
+            // re-mints them on reload, so they never need long-lived storage.
+            tokens: isLocalMode() ? null : state.tokens
          }),
          onRehydrateStorage: () => (state) => {
             if (state) {

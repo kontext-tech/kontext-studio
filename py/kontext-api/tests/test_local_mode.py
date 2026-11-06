@@ -62,13 +62,20 @@ def _is_timezone_aware_iso_datetime(value: str | None) -> bool:
     return parsed.tzinfo is not None
 
 
+TEST_LAUNCH_TOKEN = "test-launch-token"
+
+
+def _launch_headers() -> dict[str, str]:
+    return {"X-Kontext-Launch-Token": TEST_LAUNCH_TOKEN}
+
+
 def _clear_db_caches() -> None:
     get_engine.cache_clear()
     get_session_factory.cache_clear()
 
 
 def _get_local_access_token(client: TestClient, email: str = "local-tester@example.com") -> str:
-    bootstrap_response = client.get("/host/auth/bootstrap")
+    bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
     bootstrap_payload = bootstrap_response.json()
     if bootstrap_payload.get("accessToken"):
         return bootstrap_payload["accessToken"]["accessToken"]
@@ -80,6 +87,7 @@ def _get_local_access_token(client: TestClient, email: str = "local-tester@examp
             "lastName": "Tester",
             "email": email,
         },
+        headers=_launch_headers(),
     )
     assert setup_response.status_code == 200
     return setup_response.json()["accessToken"]
@@ -359,8 +367,9 @@ def test_host_auth_bootstrap_and_me_use_local_dev_identity(tmp_path):
                         "lastName": "Tester",
                         "email": "local-tester@example.com",
                     },
+                    headers=_launch_headers(),
                 )
-                bootstrap_response = client.get("/host/auth/bootstrap")
+                bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
                 bootstrap_payload = bootstrap_response.json()
                 access_token = bootstrap_payload["accessToken"]["accessToken"]
 
@@ -413,9 +422,15 @@ def test_host_config_projects_and_culture_endpoints(tmp_path):
         try:
             app = create_app()
             with TestClient(app) as client:
+                access_token = _get_local_access_token(client)
+                auth_headers = {"Authorization": f"Bearer {access_token}"}
                 config_response = client.get("/host/config")
-                projects_response = client.get("/host/projects")
-                project_response = client.get(f"/host/projects/code/{LOCAL_PROJECT_CODE}")
+                projects_response = client.get("/host/projects", headers=auth_headers)
+                cookie_projects_response = client.get("/host/projects")
+                project_response = client.get(
+                    f"/host/projects/code/{LOCAL_PROJECT_CODE}",
+                    headers=auth_headers,
+                )
                 culture_response = client.get("/host/culture")
         finally:
             _clear_db_caches()
@@ -425,6 +440,7 @@ def test_host_config_projects_and_culture_endpoints(tmp_path):
     assert config_contract.default_project_code == LOCAL_PROJECT_CODE
 
     assert projects_response.status_code == 200
+    assert cookie_projects_response.status_code == 200
     projects_payload = PaginatedListOfProjectModel.model_validate(projects_response.json())
     assert any(project.project_code == LOCAL_PROJECT_CODE for project in projects_payload.items)
 
@@ -485,7 +501,7 @@ def test_setup_succeeds_with_legacy_local_profile_schema(tmp_path):
                         "lastName": "User",
                         "email": "legacy-user@example.com",
                     },
-                    headers={"Origin": "http://localhost:8002"},
+                    headers={**_launch_headers(), "Origin": "http://localhost:8002"},
                 )
         finally:
             _clear_db_caches()
@@ -650,7 +666,7 @@ def test_local_setup_endpoints_create_profile_and_enable_host_bootstrap(tmp_path
             app = create_app()
             with TestClient(app) as client:
                 status_response = client.get("/setup/status")
-                bootstrap_before = client.get("/host/auth/bootstrap")
+                bootstrap_before = client.get("/host/auth/bootstrap", headers=_launch_headers())
                 setup_response = client.post(
                     "/setup",
                     json={
@@ -658,8 +674,9 @@ def test_local_setup_endpoints_create_profile_and_enable_host_bootstrap(tmp_path
                         "lastName": "Tester",
                         "email": "local-tester@example.com",
                     },
+                    headers=_launch_headers(),
                 )
-                bootstrap_after = client.get("/host/auth/bootstrap")
+                bootstrap_after = client.get("/host/auth/bootstrap", headers=_launch_headers())
         finally:
             _clear_db_caches()
 
@@ -706,9 +723,10 @@ def test_local_setup_rejects_seeded_placeholder_identity(tmp_path):
                         "lastName": "Admin",
                         "email": get_local_default_user_email(),
                     },
+                    headers=_launch_headers(),
                 )
                 status_response = client.get("/setup/status")
-                bootstrap_response = client.get("/host/auth/bootstrap")
+                bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
         finally:
             _clear_db_caches()
 
@@ -754,6 +772,7 @@ def test_local_setup_does_not_overwrite_existing_workspace_content(tmp_path):
                         "lastName": "Owner",
                         "email": existing_email,
                     },
+                    headers=_launch_headers(),
                 )
                 assert first_setup.status_code == 200
 
@@ -794,6 +813,7 @@ def test_local_setup_does_not_overwrite_existing_workspace_content(tmp_path):
                         "lastName": "User",
                         "email": "attacker@example.com",
                     },
+                    headers=_launch_headers(),
                 )
 
                 with get_sync_db_session() as session:
@@ -851,11 +871,19 @@ def test_setup_status_is_complete_when_workspace_has_content(tmp_path):
                     session.commit()
 
                 status_response = client.get("/setup/status")
+                bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
         finally:
             _clear_db_caches()
 
     assert status_response.status_code == 200
     assert status_response.json() == {"isSetupComplete": True}
+    # A used workspace must remain usable even when its owner never renamed
+    # the seeded placeholder profile; otherwise login and setup page-loop.
+    assert bootstrap_response.status_code == 200
+    bootstrap_payload = bootstrap_response.json()
+    assert bootstrap_payload["authenticated"] is True
+    assert bootstrap_payload["accessToken"] is not None
+    assert bootstrap_payload["user"]["email"] == "local@kontext.local"
 
 
 def test_local_file_list_normalizes_naive_created_timestamps(tmp_path):

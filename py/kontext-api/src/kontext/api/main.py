@@ -101,6 +101,7 @@ def create_app(runtime_profile: RuntimeProfile | None = None) -> FastAPI:
             configured=os.getenv(ENV_CORS_ALLOWED_ORIGINS, ""),
         ),
         include_local_platform_routers=runtime_profile.exposes_local_platform_routers,
+        local_request_guard=runtime_profile.is_local,
     )
 
     logger.info("Kontext API application created successfully")
@@ -115,9 +116,21 @@ def main():
     """CLI entry point for running the API server."""
     import uvicorn
 
-    host = os.getenv("HOST", "0.0.0.0")
+    default_host = "127.0.0.1" if get_runtime_profile().is_local else "0.0.0.0"
+    host = os.getenv("HOST", default_host)
     port = int(os.getenv("PORT", "8000"))
     reload = os.getenv("ENVIRONMENT", "Development") == "Development"
+
+    from kontext.runtime.local.hosts import configure_allowed_hosts, is_loopback_host
+
+    if get_runtime_profile().is_local:
+        configure_allowed_hosts(host)
+        if not is_loopback_host(host):
+            logger.warning(
+                "Bound to non-loopback host %s; only this machine's interface "
+                "addresses pass Host validation.",
+                host,
+            )
 
     logger.info(f"Starting Kontext API on {host}:{port} (reload={reload})")
 

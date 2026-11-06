@@ -1,5 +1,9 @@
 import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, HttpApiService } from "@kontext-labs/common";
+import {
+   ApiResult,
+   getLaunchToken,
+   HttpApiService
+} from "@kontext-labs/common";
 import { HostClient, type HostAuthBootstrap } from "@kontext-labs/host-api";
 import type { AccessTokenResponse, LoginRequest } from "@kontext-labs/schema";
 
@@ -97,6 +101,7 @@ export class AuthService extends HttpApiService {
       return new HostClient({
          basePath: config.basePath,
          accessToken: this.currentAuthContext.accessToken,
+         launchToken: getLaunchToken(),
          credentials: config.credentials as RequestCredentials,
          headers: config.headers
       });

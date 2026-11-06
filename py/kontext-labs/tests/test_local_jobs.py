@@ -110,8 +110,15 @@ def _background_worker(*, poll_interval: float = 0.1):
         raise AssertionError(f"background worker raised: {errors[0]!r}") from errors[0]
 
 
+TEST_LAUNCH_TOKEN = "test-launch-token"
+
+
+def _launch_headers() -> dict[str, str]:
+    return {"X-Kontext-Launch-Token": TEST_LAUNCH_TOKEN}
+
+
 def _get_local_access_token(client: TestClient) -> str:
-    bootstrap_response = client.get("/host/auth/bootstrap")
+    bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
     bootstrap_payload = bootstrap_response.json()
 
     if bootstrap_payload.get("accessToken"):
@@ -124,6 +131,7 @@ def _get_local_access_token(client: TestClient) -> str:
             "lastName": "Tester",
             "email": "local-tester@example.com",
         },
+        headers=_launch_headers(),
     )
     assert setup_response.status_code == 200
     return setup_response.json()["accessToken"]

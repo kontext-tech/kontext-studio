@@ -47,6 +47,14 @@ kontext-labs query "select * from my_table limit 10" --project <id>
 
 Run `kontext-labs --help` or `kontext-labs <subcommand> --help` for flags.
 
+At startup the server prints the URL to open, including a per-run launch token
+in the fragment (`http://127.0.0.1:8000/#token=...`). Open that URL rather than
+the bare host: the API only issues credentials to callers presenting the
+token. The app removes the token from the address bar after reading it, and
+keeps the session in an HttpOnly cookie so file previews and new tabs work.
+The latest token is in `~/.kontext/runtime/launch.token`; a per-port copy lives
+in `launch-<port>.token` when several servers run.
+
 ## Architecture
 
 ```text

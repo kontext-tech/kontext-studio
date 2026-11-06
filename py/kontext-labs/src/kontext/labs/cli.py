@@ -25,6 +25,13 @@ import sys
 import threading
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
+
+from kontext.runtime.local.hosts import (
+    browser_host,
+    configure_allowed_hosts,
+    is_loopback_host,
+)
 
 from .sqlite_compat import ensure_supported_sqlite
 
@@ -184,7 +191,6 @@ class _WorkerSupervisor:
 
     def _spawn(self) -> None:
         env = dict(os.environ)
-        env.setdefault("KONTEXT_LOCAL_MODE", "true")
         kwargs: dict[str, Any] = {}
         if os.name == "nt":  # pragma: no cover - Windows-only process flags
             kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
@@ -243,6 +249,10 @@ class _WorkerSupervisor:
 
 
 def _cmd_serve(args: argparse.Namespace) -> None:
+    # This entrypoint is the local composition; make the profile explicit
+    # before any settings are read or child processes are spawned.
+    os.environ["KONTEXT_LOCAL_MODE"] = "true"
+
     # Fail before starting the worker or opening a database: SQLite 3.51.0/3.51.1
     # can deadlock under the local multi-process WAL workload.
     try:
@@ -268,14 +278,45 @@ def _cmd_serve(args: argparse.Namespace) -> None:
     with contextlib.suppress(AttributeError, ValueError, OSError):
         signal.signal(signal.SIGHUP, _sighup_to_exit)
 
+    from kontext.runtime.local.launch_token import (
+        LAUNCH_TOKEN_ENV,
+        generate_launch_token,
+        persist_launch_token,
+    )
+
+    # A per-run token proves the browser was opened by this server rather than
+    # by a page that reached loopback through DNS rebinding. The worker process
+    # inherits it through the environment; the file lets a user recover a lost
+    # launch URL without restarting.
+    launch_token = os.getenv(LAUNCH_TOKEN_ENV, "").strip() or generate_launch_token()
+    os.environ[LAUNCH_TOKEN_ENV] = launch_token
+    token_file = persist_launch_token(launch_token, port=args.port)
+
+    configure_allowed_hosts(args.host)
+
     _init_engine(getattr(args, "lake_path", None))
 
     import uvicorn
 
     _print_startup_banner()
 
-    url = f"http://{args.host}:{args.port}"
-    print(f"\n🚀 Kontext (local) → {url}\n")
+    url = f"http://{browser_host(args.host)}:{args.port}"
+    launch_url = f"{url}/#token={quote(launch_token, safe='')}"
+    print(
+        "\n"
+        "============================================================\n"
+        f"  Kontext local: {url}\n"
+        f"  Open with token: {launch_url}\n"
+        f"  Token file: {token_file}\n"
+        "============================================================\n"
+    )
+    if not is_loopback_host(args.host):
+        print(
+            "Warning: the server is bound to a non-loopback address without "
+            "TLS. Requests are accepted only for this machine's interface "
+            "addresses; anyone who can reach them can attempt requests.",
+            file=sys.stderr,
+        )
 
     if args.open:
         import time
@@ -283,7 +324,7 @@ def _cmd_serve(args: argparse.Namespace) -> None:
 
         def _open_browser() -> None:
             time.sleep(1.5)
-            webbrowser.open(url)
+            webbrowser.open(launch_url)
 
         threading.Thread(target=_open_browser, daemon=True).start()
 

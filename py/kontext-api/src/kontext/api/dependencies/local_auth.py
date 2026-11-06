@@ -13,7 +13,7 @@ from typing import Any
 from uuid import uuid4
 
 import jwt as _jwt
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException, Request, Response
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from kontext.account import UserProfile, read_profile
@@ -28,6 +28,8 @@ from kontext.runtime.local.config import (
 from kontext.schema import AccessTokenResponse, UserWithRolesModel
 
 logger = logging.getLogger(__name__)
+
+LOCAL_SESSION_COOKIE = "kontext_local_session"
 
 _ROLE_CLAIM = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
 _bearer_scheme = HTTPBearer(auto_error=False)
@@ -89,11 +91,10 @@ async def resolve_local_user(
 ) -> UserProfile | None:
     """Single policy for local identity resolution.
 
-    1. A valid Bearer token always wins and is enforced: invalid, expired, or
-       subject-less tokens are rejected, never silently replaced by the
-       console auto-auth profile.
-    2. Without credentials, the console auto-auth ambient profile is used so
-       local CLI/first-launch flows work without a login round trip.
+    A valid Bearer token — or the HttpOnly local session cookie, which exists
+    only after a launch-token bootstrap — is required. Invalid, expired, or
+    subject-less tokens are rejected. There is no ambient-profile fallback, so
+    an unauthenticated request can never act as the workspace owner.
 
     ``get_auth_context`` and the router-facing ``get_current_user`` both
     funnel through this function, so token semantics cannot diverge per
@@ -101,17 +102,42 @@ async def resolve_local_user(
     """
 
     if credentials is not None:
-        claims = decode_access_token(credentials.credentials)
-        email: str | None = claims.get("email")
-        if not email:
-            return None  # surface as unauthenticated; callers raise 401
-        profile = read_profile(email=email)
-        if profile is None:
-            return None
-        return profile
+        return _profile_from_token(credentials.credentials)
+    if request is not None:
+        cookie = request.cookies.get(LOCAL_SESSION_COOKIE)
+        if cookie:
+            return _profile_from_token(cookie)
+    return None
 
-    _ = request
-    return read_profile()
+
+def _profile_from_token(token: str) -> UserProfile | None:
+    claims = decode_access_token(token)
+    email: str | None = claims.get("email")
+    if not email:
+        return None  # surface as unauthenticated; callers raise 401
+    return read_profile(email=email)
+
+
+def set_local_session_cookie(
+    response: Response,
+    access_token: AccessTokenResponse | None,
+) -> None:
+    """Mirror the local session into an HttpOnly cookie for browser loads.
+
+    ``<img>``, notebook embeds, and direct download links cannot attach an
+    Authorization header; the cookie gives them the same identity while
+    remaining unreadable to scripts and restricted to same-site requests.
+    """
+    if access_token is None:
+        response.delete_cookie(LOCAL_SESSION_COOKIE, path="/")
+        return
+    response.set_cookie(
+        LOCAL_SESSION_COOKIE,
+        access_token.access_token,
+        httponly=True,
+        samesite="strict",
+        path="/",
+    )
 
 
 async def get_current_user(

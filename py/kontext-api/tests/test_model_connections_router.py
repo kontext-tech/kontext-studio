@@ -9,6 +9,12 @@ from fastapi.testclient import TestClient
 from kontext.api.main import create_app
 from kontext.data.database import get_engine, get_session_factory
 
+TEST_LAUNCH_TOKEN = "test-launch-token"
+
+
+def _launch_headers() -> dict[str, str]:
+    return {"X-Kontext-Launch-Token": TEST_LAUNCH_TOKEN}
+
 
 def _clear_db_caches() -> None:
     get_engine.cache_clear()
@@ -16,7 +22,7 @@ def _clear_db_caches() -> None:
 
 
 def _get_local_access_token(client: TestClient) -> str:
-    bootstrap_response = client.get("/host/auth/bootstrap")
+    bootstrap_response = client.get("/host/auth/bootstrap", headers=_launch_headers())
     bootstrap_payload = bootstrap_response.json()
 
     if bootstrap_payload.get("accessToken"):
@@ -29,6 +35,7 @@ def _get_local_access_token(client: TestClient) -> str:
             "lastName": "Tester",
             "email": "local-tester@example.com",
         },
+        headers=_launch_headers(),
     )
     assert setup_response.status_code == 200
     return setup_response.json()["accessToken"]

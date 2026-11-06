@@ -6,12 +6,15 @@ import os
 from datetime import UTC, datetime, timedelta
 from typing import Literal
 
-from fastapi import HTTPException
-from fastapi.security import HTTPAuthorizationCredentials
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from kontext.account import UserProfile, is_default_local_profile, read_profile
+from kontext.account import (
+    UserProfile,
+    is_default_local_profile,
+    is_setup_complete,
+    read_profile,
+)
 from kontext.project.local import seed_default_local_project
 from kontext.runtime.local.config import get_local_access_token_ttl_seconds
 from kontext.runtime.profiles import get_runtime_profile
@@ -20,7 +23,6 @@ from kontext.schema import AccessTokenResponse, SiteConfigResponse, UserWithRole
 from ..dependencies.local_auth import (
     build_token_response,
     profile_to_model,
-    resolve_local_user,
 )
 
 HostMode = Literal["local", "hosted"]
@@ -98,7 +100,15 @@ def build_host_auth_bootstrap_response() -> HostAuthBootstrapResponse:
             expires_at=None,
         )
 
-    if is_default_local_profile(profile) and not _should_auto_auth_default_local_profile():
+    # A workspace that already has content must never be locked out just
+    # because its owner never renamed the seeded placeholder profile: setup is
+    # intentionally blocked in that case (it would repurpose the profile), so
+    # authenticating the placeholder is the only non-looping outcome.
+    if (
+        is_default_local_profile(profile)
+        and not is_setup_complete()
+        and not _should_auto_auth_default_local_profile()
+    ):
         return HostAuthBootstrapResponse(
             mode="local",
             authenticated=False,
@@ -125,25 +135,7 @@ def build_host_auth_bootstrap_response() -> HostAuthBootstrapResponse:
     )
 
 
-async def build_host_auth_me_response(
-    credentials: HTTPAuthorizationCredentials | None,
-) -> HostAuthMeResponse:
-    if get_runtime_profile().is_local and credentials is None:
-        profile = get_local_profile_service()
-        if profile is None or is_default_local_profile(profile):
-            return HostAuthMeResponse(
-                mode="local",
-                authenticated=False,
-                user=None,
-                project_roles={},
-                permissions=[],
-                expires_at=None,
-            )
-    else:
-        profile = await resolve_local_user(None, credentials)
-        if profile is None:
-            raise HTTPException(status_code=401, detail="Not authenticated.")
-
+def build_host_auth_me_response(profile: UserProfile) -> HostAuthMeResponse:
     user = profile_to_model(profile)
     return HostAuthMeResponse(
         mode=get_host_mode(),

@@ -35,10 +35,17 @@ import {
 } from "./chat.mjs";
 import { FIXTURE_EPOCH } from "../fixtures.mjs";
 
-async function runStage({ browser, stories, baseUrl, homeDir, onStoryComplete }) {
+async function runStage({
+   browser,
+   stories,
+   baseUrl,
+   homeDir,
+   launchToken,
+   onStoryComplete
+}) {
    const results = [];
    for (const story of stories) {
-      const { context, page } = await openPage(browser);
+      const { context, page } = await openPage(browser, { launchToken });
       let current = null;
       try {
          await navigate(page, baseUrl, story.goto ?? "/");
@@ -267,7 +274,8 @@ export async function capture({ only = null } = {}) {
             browser,
             stories: unconfigured,
             baseUrl: server.baseUrl,
-            homeDir: server.homeDir
+            homeDir: server.homeDir,
+            launchToken: server.launchToken
          }))
       );
 
@@ -309,6 +317,7 @@ export async function capture({ only = null } = {}) {
             stories: configured,
             baseUrl: server.baseUrl,
             homeDir: server.homeDir,
+            launchToken: server.launchToken,
             onStoryComplete: async (story) => {
                // Runs created during a capture carry the real wall clock, which
                // is later than the frozen page clock. Restamp them so later

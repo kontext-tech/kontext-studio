@@ -29,7 +29,7 @@ export async function launchBrowser() {
    return chromium.launch();
 }
 
-export async function openPage(browser) {
+export async function openPage(browser, { launchToken } = {}) {
    const context = await browser.newContext({
       viewport: VIEWPORT,
       deviceScaleFactor: 2,
@@ -38,6 +38,15 @@ export async function openPage(browser) {
       timezoneId: "UTC",
       reducedMotion: "reduce"
    });
+   if (launchToken) {
+      await context.addInitScript((token) => {
+         try {
+            window.sessionStorage.setItem("kontext.launch.token", token);
+         } catch {
+            // Storage can be unavailable; the page will show the login state.
+         }
+      }, launchToken);
+   }
    const page = await context.newPage();
    page.setDefaultTimeout(15_000);
    await page.clock.setFixedTime(CAPTURE_CLOCK);

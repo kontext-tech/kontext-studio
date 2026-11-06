@@ -56,13 +56,11 @@ async def lifespan(app: FastAPI):
 
     cfg = get_config()
     runtime_profile = get_local_runtime_profile()
-    previous_console_auto_auth = os.environ.get("KONTEXT_LOCAL_CONSOLE_AUTO_AUTH")
 
     configure_runtime_logging("kontext-labs")
     configure_telemetry(service_name="kontext-labs")
 
     logger.info("Starting Kontext local server...")
-    os.environ["KONTEXT_LOCAL_CONSOLE_AUTO_AUTH"] = "true"
 
     try:
         db_url = runtime_profile.initialize(log_level=cfg.log_level, log_format=cfg.log_format)
@@ -76,11 +74,6 @@ async def lifespan(app: FastAPI):
     # The API process does not execute jobs; that runs in a separate worker
     # process (``kontext-labs worker``) so a hung job cannot wedge the server.
     await drain_async_finalizers()
-
-    if previous_console_auto_auth is None:
-        os.environ.pop("KONTEXT_LOCAL_CONSOLE_AUTO_AUTH", None)
-    else:
-        os.environ["KONTEXT_LOCAL_CONSOLE_AUTO_AUTH"] = previous_console_auto_auth
 
     logger.info("Kontext server stopped.")
 
@@ -108,6 +101,7 @@ def create_app(dist_dir: str | Path | None = None) -> FastAPI:
         include_error_details=True,
         cors_origins=list(LOCAL_CORS_ORIGINS),
         include_local_platform_routers=True,
+        local_request_guard=True,
     )
 
     # ── Static React app ──────────────────────────────────────────────────────

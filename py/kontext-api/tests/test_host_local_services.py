@@ -1,4 +1,3 @@
-import asyncio
 import os
 from unittest.mock import patch
 
@@ -87,7 +86,9 @@ def test_build_host_auth_me_response_uses_local_service_shape(tmp_path):
                     email="local-tester@example.com",
                 ),
             )
-            response = asyncio.run(build_host_auth_me_response(credentials=None))
+            profile = read_profile()
+            assert profile is not None
+            response = build_host_auth_me_response(profile)
         finally:
             _clear_db_caches()
 

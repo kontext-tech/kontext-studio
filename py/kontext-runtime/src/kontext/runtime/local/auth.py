@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 import base64
+import contextlib
+import os
 import secrets
 from datetime import UTC, datetime
 from pathlib import Path
 
 from kontext.project.local_data import get_local_project_roles_for_user
 from kontext.schema import UserType, UserWithRolesModel
+
+from .private_files import read_private_file, write_private_file
 
 
 def _get_key_file() -> Path:
@@ -20,14 +24,26 @@ def _get_key_file() -> Path:
 def get_local_jwt_secret() -> str:
     """Return or create the persistent local signing secret."""
     key_file = _get_key_file()
-    if key_file.exists():
-        return key_file.read_text(encoding="utf-8").strip()
+    key_file.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    with contextlib.suppress(OSError):
+        os.chmod(key_file.parent, 0o700)
 
-    raw = secrets.token_bytes(32)
-    secret = base64.urlsafe_b64encode(raw).decode("utf-8")
-    key_file.parent.mkdir(parents=True, exist_ok=True)
-    key_file.write_text(secret + "\n", encoding="utf-8")
-    return secret
+    existing = read_private_file(key_file)
+    if existing is not None:
+        return existing
+
+    # The API and worker initialize concurrently on first start; serialize the
+    # create/repair path so both processes agree on one key.
+    from .init_lock import local_init_lock
+
+    with local_init_lock(key_file.parent):
+        existing = read_private_file(key_file)
+        if existing is not None:
+            return existing
+
+        secret = base64.urlsafe_b64encode(secrets.token_bytes(32)).decode("utf-8")
+        write_private_file(key_file, secret + "\n")
+        return read_private_file(key_file) or secret
 
 
 def get_local_permission_claims() -> list[str]:

@@ -5,8 +5,25 @@ from fastapi.testclient import TestClient
 
 from kontext.api.testing import iter_effective_api_routes
 from kontext.common import BadRequestError
+from kontext.data.database import get_engine, get_session_factory
 from kontext.labs.async_cleanup import drain_async_finalizers
 from kontext.labs.server import create_app
+
+TEST_LAUNCH_TOKEN = "test-launch-token"
+
+
+def _launch_headers() -> dict[str, str]:
+    return {"X-Kontext-Launch-Token": TEST_LAUNCH_TOKEN}
+
+
+def _use_temp_database(monkeypatch, tmp_path) -> None:
+    """Keep the lifespan from initializing the user's real workspace."""
+    monkeypatch.setattr(
+        "kontext.runtime.local.config.get_local_database_url",
+        lambda: f"sqlite:///{tmp_path / 'kontext.db'}",
+    )
+    get_engine.cache_clear()
+    get_session_factory.cache_clear()
 
 
 class TestCreateApp:
@@ -33,16 +50,114 @@ class TestCreateApp:
     def test_host_auth_bootstrap_is_available(self, monkeypatch, tmp_path):
         """Local Kontext server should expose the host bootstrap contract."""
         monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
         app = create_app(dist_dir=str(tmp_path / "nonexistent"))
+        headers = _launch_headers()
 
-        with TestClient(app) as client:
-            response = client.get("/host/auth/bootstrap")
+        try:
+            with TestClient(app) as client:
+                setup_response = client.post(
+                    "/setup",
+                    json={
+                        "firstName": "Local",
+                        "lastName": "Tester",
+                        "email": "bootstrap-tester@example.com",
+                    },
+                    headers=headers,
+                )
+                assert setup_response.status_code == 200
+
+                response = client.get("/host/auth/bootstrap", headers=headers)
+                me_response = client.get("/host/auth/me")
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
 
         assert response.status_code == 200
         payload = response.json()
         assert payload["mode"] == "local"
         assert payload["authenticated"] is True
         assert payload["accessToken"] is not None
+        # The session cookie authenticates browser-native requests that cannot
+        # attach an Authorization header.
+        assert me_response.status_code == 200
+
+    def test_launch_gate_survives_false_local_mode(self, monkeypatch, tmp_path):
+        """A contradictory env must not remove the gate from the local app."""
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "false")
+        _use_temp_database(monkeypatch, tmp_path)
+        app = create_app(dist_dir=str(tmp_path / "nonexistent"))
+
+        try:
+            with TestClient(app) as client:
+                response = client.post(
+                    "/setup",
+                    json={
+                        "firstName": "No",
+                        "lastName": "Token",
+                        "email": "no-token@example.com",
+                    },
+                )
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert response.status_code == 401
+        assert "launch token" in response.json()["detail"].lower()
+
+    def test_host_auth_bootstrap_requires_launch_token(self, monkeypatch, tmp_path):
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
+        app = create_app(dist_dir=str(tmp_path / "nonexistent"))
+
+        try:
+            with TestClient(app) as client:
+                response = client.get("/host/auth/bootstrap")
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert response.status_code == 401
+        assert "launch token" in response.json()["detail"].lower()
+
+    def test_local_request_guard_rejects_foreign_host(self, monkeypatch, tmp_path):
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
+        app = create_app(dist_dir=str(tmp_path / "nonexistent"))
+
+        try:
+            with TestClient(app) as client:
+                response = client.get(
+                    "/host/auth/bootstrap",
+                    headers={**_launch_headers(), "Host": "evil.example"},
+                )
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert response.status_code == 403
+
+    def test_local_request_guard_rejects_foreign_origin(self, monkeypatch, tmp_path):
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
+        app = create_app(dist_dir=str(tmp_path / "nonexistent"))
+
+        try:
+            with TestClient(app) as client:
+                response = client.post(
+                    "/setup",
+                    json={
+                        "firstName": "Local",
+                        "lastName": "Tester",
+                        "email": "origin-tester@example.com",
+                    },
+                    headers={**_launch_headers(), "Origin": "https://evil.example"},
+                )
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert response.status_code == 403
 
     def test_create_app_registers_problem_detail_handler(self, tmp_path):
         """Local Kontext server should reuse the API problem-detail handlers."""

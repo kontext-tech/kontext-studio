@@ -37,9 +37,13 @@ export interface HostAuthMe {
 export interface HostClientOptions {
    basePath: string;
    accessToken?: string;
+   launchToken?: string;
    credentials?: RequestCredentials;
    headers?: Record<string, string>;
 }
+
+// Keep in sync with LAUNCH_TOKEN_HEADER in @kontext-labs/common.
+const LAUNCH_TOKEN_HEADER = "X-Kontext-Launch-Token";
 
 export interface HostProjectListParams {
    filter?: string;
@@ -54,12 +58,14 @@ export interface HostProjectListParams {
 export class HostClient {
    private readonly basePath: string;
    private readonly accessToken?: string;
+   private readonly launchToken?: string;
    private readonly credentials?: RequestCredentials;
    private readonly headers: Record<string, string>;
 
    constructor(options: HostClientOptions) {
       this.basePath = options.basePath.replace(/\/$/, "");
       this.accessToken = options.accessToken;
+      this.launchToken = options.launchToken;
       this.credentials = options.credentials;
       this.headers = options.headers ?? {};
    }
@@ -111,6 +117,9 @@ export class HostClient {
       }
       if (this.accessToken && !headers.has("Authorization")) {
          headers.set("Authorization", `Bearer ${this.accessToken}`);
+      }
+      if (this.launchToken) {
+         headers.set(LAUNCH_TOKEN_HEADER, this.launchToken);
       }
 
       const response = await fetch(`${this.basePath}${path}`, {

@@ -39,8 +39,10 @@ object store is required. See `.env.example` for the supported configuration.
 Configuration is read from the environment (typically `.env.local`, see
 `.env.example`). Common values:
 
-- `KONTEXT_LOCAL_MODE` — `true` selects SQLite + local filesystem + in-process
-  execution.
+- `KONTEXT_LOCAL_MODE` — internal deployment-profile switch owned by the
+  composition root. The local launcher sets it to `true`; the OpenAPI exporter
+  passes the cloud profile explicitly. Do not set it to `false` for a local
+  server.
 - `ENVIRONMENT` — deployment environment name; `development` enables the
   interactive docs routes.
 - `ENV_CORS_ALLOWED_ORIGINS` — comma-separated CORS allowlist.
@@ -62,9 +64,17 @@ The committed generator-facing spec lives at
 
 ## Authentication
 
-Every endpoint except health/ping requires JWT authentication via the
-`Authorization: Bearer <token>` header. Local mode mints its own tokens; see
-`kontext-api` dependencies and the `kontext-auth` package.
+Every data endpoint requires JWT authentication via the
+`Authorization: Bearer <token>` header. Local mode mints tokens only for
+callers that present the per-run launch token in `X-Kontext-Launch-Token`;
+`kontext-labs serve` prints that token in the URL it opens
+(`http://127.0.0.1:<port>/#token=...`) and writes it to
+`~/.kontext/runtime/launch.token` plus a per-port `launch-<port>.token`
+(owner-only) so a lost URL can be recovered even with several local servers
+running. Local mode additionally validates the Host header and rejects foreign
+Origins so a DNS-rebinding page cannot reach the API. When bound to a
+non-loopback address, the CLI adds this machine's interface addresses to
+`KONTEXT_ALLOWED_HOSTS`; set it explicitly for hostnames or reverse proxies.
 
 ## Testing
 

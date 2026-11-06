@@ -160,6 +160,21 @@ export async function startServer({ apiPort, appPort } = {}) {
 
    fs.mkdirSync(path.dirname(dbFile), { recursive: true });
 
+   async function readLaunchToken() {
+      const tokenFile = path.join(fakeHome, ".kontext", "runtime", "launch.token");
+      const deadline = Date.now() + 30_000;
+      while (Date.now() < deadline) {
+         try {
+            const token = fs.readFileSync(tokenFile, "utf8").trim();
+            if (token) return token;
+         } catch {
+            // The API writes it during startup.
+         }
+         await delay(200);
+      }
+      throw new Error(`Local launch token was not written to ${tokenFile}`);
+   }
+
    // `kontext-labs serve` resolves the local data directory from `Path.home()`
    // (profiles, project storage, the internal lakehouse). `KONTEXT_LAKE_PATH`
    // alone is not enough: uploads otherwise land in the developer's real
@@ -213,6 +228,7 @@ export async function startServer({ apiPort, appPort } = {}) {
 
    try {
       await waitForHttp(`${apiUrl}/health`, { label: "kontext-labs", process: api });
+      const launchToken = await readLaunchToken();
 
       const app = spawnLogged({
          name: "app",
@@ -314,15 +330,19 @@ export async function startServer({ apiPort, appPort } = {}) {
       return Boolean(body?.isSetupComplete);
    }
 
+   const launchHeaders = () => ({ "x-kontext-launch-token": launchToken });
+
    async function getToken() {
-      const { body } = await fetchJson(`${apiUrl}/host/auth/bootstrap`);
+      const { body } = await fetchJson(`${apiUrl}/host/auth/bootstrap`, {
+         headers: launchHeaders()
+      });
       return body?.accessToken?.accessToken ?? null;
    }
 
    async function completeSetup() {
       const response = await fetchJson(`${apiUrl}/setup`, {
          method: "POST",
-         headers: { "content-type": "application/json" },
+         headers: { "content-type": "application/json", ...launchHeaders() },
          body: JSON.stringify(SETUP_PROFILE)
       });
       if (response.status !== 200) {
@@ -359,6 +379,7 @@ export async function startServer({ apiPort, appPort } = {}) {
       apiUrl,
       appUrl,
       baseUrl: appUrl,
+      launchToken,
       runDir,
       dbFile,
       homeDir: fakeHome,

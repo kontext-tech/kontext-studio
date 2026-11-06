@@ -1,4 +1,7 @@
 import { spawn } from "node:child_process";
+import crypto from "node:crypto";
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -14,11 +17,74 @@ const envFile = path.join(workspaceRoot, ".env.local");
 const uvCommand = process.platform === "win32" ? "uv.exe" : "uv";
 const pnpmCommand = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 
+// Share one launch token with the API and print the app URL that carries it.
+// Without the fragment the UI cannot bootstrap credentials from the local API.
+const launchToken =
+   process.env.KONTEXT_LOCAL_LAUNCH_TOKEN ||
+   crypto.randomBytes(32).toString("base64url");
+const appUrl = `http://localhost:8002/#token=${encodeURIComponent(launchToken)}`;
+const runtimeDir = path.join(os.homedir(), ".kontext", "runtime");
+const launchUrlFile = path.join(runtimeDir, "launch.url");
+const launchPortUrlFile = path.join(runtimeDir, "launch-8002.url");
+const tokenFile = path.join(runtimeDir, "launch.token");
+
 const sharedLocalEnv = {
    ...process.env,
    STORAGE_PROVIDER: "local",
-   KONTEXT_LOCAL_MODE: "true"
+   KONTEXT_LOCAL_MODE: "true",
+   KONTEXT_LOCAL_LAUNCH_TOKEN: launchToken
 };
+
+function writeLaunchUrl() {
+   try {
+      fs.mkdirSync(runtimeDir, { recursive: true, mode: 0o700 });
+      for (const target of [launchUrlFile, launchPortUrlFile]) {
+         fs.writeFileSync(target, `${appUrl}\n`, { mode: 0o600 });
+         fs.chmodSync(target, 0o600);
+      }
+   } catch (error) {
+      console.warn(
+         `[local-mode] could not write ${launchUrlFile}:`,
+         error instanceof Error ? error.message : error
+      );
+   }
+}
+
+function printLaunchBanner() {
+   console.log(
+      [
+         "",
+         "============================================================",
+         `  Open Kontext: ${appUrl}`,
+         `  Launch URL file: ${launchUrlFile}`,
+         `  Token file: ${tokenFile}`,
+         "============================================================",
+         ""
+      ].join("\n")
+   );
+}
+
+async function announceWhenReady() {
+   const deadline = Date.now() + 60_000;
+   while (Date.now() < deadline) {
+      try {
+         const [api, ui] = await Promise.all([
+            fetch("http://127.0.0.1:8000/health"),
+            fetch("http://127.0.0.1:8002/")
+         ]);
+         if (api.ok && ui.ok) {
+            printLaunchBanner();
+            return;
+         }
+      } catch {
+         // Services are still starting.
+      }
+      await new Promise((resolve) => setTimeout(resolve, 500));
+   }
+}
+
+writeLaunchUrl();
+printLaunchBanner();
 
 const childProcesses = [];
 let shuttingDown = false;
@@ -105,6 +171,10 @@ spawnService("app", pnpmCommand, ["run", "dev"], {
       PUBLIC_KONTEXT_DATA_API_URL: "http://localhost:8000"
    }
 });
+
+// Print the banner again once both services answer, after the noisy startup
+// logs, so the launch URL is the last thing in the terminal.
+void announceWhenReady();
 
 const shutdownSignals = ["SIGINT", "SIGTERM", "SIGHUP"];
 

@@ -26,8 +26,9 @@ Equivalent entry points are the VS Code task `refresh: api schema` and
 
 Normalization is centralized in
 [`ts/schema/scripts/openapi-normalize.cjs`](../../ts/schema/scripts/openapi-normalize.cjs).
-The exporter forces `KONTEXT_LOCAL_MODE=false` so the tracked spec keeps the
-non-local route shape even though this repository ships local mode only.
+The exporter passes the cloud runtime profile explicitly, so the tracked spec
+keeps the non-local route shape even though this repository ships local mode
+only; no environment override is involved.
 
 ## Validate
 

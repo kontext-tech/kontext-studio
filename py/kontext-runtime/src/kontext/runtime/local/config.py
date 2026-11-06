@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
 from pathlib import Path
 
@@ -69,7 +70,11 @@ def is_local_mode() -> bool:
 def get_local_data_dir() -> Path:
     """Return the local Kontext data directory, creating it if needed."""
     data_dir = Path.home() / ".kontext"
-    data_dir.mkdir(parents=True, exist_ok=True)
+    data_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+    # The directory holds the signing key, launch token, and workspace data.
+    # Keep it owner-only even when the process umask is permissive.
+    with contextlib.suppress(OSError):
+        os.chmod(data_dir, 0o700)
     return data_dir
 
 
@@ -106,11 +111,13 @@ def configure_local_runtime(*, log_level: str | None = None, log_format: str | N
     """
     from .auth import get_local_jwt_secret
 
-    os.environ.setdefault("KONTEXT_LOCAL_MODE", "true")
+    # This is the local composition: an inherited ``false`` must not leave the
+    # process in cloud mode while the local routers and storage are mounted.
+    os.environ["KONTEXT_LOCAL_MODE"] = "true"
 
     db_url = configure_local_database_url()
 
-    overrides: dict[str, str] = {}
+    overrides: dict[str, object] = {"local_mode": True}
     if not (os.getenv("KONTEXT_JWT_SECRET_KEY") or os.getenv("JWT_SECRET_KEY")):
         overrides["jwt_secret_key"] = get_local_jwt_secret()
     if not (os.getenv("KONTEXT_JWT_ISSUER") or os.getenv("JWT_ISSUER")):

@@ -46,10 +46,6 @@ function loadOfflineApiOpenAPISpec() {
       {
          cwd: PROJECT_ROOT,
          encoding: "utf8",
-         env: {
-            ...process.env,
-            KONTEXT_LOCAL_MODE: "false"
-         },
          maxBuffer: 20 * 1024 * 1024
       }
    );
