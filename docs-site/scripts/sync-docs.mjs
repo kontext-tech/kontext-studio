@@ -185,11 +185,11 @@ function writeHomePage() {
 
    const body = `---
 title: Home
-description: "Kontext Labs documentation: install the local workspace, connect data and model providers, and work with notebooks, agents, and jobs."
+description: "Kontext Labs documentation: install the local AI data workspace, connect sources and model providers, and work with agent chat, notebooks, charts, and jobs."
 ${banner}template: splash
 hero:
   title: Kontext Labs Docs
-  tagline: Connect your data, bring your own LLM provider, and go from data questions to SQL, charts, and automated workflows — all in one workspace.
+  tagline: Ask your data in plain language. A team of agents returns SQL, charts, and reproducible notebooks — with your sources, your model, and your machine.
   actions:
     - text: ${primaryAction.text}
       link: ${primaryAction.link}
@@ -213,8 +213,8 @@ hero:
   </a>
   <a class="home-step" href="user-guide/jobs/">
     <span class="home-step-number">03</span>
-    <strong>Automate</strong>
-    <span>Run background jobs and keep their results with the project.</span>
+    <strong>Track</strong>
+    <span>Run background jobs and inspect their parameters, logs, and timing.</span>
   </a>
 </div>
 `;

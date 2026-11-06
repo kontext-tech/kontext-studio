@@ -177,9 +177,10 @@ function writeGuideIndex() {
    const lines = [
       "# Kontext Labs user guide",
       "",
-      "Kontext Labs is the AI-native workspace for data analysis. Connect your data,",
-      "bring your own LLM provider, and go from data questions to SQL, charts,",
-      "and automated workflows — all in one workspace.",
+      "Kontext Labs is a local-first AI data workspace. Connect your files and",
+      "databases, bring your own model, and ask questions in plain language. A team of",
+      "agents returns SQL results, charts, and reproducible notebooks — all on your",
+      "machine.",
       "",
       "This guide is task-oriented: each page covers one workflow, with the",
       "screens and controls you need. Start with installation if you are new, or",

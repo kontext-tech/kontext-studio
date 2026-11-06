@@ -20,16 +20,17 @@ before you connect anything else.
 | SQLite | SQL, file-based | Point it at a `.db` file |
 | PostgreSQL | SQL, server | Host, port, database, credentials |
 | MySQL | SQL, server | Host, port, database, credentials |
-| SQL Server | SQL, server | Host, port, database, credentials |
-| Oracle | SQL, server | Host, port, service name, credentials |
-| Teradata | SQL, server | Host, port, database, credentials |
+| SQL Server | SQL, server | Definition only in this runtime; queries are not executed yet |
+| Oracle | SQL, server | Definition only in this runtime; queries are not executed yet |
+| Teradata | SQL, server | Definition only in this runtime; queries are not executed yet |
 | Snowflake | SQL, cloud | Definition only in this runtime; queries are not executed yet |
 | BigQuery | SQL, cloud | Definition only in this runtime; queries are not executed yet |
 | HTTP API | API | Definition only in this runtime; queries are not executed yet |
 
-The first eight are fully usable in local mode. The last three can be registered
-so the project records how they are reached, but this runtime does not yet run
-queries against them.
+Internal Iceberg, DuckDB, SQLite, PostgreSQL, and MySQL are fully usable in local
+mode. SQL Server, Oracle, Teradata, Snowflake, BigQuery, and HTTP API can be
+registered so the project records how they are reached, but this runtime does
+not yet run queries against them.
 
 ## What the page shows
 

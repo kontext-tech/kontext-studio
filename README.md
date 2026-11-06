@@ -7,23 +7,27 @@
 
 <h1 align="center">Kontext Labs</h1>
 
-**Kontext Labs is a local, open-source data and AI workspace.** It gives you a
-notebook-style environment for querying data, running Python, and working with AI
-agents — all running on your own machine, over your own files and databases.
+**Kontext Labs is a local, open-source AI data workspace.** Ask questions in
+plain language and a team of agents queries your files and databases, then
+returns SQL results, charts, and reproducible notebooks. Bring your own model —
+local or cloud — and keep the workspace on your machine.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## What you get
 
-- **Data workspace** — connect local files and databases, browse catalogs, and
-  explore schemas without uploading your data anywhere.
-- **SQL notebooks** — author markdown and SQL blocks, execute queries, and
-  visualize results as charts.
-- **Python execution** — run Python against your local engine and data.
-- **AI chat** — chat with agents that can read your workspace context and use
-  tools to answer questions about your data.
-- **Local-first runtime** — the API, engine, storage, and web app all run in a
-  single process on your machine. Your data stays local.
+- **Ask, don't assemble** — a coordinator routes work to SQL, chart, notebook,
+  and Python specialists, and every tool call stays visible.
+- **Outputs you can keep** — answers become data tables, charts, and notebooks
+  that mix prose, SQL, Python, and diagrams.
+- **Your sources** — a managed local lakehouse plus DuckDB, SQLite, PostgreSQL,
+  and MySQL connections over data you already have.
+- **Your models** — Ollama or LM Studio locally, or cloud providers such as
+  OpenAI, Anthropic, Gemini, and Bedrock.
+- **Grounded context** — curated Knowledge concepts for metrics, joins, and
+  golden queries, with agent proposals you review.
+- **Local-first** — the app, API, job worker, and Python kernels run on one
+  machine; prompts go only to the model provider you configure.
 
 ## Install
 

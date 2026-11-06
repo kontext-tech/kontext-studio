@@ -607,7 +607,7 @@ def cli(argv: list[str] | None = None) -> None:
     """Unified CLI entry point: ``kontext-labs``."""
     parser = argparse.ArgumentParser(
         prog="kontext-labs",
-        description="Kontext — local-first data & AI workspace.",
+        description="Kontext — local-first AI data workspace.",
     )
     subs = parser.add_subparsers(dest="command")
 

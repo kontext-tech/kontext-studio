@@ -1,7 +1,7 @@
 [project]
 name = "kontext-labs"
 version = "0.261.0"
-description = "Local server, CLI, and runtime for Kontext"
+description = "Local-first AI data workspace: server, CLI, and runtime"
 authors = [
     { name = "Kontext Team", email = "hello@kontext.tech" },
 ]
