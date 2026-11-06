@@ -11,13 +11,14 @@ const PYTHON_ENVIRONMENT_QUERY_KEY = ["python-environment"] as const;
  * mutation. React Query owns the cached server state so the page no longer
  * hand-rolls loading/error/refresh state.
  */
-export function usePythonEnvironment() {
+export function usePythonEnvironment(options?: { enabled?: boolean }) {
    const apiErrorHandler = useApiErrorHandler();
    const accountService = useService(AccountService, apiErrorHandler);
    const queryClient = useQueryClient();
 
    const query = useQuery<PythonEnvironmentInfo>({
       queryKey: PYTHON_ENVIRONMENT_QUERY_KEY,
+      enabled: options?.enabled ?? true,
       queryFn: async () => {
          const response = await accountService.getPythonEnvironment();
 

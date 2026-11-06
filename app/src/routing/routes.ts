@@ -124,7 +124,7 @@ export const ROUTE_CONFIG: {
       pathPattern: "/",
       name: RouteNames.HOME,
       key: "home",
-      label: "User Console",
+      label: "Home",
       icon: "HomeOutlined",
       layout: UserLayout,
       element: () => withSuspense(HomePage),

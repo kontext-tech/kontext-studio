@@ -37,12 +37,12 @@ const UserNav = ({ includeNavigationItems = true }: UserNavProps) => {
       });
 
       // The header dropdown suppresses the standard navigation items, so add a
-      // direct link back to the User Console (HOME) when they are not present.
+      // direct link back to Home when they are not present.
       if (!includeNavigationItems) {
          userMenuItems.push({
             key: "user-console",
             icon: <HomeOutlined />,
-            label: "User Console",
+            label: "Home",
             onClick: () => navigate(getRoutePath(RouteNames.HOME))
          });
       }

@@ -50,7 +50,9 @@ export const createThemeConfig = (isDark: boolean): ThemeConfig => {
             boxShadow: "none",
             primaryShadow: "none",
             defaultShadow: "none",
-            fontWeight: 600
+            fontWeight: 600,
+            // Cyan is bright in dark mode; white text on it falls below AA.
+            primaryColor: isDark ? "#08131A" : "#FFFFFF"
          },
          Tooltip: {
             borderRadius: tokens.shared.borderRadius

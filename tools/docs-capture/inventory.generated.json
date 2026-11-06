@@ -1,6 +1,6 @@
 {
   "generatedFrom": "app/src/routing/routes.ts",
-  "sourceHash": "6f6e5f669524bcf0ae54e61afce79863f8108fd7e49c4ab2c17ebc4808ea96d5",
+  "sourceHash": "c0978412e0ac7ede43a14248b82a941b9f9f8e426be92b22563786b28f04c7e2",
   "routeCount": 25,
   "routes": [
     {
@@ -45,7 +45,7 @@
     {
       "name": "HOME",
       "pathPattern": "/",
-      "label": "User Console",
+      "label": "Home",
       "layout": "UserLayout",
       "public": false,
       "hidden": false,

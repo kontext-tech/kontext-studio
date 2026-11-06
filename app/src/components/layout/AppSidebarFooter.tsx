@@ -77,7 +77,7 @@ const AppSidebarFooter = ({ collapsed }: AppSidebarFooterProps) => {
          {
             key: "user-console",
             icon: <HomeOutlined />,
-            label: "User Console",
+            label: "Home",
             onClick: () => navigate(getGeneralRoutePath(RouteNames.HOME))
          },
          ...(isLocalMode
