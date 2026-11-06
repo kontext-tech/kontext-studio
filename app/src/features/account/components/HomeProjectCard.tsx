@@ -127,7 +127,7 @@ export const HomeProjectCard: React.FC<HomeProjectCardProps> = ({
                icon={<MessageOutlined />}
                onClick={openChat}
             >
-               {isChatEnabled ? "Open chat" : "Open project"}
+               {isChatEnabled ? "Open Chat" : "Open Project"}
             </Button>
             {modifiedLabel && (
                <span

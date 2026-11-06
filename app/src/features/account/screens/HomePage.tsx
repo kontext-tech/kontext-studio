@@ -54,13 +54,6 @@ dayjs.extend(relativeTime);
 
 const { Text } = Typography;
 
-const getTimeGreeting = () => {
-   const hour = new Date().getHours();
-   if (hour < 12) return "Good morning";
-   if (hour < 18) return "Good afternoon";
-   return "Good evening";
-};
-
 const HomePage = () => {
    const navigate = useNavigate();
    const { user, getUserRolesForProject } = useUser();
@@ -195,7 +188,7 @@ const HomePage = () => {
    const projectCountLabel = `${totalCount} ${
       totalCount === 1 ? "project" : "projects"
    }`;
-   const showRoleFilter = hasActiveFilters || totalCount > 4;
+   const showRoleFilter = totalCount > 0;
 
    const setupActions: Record<string, { label: string; path: string }> = {
       model: {
@@ -249,7 +242,7 @@ const HomePage = () => {
             <h1 className="home-title">
                {displayName ? (
                   <>
-                     {getTimeGreeting()},{" "}
+                     Hello,{" "}
                      <span className="gradient-text" style={gradientStyle}>
                         {displayName}
                      </span>
@@ -286,7 +279,7 @@ const HomePage = () => {
                disabled={!isLocalMode}
                onClick={() => setShowCreateModal(true)}
             >
-               New project
+               Create Project
             </Button>
          </Flex>
       </section>
@@ -438,7 +431,7 @@ const HomePage = () => {
                         disabled={!isLocalMode}
                         onClick={() => setShowCreateModal(true)}
                      >
-                        New project
+                        Create Project
                      </Button>
                   )}
                   <Button onClick={() => setShowDemoModal(true)}>
@@ -478,7 +471,7 @@ const HomePage = () => {
                         <PlusOutlined />
                      </span>
                      <span className="home-project-card__new-title">
-                        New project
+                        Create Project
                      </span>
                      <span className="home-project-card__new-copy">
                         Start with a local lakehouse and add your own data.
