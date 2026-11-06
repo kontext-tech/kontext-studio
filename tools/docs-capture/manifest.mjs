@@ -22,7 +22,7 @@ export const manifest = {
    LOGIN: { kind: "excluded", reason: "internal-redirect" },
 
    HOME: { kind: "documented", page: "02-create-a-project" },
-   PROJECT_CONSOLE: { kind: "documented", page: "02-create-a-project" },
+   PROJECT_CONSOLE: { kind: "documented", page: "15-project-overview" },
    PROJECT: { kind: "documented", page: "08-chat-with-an-agent" },
 
    PROJECT_CATALOGS: { kind: "documented", page: "03-connect-a-data-source" },

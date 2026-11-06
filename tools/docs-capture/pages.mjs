@@ -45,7 +45,7 @@ export const pages = [
       order: 2,
       status: "published",
       summary: "Projects hold data sources, files, chats, and settings.",
-      routes: ["HOME", "PROJECT_CONSOLE"],
+      routes: ["HOME"],
       flow: "first-project"
    },
    {
@@ -171,5 +171,16 @@ export const pages = [
       summary: "Monitor background runs and inspect their parameters, logs, and timing.",
       routes: ["PROJECT_JOBS"],
       flow: "account-settings"
+   },
+   {
+      slug: "15-project-overview",
+      title: "Project overview and usage",
+      group: "workspace",
+      order: 15,
+      status: "published",
+      summary:
+         "Inspect project details, token and storage usage, and the monthly token history.",
+      routes: ["PROJECT_CONSOLE"],
+      flow: "first-project"
    }
 ];

@@ -225,10 +225,11 @@ export async function startServer({ apiPort, appPort } = {}) {
    });
 
    const processes = [api];
+   let launchToken = "";
 
    try {
       await waitForHttp(`${apiUrl}/health`, { label: "kontext-labs", process: api });
-      const launchToken = await readLaunchToken();
+      launchToken = await readLaunchToken();
 
       const app = spawnLogged({
          name: "app",

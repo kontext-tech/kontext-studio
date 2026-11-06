@@ -8,7 +8,9 @@ one project at a time.
 
 The home page lists the projects you can access. Select a project name to open
 its overview, which gathers the data sources, files, notebooks, chats, and
-settings for that project.
+settings for that project. See
+[Project overview and usage](15-project-overview.md) for the stats and project
+details tabs.
 
 ## Find a project
 
