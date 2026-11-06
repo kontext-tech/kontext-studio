@@ -213,7 +213,7 @@ const HomePage = () => {
    const helpLinks = getHelpLinks();
 
    const renderHelpResources = () => (
-      <Flex vertical gap="large" style={{ width: "100%" }}>
+      <Flex vertical gap="middle" style={{ width: "100%" }}>
          <Text
             strong
             style={{
@@ -225,24 +225,30 @@ const HomePage = () => {
             Help & Resources
          </Text>
 
-         <Flex vertical gap="small">
+         <Flex wrap gap="small">
             {helpLinks.map((link) => (
                <a
                   key={link.key}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ textDecoration: "none" }}
+                  style={{
+                     textDecoration: "none",
+                     flex: "1 1 200px",
+                     minWidth: 180
+                  }}
                >
                   <Card
                      hoverable
                      size="small"
+                     style={{ height: "100%" }}
                      styles={{
                         body: {
                            display: "flex",
                            alignItems: "center",
-                           gap: 12,
-                           padding: "12px 16px"
+                           gap: 10,
+                           padding: "12px 14px",
+                           height: "100%"
                         }
                      }}
                   >
@@ -250,13 +256,13 @@ const HomePage = () => {
                         align="center"
                         justify="center"
                         style={{
-                           width: 36,
-                           height: 36,
+                           width: 32,
+                           height: 32,
                            flex: "0 0 auto",
                            borderRadius: token.borderRadiusLG,
                            background: token.colorPrimaryBg,
                            color: token.colorPrimary,
-                           fontSize: 16
+                           fontSize: 15
                         }}
                      >
                         {link.icon}
@@ -274,9 +280,10 @@ const HomePage = () => {
                         {link.description && (
                            <Text
                               type="secondary"
+                              ellipsis={{ tooltip: link.description }}
                               style={{
                                  fontSize: 12,
-                                 lineHeight: 1.45
+                                 lineHeight: 1.4
                               }}
                            >
                               {link.description}
@@ -340,7 +347,7 @@ const HomePage = () => {
                   </Col>
 
                   {/* Main content */}
-                  <Col xs={24} md={16} lg={12}>
+                  <Col xs={24} md={16} lg={17}>
                      <Flex vertical gap="large" style={{ width: "100%" }}>
                         {renderProjectList()}
 
@@ -367,12 +374,9 @@ const HomePage = () => {
                            renderGettingStarted()}
                      </Flex>
                   </Col>
-
-                  {/* Help & Resources sidebar */}
-                  <Col xs={24} md={24} lg={5}>
-                     {renderHelpResources()}
-                  </Col>
                </Row>
+
+               {renderHelpResources()}
             </Space>
          </PageContainer>
 
