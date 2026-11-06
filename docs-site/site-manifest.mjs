@@ -33,6 +33,7 @@ export const userGuidePagesByGroup = pageGroups
 export const developerGroups = [
    { id: "ai", label: "AI architecture" },
    { id: "notebook", label: "Notebook" },
+   { id: "concepts", label: "Concepts" },
    { id: "workflows", label: "Repository workflows" }
 ];
 
@@ -83,13 +84,22 @@ export const developerDocs = [
       order: 1
    },
    {
+      source: "development/environment.md",
+      route: "develop/workflows/environment",
+      title: "Environment reference",
+      description:
+         "Runtime environment variables, ownership, and security-sensitive settings.",
+      group: "workflows",
+      order: 1
+   },
+   {
       source: "development/generated-code.md",
       route: "develop/workflows/generated-code",
       title: "Generated code",
       description:
          "The committed API types and Python models, and how to regenerate them.",
       group: "workflows",
-      order: 1
+      order: 2
    },
    {
       source: "development/openapi-workflow.md",
@@ -98,7 +108,7 @@ export const developerDocs = [
       description:
          "Refreshing and validating the tracked API specifications.",
       group: "workflows",
-      order: 2
+      order: 3
    },
    {
       source: "development/python-package-boundaries.md",
@@ -107,7 +117,7 @@ export const developerDocs = [
       description:
          "The Python package responsibility matrix and dependency rules.",
       group: "workflows",
-      order: 3
+      order: 4
    },
    {
       source: "development/releasing.md",
@@ -116,7 +126,34 @@ export const developerDocs = [
       description:
          "The app, wheel, TypeScript package, and docs publishing paths.",
       group: "workflows",
-      order: 4
+      order: 5
+   },
+   {
+      source: "development/local-operations.md",
+      route: "develop/workflows/local-operations",
+      title: "Local operations",
+      description:
+         "Running the local stack, recovering launch tokens, and diagnosing common failures.",
+      group: "workflows",
+      order: 6
+   },
+   {
+      source: "development/security-model.md",
+      route: "develop/concepts/security-model",
+      title: "Security and trust model",
+      description:
+         "Launch tokens, Host/Origin guards, JWTs, confinement, and residual risk.",
+      group: "concepts",
+      order: 1
+   },
+   {
+      source: "development/authorization.md",
+      route: "develop/concepts/authorization",
+      title: "Authorization and permissions",
+      description:
+         "Claims, project roles, feature gates, and the permission map.",
+      group: "concepts",
+      order: 2
    }
 ];
 

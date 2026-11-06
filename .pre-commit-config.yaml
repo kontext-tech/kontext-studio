@@ -55,6 +55,19 @@ repos:
                 tools/validate-agent-docs\.mjs
             )$
 
+       - id: validate-env-docs
+         name: validate environment docs
+         entry: node tools/validate-env-docs.mjs
+         language: system
+         pass_filenames: false
+         files: |
+            (?x)^(
+                docs/development/environment\.md|
+                \.env\.example|
+                py/kontext-common/src/kontext/common/constants/env_vars\.py|
+                tools/validate-env-docs\.mjs
+            )$
+
        - id: regenerate-api-types-reminder
          name: regenerate API types reminder
          # Non-blocking nudge only. Regeneration mutates the working tree, so

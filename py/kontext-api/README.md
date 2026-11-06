@@ -45,9 +45,12 @@ Configuration is read from the environment (typically `.env.local`, see
   server.
 - `ENVIRONMENT` — deployment environment name; `development` enables the
   interactive docs routes.
-- `ENV_CORS_ALLOWED_ORIGINS` — comma-separated CORS allowlist.
+- `CORS_ALLOWED_ORIGINS` — comma-separated CORS allowlist.
 - Model provider keys (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, …) — see
   `.env.example`.
+
+See [the environment reference](../../docs/development/environment.md) for the
+full variable list, ownership rules, and security-sensitive settings.
 
 ## API documentation
 

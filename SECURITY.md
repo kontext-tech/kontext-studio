@@ -1,5 +1,10 @@
 # Security Policy
 
+## Architecture and threat model
+
+See [the security and trust model](docs/development/security-model.md) for the
+local credential chain, browser boundary, confinement, and residual risk.
+
 ## Supported Versions
 
 Kontext is in active development. Security fixes are applied to the latest

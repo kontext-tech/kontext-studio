@@ -142,7 +142,11 @@ def _add_serve_parser(subparsers: argparse._SubParsersAction) -> None:
         default=False,
         help="Open the browser after start.",
     )
-    p.add_argument("--lake-path", default=None, help="Lake directory (default: .kontext/ in cwd).")
+    p.add_argument(
+        "--lake-path",
+        default=None,
+        help="Lake directory (default: $KONTEXT_LAKE_PATH or ~/.kontext).",
+    )
     p.add_argument(
         "--reload",
         action="store_true",

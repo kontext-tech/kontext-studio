@@ -34,9 +34,11 @@ Run the server from the directory that should hold your workspace:
 kontext-labs serve
 ```
 
-The first start creates a workspace in `.kontext/` and prints the URL to open.
+The first start creates a workspace in `~/.kontext/` and prints the URL to open.
 Kontext seeds a placeholder profile called **Local Admin** and one project
-called **Local Project**, so you can start working immediately.
+called **Local Project**, so you can start working immediately. If the server
+reports a missing launch token, a Host/Origin error, or a port conflict, see
+[local operations and troubleshooting](../development/local-operations.md).
 
 To open the browser automatically:
 

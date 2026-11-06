@@ -156,6 +156,9 @@ jobs:
       - name: Validate agent docs topology
         run: pnpm run validate:agent-docs
 
+      - name: Validate environment docs
+        run: pnpm run validate:env-docs
+
       - name: Lint
         run: pnpm lint
 

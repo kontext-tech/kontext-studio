@@ -33,11 +33,19 @@ Architecture, conventions, and design decisions for contributors.
   host contract.
 - [Python package boundaries](development/python-package-boundaries.md) — the
   package responsibility matrix and dependency rules.
+- [Security and trust model](development/security-model.md) — what the local
+  launch token, guards, JWT, and confinement protect.
+- [Authorization and permissions](development/authorization.md) — claims, project
+  roles, feature gates, and the permission map.
 
 ## Change Kontext
 
 Workflows for building, verifying, and releasing this repository.
 
+- [Environment reference](development/environment.md) — runtime variables,
+  ownership, and the security-sensitive knobs.
+- [Local operations and troubleshooting](development/local-operations.md) —
+  running the stack, launch-token recovery, and common failures.
 - [OpenAPI specifications](development/openapi-workflow.md) — refreshing and
   validating the tracked specs.
 - [Generated code](development/generated-code.md) — the committed API types and
