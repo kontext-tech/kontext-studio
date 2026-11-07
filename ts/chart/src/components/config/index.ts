@@ -13,7 +13,7 @@ import type {
    RadarChartConfig as RadarChartConfigType,
    ScatterChartConfig as ScatterChartConfigType,
    StockChartConfig as StockChartConfigType
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import React from "react";
 import type { ChartConfig, Field } from "../../types";
 import { AreaChartConfig } from "./AreaChartConfig";

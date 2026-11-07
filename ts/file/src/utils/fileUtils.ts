@@ -1,4 +1,4 @@
-import type { FileModel } from "@kontext-labs/schema";
+import type { FileModel } from "@kontext-tech/schema";
 
 /**
  * Checks if a resource is an image based on its content type

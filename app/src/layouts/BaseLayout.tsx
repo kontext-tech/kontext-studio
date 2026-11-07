@@ -1,8 +1,8 @@
 import AppHeader from "@/components/layout/AppHeader";
 import AppSidebarFooter from "@/components/layout/AppSidebarFooter";
 import AppSidebarTop from "@/components/layout/AppSidebarTop";
-import { AppShellLayout, type AppShellLayoutProps } from "@kontext-labs/layout";
-import { useTheme } from "@kontext-labs/theme";
+import { AppShellLayout, type AppShellLayoutProps } from "@kontext-tech/layout";
+import { useTheme } from "@kontext-tech/theme";
 import React, { type ReactNode } from "react";
 
 interface MenuProps {

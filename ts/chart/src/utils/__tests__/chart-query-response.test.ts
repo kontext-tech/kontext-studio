@@ -1,4 +1,4 @@
-import type { ChartDocument, DataTable } from "@kontext-labs/schema";
+import type { ChartDocument, DataTable } from "@kontext-tech/schema";
 import { resolveChartQueryResponse } from "../chartQueryResponse";
 
 const baseTable: DataTable = {

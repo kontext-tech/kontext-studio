@@ -1,4 +1,4 @@
-import projectPermissionToRoles from "@kontext-labs/common/resources/security/project-permission-to-roles.json";
+import projectPermissionToRoles from "@kontext-tech/common/resources/security/project-permission-to-roles.json";
 
 /**
  * Utility for mapping project-scoped permissions to roles.

@@ -1,4 +1,4 @@
-import type { InlineData } from "@kontext-labs/schema";
+import type { InlineData } from "@kontext-tech/schema";
 
 export const EXAMPLE_DATA_TABLES: Record<string, InlineData> = {
    "57883424-55e1-4763-9b64-b0b7f0daef5e": {

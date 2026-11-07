@@ -10,8 +10,8 @@ PROJECT_ROOT="$(generator_repo_root)"
 GUARD_MANIFEST="$SCRIPT_DIR/generated-code-guards.json"
 
 echo "🔎 Checking schema package contracts..."
-pnpm --filter @kontext-labs/schema build
-pnpm --filter @kontext-labs/schema run check:contracts
+pnpm --filter @kontext-tech/schema build
+pnpm --filter @kontext-tech/schema run check:contracts
 
 echo "🔎 Checking generated Python schema models..."
 uv run python -m compileall -q "$PROJECT_ROOT/py/kontext-schema/src/kontext/schema"

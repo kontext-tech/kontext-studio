@@ -1,5 +1,5 @@
 import Header from "@editorjs/header";
-import { BlockIcons } from "@kontext-labs/common";
+import { BlockIcons } from "@kontext-tech/common";
 import type { BlockPreviewProps, HeaderBlock } from "@notebook/types/notebook";
 import * as React from "react";
 export class CustomHeader extends Header {

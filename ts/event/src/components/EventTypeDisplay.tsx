@@ -1,5 +1,5 @@
 import { getEventTypeConfig } from "../utils/eventTypeUtils";
-import type { EventType } from "@kontext-labs/schema";
+import type { EventType } from "@kontext-tech/schema";
 import { Space, Tag, Typography } from "antd";
 import React from "react";
 import { getEventIcon } from "./EventIcons";

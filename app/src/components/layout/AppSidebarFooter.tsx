@@ -8,16 +8,16 @@ import {
    QuestionCircleOutlined,
    SunMoonOutlined,
    UserOutlined
-} from "@kontext-labs/icons";
-import { UserAvatar, useUser } from "@kontext-labs/identity";
-import { SidebarFooter, getHelpMenuItems } from "@kontext-labs/layout";
-import { SiteFeature } from "@kontext-labs/schema";
-import { useIsLocalMode, useSiteConfigStore } from "@kontext-labs/site";
+} from "@kontext-tech/icons";
+import { UserAvatar, useUser } from "@kontext-tech/identity";
+import { SidebarFooter, getHelpMenuItems } from "@kontext-tech/layout";
+import { SiteFeature } from "@kontext-tech/schema";
+import { useIsLocalMode, useSiteConfigStore } from "@kontext-tech/site";
 import {
    themeMenuItems as buildThemeMenuItems,
    themeModeLabel,
    useTheme
-} from "@kontext-labs/theme";
+} from "@kontext-tech/theme";
 import {
    Button,
    Dropdown,

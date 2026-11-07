@@ -2,9 +2,9 @@ import {
    CodeOutlined,
    FormOutlined,
    InfoCircleOutlined
-} from "@kontext-labs/icons";
-import type { UnifiedJobParameterModel } from "@kontext-labs/schema";
-import { JobParameterType } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import type { UnifiedJobParameterModel } from "@kontext-tech/schema";
+import { JobParameterType } from "@kontext-tech/schema";
 import {
    Alert,
    Button,

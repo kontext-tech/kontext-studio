@@ -5,7 +5,7 @@ import type {
    ProjectModel,
    SiteConfigResponse,
    UserWithRolesModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export type HostMode = "local" | "hosted";
 
@@ -42,7 +42,7 @@ export interface HostClientOptions {
    headers?: Record<string, string>;
 }
 
-// Keep in sync with LAUNCH_TOKEN_HEADER in @kontext-labs/common.
+// Keep in sync with LAUNCH_TOKEN_HEADER in @kontext-tech/common.
 const LAUNCH_TOKEN_HEADER = "X-Kontext-Launch-Token";
 
 export interface HostProjectListParams {

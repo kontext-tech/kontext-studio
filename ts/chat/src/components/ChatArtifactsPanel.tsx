@@ -1,4 +1,4 @@
-import type { Artifact } from "@kontext-labs/schema";
+import type { Artifact } from "@kontext-tech/schema";
 import React from "react";
 import type { ChatArtifactHost } from "../types/chatHost";
 import ArtifactsSidebar from "./ArtifactsSidebar";

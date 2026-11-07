@@ -1,5 +1,5 @@
 import Paragraph from "@editorjs/paragraph";
-import { BlockIcons } from "@kontext-labs/common";
+import { BlockIcons } from "@kontext-tech/common";
 import type {
    BlockPreviewProps,
    ParagraphBlock

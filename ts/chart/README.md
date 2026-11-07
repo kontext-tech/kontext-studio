@@ -1,4 +1,4 @@
-# @kontext-labs/chart
+# @kontext-tech/chart
 
 Reusable chart components, schemas, and utilities for Kontext. Rendering,
 validation, conversion, aggregation, and export live here; host apps own
@@ -11,13 +11,13 @@ data fetching.
 - **Export**: download charts as PNG, JPEG, SVG, CSV, or JSON
 - **Theme support**: light and dark themes
 - **Type safety**: full TypeScript coverage, validated with Zod schemas from
-  `@kontext-labs/schema`
+  `@kontext-tech/schema`
 - **Color palettes**: predefined data-visualization palettes
 - **Auto-aggregation**: aggregates data when grouping by fields with duplicates
 
 ## Supported Chart Types
 
-The chart type registry is owned by `@kontext-labs/schema`
+The chart type registry is owned by `@kontext-tech/schema`
 (`ts/schema/src/charts/`). The 13 types are: `line`, `bar`, `column`, `area`,
 `pie`, `scatter`, `dualAxes`, `funnel`, `heatmap`, `histogram`, `box`, `radar`,
 and `stock`.
@@ -25,7 +25,7 @@ and `stock`.
 ## Quick Start
 
 ```tsx
-import { ChartFactory } from "@kontext-labs/chart";
+import { ChartFactory } from "@kontext-tech/chart";
 
 const MyChart = () => (
   <ChartFactory
@@ -73,10 +73,10 @@ Exports a chart to PNG, JPEG, SVG, CSV, or JSON.
 
 ## Validation
 
-Chart configs are validated with Zod schemas from `@kontext-labs/schema`:
+Chart configs are validated with Zod schemas from `@kontext-tech/schema`:
 
 ```ts
-import { validateChart } from "@kontext-labs/chart";
+import { validateChart } from "@kontext-tech/chart";
 
 const result = validateChart(config, "line");
 if (!result.valid) {
@@ -92,7 +92,7 @@ import type {
   ChartType,
   LineChartConfig,
   BarChartConfig
-} from "@kontext-labs/chart";
+} from "@kontext-tech/chart";
 ```
 
 ## Boundary Contract
@@ -102,9 +102,9 @@ export**. It does **not** own host-specific concerns:
 
 | Responsibility | Owner |
 | --- | --- |
-| Chart rendering / component tree | `@kontext-labs/chart` |
-| Config validation (Zod) | `@kontext-labs/chart` (schemas from `@kontext-labs/schema`) |
-| Chart data aggregation (`useChartDataAggregation`) | `@kontext-labs/chart` |
+| Chart rendering / component tree | `@kontext-tech/chart` |
+| Config validation (Zod) | `@kontext-tech/chart` (schemas from `@kontext-tech/schema`) |
+| Chart data aggregation (`useChartDataAggregation`) | `@kontext-tech/chart` |
 | Remote data loading via file service | App / host layer |
 | `DataRef` resolution + React Query | App / host layer |
 
@@ -114,20 +114,20 @@ resolved `DataTable` into `<ChartDocumentView>` or the chart components as props
 ## Dependencies
 
 - React 19+, Ant Design 6+, `@ant-design/plots` 2.6+, Zod 4+
-- `@kontext-labs/common`, `@kontext-labs/schema`, `@kontext-labs/file`,
-  `@kontext-labs/query`, `@kontext-labs/theme`, `@kontext-labs/ui`
+- `@kontext-tech/common`, `@kontext-tech/schema`, `@kontext-tech/file`,
+  `@kontext-tech/query`, `@kontext-tech/theme`, `@kontext-tech/ui`
 
 ## Development
 
 ```bash
-pnpm --filter @kontext-labs/chart build
-pnpm --filter @kontext-labs/chart lint
-pnpm --filter @kontext-labs/chart test
+pnpm --filter @kontext-tech/chart build
+pnpm --filter @kontext-tech/chart lint
+pnpm --filter @kontext-tech/chart test
 ```
 
 ## Used By
 
-- `@kontext-labs/notebook` — notebook editor with chart blocks
+- `@kontext-tech/notebook` — notebook editor with chart blocks
 - The Kontext app
 
 ## License

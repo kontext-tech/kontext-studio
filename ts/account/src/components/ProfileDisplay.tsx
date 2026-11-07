@@ -2,9 +2,9 @@ import {
    CheckCircleOutlined,
    CloseCircleOutlined,
    EditOutlined
-} from "@kontext-labs/icons";
-import { UserAvatar } from "@kontext-labs/identity";
-import type { UserWithRolesModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { UserAvatar } from "@kontext-tech/identity";
+import type { UserWithRolesModel } from "@kontext-tech/schema";
 import {
    Button,
    Card,

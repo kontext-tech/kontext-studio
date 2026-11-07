@@ -4,7 +4,7 @@ import type {
    CatalogConnectionRequest,
    CatalogExecutionMode,
    CatalogProviderDefinition
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export type CatalogFormValues = {
    providerKind: string;

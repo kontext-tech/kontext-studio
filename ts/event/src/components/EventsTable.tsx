@@ -1,12 +1,12 @@
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
 import {
    formatFullDateTime,
    formatNumberWithCommas,
    formatTimeAgo
-} from "@kontext-labs/common";
-import { UserAvatarById } from "@kontext-labs/identity";
-import { ExpandAltOutlined, ShrinkOutlined } from "@kontext-labs/icons";
-import type { EventModel } from "@kontext-labs/schema";
+} from "@kontext-tech/common";
+import { UserAvatarById } from "@kontext-tech/identity";
+import { ExpandAltOutlined, ShrinkOutlined } from "@kontext-tech/icons";
+import type { EventModel } from "@kontext-tech/schema";
 import { Button, Card, Space, Table, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useState } from "react";

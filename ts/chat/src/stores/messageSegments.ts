@@ -2,7 +2,7 @@ import type {
    ChatErrorSegment,
    ChatReasoningSegment,
    ChatTextSegment
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 // Helper functions for creating discriminated union segments
 export const createTextSegment = (

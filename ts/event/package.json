@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/event",
+   "name": "@kontext-tech/event",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared event display components for Kontext",
@@ -19,11 +19,11 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/common": "workspace:*",
-      "@kontext-labs/icons": "workspace:*",
-      "@kontext-labs/identity": "workspace:*",
-      "@kontext-labs/app-runtime": "workspace:*",
-      "@kontext-labs/schema": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
+      "@kontext-tech/identity": "workspace:*",
+      "@kontext-tech/app-runtime": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
       "antd": "^6.6.7",
       "react": "^19.3.1"
    },

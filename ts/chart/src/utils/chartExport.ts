@@ -4,7 +4,7 @@
  */
 
 import type { Chart } from "@ant-design/plots";
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 
 export type ExportFormat = "png";
 

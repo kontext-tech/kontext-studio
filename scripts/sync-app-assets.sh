@@ -42,7 +42,7 @@ if [ -d "$APP_DIST" ]; then
     cp "$LABS_DIR/PRIVACY.md" "$LABS_DIST_TARGET/PRIVACY.md"
     echo "✅ Synced app/dist to $LABS_DIST_TARGET"
 else
-    echo "ℹ️  Note: app/dist not built yet. Run 'pnpm --filter @kontext-labs/app build' to bundle frontend UI."
+    echo "ℹ️  Note: app/dist not built yet. Run 'pnpm --filter @kontext-tech/app build' to bundle frontend UI."
 fi
 
 echo "✨ Asset sync complete."

@@ -1,6 +1,6 @@
 import type { PermissionClaim } from "../constants/permissionClaims";
 import type { SystemRole } from "../constants/systemRoles";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Flex, Result } from "antd";
 import type { ReactNode } from "react";
 import { usePermissionContext } from "../context/PermissionContext";

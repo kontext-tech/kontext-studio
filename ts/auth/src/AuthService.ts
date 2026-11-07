@@ -1,11 +1,11 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import {
    ApiResult,
    getLaunchToken,
    HttpApiService
-} from "@kontext-labs/common";
-import { HostClient, type HostAuthBootstrap } from "@kontext-labs/host-api";
-import type { AccessTokenResponse, LoginRequest } from "@kontext-labs/schema";
+} from "@kontext-tech/common";
+import { HostClient, type HostAuthBootstrap } from "@kontext-tech/host-api";
+import type { AccessTokenResponse, LoginRequest } from "@kontext-tech/schema";
 
 export class AuthService extends HttpApiService {
    constructor(

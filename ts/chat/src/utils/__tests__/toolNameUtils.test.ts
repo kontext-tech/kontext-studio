@@ -4,7 +4,7 @@ import {
    AgentToolNames,
    DelegationToolNames,
    ExternalExecutionToolNames
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    getToolDisplayName,
    isDelegationTool,

@@ -3,9 +3,9 @@ import type {
    ModelCatalogEntry,
    PythonExecutionApprovalMode,
    ProjectModel
-} from "@kontext-labs/schema";
-import { useUiApp } from "@kontext-labs/ui";
-import { CodeOutlined, RobotOutlined } from "@kontext-labs/icons";
+} from "@kontext-tech/schema";
+import { useUiApp } from "@kontext-tech/ui";
+import { CodeOutlined, RobotOutlined } from "@kontext-tech/icons";
 import { Button, Dropdown, Flex, theme, Typography } from "antd";
 import React, { useCallback, useState } from "react";
 import type { ChatNavigationAdapter } from "../types/chatHost";

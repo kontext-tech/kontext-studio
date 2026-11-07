@@ -1,4 +1,4 @@
-import { useUiApp } from "@kontext-labs/ui";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    DeleteOutlined,
    EditOutlined,
@@ -6,8 +6,8 @@ import {
    MoreOutlined,
    PanelLeftCloseOutlined,
    PanelLeftOpenOutlined
-} from "@kontext-labs/icons";
-import { type ChatSessionModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { type ChatSessionModel } from "@kontext-tech/schema";
 import {
    Button,
    Dropdown,

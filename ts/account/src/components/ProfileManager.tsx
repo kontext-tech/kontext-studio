@@ -1,7 +1,7 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUser } from "@kontext-labs/identity";
-import type { UiFeedback } from "@kontext-labs/ui";
-import type { UserWithRolesModel } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUser } from "@kontext-tech/identity";
+import type { UiFeedback } from "@kontext-tech/ui";
+import type { UserWithRolesModel } from "@kontext-tech/schema";
 import { Button, Card, Flex, Spin, Typography } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import ProfileDisplay from "./ProfileDisplay";

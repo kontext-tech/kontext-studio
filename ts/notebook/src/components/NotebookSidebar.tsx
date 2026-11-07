@@ -1,5 +1,5 @@
-import { FileTextOutlined } from "@kontext-labs/icons";
-import type { CultureInfoModel } from "@kontext-labs/schema";
+import { FileTextOutlined } from "@kontext-tech/icons";
+import type { CultureInfoModel } from "@kontext-tech/schema";
 import type {
    NotebookMetadata,
    SidebarTabExtension

@@ -1,5 +1,5 @@
 import type { Chart } from "@ant-design/plots";
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 import { Alert, Card, Empty, Space, Spin, Typography, theme } from "antd";
 import React, { useState } from "react";
 import { convertChartConfig } from "../schemas/converters";

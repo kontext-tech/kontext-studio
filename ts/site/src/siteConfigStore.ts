@@ -1,6 +1,6 @@
-import { SiteFeature, type SiteConfigResponse } from "@kontext-labs/schema";
+import { SiteFeature, type SiteConfigResponse } from "@kontext-tech/schema";
 import { create } from "zustand";
-import { API_BASE_PATH } from "@kontext-labs/common";
+import { API_BASE_PATH } from "@kontext-tech/common";
 
 export interface SiteConfigState {
    siteConfig: SiteConfigResponse | null;

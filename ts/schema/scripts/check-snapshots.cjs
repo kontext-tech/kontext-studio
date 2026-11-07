@@ -27,7 +27,7 @@ const snapshots = {
             }
          );
       },
-      hint: "Run `pnpm --filter @kontext-labs/schema refresh-schemas` and commit the result."
+      hint: "Run `pnpm --filter @kontext-tech/schema refresh-schemas` and commit the result."
    },
    api: {
       fileName: "kontext.api.openapi.json",
@@ -37,7 +37,7 @@ const snapshots = {
          const { fetchApiOpenAPISpec } = require("./fetch-api-openapi.cjs");
          await fetchApiOpenAPISpec();
       },
-      hint: "Run `pnpm --filter @kontext-labs/schema refresh-api-schema` and commit the result."
+      hint: "Run `pnpm --filter @kontext-tech/schema refresh-api-schema` and commit the result."
    }
 };
 

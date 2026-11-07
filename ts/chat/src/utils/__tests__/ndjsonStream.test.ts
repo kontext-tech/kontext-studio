@@ -2,7 +2,7 @@
 
 import { ReadableStream } from "stream/web";
 import { TextDecoder, TextEncoder } from "util";
-import { RunEvent, SimpleRunEventStreamSchema } from "@kontext-labs/schema";
+import { RunEvent, SimpleRunEventStreamSchema } from "@kontext-tech/schema";
 import { consumeNdjsonStream } from "../ndjsonStream";
 
 const encoder = new TextEncoder();

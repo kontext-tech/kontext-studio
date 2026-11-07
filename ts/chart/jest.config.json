@@ -14,8 +14,8 @@
    "moduleNameMapper": {
       "^(\\.\\.?/.*)\\.js$": "$1",
       "^@charts/(.*)$": "<rootDir>/src/$1",
-      "^@kontext-labs/([^/]+)/(.*)$": "<rootDir>/../$1/src/$2",
-      "^@kontext-labs/([^/]+)$": "<rootDir>/../$1/src/index.ts"
+      "^@kontext-tech/([^/]+)/(.*)$": "<rootDir>/../$1/src/$2",
+      "^@kontext-tech/([^/]+)$": "<rootDir>/../$1/src/index.ts"
    },
    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"],
    "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts"],

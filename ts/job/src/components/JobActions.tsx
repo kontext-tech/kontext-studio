@@ -1,11 +1,11 @@
-import { PermissionButton } from "@kontext-labs/auth";
-import { PERMISSION_CLAIMS } from "@kontext-labs/auth";
+import { PermissionButton } from "@kontext-tech/auth";
+import { PERMISSION_CLAIMS } from "@kontext-tech/auth";
 import {
    DeleteOutlined,
    EditOutlined,
    PlayCircleOutlined,
    StopOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import { Space } from "antd";
 import React from "react";
 import type { JobActionsProps } from "../jobTypes";

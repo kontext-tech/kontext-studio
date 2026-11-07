@@ -1,11 +1,11 @@
 import { useLogoutAction } from "@/hooks/useLogoutAction";
 import { useRoute } from "@/hooks/useRoute";
-import { SignInButton } from "@kontext-labs/auth";
-import { UserAvatar, useUser } from "@kontext-labs/identity";
+import { SignInButton } from "@kontext-tech/auth";
+import { UserAvatar, useUser } from "@kontext-tech/identity";
 import { RouteNames } from "@/types";
 import { getUserMenuItems } from "@/utils/menuUtils";
-import { useSiteConfigStore } from "@kontext-labs/site";
-import { HomeOutlined, LogoutOutlined } from "@kontext-labs/icons";
+import { useSiteConfigStore } from "@kontext-tech/site";
+import { HomeOutlined, LogoutOutlined } from "@kontext-tech/icons";
 import { Button, Dropdown, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 

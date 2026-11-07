@@ -1,11 +1,11 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
 import type {
    JobResetResponse,
    JobRunLogModel,
    JobRunModel,
    PaginatedListOfJobRunModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Service for managing project-scoped job runs via the Data API.

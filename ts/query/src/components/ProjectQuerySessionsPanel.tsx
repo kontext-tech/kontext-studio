@@ -1,14 +1,14 @@
-import { UserAvatarById } from "@kontext-labs/identity";
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { formatFullDateTime, formatTimeAgo } from "@kontext-labs/common";
+import { UserAvatarById } from "@kontext-tech/identity";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { formatFullDateTime, formatTimeAgo } from "@kontext-tech/common";
 import {
    DeleteOutlined,
    ReloadOutlined,
    StopOutlined
-} from "@kontext-labs/icons";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import type { QuerySessionModel } from "@kontext-labs/schema";
-import { QuerySessionStatus } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import type { QuerySessionModel } from "@kontext-tech/schema";
+import { QuerySessionStatus } from "@kontext-tech/schema";
 import { Button, Modal, Space, Table, Tag, Tooltip, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useCallback, useEffect, useState } from "react";

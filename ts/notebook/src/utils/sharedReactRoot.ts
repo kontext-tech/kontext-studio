@@ -1,5 +1,5 @@
-import { logger } from "@kontext-labs/common";
-import { ThemeContext, type ThemeContextProps } from "@kontext-labs/theme";
+import { logger } from "@kontext-tech/common";
+import { ThemeContext, type ThemeContextProps } from "@kontext-tech/theme";
 import { ConfigProvider } from "antd";
 import React from "react";
 import { createPortal } from "react-dom";

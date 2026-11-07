@@ -1,7 +1,7 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { ReloadOutlined } from "@kontext-labs/icons";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import type { EventModel } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { ReloadOutlined } from "@kontext-tech/icons";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import type { EventModel } from "@kontext-tech/schema";
 import { Button, Select, Space } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { ProjectEventService } from "../ProjectEventService";

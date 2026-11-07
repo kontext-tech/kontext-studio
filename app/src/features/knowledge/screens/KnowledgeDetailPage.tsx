@@ -13,11 +13,11 @@ import {
 } from "@/features/knowledge/utils/conceptPresentation";
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { CommonRoleGroups, PermissionButton } from "@kontext-labs/auth";
-import { DeleteOutlined, EditOutlined } from "@kontext-labs/icons";
-import { useProject } from "@kontext-labs/project";
-import { MarkdownRenderer } from "@kontext-labs/chat";
-import { LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+import { CommonRoleGroups, PermissionButton } from "@kontext-tech/auth";
+import { DeleteOutlined, EditOutlined } from "@kontext-tech/icons";
+import { useProject } from "@kontext-tech/project";
+import { MarkdownRenderer } from "@kontext-tech/chat";
+import { LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import {
    Alert,
    Card,

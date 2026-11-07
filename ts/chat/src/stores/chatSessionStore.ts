@@ -1,6 +1,6 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult } from "@kontext-labs/common";
-import { ServiceContainer } from "@kontext-labs/common/container";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult } from "@kontext-tech/common";
+import { ServiceContainer } from "@kontext-tech/common/container";
 import type {
    Artifact,
    ChatMessage,
@@ -11,7 +11,7 @@ import type {
    SimpleRunEvent,
    ToolCall,
    UpdateChatSessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { createContext, useContext } from "react";
 import { createStore, useStore, type StoreApi } from "zustand";
 import { devtools } from "zustand/middleware";

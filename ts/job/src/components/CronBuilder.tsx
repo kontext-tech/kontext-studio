@@ -1,4 +1,4 @@
-import { InfoCircleOutlined } from "@kontext-labs/icons";
+import { InfoCircleOutlined } from "@kontext-tech/icons";
 import { Input, Select, Space, Typography } from "antd";
 import cronstrue from "cronstrue";
 import React, { useCallback, useEffect, useState } from "react";

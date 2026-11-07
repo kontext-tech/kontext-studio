@@ -1,7 +1,7 @@
 import type { BlockAPI } from "@editorjs/editorjs";
-import { DEFAULT_COLOR_PALETTE } from "@kontext-labs/chart";
-import { BlockIcons, logger } from "@kontext-labs/common";
-import type { ChartBlockData, NotebookDocument } from "@kontext-labs/schema";
+import { DEFAULT_COLOR_PALETTE } from "@kontext-tech/chart";
+import { BlockIcons, logger } from "@kontext-tech/common";
+import type { ChartBlockData, NotebookDocument } from "@kontext-tech/schema";
 import { ChartBlockComponent } from "@notebook/components/chart/ChartBlockComponent";
 import { useNotebookStore } from "@notebook/stores/notebookStore";
 import { createBlockId } from "@notebook/utils/coreUtils";

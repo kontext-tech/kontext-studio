@@ -1,9 +1,9 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import type {
    UnifiedJobParameterModel,
    UnifiedJobTypeModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DataJobService } from "./DataJobService";
 

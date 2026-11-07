@@ -1,4 +1,4 @@
-import { ThemeProvider, useTheme } from "@kontext-labs/theme";
+import { ThemeProvider, useTheme } from "@kontext-tech/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { App as AntdApp, ConfigProvider, Layout } from "antd";
 import React, { useState } from "react";

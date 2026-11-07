@@ -25,9 +25,9 @@
       "declarationMap": true,
       "sourceMap": true,
       "paths": {
-         "@kontext-labs/common": ["../common/src/index.ts"],
-         "@kontext-labs/icons": ["../icons/src/index.ts"],
-         "@kontext-labs/theme": ["../theme/src/index.ts"]
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/icons": ["../icons/src/index.ts"],
+         "@kontext-tech/theme": ["../theme/src/index.ts"]
       }
    },
    "references": [

@@ -1,12 +1,12 @@
-import { formatFileSize } from "@kontext-labs/common";
-import { UploadOutlined } from "@kontext-labs/icons";
-import type { ApiErrorResult } from "@kontext-labs/common/types";
+import { formatFileSize } from "@kontext-tech/common";
+import { UploadOutlined } from "@kontext-tech/icons";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
 import type {
    CreateMultipleFilesResponse,
    ProjectConfiguration
-} from "@kontext-labs/schema";
-import { useIsLocalMode } from "@kontext-labs/site";
-import { useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useIsLocalMode } from "@kontext-tech/site";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    Checkbox,
    Flex,

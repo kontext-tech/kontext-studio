@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import React from "react";
 import type { ChatMessage } from "../types/chat";
 import ChatMessageList from "./ChatMessageList";

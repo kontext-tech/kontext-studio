@@ -6,7 +6,7 @@
  * approval resolution, tool-output shaping, and notebook-state updates.
  */
 
-import { notebookInstanceId } from "@kontext-labs/common";
+import { notebookInstanceId } from "@kontext-tech/common";
 import {
    AgentToolNames,
    type PendingPythonExecutionRequest,
@@ -15,7 +15,7 @@ import {
    type RunPausedEventData,
    type SimpleRunEvent,
    type ToolCall
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 import { isExternalExecutionTool } from "./utils/toolNameUtils";
 

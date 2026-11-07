@@ -1,7 +1,7 @@
 import type { PermissionClaim } from "../constants/permissionClaims";
 import type { SystemRole } from "../constants/systemRoles";
 import type { PermissionProps } from "../permissionTypes";
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { createContext, useContext } from "react";
 
 /**

@@ -3,8 +3,8 @@
  * Provides robust schema validation for chart configurations
  */
 
-import type { ChartType } from "@kontext-labs/schema";
-import { CHART_SCHEMAS } from "@kontext-labs/schema";
+import type { ChartType } from "@kontext-tech/schema";
+import { CHART_SCHEMAS } from "@kontext-tech/schema";
 import { z } from "zod";
 import type { ChartConfig } from "../types/chart";
 

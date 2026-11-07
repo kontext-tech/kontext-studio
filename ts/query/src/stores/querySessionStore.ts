@@ -1,15 +1,15 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
    QueryModel,
    QuerySessionModel,
    UpdateQuerySessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    QuerySessionStatus,
    type QueryExecRequest,
    type QueryResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import type {

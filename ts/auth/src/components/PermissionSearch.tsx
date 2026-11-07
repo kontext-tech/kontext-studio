@@ -1,4 +1,4 @@
-import { DebouncedSearch } from "@kontext-labs/ui";
+import { DebouncedSearch } from "@kontext-tech/ui";
 import { Tooltip } from "antd";
 import type { InputProps, InputRef } from "antd/es/input";
 import { forwardRef } from "react";

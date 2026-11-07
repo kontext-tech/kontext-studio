@@ -19,8 +19,8 @@ import {
    UserAddOutlined,
    UserCheckOutlined,
    UserOutlined
-} from "@kontext-labs/icons";
-import { EventType } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { EventType } from "@kontext-tech/schema";
 import React from "react";
 
 export const getEventIcon = (type: EventType | undefined): React.ReactNode => {

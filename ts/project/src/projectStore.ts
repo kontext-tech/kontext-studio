@@ -1,10 +1,10 @@
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ProjectModel } from "@kontext-tech/schema";
 import {
    LOCAL_STORAGE_KEYS,
    ServiceContainer,
    logger,
    type ApiErrorResult
-} from "@kontext-labs/common";
+} from "@kontext-tech/common";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { ProjectService } from "./ProjectService";

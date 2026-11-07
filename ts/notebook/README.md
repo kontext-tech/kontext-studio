@@ -38,7 +38,7 @@ import {
    NotebookServiceProvider,
    useNotebookStore,
    type NotebookDocument
-} from "@kontext-labs/notebook";
+} from "@kontext-tech/notebook";
 
 const queryClient = new QueryClient();
 const instanceId = "example-notebook";
@@ -69,9 +69,9 @@ export function ExampleNotebook({ document }: { document: NotebookDocument }) {
 ## Development Commands
 
 ```bash
-pnpm --filter @kontext-labs/notebook build
-pnpm --filter @kontext-labs/notebook test
-pnpm --filter @kontext-labs/notebook lint
+pnpm --filter @kontext-tech/notebook build
+pnpm --filter @kontext-tech/notebook test
+pnpm --filter @kontext-tech/notebook lint
 pnpm --filter notebook-demo dev
 ```
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import type { ModelCatalogEntry, ProjectModel } from "@kontext-labs/schema";
+import type { ModelCatalogEntry, ProjectModel } from "@kontext-tech/schema";
 import ChatInputArea from "../ChatInputArea";
 
 jest.mock("../../useChat", () => ({
@@ -26,7 +26,7 @@ jest.mock("../../stores/chatSessionStore", () => ({
    ) => selector({ modelSelectionId: undefined })
 }));
 
-jest.mock("@kontext-labs/ui", () => ({
+jest.mock("@kontext-tech/ui", () => ({
    useUiApp: () => ({
       message: {
          error: jest.fn()
@@ -37,7 +37,7 @@ jest.mock("@kontext-labs/ui", () => ({
    })
 }));
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    const Icon = ({ name }: { name: string }) =>

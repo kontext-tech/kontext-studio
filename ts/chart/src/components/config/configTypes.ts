@@ -1,4 +1,4 @@
-import type { ChartConfig } from "@kontext-labs/schema";
+import type { ChartConfig } from "@kontext-tech/schema";
 import type { Field } from "../../types";
 
 /**

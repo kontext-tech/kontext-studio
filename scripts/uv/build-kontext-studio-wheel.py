@@ -150,7 +150,7 @@ def main() -> None:
 
     if args.build_app:
         print("🔨 Building frontend app with pnpm...")
-        subprocess.run(["pnpm", "--filter", "@kontext-labs/app", "build"], cwd=ROOT_DIR, check=True)
+        subprocess.run(["pnpm", "--filter", "@kontext-tech/app", "build"], cwd=ROOT_DIR, check=True)
 
     # Sync app assets to the labs package
     sync_script = ROOT_DIR / "scripts" / "sync-app-assets.sh"

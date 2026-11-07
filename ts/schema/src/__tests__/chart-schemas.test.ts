@@ -1,5 +1,5 @@
 /**
- * Tests for chart schemas in @kontext-labs/schema
+ * Tests for chart schemas in @kontext-tech/schema
  * Tests the Zod schemas and their validation capabilities
  */
 

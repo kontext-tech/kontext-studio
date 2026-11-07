@@ -2,7 +2,7 @@
 
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ArtifactType, type ChatSessionModel } from "@kontext-labs/schema";
+import { ArtifactType, type ChatSessionModel } from "@kontext-tech/schema";
 import ArtifactsSidebar from "../ArtifactsSidebar";
 import { useChatSessionStore } from "../../stores/chatSessionStore";
 
@@ -28,7 +28,7 @@ jest.mock("../../stores/chatSessionStore", () => {
    return { useChatSessionStore };
 });
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    const Icon = ({ name }: { name: string }) =>

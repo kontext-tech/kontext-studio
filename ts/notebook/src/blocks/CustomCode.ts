@@ -1,6 +1,6 @@
 import type { BlockAPI } from "@editorjs/editorjs";
-import { BlockIcons } from "@kontext-labs/common";
-import type { CodeBlockData } from "@kontext-labs/schema";
+import { BlockIcons } from "@kontext-tech/common";
+import type { CodeBlockData } from "@kontext-tech/schema";
 import {
    CodeBlockComponent,
    type CodeBlockComponentRef

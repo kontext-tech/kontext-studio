@@ -26,7 +26,7 @@ export * from "./constants";
 // Export chart type constants
 export { CHART_TYPE_ICONS, CHART_TYPE_NAMES } from "./types/chart";
 
-// Export chart schemas and validation from centralized @kontext-labs/schema
+// Export chart schemas and validation from centralized @kontext-tech/schema
 export {
    CHART_SCHEMAS,
    CHART_SCHEMAS_ARRAY,
@@ -34,7 +34,7 @@ export {
    getAllChartTypes,
    getChartSchema,
    hasChartSchema
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 // Export chart validation utilities (charts-specific)
 export { validateChartConfig as validateChart } from "./schemas/validation";

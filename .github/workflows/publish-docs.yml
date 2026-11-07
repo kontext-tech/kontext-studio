@@ -77,7 +77,7 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       # docs-site depends only on public Astro/Starlight packages, so no
-      # private @kontext-labs registry token is needed.
+      # private @kontext-tech registry token is needed.
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

@@ -1,6 +1,6 @@
 import type { BlockAPI } from "@editorjs/editorjs";
-import { BlockIcons } from "@kontext-labs/common";
-import type { MermaidBlockData } from "@kontext-labs/schema";
+import { BlockIcons } from "@kontext-tech/common";
+import type { MermaidBlockData } from "@kontext-tech/schema";
 import { MermaidBlockComponent } from "@notebook/components/mermaid";
 import { sharedReactRoot } from "@notebook/utils/sharedReactRoot";
 import React from "react";

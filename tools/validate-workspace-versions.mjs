@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-// The lockstep version contract for the `@kontext-labs/*` TypeScript packages.
+// The lockstep version contract for the `@kontext-tech/*` TypeScript packages.
 //
 // Versioning is driven by Commitizen (`uv run cz bump`), configured in the root
 // `pyproject.toml` under `[tool.commitizen]`. Commitizen rewrites every entry in

@@ -1,10 +1,10 @@
 import ProjectSelectorLazy from "@/shell/project/ProjectSelectorLazy";
-import { useProject } from "@kontext-labs/project";
-import { useUser } from "@kontext-labs/identity";
-import { getBaseUrl } from "@kontext-labs/common/utils";
-import { MenuOutlined, QuestionCircleOutlined } from "@kontext-labs/icons";
-import { getHelpMenuItems } from "@kontext-labs/layout";
-import { ThemeSelector } from "@kontext-labs/theme";
+import { useProject } from "@kontext-tech/project";
+import { useUser } from "@kontext-tech/identity";
+import { getBaseUrl } from "@kontext-tech/common/utils";
+import { MenuOutlined, QuestionCircleOutlined } from "@kontext-tech/icons";
+import { getHelpMenuItems } from "@kontext-tech/layout";
+import { ThemeSelector } from "@kontext-tech/theme";
 import { Button, Dropdown, Flex, Layout, theme } from "antd";
 import { Suspense } from "react";
 import UserNav from "./UserNav";

@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEYS } from "@kontext-labs/common/constants";
+import { LOCAL_STORAGE_KEYS } from "@kontext-tech/common/constants";
 import { ThemeMode } from "./themeMode";
 import type { ThemeConfig } from "antd";
 import {

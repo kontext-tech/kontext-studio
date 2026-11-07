@@ -1,6 +1,6 @@
 import { usePermissionContext } from "../context/PermissionContext";
 import { createUrlWithReturnParam } from "../utils/navigationUtils";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 

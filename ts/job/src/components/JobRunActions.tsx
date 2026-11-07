@@ -1,7 +1,7 @@
-import { PermissionButton } from "@kontext-labs/auth";
-import { PERMISSION_CLAIMS } from "@kontext-labs/auth";
-import { EditOutlined, EyeOutlined, StopOutlined } from "@kontext-labs/icons";
-import { JobRunStatus } from "@kontext-labs/schema";
+import { PermissionButton } from "@kontext-tech/auth";
+import { PERMISSION_CLAIMS } from "@kontext-tech/auth";
+import { EditOutlined, EyeOutlined, StopOutlined } from "@kontext-tech/icons";
+import { JobRunStatus } from "@kontext-tech/schema";
 import { Space } from "antd";
 import React from "react";
 import type { JobRunActionsProps } from "../jobTypes";

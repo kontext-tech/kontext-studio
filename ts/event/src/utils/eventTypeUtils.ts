@@ -1,4 +1,4 @@
-import { EventType } from "@kontext-labs/schema";
+import { EventType } from "@kontext-tech/schema";
 
 export interface EventTypeConfig {
    displayName: string;

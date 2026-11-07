@@ -1,5 +1,5 @@
 import Delimiter from "@editorjs/delimiter";
-import { BlockIcons } from "@kontext-labs/common";
+import { BlockIcons } from "@kontext-tech/common";
 import type { BlockPreviewProps } from "@notebook/types/notebook";
 import React from "react";
 

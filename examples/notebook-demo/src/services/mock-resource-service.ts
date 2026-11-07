@@ -1,11 +1,11 @@
-import { ApiResult, type PaginatedResult } from "@kontext-labs/common";
-import type { FileServiceContract } from "@kontext-labs/file";
+import { ApiResult, type PaginatedResult } from "@kontext-tech/common";
+import type { FileServiceContract } from "@kontext-tech/file";
 import type {
    FileFormatType,
    FileModel,
    InlineData,
    PythonExecutionResult
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 interface MockResource {
    id: string;

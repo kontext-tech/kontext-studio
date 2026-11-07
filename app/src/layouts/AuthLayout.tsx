@@ -1,5 +1,5 @@
 import { useRoute } from "@/hooks/useRoute";
-import { AppFooter, AuthCardLayout } from "@kontext-labs/layout";
+import { AppFooter, AuthCardLayout } from "@kontext-tech/layout";
 
 const AuthLayout: React.FC = () => {
    const { currentRoute } = useRoute();

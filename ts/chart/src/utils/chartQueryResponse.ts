@@ -2,7 +2,7 @@ import type {
    ChartDocument,
    DataTable,
    QueryResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Resolves the tabular data to show in the chart's Data tab.

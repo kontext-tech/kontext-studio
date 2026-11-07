@@ -1,5 +1,5 @@
 import { UI_TIMING } from "../constants/layout";
-import { SearchOutlined } from "@kontext-labs/icons";
+import { SearchOutlined } from "@kontext-tech/icons";
 import { Input } from "antd";
 import type { InputProps, InputRef } from "antd/es/input";
 import { forwardRef, useEffect, useRef, useState } from "react";

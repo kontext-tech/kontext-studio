@@ -172,7 +172,7 @@ jobs:
         # The API spec snapshot is excluded here because it re-exports the
         # FastAPI app and therefore needs `uv`; the generated-code job runs the
         # full `check:contracts` suite where both toolchains are installed.
-        run: pnpm --filter @kontext-labs/schema run check:contracts:ts
+        run: pnpm --filter @kontext-tech/schema run check:contracts:ts
 
   docs:
     name: User guide coverage
@@ -278,12 +278,12 @@ jobs:
         # `tsc --noEmit` against the solution tsconfig checks zero files
         # because `app/tsconfig.json` only lists project references. Build
         # mode follows the references and actually type-checks app sources.
-        run: pnpm --filter @kontext-labs/app exec tsc -b
+        run: pnpm --filter @kontext-tech/app exec tsc -b
 
       - name: Build app
         env:
           NODE_ENV: production
-        run: pnpm --filter @kontext-labs/app build
+        run: pnpm --filter @kontext-tech/app build
 
       - name: Build notebook demo
         run: pnpm run build:notebook-demo
@@ -406,13 +406,13 @@ jobs:
           fi
 
       - name: Generator smoke checks
-        run: pnpm --filter @kontext-labs/schema run check:generator-smoke
+        run: pnpm --filter @kontext-tech/schema run check:generator-smoke
 
       - name: Check contracts
         # Full suite, including the API spec snapshot re-exported from the
         # FastAPI app. It needs `uv`, which the Node-only lint job does not
         # have, so this job owns it.
-        run: pnpm --filter @kontext-labs/schema run check:contracts
+        run: pnpm --filter @kontext-tech/schema run check:contracts
 
   wheel-smoke:
     name: Unified wheel smoke test

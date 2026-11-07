@@ -1,6 +1,6 @@
-import { DownloadOutlined } from "@kontext-labs/icons";
+import { DownloadOutlined } from "@kontext-tech/icons";
 import type { Chart } from "@ant-design/plots";
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 import type { MenuProps } from "antd";
 import { App, Button, Dropdown } from "antd";
 import React from "react";

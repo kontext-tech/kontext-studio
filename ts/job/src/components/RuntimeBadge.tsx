@@ -1,6 +1,6 @@
-import { CodeOutlined } from "@kontext-labs/icons";
-import type { JobExecutionRuntime } from "@kontext-labs/schema";
-import { JobExecutionRuntime as JobExecutionRuntimeEnum } from "@kontext-labs/schema";
+import { CodeOutlined } from "@kontext-tech/icons";
+import type { JobExecutionRuntime } from "@kontext-tech/schema";
+import { JobExecutionRuntime as JobExecutionRuntimeEnum } from "@kontext-tech/schema";
 import { Tag } from "antd";
 import React from "react";
 

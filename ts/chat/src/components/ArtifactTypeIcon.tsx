@@ -4,8 +4,8 @@ import {
    FileTextOutlined,
    NotebookOutlined,
    TableOutlined
-} from "@kontext-labs/icons";
-import { ArtifactType } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { ArtifactType } from "@kontext-tech/schema";
 import React from "react";
 
 export interface ArtifactTypeIconProps {

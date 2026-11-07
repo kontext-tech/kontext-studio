@@ -1,4 +1,4 @@
-import { createFrontendViteConfig } from "@kontext-labs/build-config/vite";
+import { createFrontendViteConfig } from "@kontext-tech/build-config/vite";
 import path from "node:path";
 import { visualizer } from "rollup-plugin-visualizer";
 import { compression } from "vite-plugin-compression2";
@@ -10,10 +10,10 @@ import svgr from "vite-plugin-svgr";
 
 export default createFrontendViteConfig({
    defaultPort: 8002,
-   // Resolve every `@kontext-labs/*` workspace import from its `src` (via the
+   // Resolve every `@kontext-tech/*` workspace import from its `src` (via the
    // paths in tsconfig.app.json) so editing a shared package hot-reloads
    // without running `build:shared`. The few packages whose tsconfig path
-   // targets built output are aliased to source below. `@kontext-labs/build-config`
+   // targets built output are aliased to source below. `@kontext-tech/build-config`
    // is loaded by the Vite config itself and stays on its built output.
    tsconfig: "./tsconfig.app.json",
    envDefaults: {
@@ -41,7 +41,7 @@ export default createFrontendViteConfig({
             // app's strict flags). Alias it to `src` here so the dev server
             // still hot-reloads edits without a rebuild.
             {
-               find: /^@kontext-labs\/schema$/,
+               find: /^@kontext-tech\/schema$/,
                replacement: path.resolve(
                   import.meta.dirname,
                   "../ts/schema/src/index.ts"
@@ -52,7 +52,7 @@ export default createFrontendViteConfig({
             // not expose. `verbatimModuleSyntax` is enabled for every library
             // package, so its source is safe for esbuild to consume directly.
             {
-               find: /^@kontext-labs\/notebook$/,
+               find: /^@kontext-tech\/notebook$/,
                replacement: path.resolve(
                   import.meta.dirname,
                   "../ts/notebook/src/index.ts"

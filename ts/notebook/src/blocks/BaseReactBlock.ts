@@ -1,5 +1,5 @@
 import type { BlockAPI, BlockTool } from "@editorjs/editorjs";
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import type { BlockPreviewProps } from "@notebook/types/notebook";
 import { createBlockId } from "@notebook/utils/coreUtils";
 import { sharedReactRoot } from "@notebook/utils/sharedReactRoot";

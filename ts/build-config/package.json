@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/build-config",
+   "name": "@kontext-tech/build-config",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared Vite and TypeScript configuration for frontend packages",

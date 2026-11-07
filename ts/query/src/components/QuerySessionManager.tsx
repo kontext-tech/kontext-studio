@@ -1,4 +1,4 @@
-import { formatTimeAgo } from "@kontext-labs/common";
+import { formatTimeAgo } from "@kontext-tech/common";
 import {
    ArrowRightOutlined,
    DatabaseOutlined,
@@ -6,8 +6,8 @@ import {
    PlayCircleOutlined,
    PlusOutlined,
    SearchOutlined
-} from "@kontext-labs/icons";
-import { QuerySessionStatus } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { QuerySessionStatus } from "@kontext-tech/schema";
 import {
    Badge,
    Button,

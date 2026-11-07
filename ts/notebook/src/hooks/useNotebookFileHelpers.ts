@@ -2,9 +2,9 @@ import {
    useFileWorkflow,
    useJsonFileHelpers,
    type UseFileWorkflowReturn
-} from "@kontext-labs/file";
-import type { FileModel } from "@kontext-labs/schema";
-import { NotebookDocumentSchema } from "@kontext-labs/schema";
+} from "@kontext-tech/file";
+import type { FileModel } from "@kontext-tech/schema";
+import { NotebookDocumentSchema } from "@kontext-tech/schema";
 import { useCallback } from "react";
 import { NOTEBOOK_FILE_EXTENSION } from "../constants";
 import type { NotebookDocument } from "../types/notebook";

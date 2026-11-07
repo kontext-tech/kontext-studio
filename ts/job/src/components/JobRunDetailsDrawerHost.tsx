@@ -1,6 +1,6 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import type { TriggerActorModel } from "@kontext-labs/schema";
-import type { UiFeedback } from "@kontext-labs/ui";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import type { TriggerActorModel } from "@kontext-tech/schema";
+import type { UiFeedback } from "@kontext-tech/ui";
 import React, { useState, type ReactNode } from "react";
 import { useDataJobRuns } from "../useDataJobRuns";
 import { useDataJobTypes } from "../useDataJobTypes";

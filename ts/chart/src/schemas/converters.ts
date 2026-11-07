@@ -19,8 +19,8 @@ import type {
    RadarChartConfig,
    ScatterChartConfig,
    StockChartConfig
-} from "@kontext-labs/schema";
-import { aggregateData } from "@kontext-labs/common/utils";
+} from "@kontext-tech/schema";
+import { aggregateData } from "@kontext-tech/common/utils";
 import { getChartAggregatedData } from "../utils/dataAggregation";
 import { formatNumber } from "../utils/formatUtils";
 

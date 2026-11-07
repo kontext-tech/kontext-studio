@@ -1,6 +1,6 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUserStore } from "@kontext-labs/identity";
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUserStore } from "@kontext-tech/identity";
+import type { ProjectModel } from "@kontext-tech/schema";
 import React, { useEffect, useMemo } from "react";
 import {
    ChatSessionStoreContext,

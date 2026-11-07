@@ -1,5 +1,5 @@
-import { logoDark, logoLight } from "@kontext-labs/common";
-import { DatabaseZapOutlined } from "@kontext-labs/icons";
+import { logoDark, logoLight } from "@kontext-tech/common";
+import { DatabaseZapOutlined } from "@kontext-tech/icons";
 import {
    NotebookEditor,
    NotebookServiceProvider,
@@ -7,9 +7,9 @@ import {
    type CellExecutionContext,
    type NotebookDocument,
    type SidebarTabExtension
-} from "@kontext-labs/notebook";
-import { useQuerySessionStore } from "@kontext-labs/query";
-import { QueryEngineType, QuerySessionStatus } from "@kontext-labs/schema";
+} from "@kontext-tech/notebook";
+import { useQuerySessionStore } from "@kontext-tech/query";
+import { QueryEngineType, QuerySessionStatus } from "@kontext-tech/schema";
 import { App } from "antd";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import NotebookSessionsSidebarTab from "../extensions/NotebookSessionsSidebarTab";

@@ -1,4 +1,4 @@
-import { QuerySessionStatus } from "@kontext-labs/schema";
+import { QuerySessionStatus } from "@kontext-tech/schema";
 import { Tag } from "antd";
 import type { CSSProperties } from "react";
 import React from "react";

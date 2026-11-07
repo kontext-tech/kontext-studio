@@ -1,5 +1,5 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
    PaginatedListOfQuerySessionModel,
@@ -7,7 +7,7 @@ import type {
    SessionInitRequest,
    SessionInitResponse,
    UpdateQuerySessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { QuerySessionServiceContract } from "./types/querySessionService";
 
 /**

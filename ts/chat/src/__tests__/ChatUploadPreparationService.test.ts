@@ -1,7 +1,7 @@
 /** @jest-environment node */
 /// <reference types="jest" />
 
-import { ProblemTypes } from "@kontext-labs/schema";
+import { ProblemTypes } from "@kontext-tech/schema";
 import { ChatUploadPreparationService } from "../ChatUploadPreparationService";
 
 const jsonResponse = (body: unknown, status: number): Response =>

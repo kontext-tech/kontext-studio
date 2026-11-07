@@ -1,5 +1,5 @@
-import { ArrowLeftOutlined } from "@kontext-labs/icons";
-import { MetaTags } from "@kontext-labs/site";
+import { ArrowLeftOutlined } from "@kontext-tech/icons";
+import { MetaTags } from "@kontext-tech/site";
 import { Button, Flex, Result } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";

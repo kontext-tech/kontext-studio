@@ -1,4 +1,4 @@
-import type { Artifact } from "@kontext-labs/schema";
+import type { Artifact } from "@kontext-tech/schema";
 import { Flex, Typography } from "antd";
 import SecureImage from "./SecureImage";
 

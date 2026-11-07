@@ -6,8 +6,8 @@ import { RouteNames } from "@/types";
 import {
    PROJECT_ROLE_FILTER_OPTIONS,
    type ProjectRole
-} from "@kontext-labs/auth";
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
+} from "@kontext-tech/auth";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
 import {
    ArrowRightOutlined,
    CheckCircleOutlined,
@@ -16,18 +16,18 @@ import {
    MessageOutlined,
    PlusOutlined,
    SparklesOutlined
-} from "@kontext-labs/icons";
-import { getHelpLinks } from "@kontext-labs/layout";
-import { useUser } from "@kontext-labs/identity";
+} from "@kontext-tech/icons";
+import { getHelpLinks } from "@kontext-tech/layout";
+import { useUser } from "@kontext-tech/identity";
 import {
    ProjectCreateModal,
    useProject,
    useProjectListing
-} from "@kontext-labs/project";
-import { SiteFeature, type ProjectModel } from "@kontext-labs/schema";
-import { useSiteConfigStore } from "@kontext-labs/site";
-import { useTheme } from "@kontext-labs/theme";
-import { DebouncedSearch, useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/project";
+import { SiteFeature, type ProjectModel } from "@kontext-tech/schema";
+import { useSiteConfigStore } from "@kontext-tech/site";
+import { useTheme } from "@kontext-tech/theme";
+import { DebouncedSearch, useUiApp } from "@kontext-tech/ui";
 import {
    Button,
    Flex,

@@ -3,8 +3,8 @@ import {
    FileTextOutlined,
    InfoCircleOutlined,
    UserOutlined
-} from "@kontext-labs/icons";
-import { getDocsUrl, getPlatformPageUrl } from "@kontext-labs/common/utils";
+} from "@kontext-tech/icons";
+import { getDocsUrl, getPlatformPageUrl } from "@kontext-tech/common/utils";
 import type { MenuProps } from "antd/es/menu";
 import React from "react";
 

@@ -2,8 +2,8 @@ import {
    useFileWorkflow,
    useJsonFileHelpers,
    type UseFileWorkflowReturn
-} from "@kontext-labs/file";
-import type { ChartDocument, FileModel } from "@kontext-labs/schema";
+} from "@kontext-tech/file";
+import type { ChartDocument, FileModel } from "@kontext-tech/schema";
 import { useCallback } from "react";
 import { CHART_FILE_EXTENSION } from "../constants";
 

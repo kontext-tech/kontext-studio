@@ -1,5 +1,5 @@
-import type { JobModel, UnifiedJobTypeModel } from "@kontext-labs/schema";
-import type { UiFeedback } from "@kontext-labs/ui";
+import type { JobModel, UnifiedJobTypeModel } from "@kontext-tech/schema";
+import type { UiFeedback } from "@kontext-tech/ui";
 import type { FormInstance } from "antd";
 import type { JobFormData } from "../../jobTypes";
 

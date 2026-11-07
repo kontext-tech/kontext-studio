@@ -1,6 +1,6 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
-import type { ExecutionRunModel } from "@kontext-labs/schema";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
+import type { ExecutionRunModel } from "@kontext-tech/schema";
 
 /**
  * Service for the unified execution-run surface (`/runs`).

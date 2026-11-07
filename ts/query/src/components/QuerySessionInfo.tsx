@@ -1,5 +1,5 @@
-import { UserAvatarById } from "@kontext-labs/identity";
-import { formatTimeAgo, logger } from "@kontext-labs/common";
+import { UserAvatarById } from "@kontext-tech/identity";
+import { formatTimeAgo, logger } from "@kontext-tech/common";
 import {
    CalendarOutlined,
    CheckOutlined,
@@ -8,7 +8,7 @@ import {
    EditOutlined,
    StopOutlined,
    UserOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import {
    Alert,
    Button,

@@ -1,5 +1,5 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import type { DataTable, InlineData } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import type { DataTable, InlineData } from "@kontext-tech/schema";
 import { fileKeys } from "../queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";

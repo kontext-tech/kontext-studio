@@ -1,4 +1,4 @@
-import type { ScatterChartConfig as ScatterChartConfigType } from "@kontext-labs/schema";
+import type { ScatterChartConfig as ScatterChartConfigType } from "@kontext-tech/schema";
 import { Col, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import { NumberFormatSelect } from "../NumberFormatSelect";

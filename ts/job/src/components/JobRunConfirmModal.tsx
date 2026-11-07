@@ -1,5 +1,5 @@
-import { PlayCircleOutlined } from "@kontext-labs/icons";
-import type { JobModel, UnifiedJobTypeModel } from "@kontext-labs/schema";
+import { PlayCircleOutlined } from "@kontext-tech/icons";
+import type { JobModel, UnifiedJobTypeModel } from "@kontext-tech/schema";
 import { Alert, Grid, Modal, Space, Typography } from "antd";
 import React, { useState } from "react";
 import JobParameterConfigurator from "./JobParameterConfigurator";

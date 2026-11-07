@@ -1,10 +1,10 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import {
    DeleteOutlined,
    PlusOutlined,
    RightOutlined
-} from "@kontext-labs/icons";
-import { useService } from "@kontext-labs/app-runtime/hooks";
+} from "@kontext-tech/icons";
+import { useService } from "@kontext-tech/app-runtime/hooks";
 import type {
    FoundationModel,
    ModelConnection,
@@ -12,8 +12,8 @@ import type {
    ModelConnectionKind,
    ModelConnectionProviderConfig,
    ModelProviderDefinition
-} from "@kontext-labs/schema";
-import type { UiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import type { UiFeedback } from "@kontext-tech/ui";
 import {
    Alert,
    AutoComplete,

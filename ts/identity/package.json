@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/identity",
+   "name": "@kontext-tech/identity",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared current-user identity state and UI for Kontext",
@@ -19,11 +19,11 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/auth": "workspace:*",
-      "@kontext-labs/common": "workspace:*",
-      "@kontext-labs/host-api": "workspace:*",
-      "@kontext-labs/icons": "workspace:*",
-      "@kontext-labs/schema": "workspace:*",
+      "@kontext-tech/auth": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
+      "@kontext-tech/host-api": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
       "antd": "^6.6.7",
       "react": "^19.3.1",
       "zustand": "^5.0.15"

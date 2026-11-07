@@ -2,7 +2,7 @@ import {
    AgentToolNames,
    DelegationToolNames,
    ExternalExecutionToolNames
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 const TOOL_NAME_OVERRIDES: Record<string, string> = {
    [AgentToolNames.executePythonCode]: "Execute Python Code",

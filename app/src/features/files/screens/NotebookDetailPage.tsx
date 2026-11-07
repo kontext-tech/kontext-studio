@@ -5,11 +5,11 @@ import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useNavigationBlock } from "@/hooks/useNavigationBlock";
 import { useNotebookHostBindings } from "@/hooks/useNotebookHostBindings";
 import { RouteNames } from "@/types";
-import { AccessDeniedAlert } from "@kontext-labs/auth";
-import { useFileWorkflow } from "@kontext-labs/file";
-import { DatabaseZapOutlined } from "@kontext-labs/icons";
-import { JobRunDetailsDrawerHost } from "@kontext-labs/job";
-import { useUser } from "@kontext-labs/identity";
+import { AccessDeniedAlert } from "@kontext-tech/auth";
+import { useFileWorkflow } from "@kontext-tech/file";
+import { DatabaseZapOutlined } from "@kontext-tech/icons";
+import { JobRunDetailsDrawerHost } from "@kontext-tech/job";
+import { useUser } from "@kontext-tech/identity";
 import {
    NotebookEditor,
    NotebookServiceProvider,
@@ -19,11 +19,11 @@ import {
    useNotebookStore,
    type NotebookDocument,
    type SidebarTabExtension
-} from "@kontext-labs/notebook";
-import { useProject } from "@kontext-labs/project";
-import type { FileModel } from "@kontext-labs/schema";
-import { useSiteCultures } from "@kontext-labs/site";
-import { LoadingSpinner, useUiApp, useUiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/notebook";
+import { useProject } from "@kontext-tech/project";
+import type { FileModel } from "@kontext-tech/schema";
+import { useSiteCultures } from "@kontext-tech/site";
+import { LoadingSpinner, useUiApp, useUiFeedback } from "@kontext-tech/ui";
 import { Flex } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";

@@ -9,7 +9,7 @@ never contend for the same GitHub Release; the docs site piggybacks on the
 | Artifact | Workflow | Trigger | Release tag |
 | -------- | -------- | ------- | ----------- |
 | Unified Python wheel (`kontext_studio-<version>-py3-none-any.whl`) | `publish-pypi.yml` | dispatched by `release.yml`, or `workflow_dispatch` | `v<version>` (GitHub Release + PyPI) |
-| `@kontext-labs/*` TypeScript packages (GitHub Packages) | `publish-ts-packages.yml` | `push: tags: ["ts-packages-v*"]` | `ts-packages-v<version>` |
+| `@kontext-tech/*` TypeScript packages (GitHub Packages) | `publish-ts-packages.yml` | `push: tags: ["ts-packages-v*"]` | `ts-packages-v<version>` |
 | Docs site (`docs.kontext.tech`) | `publish-docs.yml` | `workflow_call` from `release.yml`, or `workflow_dispatch` | none |
 
 ## Cut a release
@@ -31,7 +31,7 @@ The workflow:
 2. Runs `cz bump`. It rewrites every `version_files` entry, prepends
    `CHANGELOG.md`, creates the `chore(release): version <old> -> <new>` commit,
    pushes it to `main`, and pushes `ts-packages-v<new>`, which publishes the
-   `@kontext-labs/*` packages.
+   `@kontext-tech/*` packages.
 3. Creates or promotes the `v<version>` GitHub Release at the bump commit,
    using the generated changelog section as the release notes.
 4. Publishes the docs site (unless `publish_docs` is false).
@@ -84,7 +84,7 @@ both environments only allow deployments from `main`.
 
 ## Releasing the TypeScript packages
 
-The `@kontext-labs/*` TypeScript packages are versioned in lockstep with
+The `@kontext-tech/*` TypeScript packages are versioned in lockstep with
 [Commitizen](https://commitizen-tools.github.io/commitizen/), configured under
 `[tool.commitizen]` in the root `pyproject.toml`. There is no release PR step:
 `release.yml` produces the bump, changelog, commit, and tag in one action, and
@@ -149,7 +149,7 @@ lockstep too.
 
 ### Legacy tags
 
-Earlier releases used one tag per package (`@kontext-labs/<name>@<version>`), and
+Earlier releases used one tag per package (`@kontext-tech/<name>@<version>`), and
 those tags anchor the published GitHub Releases from that era. They are **frozen
 history**: the lockstep scheme deliberately replaced them with the single
 `ts-packages-v<version>` tag, so they are no longer read by the release tooling.
@@ -170,12 +170,10 @@ release.
 `release.yml` or by `git push --follow-tags` — builds the shared packages, and
 runs `pnpm --filter "./ts/*" publish` against `npm.pkg.github.com`.
 
-The packages keep the `@kontext-labs` scope while the repository lives under
-`kontext-tech`. Publishing therefore needs `KONTEXT_PACKAGES_TOKEN`, a PAT with
-`write:packages` access to the account that owns that scope; the workflow's
-`GITHUB_TOKEN` only covers the `kontext-tech` owner. Renaming the scope to
-`@kontext-tech` is a breaking change for consumers and must update every
-package name together with `setup-node.scope` in the workflow.
+The packages publish under the `@kontext-tech` scope, matching the repository
+owner, so `publish-ts-packages.yml` uses the workflow `GITHUB_TOKEN` with
+`packages: write` and needs no PAT. Consumers outside the org still need a
+token with `read:packages` access.
 
 Commitizen replaces the previous Changesets flow. The package versions were
 normalized to a single lockstep version before the switch, because Commitizen

@@ -1,5 +1,5 @@
 {
-   "extends": "@kontext-labs/build-config/tsconfig/vite-node.json",
+   "extends": "@kontext-tech/build-config/tsconfig/vite-node.json",
    "compilerOptions": {
       "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
    },

@@ -1,9 +1,9 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { useInlineDataFile } from "@kontext-labs/file";
-import { useProject } from "@kontext-labs/project";
-import { DataTablePreview } from "@kontext-labs/query";
-import type { Artifact, ProjectModel } from "@kontext-labs/schema";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { useInlineDataFile } from "@kontext-tech/file";
+import { useProject } from "@kontext-tech/project";
+import { DataTablePreview } from "@kontext-tech/query";
+import type { Artifact, ProjectModel } from "@kontext-tech/schema";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Alert, Empty } from "antd";
 import React, { useEffect } from "react";
 

@@ -4,7 +4,7 @@ import {
    ArtifactEventKind,
    ArtifactType,
    type ArtifactEventData
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    type ArtifactRuntimeReducerState,
    reduceArtifactEvent

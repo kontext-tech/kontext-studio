@@ -1,7 +1,7 @@
-import { DeleteOutlined } from "@kontext-labs/icons";
-import { UserAvatarById } from "@kontext-labs/identity";
-import { type ChatSessionModel, type ProjectModel } from "@kontext-labs/schema";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { DeleteOutlined } from "@kontext-tech/icons";
+import { UserAvatarById } from "@kontext-tech/identity";
+import { type ChatSessionModel, type ProjectModel } from "@kontext-tech/schema";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Button, Empty, Flex, Space, Tooltip, Typography, theme } from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

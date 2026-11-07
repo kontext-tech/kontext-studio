@@ -1,7 +1,7 @@
-import { logger } from "@kontext-labs/common";
-import { PROJECT_ROLE_FILTER_OPTIONS } from "@kontext-labs/auth";
-import { getUserDisplayName } from "@kontext-labs/identity";
-import type { UserWithProjectRolesModel } from "@kontext-labs/schema";
+import { logger } from "@kontext-tech/common";
+import { PROJECT_ROLE_FILTER_OPTIONS } from "@kontext-tech/auth";
+import { getUserDisplayName } from "@kontext-tech/identity";
+import type { UserWithProjectRolesModel } from "@kontext-tech/schema";
 import { Form, Modal, Select, Typography } from "antd";
 import type { FormInstance } from "antd/es/form";
 import { useEffect } from "react";

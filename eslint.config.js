@@ -57,7 +57,7 @@ export default tseslint.config(
          "prefer-const": "error",
          "no-var": "error",
          // F9.13 (D-B): informational console noise is stripped from prod
-         // bundles; diagnostics belong in @kontext-labs/common `logger` —
+         // bundles; diagnostics belong in @kontext-tech/common `logger` —
          // demo code under examples/ is exempt above.
          "no-console": [
             "error",
@@ -94,7 +94,7 @@ export default tseslint.config(
                      message: "Shared packages must not import from app modules."
                   },
                   {
-                     group: ["@kontext-labs/*/src", "@kontext-labs/*/src/*"],
+                     group: ["@kontext-tech/*/src", "@kontext-tech/*/src/*"],
                      message:
                         "Import packages through their public entry points, not src internals."
                   }

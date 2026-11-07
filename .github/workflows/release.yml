@@ -10,7 +10,7 @@ name: Release
 #
 # This workflow never runs on a push or a merged pull request: merging cannot
 # publish an artifact by itself. The tag push to `ts-packages-v*` is what
-# publishes the @kontext-labs/* packages, exactly as before.
+# publishes the @kontext-tech/* packages, exactly as before.
 #
 # Resume paths:
 #   - bump/tag/release succeeded but a publish failed: re-dispatch the failed

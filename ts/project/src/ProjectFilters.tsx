@@ -1,12 +1,12 @@
-import { PROJECT_ROLE_FILTER_OPTIONS } from "@kontext-labs/auth";
-import { useUser } from "@kontext-labs/identity";
+import { PROJECT_ROLE_FILTER_OPTIONS } from "@kontext-tech/auth";
+import { useUser } from "@kontext-tech/identity";
 import {
    FilterOutlined,
    GlobalOutlined,
    ReloadOutlined,
    SearchOutlined
-} from "@kontext-labs/icons";
-import { DebouncedSearch } from "@kontext-labs/ui";
+} from "@kontext-tech/icons";
+import { DebouncedSearch } from "@kontext-tech/ui";
 import { Button, Card, Flex, Select, Space, Switch, theme } from "antd";
 import type { ReactNode } from "react";
 

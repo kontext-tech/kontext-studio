@@ -9,7 +9,7 @@ const mockUpdateBlockData = jest.fn();
 const mockExecuteCell = jest.fn();
 const mockOnViewExecutionRun = jest.fn();
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    const Icon = ({ name }: { name: string }) =>
@@ -27,13 +27,13 @@ jest.mock("@kontext-labs/icons", () => {
    };
 });
 
-jest.mock("@kontext-labs/theme", () => ({
+jest.mock("@kontext-tech/theme", () => ({
    useTheme: () => ({
       isDarkMode: false
    })
 }));
 
-jest.mock("@kontext-labs/ui", () => ({
+jest.mock("@kontext-tech/ui", () => ({
    LoadingSpinner: () => null
 }));
 

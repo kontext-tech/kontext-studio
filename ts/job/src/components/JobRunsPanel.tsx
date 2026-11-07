@@ -1,11 +1,11 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { ReloadOutlined } from "@kontext-labs/icons";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { ReloadOutlined } from "@kontext-tech/icons";
 import type {
    JobRunModel,
    JobRunStatus,
    TriggerActorModel
-} from "@kontext-labs/schema";
-import type { UiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import type { UiFeedback } from "@kontext-tech/ui";
 import type { TablePaginationConfig } from "antd";
 import { Alert, Button, Select, Space } from "antd";
 import React, { useState, type ReactNode } from "react";

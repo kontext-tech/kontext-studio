@@ -4,7 +4,7 @@ import {
    CloseOutlined,
    LoadingOutlined,
    RightOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import type { DescriptionsProps } from "antd";
 import type { ChatMessageSegment, ChatToolCallSegment } from "../types/chat";
 import { getToolDisplayName, isDelegationTool } from "../utils/toolNameUtils";

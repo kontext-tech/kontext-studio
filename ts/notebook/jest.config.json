@@ -17,8 +17,8 @@
    "moduleNameMapper": {
       "^(\\.\\.?/.*)\\.js$": "$1",
       "^@notebook/(.*)$": "<rootDir>/src/$1",
-      "^@kontext-labs/query/(.*)$": "<rootDir>/../query/src/$1",
-      "^@kontext-labs/(.*)$": "<rootDir>/../$1/src",
+      "^@kontext-tech/query/(.*)$": "<rootDir>/../query/src/$1",
+      "^@kontext-tech/(.*)$": "<rootDir>/../$1/src",
       "^.+\\.(svg|png)$": "<rootDir>/src/test/fileMock.ts"
    },
    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"],

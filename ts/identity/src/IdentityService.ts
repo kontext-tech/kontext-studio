@@ -1,12 +1,12 @@
 import type {
    ApiAuthContext,
    ApiErrorResult
-} from "@kontext-labs/common/types";
-import { ApiResult } from "@kontext-labs/common/types";
-import { HttpApiService } from "@kontext-labs/common/services";
-import { API_BASE_PATH } from "@kontext-labs/common/utils";
-import { HostClient } from "@kontext-labs/host-api";
-import type { UserWithRolesModel } from "@kontext-labs/schema";
+} from "@kontext-tech/common/types";
+import { ApiResult } from "@kontext-tech/common/types";
+import { HttpApiService } from "@kontext-tech/common/services";
+import { API_BASE_PATH } from "@kontext-tech/common/utils";
+import { HostClient } from "@kontext-tech/host-api";
+import type { UserWithRolesModel } from "@kontext-tech/schema";
 
 export class IdentityService extends HttpApiService {
    constructor(

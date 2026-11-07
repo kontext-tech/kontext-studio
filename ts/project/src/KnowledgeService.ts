@@ -1,7 +1,7 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
-import type { OkfConcept } from "@kontext-labs/schema";
-import type { paths } from "@kontext-labs/schema/api";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
+import type { OkfConcept } from "@kontext-tech/schema";
+import type { paths } from "@kontext-tech/schema/api";
 
 /** JSON request body for the OKF upsert endpoint, derived from the spec. */
 type UpsertConceptBody =

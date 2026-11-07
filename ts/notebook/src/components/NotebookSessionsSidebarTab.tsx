@@ -1,4 +1,4 @@
-import { QuerySessionManager } from "@kontext-labs/query";
+import { QuerySessionManager } from "@kontext-tech/query";
 import { Space, Typography } from "antd";
 import React from "react";
 

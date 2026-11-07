@@ -1,4 +1,4 @@
-import { EyeOutlined } from "@kontext-labs/icons";
+import { EyeOutlined } from "@kontext-tech/icons";
 import { Button } from "antd";
 import React from "react";
 import { useNotebookServices } from "../context/NotebookServiceContext";

@@ -1,13 +1,13 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUserStore } from "@kontext-labs/identity";
-import { CatalogService } from "@kontext-labs/project";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUserStore } from "@kontext-tech/identity";
+import { CatalogService } from "@kontext-tech/project";
 import type {
    CatalogConnection,
    CatalogEntitySummary,
    CatalogNamespaceSummary,
    ProjectModel
-} from "@kontext-labs/schema";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+} from "@kontext-tech/schema";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type ScopeOverrides = {

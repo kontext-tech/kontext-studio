@@ -2,21 +2,21 @@ import PageHeader from "@/components/common/PageHeader";
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useFileResource } from "@/hooks/useFileResource";
-import { AccessDeniedAlert } from "@kontext-labs/auth";
-import { useUiApp } from "@kontext-labs/ui";
+import { AccessDeniedAlert } from "@kontext-tech/auth";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    FileActions,
    FileDetailView,
    ImagePreviewModal,
    useFileService,
    useFileWorkflow
-} from "@kontext-labs/file";
-import { useProject } from "@kontext-labs/project";
+} from "@kontext-tech/file";
+import { useProject } from "@kontext-tech/project";
 import { useRoute } from "@/hooks/useRoute";
-import { useUser } from "@kontext-labs/identity";
+import { useUser } from "@kontext-tech/identity";
 import { RouteNames } from "@/types";
-import { type FileModel, FileFormatType } from "@kontext-labs/schema";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { type FileModel, FileFormatType } from "@kontext-tech/schema";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Flex } from "antd";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";

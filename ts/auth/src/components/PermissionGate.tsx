@@ -1,5 +1,5 @@
 import type { PermissionProps } from "../permissionTypes";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 import { usePermissionContext } from "../context/PermissionContext";

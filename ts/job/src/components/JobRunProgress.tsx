@@ -1,4 +1,4 @@
-import { JobRunStatus } from "@kontext-labs/schema";
+import { JobRunStatus } from "@kontext-tech/schema";
 import { Progress } from "antd";
 import React from "react";
 

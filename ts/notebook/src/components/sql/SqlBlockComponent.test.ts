@@ -16,7 +16,7 @@ const mockStoreBlocks: Array<{
    data?: { alias?: string | null };
 }> = [];
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    const Icon = ({ name }: { name: string }) =>
@@ -35,16 +35,16 @@ jest.mock("@kontext-labs/icons", () => {
    };
 });
 
-jest.mock("@kontext-labs/ui", () => ({
+jest.mock("@kontext-tech/ui", () => ({
    LoadingSpinner: () => null
 }));
 
-jest.mock("@kontext-labs/query/query-results", () => ({
+jest.mock("@kontext-tech/query/query-results", () => ({
    __esModule: true,
    default: () => null
 }));
 
-jest.mock("@kontext-labs/query/sql-editor", () => ({
+jest.mock("@kontext-tech/query/sql-editor", () => ({
    __esModule: true,
    default: () => null
 }));

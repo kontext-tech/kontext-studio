@@ -1,4 +1,4 @@
-import { NumberFormat } from "@kontext-labs/schema";
+import { NumberFormat } from "@kontext-tech/schema";
 import { Select, Typography } from "antd";
 import React from "react";
 

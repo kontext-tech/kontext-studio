@@ -1,7 +1,7 @@
-import { formatTimeAgo } from "@kontext-labs/common/utils";
-import { UserAvatarById } from "@kontext-labs/identity";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@kontext-labs/icons";
-import type { JobModel, UnifiedJobTypeModel } from "@kontext-labs/schema";
+import { formatTimeAgo } from "@kontext-tech/common/utils";
+import { UserAvatarById } from "@kontext-tech/identity";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@kontext-tech/icons";
+import type { JobModel, UnifiedJobTypeModel } from "@kontext-tech/schema";
 import { Descriptions, Space, Table, Tooltip, Typography, theme } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import cronstrue from "cronstrue";

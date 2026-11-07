@@ -8,8 +8,8 @@ import {
    FileSpreadsheetOutlined,
    FileTextOutlined,
    NotebookOutlined
-} from "@kontext-labs/icons";
-import { FileFormatType } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { FileFormatType } from "@kontext-tech/schema";
 import React from "react";
 
 export interface FileIconProps {

@@ -2,8 +2,8 @@ import type {
    Artifact,
    ArtifactAction,
    ArtifactEventData
-} from "@kontext-labs/schema";
-import { ArtifactType } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { ArtifactType } from "@kontext-tech/schema";
 
 export interface ArtifactRuntimeEntry {
    artifactId: string;

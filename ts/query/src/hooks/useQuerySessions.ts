@@ -1,5 +1,5 @@
-import { useUserStore } from "@kontext-labs/identity";
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
+import { useUserStore } from "@kontext-tech/identity";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
    QueryExecRequest,
@@ -8,8 +8,8 @@ import type {
    QuerySessionModel,
    TriggerActorModel,
    UpdateQuerySessionRequest
-} from "@kontext-labs/schema";
-import { QuerySessionStatus, TriggerActorType } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { QuerySessionStatus, TriggerActorType } from "@kontext-tech/schema";
 import { useCallback, useEffect, useMemo } from "react";
 import { useQuerySessionStore } from "../stores";
 

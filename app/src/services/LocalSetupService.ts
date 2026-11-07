@@ -2,12 +2,12 @@ import {
    API_BASE_PATH,
    LAUNCH_TOKEN_HEADER,
    getLaunchToken
-} from "@kontext-labs/common";
+} from "@kontext-tech/common";
 import type {
    AccessTokenResponse,
    SetupRequest,
    SetupStatusResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export class LocalSetupService {
    async getStatus(): Promise<SetupStatusResponse> {

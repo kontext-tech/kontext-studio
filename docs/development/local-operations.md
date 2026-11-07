@@ -79,7 +79,7 @@ Several instances share the same `~/.kontext` by default. Use the per-port
 | `403 Request rejected: local server host validation failed` | Non-loopback hostname, reverse proxy, or DNS rebinding attempt | Use `localhost`/`127.0.0.1`, or add the hostname to `KONTEXT_ALLOWED_HOSTS`. |
 | Login and setup pages bounce | A stale stored token or a mismatched profile/setup state | Open the newly printed URL; hard-reload; clear site data for the origin if needed. |
 | Address already in use | API or Vite port conflict | Change `--port`/`KONTEXT_PORT` or `VITE_PORT`; keep the Vite origin in `CORS_ALLOWED_ORIGINS` (8002/8003/8006 by default). |
-| SPA returns 503 | No built app | `pnpm --filter @kontext-labs/app build`, or pass `--dist-dir`. |
+| SPA returns 503 | No built app | `pnpm --filter @kontext-tech/app build`, or pass `--dist-dir`. |
 | Jobs stay `Queued` | Worker disabled, crashed, or not inherited the database | Check `KONTEXT_LOCAL_WORKER_ENABLED`, start without `--no-worker`, and inspect the worker log. |
 | SQLite lock or startup timeout | Two processes initializing, or an unsupported SQLite build | Stop both, check `~/.kontext/local-init.lock`, restart one server; SQLite 3.51.0/3.51.1 is rejected. |
 | Kernel failures | Managed Python environment or repeated infrastructure errors | Check the worker log and `KONTEXT_PYTHON_MAX_CONSECUTIVE_KERNEL_FAILURES`; a dead session kernel restarts with a fresh namespace. |

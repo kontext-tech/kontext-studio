@@ -1,7 +1,7 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, HttpApiService } from "@kontext-labs/common";
-import { HostClient } from "@kontext-labs/host-api";
-import type { ProjectRole } from "@kontext-labs/auth";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, HttpApiService } from "@kontext-tech/common";
+import { HostClient } from "@kontext-tech/host-api";
+import type { ProjectRole } from "@kontext-tech/auth";
 import type {
    CreateProjectRequest,
    FoundationModel,
@@ -9,7 +9,7 @@ import type {
    PaginatedListOfUserWithProjectRolesModel,
    ProjectModel,
    UpdateProjectRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export class ProjectService extends HttpApiService {
    constructor(

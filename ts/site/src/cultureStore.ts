@@ -1,7 +1,7 @@
-import type { CultureInfoModel } from "@kontext-labs/schema";
+import type { CultureInfoModel } from "@kontext-tech/schema";
 import { create } from "zustand";
-import { ServiceContainer } from "@kontext-labs/common";
-import type { ApiErrorResult } from "@kontext-labs/common";
+import { ServiceContainer } from "@kontext-tech/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import { SiteCultureService } from "./SiteCultureService";
 
 const cultureServiceContainer = new ServiceContainer();

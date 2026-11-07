@@ -1,7 +1,7 @@
 import { Bubble } from "@ant-design/x";
-import { UserAvatar, UserAvatarById, useUser } from "@kontext-labs/identity";
-import { CopyOutlined } from "@kontext-labs/icons";
-import { RobotAvatar, useUiApp } from "@kontext-labs/ui";
+import { UserAvatar, UserAvatarById, useUser } from "@kontext-tech/identity";
+import { CopyOutlined } from "@kontext-tech/icons";
+import { RobotAvatar, useUiApp } from "@kontext-tech/ui";
 import { Button, Flex } from "antd";
 import React from "react";
 import type { ChatMessage } from "../types/chat";

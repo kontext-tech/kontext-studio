@@ -1,4 +1,4 @@
-import type { ApiErrorResult } from "@kontext-labs/common/types";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
 import { createContext, useContext, type ReactNode } from "react";
 
 /**

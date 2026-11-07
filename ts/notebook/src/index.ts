@@ -53,4 +53,4 @@ export {
 
 // Styles
 // Import the dark theme CSS in your app:
-// import "@kontext-labs/notebook/styles/editorjs-dark-theme.css";
+// import "@kontext-tech/notebook/styles/editorjs-dark-theme.css";

@@ -11,22 +11,22 @@ import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
 import { FileCard } from "@ant-design/x";
-import { formatFileSize } from "@kontext-labs/common";
-import { CommonRoleGroups, PermissionButton } from "@kontext-labs/auth";
+import { formatFileSize } from "@kontext-tech/common";
+import { CommonRoleGroups, PermissionButton } from "@kontext-tech/auth";
 import {
    ChatUploadPreparationService,
    useChat,
    useChatSessionStore,
    useChatSessionStoreApi,
    useFoundationModels
-} from "@kontext-labs/chat";
+} from "@kontext-tech/chat";
 import {
    DatabaseOutlined,
    PlusOutlined,
    TagOutlined
-} from "@kontext-labs/icons";
-import { useUser } from "@kontext-labs/identity";
-import { useProject } from "@kontext-labs/project";
+} from "@kontext-tech/icons";
+import { useUser } from "@kontext-tech/identity";
+import { useProject } from "@kontext-tech/project";
 import {
    type ChatUploadPreparationFailure,
    type ChatUploadPreparationStatus,
@@ -34,9 +34,9 @@ import {
    type ProjectConfiguration,
    type ProjectModel,
    type StartChatUploadPreparationResponse
-} from "@kontext-labs/schema";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import { LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import { LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import {
    Alert,
    Button,

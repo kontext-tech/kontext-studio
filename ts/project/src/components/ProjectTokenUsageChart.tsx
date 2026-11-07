@@ -1,14 +1,14 @@
-import type { ChartConfig } from "@kontext-labs/chart";
-import { ChartFactory } from "@kontext-labs/chart";
-import { ChatService } from "@kontext-labs/chat";
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+import type { ChartConfig } from "@kontext-tech/chart";
+import { ChartFactory } from "@kontext-tech/chart";
+import { ChatService } from "@kontext-tech/chat";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import type {
    ProjectDailyTokenUsageResponse,
    ProjectTokenUsageResponse
-} from "@kontext-labs/schema";
-import { useTheme } from "@kontext-labs/theme";
-import { LoadingSpinner } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useTheme } from "@kontext-tech/theme";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Empty, Flex, Space, Typography } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 

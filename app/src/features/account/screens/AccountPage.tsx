@@ -1,15 +1,15 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { RouteNames } from "@/types";
-import { ProfileManager } from "@kontext-labs/account";
+import { ProfileManager } from "@kontext-tech/account";
 import {
    EDIT_MODE,
    MODE_QUERY_PARAM,
    TAB_QUERY_PARAM
-} from "@kontext-labs/common";
-import { UserOutlined } from "@kontext-labs/icons";
-import { useSiteCultures } from "@kontext-labs/site";
-import { useUiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/common";
+import { UserOutlined } from "@kontext-tech/icons";
+import { useSiteCultures } from "@kontext-tech/site";
+import { useUiFeedback } from "@kontext-tech/ui";
 import { Col, Row, Space, Tabs } from "antd";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";

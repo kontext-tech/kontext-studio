@@ -1,4 +1,4 @@
-import { formatFileSize } from "@kontext-labs/common";
+import { formatFileSize } from "@kontext-tech/common";
 import {
    CheckCircleOutlined,
    ClockCircleOutlined,
@@ -6,8 +6,8 @@ import {
    DatabaseOutlined,
    SettingOutlined,
    TagOutlined
-} from "@kontext-labs/icons";
-import type { ProjectModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { Col, Row, Space, Tag, theme, Typography } from "antd";
 
 const { Text } = Typography;

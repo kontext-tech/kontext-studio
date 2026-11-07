@@ -1,11 +1,11 @@
-import type { ApiErrorResult } from "@kontext-labs/common/types";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
 import type {
    CreateMultipleFilesResponse,
    FileModel,
    InlineData,
    PaginatedFileResponse
-} from "@kontext-labs/schema";
-import { FileFormatType } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { FileFormatType } from "@kontext-tech/schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { type DownloadProgressCallback, type ResourceData } from "../types";
 import { useFileService } from "./useFileService";

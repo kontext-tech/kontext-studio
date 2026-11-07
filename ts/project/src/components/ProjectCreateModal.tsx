@@ -1,11 +1,11 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { PlusOutlined } from "@kontext-labs/icons";
-import { useService } from "@kontext-labs/app-runtime/hooks";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { PlusOutlined } from "@kontext-tech/icons";
+import { useService } from "@kontext-tech/app-runtime/hooks";
 import type {
    AccessLevel,
    CreateProjectRequest,
    ProjectModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    Button,
    Form,

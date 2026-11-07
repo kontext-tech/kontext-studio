@@ -1,11 +1,11 @@
-import { logger } from "@kontext-labs/common";
+import { logger } from "@kontext-tech/common";
 import {
    CheckCircleOutlined,
    ClockCircleOutlined,
    SettingOutlined,
    ToolOutlined
-} from "@kontext-labs/icons";
-import type { UnifiedJobTypeModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import type { UnifiedJobTypeModel } from "@kontext-tech/schema";
 import { Button, Form, Grid, Modal, Space, Steps } from "antd";
 import React, { useEffect, useState } from "react";
 import type { JobFormData } from "../../jobTypes";

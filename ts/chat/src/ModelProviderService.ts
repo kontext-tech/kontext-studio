@@ -1,9 +1,9 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, HttpApiService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, HttpApiService } from "@kontext-tech/common";
 import type {
    ModelConnection,
    ModelProviderDefinition
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /** Service for managing executable model providers. */
 export class ModelProviderService extends HttpApiService {

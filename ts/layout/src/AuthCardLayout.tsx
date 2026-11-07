@@ -1,5 +1,5 @@
-import { getBaseUrl } from "@kontext-labs/common/utils";
-import { useTheme } from "@kontext-labs/theme";
+import { getBaseUrl } from "@kontext-tech/common/utils";
+import { useTheme } from "@kontext-tech/theme";
 import { Card, Col, Flex, Grid, Layout, Row, Typography } from "antd";
 import type { ReactNode } from "react";
 import { Outlet } from "react-router-dom";

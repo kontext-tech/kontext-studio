@@ -1,5 +1,5 @@
-import { formatTimeAgo } from "@kontext-labs/common";
-import type { CatalogConnection } from "@kontext-labs/schema";
+import { formatTimeAgo } from "@kontext-tech/common";
+import type { CatalogConnection } from "@kontext-tech/schema";
 
 export interface ReadinessStatus {
    color: string;

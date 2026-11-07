@@ -1,16 +1,16 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
-import { useProject } from "@kontext-labs/project";
+import { useProject } from "@kontext-tech/project";
 import {
    ProjectInfoBanner,
    ProjectMetadataPanel,
    ProjectStats
-} from "@kontext-labs/project";
+} from "@kontext-tech/project";
 import { useRoute } from "@/hooks/useRoute";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { RouteNames } from "@/types";
-import { CommonRoleGroups, PermissionButton } from "@kontext-labs/auth";
-import { getFullUrl } from "@kontext-labs/common/utils";
-import { FILE_PREFIX_QUERY_PARAM, FileUploadModal } from "@kontext-labs/file";
+import { CommonRoleGroups, PermissionButton } from "@kontext-tech/auth";
+import { getFullUrl } from "@kontext-tech/common/utils";
+import { FILE_PREFIX_QUERY_PARAM, FileUploadModal } from "@kontext-tech/file";
 import {
    BarChartOutlined,
    BookOutlined,
@@ -18,7 +18,7 @@ import {
    NotebookOutlined,
    PlusOutlined,
    UploadOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import {
    Card,
    Col,

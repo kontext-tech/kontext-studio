@@ -1,9 +1,9 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult } from "@kontext-tech/common";
 import type {
    QueryExecutionService,
    QuerySessionServiceContract
-} from "@kontext-labs/query";
+} from "@kontext-tech/query";
 import type {
    CreateQuerySessionRequest,
    InlineData,
@@ -15,8 +15,8 @@ import type {
    SessionInitRequest,
    SessionInitResponse,
    UpdateQuerySessionRequest
-} from "@kontext-labs/schema";
-import { QuerySessionStatus } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { QuerySessionStatus } from "@kontext-tech/schema";
 import type { MockResourceService } from "./mock-resource-service";
 
 /**

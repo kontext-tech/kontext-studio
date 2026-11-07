@@ -1,11 +1,11 @@
-import type { ApiResult } from "@kontext-labs/common";
+import type { ApiResult } from "@kontext-tech/common";
 import type {
    ChatMessage,
    ChatSessionModel,
    PaginatedChatSessionResponse,
    PythonExecutionApprovalMode,
    UpdateChatSessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { ChatSessionService } from "../types/chatSessionService";
 import type { StoreContext } from "./storeContextTypes";
 

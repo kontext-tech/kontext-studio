@@ -3,7 +3,7 @@
 import type {
    FoundationModel,
    ModelProviderDefinition
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    filterFoundationModelsForProvider,
    pruneCredentialRefs,

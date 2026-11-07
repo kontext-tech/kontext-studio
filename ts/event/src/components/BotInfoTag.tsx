@@ -1,4 +1,4 @@
-import { RobotOutlined, UserOutlined } from "@kontext-labs/icons";
+import { RobotOutlined, UserOutlined } from "@kontext-tech/icons";
 import { Tag, Tooltip } from "antd";
 import React from "react";
 

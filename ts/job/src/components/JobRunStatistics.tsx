@@ -3,7 +3,7 @@ import {
    ErrorOutlined,
    InfoCircleOutlined,
    PlayCircleOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import { Card, Col, Row, Statistic, Typography } from "antd";
 import React from "react";
 import type { JobRunStatistics as JobRunStatisticsType } from "../jobTypes";

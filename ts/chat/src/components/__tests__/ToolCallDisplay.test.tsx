@@ -14,7 +14,7 @@ jest.mock("@ant-design/x", () => {
    };
 });
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    const StubIcon = ({ "data-testid": testId }: { "data-testid"?: string }) =>

@@ -41,7 +41,7 @@ ENV NODE_OPTIONS=--max-old-space-size=4096
 
 # Build the app application
 # PNPM will automatically build any workspace dependencies first.
-RUN pnpm --filter @kontext-labs/app build:prod
+RUN pnpm --filter @kontext-tech/app build:prod
 
 # Base nginx stage
 FROM docker.io/library/nginx:alpine AS nginx_base

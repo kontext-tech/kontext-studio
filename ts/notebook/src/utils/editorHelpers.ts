@@ -1,4 +1,4 @@
-import { logger } from "@kontext-labs/common";
+import { logger } from "@kontext-tech/common";
 import { default as EditorJS } from "@editorjs/editorjs";
 import { useNotebookStore } from "@notebook/stores/notebookStore";
 import type { NotebookDocument } from "@notebook/types/notebook";

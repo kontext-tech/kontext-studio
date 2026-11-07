@@ -1,6 +1,6 @@
-import { LoadingSpinner } from "@kontext-labs/ui";
-import type { UnifiedJobParameterModel } from "@kontext-labs/schema";
-import { JobParameterType } from "@kontext-labs/schema";
+import { LoadingSpinner } from "@kontext-tech/ui";
+import type { UnifiedJobParameterModel } from "@kontext-tech/schema";
+import { JobParameterType } from "@kontext-tech/schema";
 import { Alert, Descriptions, Tag, Typography } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import type { FetchJobParametersByTypeFn } from "../jobTypes";

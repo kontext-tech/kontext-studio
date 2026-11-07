@@ -1,13 +1,13 @@
-import { extractChartDataRows } from "@kontext-labs/common";
-import { SaveOutlined } from "@kontext-labs/icons";
-import QueryResultsView from "@kontext-labs/query/query-results";
+import { extractChartDataRows } from "@kontext-tech/common";
+import { SaveOutlined } from "@kontext-tech/icons";
+import QueryResultsView from "@kontext-tech/query/query-results";
 import type {
    ChartDocument,
    DataTable,
    QueryResponse
-} from "@kontext-labs/schema";
-import { useTheme } from "@kontext-labs/theme";
-import { LoadingSpinner, ProvenanceInfo } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useTheme } from "@kontext-tech/theme";
+import { LoadingSpinner, ProvenanceInfo } from "@kontext-tech/ui";
 import { Alert, Button, Empty, Modal, Tabs, Tag } from "antd";
 import { useMemo, useState } from "react";
 import type { ChartConfig, ChartType } from "../types/chart";

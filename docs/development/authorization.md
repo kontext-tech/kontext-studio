@@ -167,7 +167,7 @@ which operations. Keep the file readable only by the account running the server.
 
 ## Frontend mirror
 
-`@kontext-labs/auth` exposes `PermissionContext`, `evaluatePermission`, and
+`@kontext-tech/auth` exposes `PermissionContext`, `evaluatePermission`, and
 route guards. They evaluate the same claims, roles, and features to hide
 actions, disable navigation, and render access-denied states. Treat these as
 UX: every route still enforces the same rule server-side.

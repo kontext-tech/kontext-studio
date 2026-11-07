@@ -1,7 +1,7 @@
 import BreadcrumbNav from "@/components/layout/BreadcrumbNav";
-import { useProject } from "@kontext-labs/project";
+import { useProject } from "@kontext-tech/project";
 import { useRoute } from "@/hooks/useRoute";
-import { PageHeaderBase, type PageHeaderBaseProps } from "@kontext-labs/layout";
+import { PageHeaderBase, type PageHeaderBaseProps } from "@kontext-tech/layout";
 import React, { type ReactNode } from "react";
 
 interface PageHeaderProps extends Omit<

@@ -1,7 +1,7 @@
 import type {
    AggregateMethod,
    LineChartConfig as LineChartConfigType
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Col, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import { NumberFormatSelect } from "../NumberFormatSelect";

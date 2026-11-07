@@ -1,4 +1,4 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import { useEffect } from "react";
 import { useCultureStore } from "./cultureStore";
 

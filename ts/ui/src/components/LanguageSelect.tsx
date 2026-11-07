@@ -1,4 +1,4 @@
-import type { CultureInfoModel } from "@kontext-labs/schema";
+import type { CultureInfoModel } from "@kontext-tech/schema";
 import { Select } from "antd";
 import type { SelectProps } from "antd/es/select";
 

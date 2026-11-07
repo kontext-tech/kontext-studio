@@ -1,26 +1,26 @@
-import { type ChatSessionStoreApi } from "@kontext-labs/chat";
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import { useFileService } from "@kontext-labs/file";
-import { useUserStore } from "@kontext-labs/identity";
-import { ExecutionRunService } from "@kontext-labs/job";
+import { type ChatSessionStoreApi } from "@kontext-tech/chat";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import { useFileService } from "@kontext-tech/file";
+import { useUserStore } from "@kontext-tech/identity";
+import { ExecutionRunService } from "@kontext-tech/job";
 import type {
    CellExecutionContext,
    CodeExecutionEngine,
    FileSystemBinding
-} from "@kontext-labs/notebook";
-import { DEFAULT_STORE_RESULT_THRESHOLD_ROWS } from "@kontext-labs/notebook";
+} from "@kontext-tech/notebook";
+import { DEFAULT_STORE_RESULT_THRESHOLD_ROWS } from "@kontext-tech/notebook";
 import {
    QuerySessionService,
    useProjectQuerySessions
-} from "@kontext-labs/query";
+} from "@kontext-tech/query";
 import type {
    CodeExecutionOutput,
    CreateQuerySessionRequest,
    QuerySessionModel,
    SessionInitRequest
-} from "@kontext-labs/schema";
-import { QuerySessionStatus, TriggerActorType } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { QuerySessionStatus, TriggerActorType } from "@kontext-tech/schema";
 import { useMemo, useRef } from "react";
 
 type NotebookHostCodeExecutionResult = {

@@ -4,7 +4,7 @@ Kontext tracks three OpenAPI documents under `ts/schema/src/schemas/`:
 
 | Spec | Source | Refresh |
 | --- | --- | --- |
-| `kontext.models.openapi.json` | Zod-first schemas under `ts/schema/src` | `pnpm --filter @kontext-labs/schema refresh-schemas` |
+| `kontext.models.openapi.json` | Zod-first schemas under `ts/schema/src` | `pnpm --filter @kontext-tech/schema refresh-schemas` |
 | `kontext.api.openapi.json` | The FastAPI Data & AI app, imported offline | `pnpm run refresh:api-schema` |
 | `kontext.api.core.openapi.json` | Frozen snapshot of the retired hosted platform contract | Not regenerated |
 
@@ -22,7 +22,7 @@ pnpm run refresh:api-schema
 ```
 
 Equivalent entry points are the VS Code task `refresh: api schema` and
-`pnpm --filter @kontext-labs/schema refresh-api-schema`.
+`pnpm --filter @kontext-tech/schema refresh-api-schema`.
 
 Normalization is centralized in
 [`ts/schema/scripts/openapi-normalize.cjs`](../../ts/schema/scripts/openapi-normalize.cjs).
@@ -33,9 +33,9 @@ only; no environment override is involved.
 ## Validate
 
 ```bash
-pnpm --filter @kontext-labs/schema run check:openapi
-pnpm --filter @kontext-labs/schema run check:contracts      # full; needs uv
-pnpm --filter @kontext-labs/schema run check:contracts:ts   # Node-only subset
+pnpm --filter @kontext-tech/schema run check:openapi
+pnpm --filter @kontext-tech/schema run check:contracts      # full; needs uv
+pnpm --filter @kontext-tech/schema run check:contracts:ts   # Node-only subset
 ```
 
 `check:contracts` verifies the models snapshot, the API snapshot, OpenAPI

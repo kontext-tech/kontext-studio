@@ -1,5 +1,5 @@
 import { Prompts, Welcome } from "@ant-design/x";
-import { RobotOutlined, Wand2Outlined } from "@kontext-labs/icons";
+import { RobotOutlined, Wand2Outlined } from "@kontext-tech/icons";
 import { theme, Typography } from "antd";
 import React from "react";
 

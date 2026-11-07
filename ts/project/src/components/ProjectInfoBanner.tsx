@@ -1,5 +1,5 @@
-import { type ProjectModel } from "@kontext-labs/schema";
-import { AccessLevelTag } from "@kontext-labs/ui";
+import { type ProjectModel } from "@kontext-tech/schema";
+import { AccessLevelTag } from "@kontext-tech/ui";
 import { Col, Flex, Row, Space, theme, Typography } from "antd";
 
 const { Paragraph, Title } = Typography;

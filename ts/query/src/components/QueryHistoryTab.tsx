@@ -1,5 +1,5 @@
-import { formatDuration, formatTimeAgo } from "@kontext-labs/common";
-import type { QueryModel } from "@kontext-labs/schema";
+import { formatDuration, formatTimeAgo } from "@kontext-tech/common";
+import type { QueryModel } from "@kontext-tech/schema";
 import { Empty, Spin, Table, Tag, Typography, theme } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useCallback, useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import {
    ClockCircleOutlined,
    DownOutlined,
    RightOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 
 const { Text } = Typography;
 

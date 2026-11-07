@@ -1,5 +1,5 @@
 import { getUserMenuItems } from "@/utils/menuUtils";
-import { useSiteConfigStore } from "@kontext-labs/site";
+import { useSiteConfigStore } from "@kontext-tech/site";
 import { Flex } from "antd";
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";

@@ -1,7 +1,7 @@
-import { ProjectRoleTags, type ProjectRole } from "@kontext-labs/auth";
-import { MessageOutlined, SettingOutlined } from "@kontext-labs/icons";
-import { ProjectFeature, type ProjectModel } from "@kontext-labs/schema";
-import { AccessLevelTag } from "@kontext-labs/ui";
+import { ProjectRoleTags, type ProjectRole } from "@kontext-tech/auth";
+import { MessageOutlined, SettingOutlined } from "@kontext-tech/icons";
+import { ProjectFeature, type ProjectModel } from "@kontext-tech/schema";
+import { AccessLevelTag } from "@kontext-tech/ui";
 import { Button, Tooltip, Typography, theme } from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

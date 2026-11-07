@@ -2,8 +2,8 @@
    "extends": "../build-config/tsconfig/library-package.json",
    "compilerOptions": {
       "paths": {
-         "@kontext-labs/identity": ["../identity/src/index.ts"],
-         "@kontext-labs/identity/*": ["../identity/src/*"]
+         "@kontext-tech/identity": ["../identity/src/index.ts"],
+         "@kontext-tech/identity/*": ["../identity/src/*"]
       },
       "outDir": "./dist",
       "rootDir": "./src",

@@ -90,7 +90,7 @@
       {
          "label": "test: schema",
          "type": "shell",
-         "command": "pnpm --filter @kontext-labs/schema test",
+         "command": "pnpm --filter @kontext-tech/schema test",
          "group": "test",
          "problemMatcher": [],
          "detail": "Runs tests for the schema package.",
@@ -134,7 +134,7 @@
       {
          "label": "build: app analyze",
          "type": "shell",
-         "command": "pnpm --filter @kontext-labs/app build:analyze",
+         "command": "pnpm --filter @kontext-tech/app build:analyze",
          "group": "build",
          "problemMatcher": [],
          "detail": "Builds the labs app with bundle analysis enabled.",
@@ -170,7 +170,7 @@
          "command": "pnpm run generate:models",
          "group": "build",
          "problemMatcher": [],
-         "detail": "Refreshes schema-derived models from @kontext-labs/schema.",
+         "detail": "Refreshes schema-derived models from @kontext-tech/schema.",
          "options": {
             "cwd": "${workspaceFolder}"
          }

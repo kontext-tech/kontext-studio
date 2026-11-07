@@ -1,6 +1,6 @@
 // Lucide Icons - Uses base lucide package for optimal tree-shaking and consistency
 import Icon from "@ant-design/icons";
-import type { IconNode } from "@kontext-labs/common";
+import type { IconNode } from "@kontext-tech/common";
 import type { GetProps } from "antd";
 import {
    AlertCircle,

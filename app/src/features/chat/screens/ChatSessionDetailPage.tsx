@@ -3,7 +3,7 @@ import ProjectChatInputArea from "@/features/chat/components/ProjectChatInputAre
 import ChatSessionComposerControls from "@/features/chat/components/ChatSessionComposerControls";
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { useFileService } from "@kontext-labs/file";
+import { useFileService } from "@kontext-tech/file";
 import {
    ChatHeader,
    ChatMessagesView,
@@ -11,25 +11,25 @@ import {
    useFoundationModels,
    usePythonExecutionApprovalModal,
    type MarkdownImageBlobResolver
-} from "@kontext-labs/chat";
-import { CatalogService } from "@kontext-labs/project";
-import { useUiApp } from "@kontext-labs/ui";
-import { useProject } from "@kontext-labs/project";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+} from "@kontext-tech/chat";
+import { CatalogService } from "@kontext-tech/project";
+import { useUiApp } from "@kontext-tech/ui";
+import { useProject } from "@kontext-tech/project";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import { useRoute } from "@/hooks/useRoute";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 
 import { RouteNames } from "@/types";
 import {
    useChatSessionStore,
    useChatSessionStoreApi
-} from "@kontext-labs/chat";
-import { DatabaseOutlined } from "@kontext-labs/icons";
+} from "@kontext-tech/chat";
+import { DatabaseOutlined } from "@kontext-tech/icons";
 
 import {
    type CatalogConnection,
    type ProjectModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Alert, Button, Flex, Layout, theme } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";

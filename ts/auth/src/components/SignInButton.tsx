@@ -1,4 +1,4 @@
-import { navigateToUrl } from "@kontext-labs/common/utils";
+import { navigateToUrl } from "@kontext-tech/common/utils";
 import { createUrlWithReturnParam } from "../utils/navigationUtils";
 import { Button } from "antd";
 import type { ButtonProps } from "antd/es/button";

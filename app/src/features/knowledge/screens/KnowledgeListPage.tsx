@@ -14,16 +14,16 @@ import {
 } from "@/features/knowledge/utils/conceptPresentation";
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { CommonRoleGroups, PermissionButton } from "@kontext-labs/auth";
+import { CommonRoleGroups, PermissionButton } from "@kontext-tech/auth";
 import {
    DownloadOutlined,
    PlusOutlined,
    ReloadOutlined,
    UploadOutlined
-} from "@kontext-labs/icons";
-import { useProject } from "@kontext-labs/project";
-import type { OkfConcept } from "@kontext-labs/schema";
-import { DebouncedSearch, LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/icons";
+import { useProject } from "@kontext-tech/project";
+import type { OkfConcept } from "@kontext-tech/schema";
+import { DebouncedSearch, LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import {
    Alert,
    Button,

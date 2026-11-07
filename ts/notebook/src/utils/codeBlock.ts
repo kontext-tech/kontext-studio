@@ -1,4 +1,4 @@
-import type { CodeBlockData } from "@kontext-labs/schema";
+import type { CodeBlockData } from "@kontext-tech/schema";
 import type {
    CodeBlock,
    NotebookBlock,

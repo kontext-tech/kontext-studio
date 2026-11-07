@@ -1,10 +1,10 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useRoute } from "@/hooks/useRoute";
 import { usePermissionContext } from "@/context/AppPermissionContext";
-import type { ProjectRole } from "@kontext-labs/auth";
-import { useUser } from "@kontext-labs/identity";
-import { ProjectSelectorModal, useProject } from "@kontext-labs/project";
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ProjectRole } from "@kontext-tech/auth";
+import { useUser } from "@kontext-tech/identity";
+import { ProjectSelectorModal, useProject } from "@kontext-tech/project";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { useNavigate } from "react-router-dom";
 
 interface ProjectSelectorProps {

@@ -1,8 +1,8 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUserStore } from "@kontext-labs/identity";
-import type { QueryResponse } from "@kontext-labs/schema";
-import { TriggerActorType } from "@kontext-labs/schema";
-import { LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUserStore } from "@kontext-tech/identity";
+import type { QueryResponse } from "@kontext-tech/schema";
+import { TriggerActorType } from "@kontext-tech/schema";
+import { LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import { Button, Empty, Splitter, Tabs, theme, Typography } from "antd";
 import React, { lazy, Suspense, useCallback, useState } from "react";
 import { useProjectQuerySessions } from "../hooks";

@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/schema",
+   "name": "@kontext-tech/schema",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared domain schemas and API type generation for Kontext",

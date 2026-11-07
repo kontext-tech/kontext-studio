@@ -1,8 +1,8 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useChartDataRef } from "@/hooks/useChartDataRef";
-import { useChartFileHelpers } from "@kontext-labs/chart";
-import { useFileService, useFileWorkflow } from "@kontext-labs/file";
-import type { ChartDocument } from "@kontext-labs/schema";
+import { useChartFileHelpers } from "@kontext-tech/chart";
+import { useFileService, useFileWorkflow } from "@kontext-tech/file";
+import type { ChartDocument } from "@kontext-tech/schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface UseChartDocumentOptions {

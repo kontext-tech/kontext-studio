@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/common",
+   "name": "@kontext-tech/common",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared common package for Kontext with Ant Design customization and Lucide icons",
@@ -76,7 +76,7 @@
    "author": "Kontext Tech",
    "license": "MIT",
    "dependencies": {
-      "@kontext-labs/schema": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
       "date-fns": "^4.4.0",
       "lucide": "1.61.0",
       "openapi-fetch": "^0.17.0",

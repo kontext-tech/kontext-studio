@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import type { Artifact } from "@kontext-labs/schema";
+import type { Artifact } from "@kontext-tech/schema";
 import { reduceArtifactRemoval } from "../artifactActions";
 
 const artifact = (artifactId: string, updatedAt: string): Artifact =>

@@ -1,7 +1,7 @@
 import { routeRegistry } from "@/routing";
 import { RouteNames, type RouteConfig, type RoutingContextInfo } from "@/types";
-import type { ProjectModel, ProjectNavModel } from "@kontext-labs/schema";
-import { createRouteHook } from "@kontext-labs/app-runtime/router";
+import type { ProjectModel, ProjectNavModel } from "@kontext-tech/schema";
+import { createRouteHook } from "@kontext-tech/app-runtime/router";
 import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 

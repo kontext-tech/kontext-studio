@@ -3,7 +3,7 @@ import { Alert, Card, Space, Typography } from "antd";
 import type {
    CatalogConnection,
    CatalogProviderDefinition
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 import {
    getAuthTypeLabel,

@@ -4,7 +4,7 @@ import type {
    DataTable,
    TabularData,
    TabularRow
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Data transformation utilities for converting query results to various formats

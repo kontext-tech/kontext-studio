@@ -1,4 +1,4 @@
-import { PageErrorBoundary } from "@kontext-labs/ui";
+import { PageErrorBoundary } from "@kontext-tech/ui";
 import { Drawer, Grid, Layout, theme } from "antd";
 import React, { type ReactNode, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";

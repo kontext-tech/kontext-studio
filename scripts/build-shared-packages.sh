@@ -24,12 +24,12 @@ pnpm run validate:workspace-graph
 # Build schemas (depends on nothing)
 echo "🔄 Building schemas..."
 if [ -d "ts/schema" ]; then
-    pnpm --filter @kontext-labs/schema build
+    pnpm --filter @kontext-tech/schema build
 fi
 
 echo "🔄 Building shared build configuration..."
 if [ -d "ts/build-config" ]; then
-    pnpm --filter @kontext-labs/build-config build
+    pnpm --filter @kontext-tech/build-config build
 fi
 
 # Build shared packages in dependency order
@@ -38,7 +38,7 @@ echo "🔄 Building shared packages..."
 # Build common shared foundations
 echo "🔄 Building common..."
 if [ -d "ts/common" ]; then
-    pnpm --filter @kontext-labs/common build
+    pnpm --filter @kontext-tech/common build
 fi
 
 # Sync common public assets (logos, icons, manifests) to the app only.
@@ -49,9 +49,9 @@ echo "🔄 Building remaining shared packages with topological workspace orderin
 pnpm -r \
     --workspace-concurrency=1 \
     --filter "./ts/**" \
-    --filter "!@kontext-labs/build-config" \
-    --filter "!@kontext-labs/schema" \
-    --filter "!@kontext-labs/common" \
+    --filter "!@kontext-tech/build-config" \
+    --filter "!@kontext-tech/schema" \
+    --filter "!@kontext-tech/common" \
     build
 
 echo "✅ All shared packages built successfully!"

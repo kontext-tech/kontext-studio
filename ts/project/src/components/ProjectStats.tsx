@@ -1,18 +1,18 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { formatDuration, formatFileSize } from "@kontext-labs/common";
-import { ChatService } from "@kontext-labs/chat";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { formatDuration, formatFileSize } from "@kontext-tech/common";
+import { ChatService } from "@kontext-tech/chat";
 import {
    ClockCircleOutlined,
    DatabaseOutlined,
    FileOutlined,
    SparklesOutlined
-} from "@kontext-labs/icons";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+} from "@kontext-tech/icons";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import type {
    ProjectModel,
    ProjectStatsModel,
    ProjectTokenUsageResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import {
    Divider,
    Flex,

@@ -7,8 +7,8 @@ import {
    LineChartOutlined,
    PieChartOutlined,
    StockOutlined
-} from "@kontext-labs/icons";
-import type { TabularData } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import type { TabularData } from "@kontext-tech/schema";
 import { Card, Col, Input, Row, Select, Space, Typography, theme } from "antd";
 import React, { useMemo } from "react";
 import {

@@ -1,5 +1,5 @@
 import Quote from "@editorjs/quote";
-import { BlockIcons } from "@kontext-labs/common";
+import { BlockIcons } from "@kontext-tech/common";
 import type { BlockPreviewProps, QuoteBlock } from "@notebook/types/notebook";
 import React from "react";
 

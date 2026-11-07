@@ -21,7 +21,7 @@ const FORBIDDEN_IN_GUIDE = [
    { label: "uv sync", pattern: /\buv sync\b/ },
    { label: "py/", pattern: /(^|[^A-Za-z0-9_-])py\// },
    { label: "ts/", pattern: /(^|[^A-Za-z0-9_-])ts\// },
-   { label: "@kontext-labs/", pattern: /@kontext-labs\// },
+   { label: "@kontext-* scope", pattern: /@kontext-(labs|tech)\// },
    { label: "pytest", pattern: /\bpytest\b/ },
    { label: "AGENTS.md", pattern: /AGENTS\.md/ }
 ];

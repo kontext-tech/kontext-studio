@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/docs-site",
+   "name": "@kontext-tech/docs-site",
    "private": true,
    "type": "module",
    "scripts": {

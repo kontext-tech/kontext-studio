@@ -1,4 +1,4 @@
-import { createPreloadableLazyWithProps } from "@kontext-labs/ui";
+import { createPreloadableLazyWithProps } from "@kontext-tech/ui";
 
 interface ProjectSelectorProps {
    inSidebar?: boolean;

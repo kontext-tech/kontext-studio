@@ -1,4 +1,4 @@
-import type { DataRef, DataTable } from "@kontext-labs/schema";
+import type { DataRef, DataTable } from "@kontext-tech/schema";
 import { useEffect, useState, useMemo } from "react";
 import { useNotebookServices } from "../context/NotebookServiceContext";
 

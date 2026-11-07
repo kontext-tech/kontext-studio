@@ -1,7 +1,7 @@
 import ImageTool from "@editorjs/image";
-import { BlockIcons } from "@kontext-labs/common";
-import { extractResourceId } from "@kontext-labs/file";
-import type { ImageBlock } from "@kontext-labs/schema";
+import { BlockIcons } from "@kontext-tech/common";
+import { extractResourceId } from "@kontext-tech/file";
+import type { ImageBlock } from "@kontext-tech/schema";
 import type { BlockPreviewProps } from "@notebook/types/notebook";
 import React from "react";
 

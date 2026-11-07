@@ -103,4 +103,4 @@ export const NotebookValidationResultSchema = z
 
 export type NotebookMetadata = z.infer<typeof NotebookMetadataSchema>;
 // Re-export types from core for use in notebook package
-// Note: We don't export these from index.ts to avoid collisions with @kontext-labs/schema core exports
+// Note: We don't export these from index.ts to avoid collisions with @kontext-tech/schema core exports

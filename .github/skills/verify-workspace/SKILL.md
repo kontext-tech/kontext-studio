@@ -27,8 +27,8 @@ Ruff covers Python style: `uv run ruff check --fix py && uv run ruff format py`.
 App-only changes verify with lint/type-check/build (no test script):
 
 ```bash
-pnpm --filter @kontext-labs/app lint && pnpm --filter @kontext-labs/app type-check
-pnpm --filter @kontext-labs/app build
+pnpm --filter @kontext-tech/app lint && pnpm --filter @kontext-tech/app type-check
+pnpm --filter @kontext-tech/app build
 ```
 
 Run `pnpm run build:shared` first when shared `ts/*` packages changed — the app
@@ -38,20 +38,20 @@ typings/assets) depend on built outputs.
 ## TS packages with Jest tests
 
 ```bash
-pnpm --filter @kontext-labs/schema test
-pnpm --filter @kontext-labs/chart test
-pnpm --filter @kontext-labs/notebook test
-pnpm --filter @kontext-labs/chat test
-pnpm --filter @kontext-labs/common test
+pnpm --filter @kontext-tech/schema test
+pnpm --filter @kontext-tech/chart test
+pnpm --filter @kontext-tech/notebook test
+pnpm --filter @kontext-tech/chat test
+pnpm --filter @kontext-tech/common test
 ```
 
 Single file:
 
 ```bash
-pnpm --filter @kontext-labs/schema test -- --runTestsByPath ts/schema/src/__tests__/core.test.ts
+pnpm --filter @kontext-tech/schema test -- --runTestsByPath ts/schema/src/__tests__/core.test.ts
 ```
 
-Schema-only contract checks: `pnpm --filter @kontext-labs/schema run check:contracts`
+Schema-only contract checks: `pnpm --filter @kontext-tech/schema run check:contracts`
 (needs `uv` for the API snapshot) or `check:contracts:ts` for the Node-only
 subset.
 

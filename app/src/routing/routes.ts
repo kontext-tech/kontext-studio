@@ -5,10 +5,10 @@ import {
    type RouteConfig,
    type RoutingContextInfo
 } from "@/types";
-import { PERMISSION_CLAIMS, SYSTEM_ROLES } from "@kontext-labs/auth";
-import { getSafeIconByName } from "@kontext-labs/icons";
-import { AccessLevel, ProjectFeature, SiteFeature } from "@kontext-labs/schema";
-import { withSuspense } from "@kontext-labs/ui";
+import { PERMISSION_CLAIMS, SYSTEM_ROLES } from "@kontext-tech/auth";
+import { getSafeIconByName } from "@kontext-tech/icons";
+import { AccessLevel, ProjectFeature, SiteFeature } from "@kontext-tech/schema";
+import { withSuspense } from "@kontext-tech/ui";
 import { lazy } from "react";
 import { RouteRegistry } from "./RouteRegistry";
 

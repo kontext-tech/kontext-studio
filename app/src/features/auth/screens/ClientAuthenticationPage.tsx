@@ -1,5 +1,5 @@
-import { useUiApp } from "@kontext-labs/ui";
-import { useUser } from "@kontext-labs/identity";
+import { useUiApp } from "@kontext-tech/ui";
+import { useUser } from "@kontext-tech/identity";
 import { Card, Result, Spin, Typography } from "antd";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";

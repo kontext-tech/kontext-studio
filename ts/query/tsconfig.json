@@ -9,10 +9,10 @@
       "composite": true,
       "noEmit": false,
       "paths": {
-         "@kontext-labs/ui": ["../ui/src/index.ts"],
-         "@kontext-labs/ui/*": ["../ui/src/*"],
-         "@kontext-labs/identity": ["../identity/src/index.ts"],
-         "@kontext-labs/identity/*": ["../identity/src/*"]
+         "@kontext-tech/ui": ["../ui/src/index.ts"],
+         "@kontext-tech/ui/*": ["../ui/src/*"],
+         "@kontext-tech/identity": ["../identity/src/index.ts"],
+         "@kontext-tech/identity/*": ["../identity/src/*"]
       }
    },
    "references": [

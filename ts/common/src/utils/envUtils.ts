@@ -151,10 +151,10 @@ export const isDevelopment = (): boolean => {
  *
  * This is NOT the same truth as `SiteFeature.LOCAL_MODE` in
  * `SiteConfigResponse.features` (see `useIsLocalMode()` in
- * `@kontext-labs/site`): the env flag is known before any server round-trip,
+ * `@kontext-tech/site`): the env flag is known before any server round-trip,
  * so it is only valid for very early decisions that cannot wait for
  * `/config/site` — currently the local auth rehydration bootstrap in
- * `@kontext-labs/identity`. Once the site config is available, code must
+ * `@kontext-tech/identity`. Once the site config is available, code must
  * check `SiteFeature.LOCAL_MODE` membership there instead.
  */
 export const isLocalMode = (): boolean => {

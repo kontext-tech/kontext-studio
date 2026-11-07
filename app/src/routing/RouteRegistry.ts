@@ -8,7 +8,7 @@ import type {
    RouteNavigationMetadata,
    RoutingContextInfo
 } from "@/types";
-import { BaseRouteRegistry } from "@kontext-labs/common/utils";
+import { BaseRouteRegistry } from "@kontext-tech/common/utils";
 import { matchPath } from "react-router-dom";
 
 export class RouteRegistry extends BaseRouteRegistry<

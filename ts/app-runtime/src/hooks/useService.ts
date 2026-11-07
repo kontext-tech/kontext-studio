@@ -3,11 +3,11 @@ import {
    HttpApiService,
    DataApiBaseService,
    useAuthContextStore
-} from "@kontext-labs/common";
+} from "@kontext-tech/common";
 import type {
    ApiAuthContext,
    ApiErrorResult
-} from "@kontext-labs/common/types";
+} from "@kontext-tech/common/types";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useOptionalDefaultServiceErrorHandler } from "../context";
 

@@ -1,4 +1,4 @@
-import type { OkfConcept } from "@kontext-labs/schema";
+import type { OkfConcept } from "@kontext-tech/schema";
 
 // OKF v0.2 lifecycle vocabulary. Kontext historically wrote "proposed" and
 // "active"; both are still recognized when reading older bundles.

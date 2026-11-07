@@ -1,5 +1,5 @@
 import type { OutputData } from "@editorjs/editorjs";
-import { NotebookBlockSchema } from "@kontext-labs/schema";
+import { NotebookBlockSchema } from "@kontext-tech/schema";
 import type { NotebookBlock, NotebookDocument } from "@notebook/types/notebook";
 import { createBlockId } from "./coreUtils";
 

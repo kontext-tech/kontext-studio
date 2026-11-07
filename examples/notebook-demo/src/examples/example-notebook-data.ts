@@ -1,4 +1,4 @@
-import type { NotebookDocument } from "@kontext-labs/notebook";
+import type { NotebookDocument } from "@kontext-tech/notebook";
 
 export const EXAMPLE_NOTEBOOK: NotebookDocument = {
    title: "Data Analysis Report",

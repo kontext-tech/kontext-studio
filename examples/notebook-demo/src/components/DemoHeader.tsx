@@ -1,5 +1,5 @@
-import { logoDark, logoLight } from "@kontext-labs/common";
-import { ThemeSelector, useTheme } from "@kontext-labs/theme";
+import { logoDark, logoLight } from "@kontext-tech/common";
+import { ThemeSelector, useTheme } from "@kontext-tech/theme";
 import { Flex, Layout, Menu, theme, Typography } from "antd";
 import React from "react";
 

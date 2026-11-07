@@ -3,7 +3,7 @@ import {
    DownloadOutlined,
    EditOutlined,
    ExpandAltOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import {
    Alert,
    Button,

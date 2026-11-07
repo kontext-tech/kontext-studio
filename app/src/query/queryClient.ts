@@ -1,3 +1,3 @@
-import { createQueryClient } from "@kontext-labs/app-runtime";
+import { createQueryClient } from "@kontext-tech/app-runtime";
 
 export const appQueryClient = createQueryClient();

@@ -1,6 +1,6 @@
-import { convertDataTableToRows } from "@kontext-labs/common";
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
-import type { DataColumn, DataTable } from "@kontext-labs/schema";
+import { convertDataTableToRows } from "@kontext-tech/common";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
+import type { DataColumn, DataTable } from "@kontext-tech/schema";
 import { Empty, Space, Table, Tooltip, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";

@@ -1,20 +1,20 @@
-import { PermissionButton } from "@kontext-labs/auth";
-import { PERMISSION_CLAIMS } from "@kontext-labs/auth";
-import { LoadingSpinner } from "@kontext-labs/ui";
-import type { UiFeedback } from "@kontext-labs/ui";
+import { PermissionButton } from "@kontext-tech/auth";
+import { PERMISSION_CLAIMS } from "@kontext-tech/auth";
+import { LoadingSpinner } from "@kontext-tech/ui";
+import type { UiFeedback } from "@kontext-tech/ui";
 import {
    ExclamationCircleOutlined,
    OrderedListOutlined,
    ProfileOutlined,
    ReloadOutlined,
    SettingOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import type {
    JobRunLogModel,
    JobRunModel,
    TriggerActorModel
-} from "@kontext-labs/schema";
-import { JobRunStatus, JobTriggerType } from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
+import { JobRunStatus, JobTriggerType } from "@kontext-tech/schema";
 import {
    Alert,
    Button,

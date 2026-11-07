@@ -1,4 +1,4 @@
-import type { FileModel } from "@kontext-labs/schema";
+import type { FileModel } from "@kontext-tech/schema";
 import { useCallback } from "react";
 import type { UseFileWorkflowReturn } from "./useFileWorkflow";
 

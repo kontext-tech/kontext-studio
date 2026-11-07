@@ -14,8 +14,8 @@
    "moduleNameMapper": {
       "^.+\\.(svg|png)$": "<rootDir>/src/test/fileMock.ts",
       "^(\\.\\.?/.*)\\.js$": "$1",
-      "^@kontext-labs/([^/]+)$": "<rootDir>/../$1/src/index.ts",
-      "^@kontext-labs/([^/]+)/(.*)$": "<rootDir>/../$1/src/$2"
+      "^@kontext-tech/([^/]+)$": "<rootDir>/../$1/src/index.ts",
+      "^@kontext-tech/([^/]+)/(.*)$": "<rootDir>/../$1/src/$2"
    },
    "setupFilesAfterEnv": ["<rootDir>/src/test/setupTests.ts"],
    "testMatch": [

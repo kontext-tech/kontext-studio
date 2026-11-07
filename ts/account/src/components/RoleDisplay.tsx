@@ -3,8 +3,8 @@ import {
    SYSTEM_ROLE_DISPLAY_NAMES,
    SYSTEM_ROLES,
    type SystemRole
-} from "@kontext-labs/auth";
-import { SafetyOutlined } from "@kontext-labs/icons";
+} from "@kontext-tech/auth";
+import { SafetyOutlined } from "@kontext-tech/icons";
 import { Space, Tag, Typography } from "antd";
 import React from "react";
 

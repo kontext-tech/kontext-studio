@@ -1,9 +1,9 @@
-import { LoadingSpinner } from "@kontext-labs/ui";
-import type { UiFeedback } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
+import type { UiFeedback } from "@kontext-tech/ui";
 import type {
    JobRunModel,
    UnifiedJobParameterModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Alert, Button, Form, Input, Modal, Space, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import type { FetchJobParametersByTypeFn } from "../jobTypes";

@@ -13,7 +13,7 @@ A notebook is a JSON document with an ordered array of blocks. Blocks carry a
 are `paragraph`, `header`, `list`, `code`, `quote`, `table`, `delimiter`,
 `image`, `imagePicker`, `sql`, `mermaid`, and `chart`.
 
-Canonical types are defined in `@kontext-labs/schema` and re-exported by
+Canonical types are defined in `@kontext-tech/schema` and re-exported by
 `ts/notebook`; treat the schema package as the source of truth rather than
 duplicating shapes here.
 

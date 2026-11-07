@@ -57,61 +57,61 @@ importers:
       '@ant-design/x':
         specifier: ^2.9.0
         version: 2.9.0(antd@6.6.7(date-fns@4.4.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@kontext-labs/account':
+      '@kontext-tech/account':
         specifier: workspace:*
         version: link:../ts/account
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../ts/app-runtime
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../ts/auth
-      '@kontext-labs/chart':
+      '@kontext-tech/chart':
         specifier: workspace:*
         version: link:../ts/chart
-      '@kontext-labs/chat':
+      '@kontext-tech/chat':
         specifier: workspace:*
         version: link:../ts/chat
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../ts/common
-      '@kontext-labs/event':
+      '@kontext-tech/event':
         specifier: workspace:*
         version: link:../ts/event
-      '@kontext-labs/file':
+      '@kontext-tech/file':
         specifier: workspace:*
         version: link:../ts/file
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../ts/icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../ts/identity
-      '@kontext-labs/job':
+      '@kontext-tech/job':
         specifier: workspace:*
         version: link:../ts/job
-      '@kontext-labs/layout':
+      '@kontext-tech/layout':
         specifier: workspace:*
         version: link:../ts/layout
-      '@kontext-labs/notebook':
+      '@kontext-tech/notebook':
         specifier: workspace:*
         version: link:../ts/notebook
-      '@kontext-labs/project':
+      '@kontext-tech/project':
         specifier: workspace:*
         version: link:../ts/project
-      '@kontext-labs/query':
+      '@kontext-tech/query':
         specifier: workspace:*
         version: link:../ts/query
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../ts/schema
-      '@kontext-labs/site':
+      '@kontext-tech/site':
         specifier: workspace:*
         version: link:../ts/site
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../ts/theme
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ts/ui
       '@tanstack/react-query':
@@ -133,7 +133,7 @@ importers:
         specifier: ^7.18.4
         version: 7.18.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     devDependencies:
-      '@kontext-labs/build-config':
+      '@kontext-tech/build-config':
         specifier: workspace:*
         version: link:../ts/build-config
       '@types/node':
@@ -190,25 +190,25 @@ importers:
 
   examples/notebook-demo:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../../ts/common
-      '@kontext-labs/file':
+      '@kontext-tech/file':
         specifier: workspace:*
         version: link:../../ts/file
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../../ts/icons
-      '@kontext-labs/notebook':
+      '@kontext-tech/notebook':
         specifier: workspace:*
         version: link:../../ts/notebook
-      '@kontext-labs/query':
+      '@kontext-tech/query':
         specifier: workspace:*
         version: link:../../ts/query
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../../ts/schema
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../../ts/theme
       '@tanstack/react-query':
@@ -245,25 +245,25 @@ importers:
 
   ts/account:
     dependencies:
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../auth
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -285,7 +285,7 @@ importers:
 
   ts/app-runtime:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
       '@tanstack/react-query':
@@ -310,16 +310,16 @@ importers:
 
   ts/auth:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/host-api':
+      '@kontext-tech/host-api':
         specifier: workspace:*
         version: link:../host-api
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -353,25 +353,25 @@ importers:
       '@ant-design/plots':
         specifier: 2.6.8
         version: 2.6.8(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/file':
+      '@kontext-tech/file':
         specifier: workspace:*
         version: link:../file
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/query':
+      '@kontext-tech/query':
         specifier: workspace:*
         version: link:../query
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../theme
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -417,28 +417,28 @@ importers:
       '@ant-design/x':
         specifier: ^2.9.0
         version: 2.9.0(antd@6.6.7(date-fns@4.4.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/file':
+      '@kontext-tech/file':
         specifier: workspace:*
         version: link:../file
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/notebook':
+      '@kontext-tech/notebook':
         specifier: workspace:*
         version: link:../notebook
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       '@tanstack/react-query':
@@ -502,7 +502,7 @@ importers:
 
   ts/common:
     dependencies:
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
       date-fns:
@@ -539,19 +539,19 @@ importers:
 
   ts/event:
     dependencies:
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
       antd:
@@ -570,25 +570,25 @@ importers:
 
   ts/file:
     dependencies:
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../auth
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/site':
+      '@kontext-tech/site':
         specifier: workspace:*
         version: link:../site
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       '@tanstack/react-query':
@@ -613,7 +613,7 @@ importers:
 
   ts/host-api:
     dependencies:
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
     devDependencies:
@@ -629,7 +629,7 @@ importers:
       '@ant-design/icons':
         specifier: ^6.3.4
         version: 6.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
       antd:
@@ -657,19 +657,19 @@ importers:
 
   ts/identity:
     dependencies:
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../auth
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/host-api':
+      '@kontext-tech/host-api':
         specifier: workspace:*
         version: link:../host-api
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
       antd:
@@ -694,25 +694,25 @@ importers:
 
   ts/job:
     dependencies:
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../auth
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -740,16 +740,16 @@ importers:
 
   ts/layout:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../theme
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -810,28 +810,28 @@ importers:
       '@editorjs/table':
         specifier: ^2.4.6
         version: 2.4.6
-      '@kontext-labs/chart':
+      '@kontext-tech/chart':
         specifier: workspace:*
         version: link:../chart
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/file':
+      '@kontext-tech/file':
         specifier: workspace:*
         version: link:../file
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/query':
+      '@kontext-tech/query':
         specifier: workspace:*
         version: link:../query
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../theme
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       '@uiw/react-codemirror':
@@ -886,37 +886,37 @@ importers:
 
   ts/project:
     dependencies:
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/auth':
+      '@kontext-tech/auth':
         specifier: workspace:*
         version: link:../auth
-      '@kontext-labs/chart':
+      '@kontext-tech/chart':
         specifier: workspace:*
         version: link:../chart
-      '@kontext-labs/chat':
+      '@kontext-tech/chat':
         specifier: workspace:*
         version: link:../chat
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/host-api':
+      '@kontext-tech/host-api':
         specifier: workspace:*
         version: link:../host-api
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/theme':
+      '@kontext-tech/theme':
         specifier: workspace:*
         version: link:../theme
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       '@tanstack/react-query':
@@ -947,22 +947,22 @@ importers:
       '@codemirror/view':
         specifier: 6.43.13
         version: 6.43.13
-      '@kontext-labs/app-runtime':
+      '@kontext-tech/app-runtime':
         specifier: workspace:*
         version: link:../app-runtime
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/identity':
+      '@kontext-tech/identity':
         specifier: workspace:*
         version: link:../identity
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       '@uiw/react-codemirror':
@@ -1024,16 +1024,16 @@ importers:
 
   ts/site:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/host-api':
+      '@kontext-tech/host-api':
         specifier: workspace:*
         version: link:../host-api
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
-      '@kontext-labs/ui':
+      '@kontext-tech/ui':
         specifier: workspace:*
         version: link:../ui
       antd:
@@ -1055,10 +1055,10 @@ importers:
 
   ts/theme:
     dependencies:
-      '@kontext-labs/common':
+      '@kontext-tech/common':
         specifier: workspace:*
         version: link:../common
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
       antd:
@@ -1080,10 +1080,10 @@ importers:
 
   ts/ui:
     dependencies:
-      '@kontext-labs/icons':
+      '@kontext-tech/icons':
         specifier: workspace:*
         version: link:../icons
-      '@kontext-labs/schema':
+      '@kontext-tech/schema':
         specifier: workspace:*
         version: link:../schema
       antd:

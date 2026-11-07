@@ -1,4 +1,4 @@
-import type { CatalogConnection } from "@kontext-labs/schema";
+import type { CatalogConnection } from "@kontext-tech/schema";
 import { useEffect } from "react";
 
 const SYNCING_STATUSES = new Set(["queued", "running"]);

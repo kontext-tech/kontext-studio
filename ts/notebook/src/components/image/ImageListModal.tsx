@@ -2,10 +2,10 @@ import {
    PAGE_SIZE_OPTIONS,
    type PaginatedResult,
    formatFileSize
-} from "@kontext-labs/common";
-import { SecureImage } from "@kontext-labs/file";
-import { SearchOutlined } from "@kontext-labs/icons";
-import type { FileModel } from "@kontext-labs/schema";
+} from "@kontext-tech/common";
+import { SecureImage } from "@kontext-tech/file";
+import { SearchOutlined } from "@kontext-tech/icons";
+import type { FileModel } from "@kontext-tech/schema";
 import {
    Button,
    Flex,

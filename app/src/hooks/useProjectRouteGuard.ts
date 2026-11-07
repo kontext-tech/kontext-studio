@@ -1,5 +1,5 @@
-import { logger } from "@kontext-labs/common";
-import { useProject } from "@kontext-labs/project";
+import { logger } from "@kontext-tech/common";
+import { useProject } from "@kontext-tech/project";
 import type { RouteConfig } from "@/types";
 import { useParams } from "react-router-dom";
 

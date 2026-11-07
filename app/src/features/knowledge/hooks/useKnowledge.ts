@@ -1,7 +1,7 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import { KnowledgeService, type OkfImportResult } from "@kontext-labs/project";
-import type { OkfConcept } from "@kontext-labs/schema";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import { KnowledgeService, type OkfImportResult } from "@kontext-tech/project";
+import type { OkfConcept } from "@kontext-tech/schema";
 import {
    useMutation,
    useQuery,

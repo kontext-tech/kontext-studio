@@ -1,5 +1,5 @@
-import { formatDate } from "@kontext-labs/common";
-import { ChannelType, type EventModel } from "@kontext-labs/schema";
+import { formatDate } from "@kontext-tech/common";
+import { ChannelType, type EventModel } from "@kontext-tech/schema";
 import { Descriptions, Space, Typography } from "antd";
 import React from "react";
 import BotInfoTag from "./BotInfoTag";

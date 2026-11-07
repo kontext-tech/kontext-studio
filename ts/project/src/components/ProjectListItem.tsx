@@ -1,13 +1,13 @@
-import { ProjectRoleTags, type ProjectRole } from "@kontext-labs/auth";
-import { UserAvatarById } from "@kontext-labs/identity";
+import { ProjectRoleTags, type ProjectRole } from "@kontext-tech/auth";
+import { UserAvatarById } from "@kontext-tech/identity";
 import {
    ArrowRightOutlined,
    CheckOutlined,
    PlusOutlined,
    SettingOutlined
-} from "@kontext-labs/icons";
-import { ProjectFeature, type ProjectModel } from "@kontext-labs/schema";
-import { AccessLevelTag } from "@kontext-labs/ui";
+} from "@kontext-tech/icons";
+import { ProjectFeature, type ProjectModel } from "@kontext-tech/schema";
+import { AccessLevelTag } from "@kontext-tech/ui";
 import { Button, Flex, Tooltip, Typography, theme } from "antd";
 import React from "react";
 

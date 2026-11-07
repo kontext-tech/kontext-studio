@@ -1,6 +1,6 @@
 import type { Client, ClientOptions } from "openapi-fetch";
 import createClient from "openapi-fetch";
-import type { paths } from "@kontext-labs/schema/api";
+import type { paths } from "@kontext-tech/schema/api";
 import type { ApiAuthContext, ApiErrorResult } from "../types";
 import {
    ApiRequestError,

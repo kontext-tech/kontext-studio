@@ -68,7 +68,7 @@ pnpm run validate:agent-docs           # AGENTS.md ↔ skills topology
 pnpm run validate:tool-pins            # pinned tool versions consistent
 
 # Schema hub contract check:
-pnpm --filter @kontext-labs/schema run check:contracts
+pnpm --filter @kontext-tech/schema run check:contracts
 ```
 
 Targeted runs while iterating:
@@ -78,12 +78,12 @@ uv run --package kontext-agentic pytest py/kontext-agentic/tests
 uv run --package kontext-api pytest py/kontext-api/tests
 uv run --package kontext-runtime pytest py/kontext-runtime/tests
 
-pnpm --filter @kontext-labs/schema test
-pnpm --filter @kontext-labs/chart test
-pnpm --filter @kontext-labs/notebook test
+pnpm --filter @kontext-tech/schema test
+pnpm --filter @kontext-tech/chart test
+pnpm --filter @kontext-tech/notebook test
 
-pnpm --filter @kontext-labs/app lint
-pnpm --filter @kontext-labs/app build
+pnpm --filter @kontext-tech/app lint
+pnpm --filter @kontext-tech/app build
 ```
 
 ## Verification expectations

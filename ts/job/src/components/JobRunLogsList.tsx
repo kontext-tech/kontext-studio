@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import {
    BugOutlined,
    CloseCircleOutlined,
@@ -6,8 +6,8 @@ import {
    InfoCircleOutlined,
    QuestionCircleOutlined,
    WarningOutlined
-} from "@kontext-labs/icons";
-import { LogLevel, type JobRunLogModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { LogLevel, type JobRunLogModel } from "@kontext-tech/schema";
 import { Flex, Typography, theme } from "antd";
 import dayjs from "dayjs";
 import React from "react";

@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/icons",
+   "name": "@kontext-tech/icons",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared Icon wrappers linking Lucide to Ant Design for Kontext",
@@ -30,7 +30,7 @@
    "license": "MIT",
    "dependencies": {
       "@ant-design/icons": "^6.3.4",
-      "@kontext-labs/common": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
       "antd": "^6.6.7",
       "lucide": "1.61.0",
       "react": "^19.3.1"

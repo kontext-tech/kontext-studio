@@ -1,5 +1,5 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
 import {
    SimpleRunEventStreamSchema,
    type Artifact,
@@ -13,7 +13,7 @@ import {
    type ProjectTokenUsageResponse,
    type PythonExecutionResult,
    type UpdateChatSessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { AIChatStreamOptions, SimpleRunEvent } from "./types/aiChat";
 import type { ChatSessionService } from "./types/chatSessionService";
 import { consumeNdjsonStream } from "./utils/ndjsonStream";

@@ -13,7 +13,7 @@
    },
    "moduleNameMapper": {
       "^(\\.\\.?/.*)\\.js$": "$1",
-      "^@kontext-labs/(.*)$": "<rootDir>/../$1/src"
+      "^@kontext-tech/(.*)$": "<rootDir>/../$1/src"
    },
    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"],
    "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts"],

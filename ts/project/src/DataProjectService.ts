@@ -1,6 +1,6 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
-import type { ProjectStatsModel } from "@kontext-labs/schema";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
+import type { ProjectStatsModel } from "@kontext-tech/schema";
 
 export class DataProjectService extends DataApiBaseService {
    constructor(

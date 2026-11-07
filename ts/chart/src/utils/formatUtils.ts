@@ -1,4 +1,4 @@
-import type { NumberFormat } from "@kontext-labs/schema";
+import type { NumberFormat } from "@kontext-tech/schema";
 
 /**
  * Format number to specified notation

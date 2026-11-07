@@ -1,6 +1,6 @@
-import type { PendingPythonExecutionRequest } from "@kontext-labs/schema";
+import type { PendingPythonExecutionRequest } from "@kontext-tech/schema";
 import { Checkbox, Flex, theme, Typography } from "antd";
-import { useUiApp } from "@kontext-labs/ui";
+import { useUiApp } from "@kontext-tech/ui";
 import React from "react";
 import {
    loadRememberedPythonApprovalMode,

@@ -9,12 +9,12 @@ pull requests.
 
 | Path | Consumed by | Generator |
 | --- | --- | --- |
-| `ts/schema/src/generated/api.ts` | `@kontext-labs/common` via `openapi-fetch` | `openapi-typescript` |
+| `ts/schema/src/generated/api.ts` | `@kontext-tech/common` via `openapi-fetch` | `openapi-typescript` |
 | `py/kontext-schema/src/kontext/schema/_generated/` | `kontext.schema` Python imports | `datamodel-code-generator` (Pydantic v2) |
 
 The TypeScript types are generated from
 `ts/schema/src/schemas/kontext.api.openapi.json` and exported as the
-`@kontext-labs/schema/api` subpath. Shared API services build a typed
+`@kontext-tech/schema/api` subpath. Shared API services build a typed
 `openapi-fetch` client from those types; no generated client package is
 published.
 
@@ -69,7 +69,7 @@ authority. If the gate fails, run the commands locally and commit the output.
 2. **Types live in `ts/schema`.** They are a single committed file compiled with
    the package, so there is no separate generated package or `prepare` build
    step. `ts/common` imports the `paths` type through
-   `@kontext-labs/schema/api`.
+   `@kontext-tech/schema/api`.
 3. **Generated output is excluded from hand-run formatters and linters.**
    `ts/schema/src/generated/` is ignored by Prettier, ESLint, and whitespace
    hooks. Ruff owns the Python models: the generator runs the repository-pinned
@@ -79,7 +79,7 @@ authority. If the gate fails, run the commands locally and commit the output.
 
 This repository generates TypeScript types and Python models only. Other
 languages can generate clients from the committed specs, which
-`@kontext-labs/schema` exports as `./specs/api` and `./specs/core`.
+`@kontext-tech/schema` exports as `./specs/api` and `./specs/core`.
 
 ## Related documentation
 

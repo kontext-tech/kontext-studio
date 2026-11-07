@@ -7,10 +7,10 @@
  * results server-side when saved/run (Jupyter-style binding), never on typing
  * alone — the client only validates *user renames*.
  *
- * The pattern mirrors the `alias` field on `SqlBlockData` in @kontext-labs/schema.
+ * The pattern mirrors the `alias` field on `SqlBlockData` in @kontext-tech/schema.
  */
 
-import type { NotebookBlock, SqlBlockData } from "@kontext-labs/schema";
+import type { NotebookBlock, SqlBlockData } from "@kontext-tech/schema";
 
 const SQL_ALIAS_PATTERN = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;
 

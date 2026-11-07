@@ -1,4 +1,4 @@
-import type { StockChartConfig as StockChartConfigType } from "@kontext-labs/schema";
+import type { StockChartConfig as StockChartConfigType } from "@kontext-tech/schema";
 import { Col, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import { NumberFormatSelect } from "../NumberFormatSelect";

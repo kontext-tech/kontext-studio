@@ -6,7 +6,7 @@ import type {
    ModelCredentialRefField,
    ModelProviderConfigField,
    ModelProviderDefinition
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export type CredentialFieldName =
    "apiKeyRef" | "accessKeyIdRef" | "secretAccessKeyRef" | "sessionTokenRef";

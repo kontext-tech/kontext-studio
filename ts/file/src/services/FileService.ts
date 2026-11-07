@@ -1,11 +1,11 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import {
    ApiResult,
    DataApiBaseService,
    logger,
    parseApiErrorPayload
-} from "@kontext-labs/common";
-import { getDataApiUrl } from "@kontext-labs/common/utils";
+} from "@kontext-tech/common";
+import { getDataApiUrl } from "@kontext-tech/common/utils";
 import type {
    CreateMultipleFilesResponse,
    FileFormatType,
@@ -13,7 +13,7 @@ import type {
    InlineData,
    PaginatedFileResponse,
    PythonExecutionResult
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { FileServiceContract, FileUpdateRequest } from "../types";
 import { generateUniqueFilename } from "../utils/fileUtils";
 

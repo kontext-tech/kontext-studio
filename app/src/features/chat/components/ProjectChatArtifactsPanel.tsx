@@ -6,14 +6,14 @@ import {
    useChatSessionStore,
    useChatSessionStoreApi,
    type ChatArtifactRenderParams
-} from "@kontext-labs/chat";
-import { ImageViewer } from "@kontext-labs/file";
-import { JobRunDetailsDrawerHost } from "@kontext-labs/job";
-import { NotebookViewer } from "@kontext-labs/notebook";
-import { useProject } from "@kontext-labs/project";
-import type { Artifact } from "@kontext-labs/schema";
-import { ArtifactType } from "@kontext-labs/schema";
-import { useUiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/chat";
+import { ImageViewer } from "@kontext-tech/file";
+import { JobRunDetailsDrawerHost } from "@kontext-tech/job";
+import { NotebookViewer } from "@kontext-tech/notebook";
+import { useProject } from "@kontext-tech/project";
+import type { Artifact } from "@kontext-tech/schema";
+import { ArtifactType } from "@kontext-tech/schema";
+import { useUiFeedback } from "@kontext-tech/ui";
 import { Card, Typography } from "antd";
 import React from "react";
 import ChartViewer from "./ChartViewer";

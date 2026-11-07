@@ -1,9 +1,9 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
-import type { ProjectRole } from "@kontext-labs/auth";
-import { ArrowLeftRightOutlined, LoadingOutlined } from "@kontext-labs/icons";
-import type { ProjectModel } from "@kontext-labs/schema";
-import { AccessLevelTag } from "@kontext-labs/ui";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
+import type { ProjectRole } from "@kontext-tech/auth";
+import { ArrowLeftRightOutlined, LoadingOutlined } from "@kontext-tech/icons";
+import type { ProjectModel } from "@kontext-tech/schema";
+import { AccessLevelTag } from "@kontext-tech/ui";
 import {
    Button,
    Col,

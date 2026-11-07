@@ -1,5 +1,5 @@
-import type { InlineData } from "@kontext-labs/schema";
-import { ProvenanceInfo } from "@kontext-labs/ui";
+import type { InlineData } from "@kontext-tech/schema";
+import { ProvenanceInfo } from "@kontext-tech/ui";
 import { Empty, Tabs } from "antd";
 import React from "react";
 import QueryResultsTable from "./QueryResultsTable";

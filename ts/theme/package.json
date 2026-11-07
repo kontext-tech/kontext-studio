@@ -1,6 +1,6 @@
 {
    "type": "module",
-   "name": "@kontext-labs/theme",
+   "name": "@kontext-tech/theme",
    "version": "0.261.0",
    "description": "Kontext shared theme runtime and design tokens",
    "license": "MIT",
@@ -19,8 +19,8 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/common": "workspace:*",
-      "@kontext-labs/icons": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
       "antd": "^6.6.7",
       "react": "^19.3.1"
    },

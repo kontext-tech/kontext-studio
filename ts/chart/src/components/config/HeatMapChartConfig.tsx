@@ -1,5 +1,5 @@
-import type { HeatMapConfig as HeatMapConfigType } from "@kontext-labs/schema";
-import { MARK_TYPES } from "@kontext-labs/schema";
+import type { HeatMapConfig as HeatMapConfigType } from "@kontext-tech/schema";
+import { MARK_TYPES } from "@kontext-tech/schema";
 import { Col, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import { NumberFormatSelect } from "../NumberFormatSelect";

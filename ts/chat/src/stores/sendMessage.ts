@@ -1,5 +1,5 @@
 import { isDelegationTool } from "../utils/toolNameUtils";
-import { RunEvent } from "@kontext-labs/schema";
+import { RunEvent } from "@kontext-tech/schema";
 import type {
    ArtifactEventData,
    ChatMessage,
@@ -9,7 +9,7 @@ import type {
    ToolCall,
    ToolCallCompletedEventData,
    ToolCallStartedEventData
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { StoreContext } from "./storeContextTypes";
 import { reduceArtifactEvent } from "./artifactRuntimeReducer";
 import {

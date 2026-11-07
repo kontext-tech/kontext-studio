@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/host-api",
+   "name": "@kontext-tech/host-api",
    "version": "0.261.0",
    "type": "module",
    "description": "Host API for Kontext local and hosted runtimes",
@@ -19,7 +19,7 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/schema": "workspace:*"
+      "@kontext-tech/schema": "workspace:*"
    },
    "devDependencies": {
       "@types/node": "^26.6.5",

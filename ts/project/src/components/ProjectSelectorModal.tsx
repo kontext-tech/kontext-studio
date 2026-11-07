@@ -1,6 +1,6 @@
-import type { ProjectRole } from "@kontext-labs/auth";
-import type { ApiErrorResult } from "@kontext-labs/common";
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ProjectRole } from "@kontext-tech/auth";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { Modal } from "antd";
 import { useState } from "react";
 import ProjectSelectorPanel, {

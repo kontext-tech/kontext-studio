@@ -1,4 +1,4 @@
-import { ThemeContext } from "@kontext-labs/theme";
+import { ThemeContext } from "@kontext-tech/theme";
 import { ConfigProvider, theme as antdTheme } from "antd";
 import React from "react";
 import { useNotebookStore } from "../stores/notebookStore";

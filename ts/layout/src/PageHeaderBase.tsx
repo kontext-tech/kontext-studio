@@ -1,4 +1,4 @@
-import { EditOutlined } from "@kontext-labs/icons";
+import { EditOutlined } from "@kontext-tech/icons";
 import { Button, Flex, Input, Typography, theme } from "antd";
 import React, { type ReactNode, useState } from "react";
 

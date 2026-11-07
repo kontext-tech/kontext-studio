@@ -1,13 +1,13 @@
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
-import { formatFullDateTime, formatTimeAgo } from "@kontext-labs/common/utils";
-import { UserAvatarById } from "@kontext-labs/identity";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
+import { formatFullDateTime, formatTimeAgo } from "@kontext-tech/common/utils";
+import { UserAvatarById } from "@kontext-tech/identity";
 import type {
    JobModel,
    JobRunModel,
    JobRunStatus,
    TriggerActorModel,
    UnifiedJobTypeModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Table, Tag, Typography, type TablePaginationConfig } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { type ReactNode } from "react";

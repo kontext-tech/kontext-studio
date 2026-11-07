@@ -1,5 +1,5 @@
-import { ReloadOutlined } from "@kontext-labs/icons";
-import { JobRunStatus } from "@kontext-labs/schema";
+import { ReloadOutlined } from "@kontext-tech/icons";
+import { JobRunStatus } from "@kontext-tech/schema";
 import { Button, Col, DatePicker, Row, Select, Space } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";

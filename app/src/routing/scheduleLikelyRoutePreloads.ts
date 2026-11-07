@@ -1,4 +1,4 @@
-import { useUserStore } from "@kontext-labs/identity";
+import { useUserStore } from "@kontext-tech/identity";
 
 type ModuleLoader = () => Promise<unknown>;
 

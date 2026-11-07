@@ -236,7 +236,7 @@ export async function startServer({ apiPort, appPort } = {}) {
          command: "pnpm",
          args: [
             "--filter",
-            "@kontext-labs/app",
+            "@kontext-tech/app",
             "dev",
             "--",
             "--port",

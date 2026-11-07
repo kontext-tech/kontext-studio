@@ -1,4 +1,4 @@
-import { LoadingOutlined } from "@kontext-labs/icons";
+import { LoadingOutlined } from "@kontext-tech/icons";
 import { Flex, Spin } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React from "react";

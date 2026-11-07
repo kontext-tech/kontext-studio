@@ -1,17 +1,17 @@
-import { ProjectRoleTags } from "@kontext-labs/auth";
+import { ProjectRoleTags } from "@kontext-tech/auth";
 import {
    getUserDisplayName,
    UserAvatar,
    useUser
-} from "@kontext-labs/identity";
-import { useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/identity";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    DeleteOutlined,
    EditOutlined,
    QuestionCircleOutlined,
    UserOutlined
-} from "@kontext-labs/icons";
-import type { UserWithProjectRolesModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import type { UserWithProjectRolesModel } from "@kontext-tech/schema";
 import { Button, Space, Table, Tag, Tooltip, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 

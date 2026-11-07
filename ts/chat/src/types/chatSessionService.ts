@@ -7,9 +7,9 @@ import type {
    PaginatedChatSessionResponse,
    PythonExecutionResult,
    UpdateChatSessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { AIChatStreamOptions } from "./aiChat";
-import type { ApiResult } from "@kontext-labs/common";
+import type { ApiResult } from "@kontext-tech/common";
 
 /**
  * Service interface for chat session management.

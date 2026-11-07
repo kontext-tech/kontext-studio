@@ -4,7 +4,7 @@ import {
    HistoryOutlined,
    RobotOutlined,
    TableOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import type { DescriptionsProps } from "antd";
 import { Descriptions, Empty, Space, Typography, theme } from "antd";
 

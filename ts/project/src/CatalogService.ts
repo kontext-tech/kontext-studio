@@ -1,5 +1,5 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
 import type {
    CatalogConnection,
    CatalogConnectionRequest,
@@ -8,7 +8,7 @@ import type {
    CatalogNamespaceSummary,
    CatalogProviderDefinition,
    CatalogSyncStatus
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Wraps the catalog endpoints behind the `ApiResult` contract used across the

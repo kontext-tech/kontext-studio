@@ -1,4 +1,4 @@
-import { BugOutlined, ReloadOutlined } from "@kontext-labs/icons";
+import { BugOutlined, ReloadOutlined } from "@kontext-tech/icons";
 import { Alert, Button, Typography } from "antd";
 import React, { type ErrorInfo } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";

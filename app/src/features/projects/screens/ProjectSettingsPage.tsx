@@ -1,15 +1,15 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
-import { ProjectUsers } from "@kontext-labs/project";
+import { ProjectUsers } from "@kontext-tech/project";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { useUiFeedback } from "@kontext-labs/ui";
-import { useProject } from "@kontext-labs/project";
-import { ProjectDetailsForm } from "@kontext-labs/project";
-import { useUser } from "@kontext-labs/identity";
+import { useUiFeedback } from "@kontext-tech/ui";
+import { useProject } from "@kontext-tech/project";
+import { ProjectDetailsForm } from "@kontext-tech/project";
+import { useUser } from "@kontext-tech/identity";
 import { RouteNames } from "@/types";
-import { TAB_QUERY_PARAM } from "@kontext-labs/common";
-import { useIsLocalMode } from "@kontext-labs/site";
-import { LockOutlined, SettingOutlined } from "@kontext-labs/icons";
-import type { ProjectModel } from "@kontext-labs/schema";
+import { TAB_QUERY_PARAM } from "@kontext-tech/common";
+import { useIsLocalMode } from "@kontext-tech/site";
+import { LockOutlined, SettingOutlined } from "@kontext-tech/icons";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { Col, Row, Space, Tabs } from "antd";
 import { useSearchParams } from "react-router-dom";
 

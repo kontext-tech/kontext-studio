@@ -3,8 +3,8 @@ import type {
    JobRunModel,
    JobRunStatus,
    UnifiedJobParameterModel
-} from "@kontext-labs/schema";
-import type { UiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import type { UiFeedback } from "@kontext-tech/ui";
 
 export interface JobFormData {
    name: string;

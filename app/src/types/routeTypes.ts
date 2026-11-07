@@ -2,16 +2,16 @@ import type {
    PermissionClaim,
    ProjectRole,
    SystemRole
-} from "@kontext-labs/auth";
+} from "@kontext-tech/auth";
 import type {
    ProjectFeature,
    ProjectModel,
    ProjectNavModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type {
    SharedLayoutRouteConfig,
    SharedRouteConfig
-} from "@kontext-labs/app-runtime/router";
+} from "@kontext-tech/app-runtime/router";
 import React from "react";
 
 type StringContextFn = (context: RoutingContextInfo) => string;

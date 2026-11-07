@@ -1,4 +1,4 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import type React from "react";
 import { z } from "zod";
 
@@ -7,7 +7,7 @@ import type {
    BlockDataSchema,
    CultureInfoModel,
    NotebookDocument
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 // Type alias for block data union
 export type BlockData = z.infer<typeof BlockDataSchema>;
@@ -28,7 +28,7 @@ export type {
    QuoteBlock,
    SqlBlock,
    TableBlock
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export interface SidebarTabExtension {
    key: string;

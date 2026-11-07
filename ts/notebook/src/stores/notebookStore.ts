@@ -1,5 +1,5 @@
-import { logger } from "@kontext-labs/common";
-import type { ArtifactAction } from "@kontext-labs/schema";
+import { logger } from "@kontext-tech/common";
+import type { ArtifactAction } from "@kontext-tech/schema";
 import type {
    ChartBlock,
    CodeBlock,

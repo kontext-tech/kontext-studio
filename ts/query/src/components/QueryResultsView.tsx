@@ -1,4 +1,4 @@
-import type { QueryResponse } from "@kontext-labs/schema";
+import type { QueryResponse } from "@kontext-tech/schema";
 import { Alert } from "antd";
 import React from "react";
 import QueryResultsTable from "./QueryResultsTable";

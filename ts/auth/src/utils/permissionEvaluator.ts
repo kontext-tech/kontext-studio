@@ -7,7 +7,7 @@ import {
    AccessLevel,
    type ProjectFeature,
    type ProjectModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { PermissionProps } from "../permissionTypes";
 
 export interface PermissionCheckOptions extends PermissionProps {

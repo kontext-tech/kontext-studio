@@ -1,4 +1,4 @@
-import { UserOutlined } from "@kontext-labs/icons";
+import { UserOutlined } from "@kontext-tech/icons";
 import { Avatar, Tooltip } from "antd";
 import React, { useMemo } from "react";
 import { IdentityService } from "../IdentityService";

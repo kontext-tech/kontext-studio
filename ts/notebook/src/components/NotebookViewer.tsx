@@ -1,12 +1,12 @@
-import { DatabaseZapOutlined } from "@kontext-labs/icons";
-import { useFileOperations } from "@kontext-labs/file";
+import { DatabaseZapOutlined } from "@kontext-tech/icons";
+import { useFileOperations } from "@kontext-tech/file";
 import type {
    Artifact,
    ArtifactAction,
    CultureInfoModel,
    FileModel
-} from "@kontext-labs/schema";
-import { LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import { Alert } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CodeExecutionEngine, FileSystemBinding } from "../types/bindings";

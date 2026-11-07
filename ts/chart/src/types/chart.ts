@@ -15,7 +15,7 @@ import type {
    RadarChartConfig,
    ScatterChartConfig,
    StockChartConfig
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export type { ChartConfig };
 

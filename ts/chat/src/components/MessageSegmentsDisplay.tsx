@@ -1,5 +1,5 @@
 import { Think } from "@ant-design/x";
-import { LoadingOutlined, SparklesOutlined } from "@kontext-labs/icons";
+import { LoadingOutlined, SparklesOutlined } from "@kontext-tech/icons";
 import { Alert, Flex, theme } from "antd";
 import React, { useEffect, useRef } from "react";
 import { useChatSessionStore } from "../stores/chatSessionStore";

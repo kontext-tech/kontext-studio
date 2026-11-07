@@ -1,5 +1,5 @@
-import type { ApiErrorResult } from "@kontext-labs/common/types";
-import type { FileModel } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
+import type { FileModel } from "@kontext-tech/schema";
 import { Modal, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useFileService } from "../hooks/useFileService";

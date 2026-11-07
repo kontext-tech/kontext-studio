@@ -5,14 +5,14 @@ import {
    PlayCircleOutlined,
    StopOutlined,
    UpOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import {
    type CodeBlockData,
    type CodeExecutionOutput,
    type PythonExecutionMode
-} from "@kontext-labs/schema";
-import { useTheme } from "@kontext-labs/theme";
-import { LoadingSpinner } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useTheme } from "@kontext-tech/theme";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import type { BaseBlockConfig } from "@notebook/blocks/BaseReactBlock";
 import ExecutionRunLink from "@notebook/components/ExecutionRunLink";
 import LazyCodeEditor from "@notebook/components/code/LazyCodeEditor";

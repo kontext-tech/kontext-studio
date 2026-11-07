@@ -40,7 +40,7 @@ OpenAPI assets, `py/kontext-api` router signatures that alter the API spec.
 ```bash
 pnpm run generate:api-types     # regenerate ts/schema/src/generated/api.ts
 pnpm run generate:models        # regenerate py/kontext-schema from the models spec
-pnpm --filter @kontext-labs/schema run refresh-schemas  # re-export the models spec from Zod
+pnpm --filter @kontext-tech/schema run refresh-schemas  # re-export the models spec from Zod
 pnpm run refresh:api-schema     # re-export the FastAPI OpenAPI doc
 ```
 
@@ -53,7 +53,7 @@ Commit the regenerated artifacts together with the source change.
 ## Verification
 
 ```bash
-pnpm --filter @kontext-labs/schema run check:contracts
+pnpm --filter @kontext-tech/schema run check:contracts
 pnpm check:generator-smoke
 ```
 
@@ -75,6 +75,6 @@ some path above was skipped.
 - Hand-copied mirrors of generated values (e.g. `SiteFeature`, permission
   claims) need a parity check wired into `check:contract-parity` before they
   can drift.
-- The generated API types are part of `@kontext-labs/schema` and must not be
+- The generated API types are part of `@kontext-tech/schema` and must not be
   versioned or published as a separate package. Regenerate them; do not bump a
   version or edit the output by hand.

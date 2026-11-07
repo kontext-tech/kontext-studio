@@ -1,7 +1,7 @@
-import { LoadingOutlined } from "@kontext-labs/icons";
-import { ServiceProvider } from "@kontext-labs/app-runtime/context";
-import { useTheme } from "@kontext-labs/theme";
-import { useSiteConfigStore } from "@kontext-labs/site";
+import { LoadingOutlined } from "@kontext-tech/icons";
+import { ServiceProvider } from "@kontext-tech/app-runtime/context";
+import { useTheme } from "@kontext-tech/theme";
+import { useSiteConfigStore } from "@kontext-tech/site";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { type ReactNode, useEffect } from "react";
 import { Outlet } from "react-router-dom";

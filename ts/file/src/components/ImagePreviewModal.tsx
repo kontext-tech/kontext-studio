@@ -1,6 +1,6 @@
-import { formatFileSize } from "@kontext-labs/common";
-import { CopyOutlined, LoadingOutlined } from "@kontext-labs/icons";
-import type { FileModel } from "@kontext-labs/schema";
+import { formatFileSize } from "@kontext-tech/common";
+import { CopyOutlined, LoadingOutlined } from "@kontext-tech/icons";
+import type { FileModel } from "@kontext-tech/schema";
 import {
    Button,
    Flex,

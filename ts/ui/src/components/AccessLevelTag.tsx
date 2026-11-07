@@ -1,5 +1,5 @@
-import { GlobalOutlined, LockOutlined } from "@kontext-labs/icons";
-import { AccessLevel } from "@kontext-labs/schema";
+import { GlobalOutlined, LockOutlined } from "@kontext-tech/icons";
+import { AccessLevel } from "@kontext-tech/schema";
 import { Tag, theme } from "antd";
 
 export type AccessLevelTagProps = {

@@ -1,5 +1,5 @@
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
-import type { QueryExecRequest, QueryResponse } from "@kontext-labs/schema";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
+import type { QueryExecRequest, QueryResponse } from "@kontext-tech/schema";
 
 /**
  * Service for query operations via the Data API

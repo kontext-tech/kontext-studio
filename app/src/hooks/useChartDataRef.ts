@@ -1,11 +1,11 @@
-import { fileKeys } from "@kontext-labs/file";
-import type { FileServiceContract } from "@kontext-labs/file";
-import type { DataRef, DataTable } from "@kontext-labs/schema";
+import { fileKeys } from "@kontext-tech/file";
+import type { FileServiceContract } from "@kontext-tech/file";
+import type { DataRef, DataTable } from "@kontext-tech/schema";
 import { useQuery } from "@tanstack/react-query";
 
 /**
  * App-level hook to load external data tables for charts.
- * This is intentionally kept in the app layer (not in @kontext-labs/chart) because
+ * This is intentionally kept in the app layer (not in @kontext-tech/chart) because
  * it depends on host-specific services (FileServiceContract) and React Query.
  *
  * @param dataRef - Reference to external data (from ChartDocument)

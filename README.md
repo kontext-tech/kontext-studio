@@ -90,7 +90,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow and
 ## Repository layout
 
 - `app/`: React + Vite labs application (Ant Design v6).
-- `ts/`: TypeScript packages published as `@kontext-labs/*`; `ts/schema` is the
+- `ts/`: TypeScript packages published as `@kontext-tech/*`; `ts/schema` is the
   contract hub and `ts/schema/src/generated/` holds the committed API types.
 - `py/`: Python packages built as `kontext-*`.
 - `examples/`: development-only sample apps that consume the packages and are

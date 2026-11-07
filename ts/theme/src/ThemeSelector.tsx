@@ -3,7 +3,7 @@ import {
    MoonOutlined,
    SunMoonOutlined,
    SunOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import { Button, Dropdown } from "antd";
 import type React from "react";
 import { themeMenuItems } from "./themeMenuItems";

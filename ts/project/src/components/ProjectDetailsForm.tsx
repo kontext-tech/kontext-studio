@@ -1,9 +1,9 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import type { UiFeedback } from "@kontext-labs/ui";
-import { getFullUrl } from "@kontext-labs/common/utils";
-import { QuestionCircleOutlined } from "@kontext-labs/icons";
-import { useService } from "@kontext-labs/app-runtime/hooks";
-import type { ProjectModel, UpdateProjectRequest } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import type { UiFeedback } from "@kontext-tech/ui";
+import { getFullUrl } from "@kontext-tech/common/utils";
+import { QuestionCircleOutlined } from "@kontext-tech/icons";
+import { useService } from "@kontext-tech/app-runtime/hooks";
+import type { ProjectModel, UpdateProjectRequest } from "@kontext-tech/schema";
 import { Button, Card, Flex, Form, Input, Tooltip } from "antd";
 import { useState } from "react";
 import { ProjectService } from "../ProjectService";

@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import { ProblemTypes } from "@kontext-labs/schema";
+import { ProblemTypes } from "@kontext-tech/schema";
 import {
    ApiRequestError,
    createFallbackApiError,

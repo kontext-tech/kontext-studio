@@ -1,4 +1,4 @@
-import type { QuerySessionModel } from "@kontext-labs/schema";
+import type { QuerySessionModel } from "@kontext-tech/schema";
 import type {
    QueryExecutionService,
    QuerySessionServiceContract

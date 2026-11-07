@@ -1,6 +1,6 @@
-import { logger } from "@kontext-labs/common";
-import { ImagesOutlined } from "@kontext-labs/icons";
-import type { FileModel } from "@kontext-labs/schema";
+import { logger } from "@kontext-tech/common";
+import { ImagesOutlined } from "@kontext-tech/icons";
+import type { FileModel } from "@kontext-tech/schema";
 import { Button, Image, Input, Typography } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import ImageListModal from "./ImageListModal";

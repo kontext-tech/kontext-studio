@@ -1,7 +1,7 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, HttpApiService } from "@kontext-labs/common";
-import { HostClient } from "@kontext-labs/host-api";
-import type { CultureInfoModel } from "@kontext-labs/schema";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, HttpApiService } from "@kontext-tech/common";
+import { HostClient } from "@kontext-tech/host-api";
+import type { CultureInfoModel } from "@kontext-tech/schema";
 
 export interface SiteCultureServiceContract {
    getCultures(): Promise<ApiResult<CultureInfoModel[]>>;

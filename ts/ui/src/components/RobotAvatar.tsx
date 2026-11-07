@@ -1,4 +1,4 @@
-import { AgentIcon, RobotOutlined } from "@kontext-labs/icons";
+import { AgentIcon, RobotOutlined } from "@kontext-tech/icons";
 import { Avatar, theme } from "antd";
 
 export interface RobotAvatarProps {

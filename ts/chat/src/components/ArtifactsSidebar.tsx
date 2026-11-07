@@ -1,6 +1,6 @@
-import { CloseOutlined, PanelLeftCloseOutlined } from "@kontext-labs/icons";
-import type { Artifact } from "@kontext-labs/schema";
-import { ArtifactType } from "@kontext-labs/schema";
+import { CloseOutlined, PanelLeftCloseOutlined } from "@kontext-tech/icons";
+import type { Artifact } from "@kontext-tech/schema";
+import { ArtifactType } from "@kontext-tech/schema";
 import { Button, Card, Flex, Tabs, Typography, theme } from "antd";
 import React from "react";
 import { useChatSessionStore } from "../stores/chatSessionStore";

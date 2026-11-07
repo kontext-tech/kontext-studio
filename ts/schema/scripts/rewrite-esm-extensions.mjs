@@ -7,7 +7,7 @@
  * TypeScript source use extensionless relative imports (e.g. `./core`). That is
  * fine for bundlers but Node's ESM resolver rejects extensionless *directory*
  * imports with ERR_UNSUPPORTED_DIR_IMPORT. The `tsc-alias` pass only rewrites
- * the `@kontext-labs/schema/*` path aliases, leaving ~167 relative imports that
+ * the `@kontext-tech/schema/*` path aliases, leaving ~167 relative imports that
  * still point at directories or extensionless files.
  *
  * This script rewrites every relative import/export in dist/**​/*.js so that:

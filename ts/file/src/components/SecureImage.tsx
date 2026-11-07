@@ -1,5 +1,5 @@
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
-import { LoadingOutlined } from "@kontext-labs/icons";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
+import { LoadingOutlined } from "@kontext-tech/icons";
 import { Flex, Image, Progress, Spin, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { FileService } from "../services";

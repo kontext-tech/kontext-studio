@@ -1,11 +1,11 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useFileService, useFileWorkflow } from "@kontext-labs/file";
-import { useUserStore } from "@kontext-labs/identity";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useFileService, useFileWorkflow } from "@kontext-tech/file";
+import { useUserStore } from "@kontext-tech/identity";
 import {
    type NotebookDocument,
    useNotebookFileHelpers,
    useNotebookStore
-} from "@kontext-labs/notebook";
+} from "@kontext-tech/notebook";
 import { createPythonHitlResolver } from "./pythonHitl";
 import {
    type PendingPythonExecutionRequest,
@@ -17,7 +17,7 @@ import {
    type ProjectModel,
    type SimpleRunEvent,
    type UpdateChatSessionRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { useCallback, useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import {

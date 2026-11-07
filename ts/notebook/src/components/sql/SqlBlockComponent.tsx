@@ -5,11 +5,11 @@ import {
    LoadingOutlined,
    PlayCircleOutlined,
    UpOutlined
-} from "@kontext-labs/icons";
-import QueryResultsView from "@kontext-labs/query/query-results";
-import type { SqlBlockData } from "@kontext-labs/schema";
-import { CopyOutlined } from "@kontext-labs/icons";
-import { LoadingSpinner } from "@kontext-labs/ui";
+} from "@kontext-tech/icons";
+import QueryResultsView from "@kontext-tech/query/query-results";
+import type { SqlBlockData } from "@kontext-tech/schema";
+import { CopyOutlined } from "@kontext-tech/icons";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import type { BaseBlockConfig } from "@notebook/blocks/BaseReactBlock";
 import { useNotebookStore } from "@notebook/stores/notebookStore";
 import {
@@ -39,7 +39,7 @@ import { resolveNotebookExecutionId } from "../../utils/notebookExecution";
 import ExecutionRunLink from "../ExecutionRunLink";
 
 // Lazy load SqlEditor for consistency with SqlWorkspacePanel
-const LazySqlEditor = lazy(() => import("@kontext-labs/query/sql-editor"));
+const LazySqlEditor = lazy(() => import("@kontext-tech/query/sql-editor"));
 
 const { Text } = Typography;
 

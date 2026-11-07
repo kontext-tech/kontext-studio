@@ -1,5 +1,5 @@
 import { CodeHighlighter } from "@ant-design/x";
-import { CustomMermaid } from "@kontext-labs/notebook";
+import { CustomMermaid } from "@kontext-tech/notebook";
 import { theme } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";

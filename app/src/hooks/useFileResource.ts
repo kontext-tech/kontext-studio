@@ -1,9 +1,9 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { useFileService } from "@kontext-labs/file";
-import type { FileModel } from "@kontext-labs/schema";
-import { fileKeys } from "@kontext-labs/file";
+import { useFileService } from "@kontext-tech/file";
+import type { FileModel } from "@kontext-tech/schema";
+import { fileKeys } from "@kontext-tech/file";
 import { useQuery } from "@tanstack/react-query";
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 
 /**
  * Loads a single file's metadata through React Query so detail screens get

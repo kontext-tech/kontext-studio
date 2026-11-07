@@ -10,7 +10,7 @@ import type {
    ChatTextSegment,
    ChatToolCallSegment,
    ToolCallState
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Re-export chat message types from schemas for use in frontend

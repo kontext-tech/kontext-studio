@@ -1,8 +1,8 @@
 import { useRoute } from "@/hooks/useRoute";
 import { routeRegistry } from "@/routing";
 import { RouteNames } from "@/types";
-import { ProjectOutlined } from "@kontext-labs/icons";
-import type { ProjectModel, ProjectNavModel } from "@kontext-labs/schema";
+import { ProjectOutlined } from "@kontext-tech/icons";
+import type { ProjectModel, ProjectNavModel } from "@kontext-tech/schema";
 import { Breadcrumb } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";

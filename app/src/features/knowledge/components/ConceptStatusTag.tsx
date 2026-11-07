@@ -1,5 +1,5 @@
 import { getConceptStatus } from "@/features/knowledge/utils/conceptPresentation";
-import type { OkfConcept } from "@kontext-labs/schema";
+import type { OkfConcept } from "@kontext-tech/schema";
 import { Tag } from "antd";
 
 interface ConceptStatusTagProps {

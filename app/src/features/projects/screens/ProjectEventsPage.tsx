@@ -2,10 +2,10 @@ import PageContainer from "@/components/layout/SeoPageContainer";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useCanViewProjectActivity } from "@/hooks/useCanViewProjectActivity";
 import { RouteNames } from "@/types";
-import { AccessDeniedAlert } from "@kontext-labs/auth";
-import { ProjectEventsPanel } from "@kontext-labs/event";
-import { useProject } from "@kontext-labs/project";
-import { useUiFeedback } from "@kontext-labs/ui";
+import { AccessDeniedAlert } from "@kontext-tech/auth";
+import { ProjectEventsPanel } from "@kontext-tech/event";
+import { useProject } from "@kontext-tech/project";
+import { useUiFeedback } from "@kontext-tech/ui";
 
 const ProjectEventsPage = () => {
    const { currentProject } = useProject();

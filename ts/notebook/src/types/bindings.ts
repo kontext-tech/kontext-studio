@@ -3,7 +3,7 @@ import type {
    DataRef,
    DataTable,
    DataTableSummary
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 interface BindingError {
    messages: string[];

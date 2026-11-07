@@ -25,15 +25,15 @@
       "declarationMap": true,
       "sourceMap": true,
       "paths": {
-         "@kontext-labs/auth": ["../auth/src/index.ts"],
-         "@kontext-labs/auth/*": ["../auth/src/*"],
-         "@kontext-labs/common": ["../common/src/index.ts"],
-         "@kontext-labs/common/*": ["../common/src/*"],
-         "@kontext-labs/host-api": ["../host-api/src/index.ts"],
-         "@kontext-labs/icons": ["../icons/src/index.ts"],
-         "@kontext-labs/icons/*": ["../icons/src/*"],
-         "@kontext-labs/schema": ["../schema/src/index.ts"],
-         "@kontext-labs/schema/*": ["../schema/src/*"]
+         "@kontext-tech/auth": ["../auth/src/index.ts"],
+         "@kontext-tech/auth/*": ["../auth/src/*"],
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/host-api": ["../host-api/src/index.ts"],
+         "@kontext-tech/icons": ["../icons/src/index.ts"],
+         "@kontext-tech/icons/*": ["../icons/src/*"],
+         "@kontext-tech/schema": ["../schema/src/index.ts"],
+         "@kontext-tech/schema/*": ["../schema/src/*"]
       }
    },
    "references": [

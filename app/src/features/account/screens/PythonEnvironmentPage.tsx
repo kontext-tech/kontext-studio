@@ -1,8 +1,8 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { usePythonEnvironment } from "@/hooks/usePythonEnvironment";
 import { RouteNames } from "@/types";
-import { CodeOutlined, ReloadOutlined } from "@kontext-labs/icons";
-import { useUiFeedback } from "@kontext-labs/ui";
+import { CodeOutlined, ReloadOutlined } from "@kontext-tech/icons";
+import { useUiFeedback } from "@kontext-tech/ui";
 import {
    Alert,
    Button,

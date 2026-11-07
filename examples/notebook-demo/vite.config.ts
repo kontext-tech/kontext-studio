@@ -16,7 +16,7 @@ export default defineConfig({
          "@lezer/highlight"
       ],
       alias: {
-         "@kontext-labs/notebook": fileURLToPath(
+         "@kontext-tech/notebook": fileURLToPath(
             new URL("../../ts/notebook/src/index.ts", import.meta.url)
          ),
          "@notebook": fileURLToPath(

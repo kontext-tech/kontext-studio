@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/app-runtime",
+   "name": "@kontext-tech/app-runtime",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared React service-context and lazy-loading helpers for Kontext",
@@ -31,7 +31,7 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/common": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
       "@tanstack/react-query": "^5.104.5",
       "react": "^19.3.1"
    },

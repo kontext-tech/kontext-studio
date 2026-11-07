@@ -1,12 +1,12 @@
 import { getRouteConfig, routeRegistry } from "@/routing";
 import { RouteNames, type RoutingContextInfo } from "@/types";
 import type { RouteVisibilityContext } from "@/types/routeTypes";
-import { createIconFromName } from "@kontext-labs/icons";
+import { createIconFromName } from "@kontext-tech/icons";
 import {
    type ChatSessionModel,
    type ProjectModel,
    type SiteConfigResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type { MenuProps } from "antd/es/menu";
 
 // Ant Design Menu types are highly recursive. To avoid "is excessively deep and possibly infinite"

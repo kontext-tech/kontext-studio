@@ -8,11 +8,11 @@ import {
    getGeneratedBy,
    getConceptTitle
 } from "@/features/knowledge/utils/conceptPresentation";
-import { CommonRoleGroups } from "@kontext-labs/auth";
-import { PermissionButton } from "@kontext-labs/auth";
-import { CheckOutlined, DeleteOutlined } from "@kontext-labs/icons";
-import { LoadingSpinner } from "@kontext-labs/ui";
-import { useUiApp } from "@kontext-labs/ui";
+import { CommonRoleGroups } from "@kontext-tech/auth";
+import { PermissionButton } from "@kontext-tech/auth";
+import { CheckOutlined, DeleteOutlined } from "@kontext-tech/icons";
+import { LoadingSpinner } from "@kontext-tech/ui";
+import { useUiApp } from "@kontext-tech/ui";
 import { Alert, Button, Card, Empty, Flex, Space, Tag, Typography } from "antd";
 
 interface ProposalsInboxProps {

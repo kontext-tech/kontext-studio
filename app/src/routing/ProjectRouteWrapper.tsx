@@ -1,13 +1,13 @@
 import { usePermissionContext } from "@/context/AppPermissionContext";
-import { useProject } from "@kontext-labs/project";
+import { useProject } from "@kontext-tech/project";
 import {
    PROJECT_ROUTE_ERRORS,
    useProjectRouteGuard
 } from "@/hooks/useProjectRouteGuard";
 import type { RouteConfig } from "@/types";
-import { AccessDeniedAlert, AuthenticatedRoute } from "@kontext-labs/auth";
-import { shouldRequireAuthentication } from "@kontext-labs/auth";
-import { LoadingSpinner, PageErrorBoundary } from "@kontext-labs/ui";
+import { AccessDeniedAlert, AuthenticatedRoute } from "@kontext-tech/auth";
+import { shouldRequireAuthentication } from "@kontext-tech/auth";
+import { LoadingSpinner, PageErrorBoundary } from "@kontext-tech/ui";
 import React, { useMemo } from "react";
 
 /**

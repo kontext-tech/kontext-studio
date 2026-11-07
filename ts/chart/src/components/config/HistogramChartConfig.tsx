@@ -1,4 +1,4 @@
-import type { HistogramChartConfig as HistogramChartConfigType } from "@kontext-labs/schema";
+import type { HistogramChartConfig as HistogramChartConfigType } from "@kontext-tech/schema";
 import { Col, InputNumber, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import type { BaseChartConfigProps } from "./configTypes";

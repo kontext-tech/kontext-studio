@@ -1,5 +1,5 @@
-import { logger } from "@kontext-labs/common";
-import type { ArtifactAction } from "@kontext-labs/schema";
+import { logger } from "@kontext-tech/common";
+import type { ArtifactAction } from "@kontext-tech/schema";
 import { type BlockAPI, default as EditorJS } from "@editorjs/editorjs";
 import {
    EditOutlined,
@@ -11,8 +11,8 @@ import {
    PanelRightOpenOutlined,
    SaveOutlined,
    SettingOutlined
-} from "@kontext-labs/icons";
-import { ThemeProvider, useTheme } from "@kontext-labs/theme";
+} from "@kontext-tech/icons";
+import { ThemeProvider, useTheme } from "@kontext-tech/theme";
 import {
    ChartBlock,
    CustomCode,

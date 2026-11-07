@@ -1,6 +1,6 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUserStore } from "@kontext-labs/identity";
-import { useService } from "@kontext-labs/app-runtime/hooks";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUserStore } from "@kontext-tech/identity";
+import { useService } from "@kontext-tech/app-runtime/hooks";
 import { chatKeys } from "./queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import { ModelCatalogService } from "./ModelCatalogService";

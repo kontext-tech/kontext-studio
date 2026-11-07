@@ -2,9 +2,9 @@ import PageContainer from "@/components/layout/SeoPageContainer";
 import { useProjectTriggerActorRenderer } from "@/features/projects/hooks/useProjectTriggerActorRenderer";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { RouteNames } from "@/types";
-import { JobRunsPanel } from "@kontext-labs/job";
-import { useProject } from "@kontext-labs/project";
-import { useUiFeedback } from "@kontext-labs/ui";
+import { JobRunsPanel } from "@kontext-tech/job";
+import { useProject } from "@kontext-tech/project";
+import { useUiFeedback } from "@kontext-tech/ui";
 import { useSearchParams } from "react-router-dom";
 
 const ProjectJobsPage = () => {

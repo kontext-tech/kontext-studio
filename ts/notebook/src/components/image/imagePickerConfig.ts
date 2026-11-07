@@ -1,5 +1,5 @@
-import type { PaginatedResult } from "@kontext-labs/common";
-import type { FileModel } from "@kontext-labs/schema";
+import type { PaginatedResult } from "@kontext-tech/common";
+import type { FileModel } from "@kontext-tech/schema";
 
 export interface ImagePickerData {
    resourceId: string;

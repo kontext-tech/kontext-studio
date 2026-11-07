@@ -1,6 +1,6 @@
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import type { ProjectNavModel, ProjectModel } from "@kontext-labs/schema";
+import type { ProjectNavModel, ProjectModel } from "@kontext-tech/schema";
 
 /**
  * Hook that returns a function to generate canonical URLs using the routing system

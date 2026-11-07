@@ -1,5 +1,5 @@
-import type { PythonExecutionApprovalMode } from "@kontext-labs/schema";
-import { SettingOutlined } from "@kontext-labs/icons";
+import type { PythonExecutionApprovalMode } from "@kontext-tech/schema";
+import { SettingOutlined } from "@kontext-tech/icons";
 import { Button, Dropdown, theme } from "antd";
 
 export interface ChatSessionComposerControlsProps {

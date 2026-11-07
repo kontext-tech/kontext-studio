@@ -1,4 +1,4 @@
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 import { Alert, Card, Tabs, theme } from "antd";
 import React from "react";
 import type { ChartConfig } from "../types/chart";

@@ -2,7 +2,7 @@
  * Tests for data aggregation utilities
  */
 
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 import { aggregateData, needsAggregation } from "../dataTableUtils";
 
 describe("Data Aggregation Utilities", () => {

@@ -1,5 +1,5 @@
 import type { ApiErrorResult } from "../types";
-import { ProblemTypes } from "@kontext-labs/schema";
+import { ProblemTypes } from "@kontext-tech/schema";
 import { logger } from "./logger";
 
 /**
@@ -247,7 +247,7 @@ const getResponseFromError = (error: unknown): Response | undefined => {
  * Normalize anything caught by a service into `ApiErrorResult`.
  *
  * - `ApiRequestError` already carries the parsed openapi-fetch payload.
- * - Foreign transports (e.g. `@kontext-labs/host-api`) attach an unread
+ * - Foreign transports (e.g. `@kontext-tech/host-api`) attach an unread
  *   `Response` to the thrown error; parse it on demand.
  * - Anything else gets the generic fallback.
  */

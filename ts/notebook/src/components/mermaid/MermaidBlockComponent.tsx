@@ -1,4 +1,4 @@
-import type { MermaidBlockData } from "@kontext-labs/schema";
+import type { MermaidBlockData } from "@kontext-tech/schema";
 import React from "react";
 import { CustomMermaid } from "./CustomMermaid";
 

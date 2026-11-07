@@ -1,4 +1,4 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import { createUrlWithReturnParam } from "./navigationUtils";
 
 export interface CurrentLocationLike {

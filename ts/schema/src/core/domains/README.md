@@ -2,7 +2,7 @@
 
 This folder is the **authoring** location for core contracts that are shared across:
 
-- TypeScript (via `@kontext-labs/schema` and generated SDKs)
+- TypeScript (via `@kontext-tech/schema` and generated SDKs)
 - Python (via generated Pydantic models and SDKs)
 - External API consumers reading the committed OpenAPI specs
 

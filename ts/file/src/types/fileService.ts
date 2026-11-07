@@ -1,10 +1,10 @@
-import type { ApiResult, PaginatedResult } from "@kontext-labs/common/types";
+import type { ApiResult, PaginatedResult } from "@kontext-tech/common/types";
 import type {
    FileModel,
    InlineData,
    PythonExecutionResult,
    UpdateFileRequest
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 export type DownloadProgressCallback = (progress: number) => void;
 

@@ -17,7 +17,7 @@ import type {
    ProjectFeature,
    ProjectModel,
    ProjectNavModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import React, { useMemo } from "react";
 
 type ProjectLike = ProjectModel | ProjectNavModel | null | undefined;

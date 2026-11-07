@@ -2,7 +2,7 @@ import {
    MoonOutlined,
    SunMoonOutlined,
    SunOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import type { MenuProps } from "antd";
 import { ThemeMode } from "./themeMode";
 

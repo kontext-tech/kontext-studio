@@ -47,7 +47,7 @@ jobs:
 
       - name: Build shared packages
         # The capture starts the app through Vite, whose config is loaded from
-        # the built `@kontext-labs/build-config` package.
+        # the built `@kontext-tech/build-config` package.
         run: pnpm run build:shared
 
       - name: Install Chromium

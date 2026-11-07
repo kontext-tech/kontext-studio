@@ -1,7 +1,7 @@
 import {
    BoxChartTypeSchema,
    type BoxChartConfig as BoxChartConfigType
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Col, Row, Select, Space, Typography } from "antd";
 import React from "react";
 import type { BaseChartConfigProps } from "./configTypes";

@@ -1,9 +1,9 @@
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { createApiErrorHandler } from "@kontext-labs/auth";
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useUserStore } from "@kontext-labs/identity";
-import { useUiApp } from "@kontext-labs/ui";
+import { createApiErrorHandler } from "@kontext-tech/auth";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useUserStore } from "@kontext-tech/identity";
+import { useUiApp } from "@kontext-tech/ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useApiErrorHandler = () => {

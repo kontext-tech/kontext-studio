@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/job",
+   "name": "@kontext-tech/job",
    "version": "0.261.0",
    "type": "module",
    "description": "Shared job management UI components for Kontext",
@@ -19,13 +19,13 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/auth": "workspace:*",
-      "@kontext-labs/common": "workspace:*",
-      "@kontext-labs/icons": "workspace:*",
-      "@kontext-labs/identity": "workspace:*",
-      "@kontext-labs/app-runtime": "workspace:*",
-      "@kontext-labs/schema": "workspace:*",
-      "@kontext-labs/ui": "workspace:*",
+      "@kontext-tech/auth": "workspace:*",
+      "@kontext-tech/common": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
+      "@kontext-tech/identity": "workspace:*",
+      "@kontext-tech/app-runtime": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
+      "@kontext-tech/ui": "workspace:*",
       "antd": "^6.6.7",
       "cronstrue": "^3.38.0",
       "dayjs": "^1.11.23",

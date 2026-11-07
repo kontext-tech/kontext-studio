@@ -4,11 +4,11 @@ import { RouteNames } from "@/types";
 import {
    ModelProviderSettingsPanel,
    type ModelProviderSettingsPanelHandle
-} from "@kontext-labs/chat";
-import { PlusOutlined } from "@kontext-labs/icons";
-import { ProjectService } from "@kontext-labs/project";
-import { useService } from "@kontext-labs/app-runtime/hooks";
-import { useUiFeedback } from "@kontext-labs/ui";
+} from "@kontext-tech/chat";
+import { PlusOutlined } from "@kontext-tech/icons";
+import { ProjectService } from "@kontext-tech/project";
+import { useService } from "@kontext-tech/app-runtime/hooks";
+import { useUiFeedback } from "@kontext-tech/ui";
 import { Button, Typography } from "antd";
 import { useCallback, useRef } from "react";
 

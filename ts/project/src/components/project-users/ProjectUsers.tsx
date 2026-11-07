@@ -1,9 +1,9 @@
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
-import { getFullUrl } from "@kontext-labs/common/utils";
-import { QuestionCircleOutlined, UserAddOutlined } from "@kontext-labs/icons";
-import type { ApiErrorResult } from "@kontext-labs/common/types";
-import type { UserWithProjectRolesModel } from "@kontext-labs/schema";
-import { DebouncedSearch } from "@kontext-labs/ui";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
+import { getFullUrl } from "@kontext-tech/common/utils";
+import { QuestionCircleOutlined, UserAddOutlined } from "@kontext-tech/icons";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
+import type { UserWithProjectRolesModel } from "@kontext-tech/schema";
+import { DebouncedSearch } from "@kontext-tech/ui";
 import {
    Alert,
    Button,

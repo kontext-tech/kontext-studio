@@ -1,6 +1,6 @@
-import { useFileWorkflow } from "@kontext-labs/file";
-import type { FileModel } from "@kontext-labs/schema";
-import { useUiApp } from "@kontext-labs/ui";
+import { useFileWorkflow } from "@kontext-tech/file";
+import type { FileModel } from "@kontext-tech/schema";
+import { useUiApp } from "@kontext-tech/ui";
 import { Form, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import {

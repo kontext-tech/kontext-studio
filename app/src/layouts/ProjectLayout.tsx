@@ -1,9 +1,9 @@
 import ProjectSideMenu from "@/components/layout/ProjectSideMenu";
-import { ChatSessionStoreProvider } from "@kontext-labs/chat";
+import { ChatSessionStoreProvider } from "@kontext-tech/chat";
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { useRoute } from "@/hooks/useRoute";
-import { useUserStore } from "@kontext-labs/identity";
-import { useProject, useProjectUrlSync } from "@kontext-labs/project";
+import { useUserStore } from "@kontext-tech/identity";
+import { useProject, useProjectUrlSync } from "@kontext-tech/project";
 import React from "react";
 import { useParams } from "react-router-dom";
 import BaseLayout from "./BaseLayout";

@@ -1,13 +1,13 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { ChatSessionList, useChatSessionStore } from "@kontext-labs/chat";
-import { PAGE_SIZE_OPTIONS } from "@kontext-labs/common";
-import { FilterOutlined, PlusOutlined } from "@kontext-labs/icons";
-import { useUserStore } from "@kontext-labs/identity";
-import { useProject } from "@kontext-labs/project";
-import { type ChatSessionModel, type ProjectModel } from "@kontext-labs/schema";
-import { DebouncedSearch, LoadingSpinner, useUiApp } from "@kontext-labs/ui";
+import { ChatSessionList, useChatSessionStore } from "@kontext-tech/chat";
+import { PAGE_SIZE_OPTIONS } from "@kontext-tech/common";
+import { FilterOutlined, PlusOutlined } from "@kontext-tech/icons";
+import { useUserStore } from "@kontext-tech/identity";
+import { useProject } from "@kontext-tech/project";
+import { type ChatSessionModel, type ProjectModel } from "@kontext-tech/schema";
+import { DebouncedSearch, LoadingSpinner, useUiApp } from "@kontext-tech/ui";
 import {
    Button,
    Checkbox,

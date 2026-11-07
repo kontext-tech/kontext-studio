@@ -1,7 +1,7 @@
-import { useProject } from "@kontext-labs/project";
+import { useProject } from "@kontext-tech/project";
 import { useRoute } from "@/hooks/useRoute";
 import type { MenuItem } from "@/utils/menuUtils";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Menu } from "antd";
 import React, { useMemo } from "react";
 

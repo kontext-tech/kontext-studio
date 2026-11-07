@@ -1,5 +1,5 @@
-import { useProject } from "@kontext-labs/project";
-import { useUser } from "@kontext-labs/identity";
+import { useProject } from "@kontext-tech/project";
+import { useUser } from "@kontext-tech/identity";
 import { routeRegistry } from "@/routing";
 import type { RoutingContextInfo } from "@/types";
 import { RouteNames } from "@/types";
@@ -7,17 +7,17 @@ import {
    PermissionContext as SharedPermissionContext,
    createPermissionContextValue,
    type PermissionContextValue as SharedPermissionContextValue
-} from "@kontext-labs/auth";
-import type { PermissionClaim, SystemRole } from "@kontext-labs/auth";
-import { CommonRoleGroups, ProjectRole } from "@kontext-labs/auth";
+} from "@kontext-tech/auth";
+import type { PermissionClaim, SystemRole } from "@kontext-tech/auth";
+import { CommonRoleGroups, ProjectRole } from "@kontext-tech/auth";
 import {
    evaluateExplicitUserAccess,
    evaluateProjectRoles,
    evaluateRequiredFeatures,
    type PermissionCheckOptions
-} from "@kontext-labs/auth";
-import { type ProjectFeature, type ProjectModel } from "@kontext-labs/schema";
-import type { ProjectNavModel } from "@kontext-labs/schema";
+} from "@kontext-tech/auth";
+import { type ProjectFeature, type ProjectModel } from "@kontext-tech/schema";
+import type { ProjectNavModel } from "@kontext-tech/schema";
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 
 type PermissionContextValue = Omit<
@@ -222,7 +222,7 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({
       [currentProject]
    );
 
-   // Shared @kontext-labs/auth context consumed by extracted package components.
+   // Shared @kontext-tech/auth context consumed by extracted package components.
    const sharedContextValue = useMemo(
       (): SharedPermissionContextValue =>
          createPermissionContextValue({
@@ -254,7 +254,7 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({
 
    /**
     * Comprehensive permission check. The evaluation itself lives in
-    * @kontext-labs/auth (createPermissionContextValue); this context only
+    * @kontext-tech/auth (createPermissionContextValue); this context only
     * defaults the project argument to the current project.
     */
    const hasPermission = useCallback(

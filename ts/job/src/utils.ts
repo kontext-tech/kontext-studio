@@ -1,5 +1,5 @@
-import { JobRunStatus, JobTriggerType } from "@kontext-labs/schema";
-import type { TriggerActorModel } from "@kontext-labs/schema";
+import { JobRunStatus, JobTriggerType } from "@kontext-tech/schema";
+import type { TriggerActorModel } from "@kontext-tech/schema";
 import dayjs from "dayjs";
 
 const JOB_RUN_STATUS_MAP: Record<

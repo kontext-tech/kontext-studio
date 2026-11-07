@@ -1,10 +1,10 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import {
    JobRunStatus,
    type JobRunLogModel,
    type JobRunModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DataJobRunService } from "./DataJobRunService";
 import { ExecutionRunService } from "./ExecutionRunService";

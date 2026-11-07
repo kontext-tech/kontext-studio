@@ -1,6 +1,6 @@
 import type { BlockAPI } from "@editorjs/editorjs";
-import { BlockIcons, logger } from "@kontext-labs/common";
-import type { SqlBlockData } from "@kontext-labs/schema";
+import { BlockIcons, logger } from "@kontext-tech/common";
+import type { SqlBlockData } from "@kontext-tech/schema";
 import {
    SqlBlockComponent,
    SqlBlockPreview,

@@ -3,9 +3,9 @@ import {
    DownloadOutlined,
    EyeOutlined,
    InfoCircleOutlined
-} from "@kontext-labs/icons";
-import { CommonRoleGroups, PermissionContext } from "@kontext-labs/auth";
-import { type FileModel } from "@kontext-labs/schema";
+} from "@kontext-tech/icons";
+import { CommonRoleGroups, PermissionContext } from "@kontext-tech/auth";
+import { type FileModel } from "@kontext-tech/schema";
 import { Button, Space, Tooltip } from "antd";
 import { useContext } from "react";
 import { isImageResource } from "../utils/fileUtils";

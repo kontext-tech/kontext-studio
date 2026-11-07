@@ -1,14 +1,14 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import type { UiFeedback } from "@kontext-labs/ui";
-import { useUser, UserAvatar } from "@kontext-labs/identity";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import type { UiFeedback } from "@kontext-tech/ui";
+import { useUser, UserAvatar } from "@kontext-tech/identity";
 import type {
    UpdateUserProfileRequest,
    UserWithRolesModel
-} from "@kontext-labs/schema";
-import { CloseOutlined, SaveOutlined } from "@kontext-labs/icons";
+} from "@kontext-tech/schema";
+import { CloseOutlined, SaveOutlined } from "@kontext-tech/icons";
 import { Button, Card, Flex, Form, Input, Select, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import { useService } from "@kontext-labs/app-runtime/hooks";
+import { useService } from "@kontext-tech/app-runtime/hooks";
 import { AccountService } from "../AccountService";
 
 export interface ProfileLanguageOption {

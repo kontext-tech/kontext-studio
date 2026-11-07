@@ -5,8 +5,8 @@
  * as NDJSON lines instead of wrapping them in a separate event envelope.
  */
 
-// Import types from @kontext-labs/schema - single source of truth
-import type { SimpleRunEvent, ToolCall } from "@kontext-labs/schema";
+// Import types from @kontext-tech/schema - single source of truth
+import type { SimpleRunEvent, ToolCall } from "@kontext-tech/schema";
 
 // Re-export SimpleRunEvent for backward compatibility
 export type { SimpleRunEvent };

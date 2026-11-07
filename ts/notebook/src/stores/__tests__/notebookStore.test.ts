@@ -1,4 +1,4 @@
-import type { ArtifactAction } from "@kontext-labs/schema";
+import type { ArtifactAction } from "@kontext-tech/schema";
 import { useNotebookStore } from "../notebookStore";
 
 const INSTANCE_ID = "notebook-store-test";

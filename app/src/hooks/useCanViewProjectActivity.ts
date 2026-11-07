@@ -1,6 +1,6 @@
-import { SYSTEM_ROLES } from "@kontext-labs/auth";
-import { useUserStore } from "@kontext-labs/identity";
-import { useIsLocalMode } from "@kontext-labs/site";
+import { SYSTEM_ROLES } from "@kontext-tech/auth";
+import { useUserStore } from "@kontext-tech/identity";
+import { useIsLocalMode } from "@kontext-tech/site";
 
 /**
  * Whether the current user may view project-level audit / monitoring views

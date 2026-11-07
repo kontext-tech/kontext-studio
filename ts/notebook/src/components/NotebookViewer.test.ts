@@ -3,8 +3,8 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ArtifactType } from "@kontext-labs/schema";
-import type { Artifact, ArtifactAction } from "@kontext-labs/schema";
+import { ArtifactType } from "@kontext-tech/schema";
+import type { Artifact, ArtifactAction } from "@kontext-tech/schema";
 import { useNotebookStore } from "@notebook/stores/notebookStore";
 import NotebookViewer, { findFirstChangedBlockId } from "./NotebookViewer";
 
@@ -35,7 +35,7 @@ const EMPTY_DOC = { title: "NB", created: 1, modified: 1000, blocks: [] };
 let servedDoc: typeof SERVER_DOC = EMPTY_DOC;
 const fileFetches = { count: 0 };
 
-jest.mock("@kontext-labs/icons", () => ({
+jest.mock("@kontext-tech/icons", () => ({
    DatabaseZapOutlined: () => null
 }));
 
@@ -46,7 +46,7 @@ const getFileBlobMock = jest.fn(async () => {
 });
 const updateFileMock = jest.fn(async () => ({ success: true }));
 
-jest.mock("@kontext-labs/file", () => ({
+jest.mock("@kontext-tech/file", () => ({
    useFileOperations: () => ({
       fetchFile: fetchFileMock,
       getFileBlob: getFileBlobMock,
@@ -57,7 +57,7 @@ jest.mock("@kontext-labs/file", () => ({
    ).useJsonFileHelpers
 }));
 
-jest.mock("@kontext-labs/ui", () => ({
+jest.mock("@kontext-tech/ui", () => ({
    __esModule: true,
    LoadingSpinner: () => null,
    useUiApp: () => ({ message: { error: jest.fn(), success: jest.fn() } })

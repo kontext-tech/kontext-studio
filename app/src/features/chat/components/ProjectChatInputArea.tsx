@@ -2,9 +2,9 @@ import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import {
    ChatInputArea as SharedChatInputArea,
    type ChatInputAreaProps as SharedChatInputAreaProps
-} from "@kontext-labs/chat";
-import { useProject } from "@kontext-labs/project";
-import type { ModelCatalogEntry } from "@kontext-labs/schema";
+} from "@kontext-tech/chat";
+import { useProject } from "@kontext-tech/project";
+import type { ModelCatalogEntry } from "@kontext-tech/schema";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoute } from "@/hooks/useRoute";

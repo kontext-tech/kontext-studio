@@ -1,10 +1,10 @@
 import { useChartDocument } from "@/hooks/useChartDocument";
 import { usePermissionContext } from "@/context/AppPermissionContext";
-import { ProjectRole } from "@kontext-labs/auth";
-import { ChartDocumentView } from "@kontext-labs/chart";
-import { useProject } from "@kontext-labs/project";
-import type { Artifact, ProjectModel } from "@kontext-labs/schema";
-import { LoadingSpinner } from "@kontext-labs/ui";
+import { ProjectRole } from "@kontext-tech/auth";
+import { ChartDocumentView } from "@kontext-tech/chart";
+import { useProject } from "@kontext-tech/project";
+import type { Artifact, ProjectModel } from "@kontext-tech/schema";
+import { LoadingSpinner } from "@kontext-tech/ui";
 import { Alert, Button, Empty } from "antd";
 
 interface ChartViewerProps {

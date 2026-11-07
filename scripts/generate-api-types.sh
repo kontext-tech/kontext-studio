@@ -3,7 +3,7 @@
 # ts/schema/src/schemas/kontext.api.openapi.json.
 #
 # The generated `paths` / `components` types are committed to the repository
-# (no artifact tarball) and consumed by @kontext-labs/common through
+# (no artifact tarball) and consumed by @kontext-tech/common through
 # openapi-fetch. The spec is exported from the Zod contracts in ts/schema, so
 # run `pnpm run generate:models` first when the contracts changed.
 #
@@ -31,6 +31,6 @@ fi
 
 echo "🔄 Generating TypeScript API types..."
 
-pnpm --filter @kontext-labs/schema exec openapi-typescript "$SPEC" --output "$OUT"
+pnpm --filter @kontext-tech/schema exec openapi-typescript "$SPEC" --output "$OUT"
 
 echo "✅ Generated API types: ts/schema/src/generated/api.ts"

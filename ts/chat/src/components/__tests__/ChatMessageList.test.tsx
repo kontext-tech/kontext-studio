@@ -35,7 +35,7 @@ jest.mock("@ant-design/x", () => {
    };
 });
 
-jest.mock("@kontext-labs/identity", () => {
+jest.mock("@kontext-tech/identity", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    return {
@@ -50,7 +50,7 @@ jest.mock("@kontext-labs/identity", () => {
    };
 });
 
-jest.mock("@kontext-labs/ui", () => {
+jest.mock("@kontext-tech/ui", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    return {
@@ -64,7 +64,7 @@ jest.mock("@kontext-labs/ui", () => {
    };
 });
 
-jest.mock("@kontext-labs/icons", () => {
+jest.mock("@kontext-tech/icons", () => {
    const React = jest.requireActual<typeof import("react")>("react");
 
    return {

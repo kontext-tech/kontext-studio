@@ -2,7 +2,7 @@ import type {
    BaseLayoutRouteConfig,
    BaseRouteConfig,
    RouteContextValue
-} from "@kontext-labs/common/utils";
+} from "@kontext-tech/common/utils";
 import React from "react";
 
 export type SharedRouteContextValue<TContext, TValue> = RouteContextValue<

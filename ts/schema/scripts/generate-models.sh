@@ -31,7 +31,7 @@ verify_generator_prerequisites "$PROJECT_ROOT"
 
 # Step 1: refresh the committed models spec from the Zod source of truth.
 echo ""
-echo "📋 Step 1: Refreshing models schema from @kontext-labs/schema..."
+echo "📋 Step 1: Refreshing models schema from @kontext-tech/schema..."
 cd "$SCHEMAS_DIR"
 pnpm run refresh-schemas
 

@@ -4,8 +4,8 @@ import {
    DRAFT_STATUS,
    STABLE_STATUS
 } from "@/features/knowledge/utils/conceptPresentation";
-import type { OkfConcept } from "@kontext-labs/schema";
-import { useUiApp } from "@kontext-labs/ui";
+import type { OkfConcept } from "@kontext-tech/schema";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    DatePicker,
    Form,

@@ -5,7 +5,7 @@
  * `pythonHitl.ts`) do not pull in the approval modal's antd/React imports.
  */
 
-import type { PythonExecutionApprovalMode } from "@kontext-labs/schema";
+import type { PythonExecutionApprovalMode } from "@kontext-tech/schema";
 
 const PYTHON_APPROVAL_MODE_STORAGE_KEY =
    "kontext.chat.pythonExecutionApprovalMode";

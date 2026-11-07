@@ -21,7 +21,7 @@ import {
    CommonRoleGroups,
    PermissionButton,
    PermissionGate
-} from "@kontext-labs/auth";
+} from "@kontext-tech/auth";
 import {
    CheckCircleOutlined,
    DatabaseOutlined,
@@ -30,14 +30,14 @@ import {
    PlusOutlined,
    ReloadOutlined,
    SyncOutlined
-} from "@kontext-labs/icons";
-import { CatalogService, useProject } from "@kontext-labs/project";
-import { useDataService } from "@kontext-labs/app-runtime/hooks";
+} from "@kontext-tech/icons";
+import { CatalogService, useProject } from "@kontext-tech/project";
+import { useDataService } from "@kontext-tech/app-runtime/hooks";
 import type {
    CatalogConnection,
    CatalogProviderDefinition
-} from "@kontext-labs/schema";
-import { useUiApp } from "@kontext-labs/ui";
+} from "@kontext-tech/schema";
+import { useUiApp } from "@kontext-tech/ui";
 import {
    Alert,
    Button,

@@ -1,5 +1,5 @@
-import { PermissionSearch } from "@kontext-labs/auth";
-import { PermissionSelect } from "@kontext-labs/auth";
+import { PermissionSearch } from "@kontext-tech/auth";
+import { PermissionSelect } from "@kontext-tech/auth";
 import PageContainer from "@/components/layout/SeoPageContainer";
 import {
    DownloadProgressModal,
@@ -9,28 +9,28 @@ import {
    FileUploadModal,
    ImagePreviewModal,
    useFileWorkflow
-} from "@kontext-labs/file";
-import { CreateNotebookModal } from "@kontext-labs/notebook";
-import { useProject } from "@kontext-labs/project";
+} from "@kontext-tech/file";
+import { CreateNotebookModal } from "@kontext-tech/notebook";
+import { useProject } from "@kontext-tech/project";
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { UserAvatarById } from "@kontext-labs/identity";
+import { UserAvatarById } from "@kontext-tech/identity";
 import { FolderOutlined } from "@ant-design/icons";
 import {
    CommonRoleGroups,
    PermissionButton,
    ProjectRole
-} from "@kontext-labs/auth";
-import { PAGE_SIZE_OPTIONS, SEARCH_QUERY_PARAM } from "@kontext-labs/common";
-import { formatFileSize, formatTimeAgo } from "@kontext-labs/common";
+} from "@kontext-tech/auth";
+import { PAGE_SIZE_OPTIONS, SEARCH_QUERY_PARAM } from "@kontext-tech/common";
+import { formatFileSize, formatTimeAgo } from "@kontext-tech/common";
 import {
    DownOutlined,
    NotebookOutlined,
    PlusOutlined,
    UploadOutlined
-} from "@kontext-labs/icons";
-import { FileFormatType, type FileModel } from "@kontext-labs/schema";
-import { FileIcon } from "@kontext-labs/ui";
+} from "@kontext-tech/icons";
+import { FileFormatType, type FileModel } from "@kontext-tech/schema";
+import { FileIcon } from "@kontext-tech/ui";
 import {
    Breadcrumb,
    Dropdown,

@@ -8,7 +8,7 @@ Run it locally with:
 pnpm run dev:app
 ```
 
-It consumes the shared workspace packages (`@kontext-labs/*`) built by
+It consumes the shared workspace packages (`@kontext-tech/*`) built by
 `pnpm run build:shared`, and talks to the local `kontext-studio` server
 (`uv run --env-file .env.local kontext serve --reload`).
 

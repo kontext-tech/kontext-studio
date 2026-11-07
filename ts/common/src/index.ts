@@ -1,4 +1,4 @@
-// Main exports for @kontext-labs/common package
+// Main exports for @kontext-tech/common package
 export * from "./assets/index";
 export * from "./constants/index";
 export * from "./container/index";

@@ -195,7 +195,7 @@ assert(
 // package instead of defining duplicates. That only holds while every component
 // in the API spec also exists as a component in the comprehensive
 // models spec. A API-only component would force the client generators to
-// emit a model that has no `@kontext-labs/schema` counterpart.
+// emit a model that has no `@kontext-tech/schema` counterpart.
 // ---------------------------------------------------------------------------
 const apiSpecPath = path.resolve(
    __dirname,

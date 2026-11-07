@@ -7,8 +7,8 @@ import type {
    SessionInitRequest,
    SessionInitResponse,
    UpdateQuerySessionRequest
-} from "@kontext-labs/schema";
-import type { ApiResult } from "@kontext-labs/common";
+} from "@kontext-tech/schema";
+import type { ApiResult } from "@kontext-tech/common";
 
 /**
  * Interface for query execution service operations.

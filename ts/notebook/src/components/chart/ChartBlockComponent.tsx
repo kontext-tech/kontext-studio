@@ -3,15 +3,15 @@ import {
    ChartFactory,
    type ChartConfig,
    type ChartType
-} from "@kontext-labs/chart";
-import { extractChartDataRows, inferChartFields } from "@kontext-labs/common";
+} from "@kontext-tech/chart";
+import { extractChartDataRows, inferChartFields } from "@kontext-tech/common";
 import {
    ChartLineOutlined,
    EditOutlined,
    SettingOutlined
-} from "@kontext-labs/icons";
-import type { ChartBlockData } from "@kontext-labs/schema";
-import { useTheme } from "@kontext-labs/theme";
+} from "@kontext-tech/icons";
+import type { ChartBlockData } from "@kontext-tech/schema";
+import { useTheme } from "@kontext-tech/theme";
 import {
    Alert,
    Button,

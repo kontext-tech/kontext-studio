@@ -2,7 +2,7 @@ import { getUserDisplayName } from "../utils/userUtils";
 import type {
    UserWithProjectRolesModel,
    UserWithRolesModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { Avatar, Space, Tooltip, Typography } from "antd";
 import React, { useMemo } from "react";
 

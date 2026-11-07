@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import { AgentToolNames, type SimpleRunEvent } from "@kontext-labs/schema";
+import { AgentToolNames, type SimpleRunEvent } from "@kontext-tech/schema";
 import {
    createPythonHitlResolver,
    type NotebookHitlPort,

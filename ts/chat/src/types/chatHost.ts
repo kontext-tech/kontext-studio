@@ -1,9 +1,9 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
+import type { ApiErrorResult } from "@kontext-tech/common";
 import type {
    Artifact,
    ModelCatalogEntry,
    ProjectModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import type React from "react";
 
 export interface ChatAvailabilityContext {

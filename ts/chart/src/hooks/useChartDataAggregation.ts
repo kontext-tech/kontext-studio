@@ -1,4 +1,4 @@
-import type { TabularData } from "@kontext-labs/schema";
+import type { TabularData } from "@kontext-tech/schema";
 import { useMemo } from "react";
 import type { ChartConfig } from "../types/chart";
 import { getChartAggregatedData } from "../utils/dataAggregation";

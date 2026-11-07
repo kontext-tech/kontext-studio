@@ -1,6 +1,6 @@
-import { normalizeTag, validateTagFormat } from "@kontext-labs/common";
-import { LanguageSelect } from "@kontext-labs/ui";
-import type { CultureInfoModel } from "@kontext-labs/schema";
+import { normalizeTag, validateTagFormat } from "@kontext-tech/common";
+import { LanguageSelect } from "@kontext-tech/ui";
+import type { CultureInfoModel } from "@kontext-tech/schema";
 import { Checkbox, Form, Select } from "antd";
 import React from "react";
 

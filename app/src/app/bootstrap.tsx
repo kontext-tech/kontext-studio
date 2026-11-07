@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@kontext-labs/theme";
+import { ThemeProvider } from "@kontext-tech/theme";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

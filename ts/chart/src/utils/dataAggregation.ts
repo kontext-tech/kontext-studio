@@ -6,8 +6,8 @@
 import {
    aggregateData,
    type AggregationFunction
-} from "@kontext-labs/common/utils";
-import type { TabularData } from "@kontext-labs/schema";
+} from "@kontext-tech/common/utils";
+import type { TabularData } from "@kontext-tech/schema";
 import type { ChartConfig } from "../types/chart";
 
 /**

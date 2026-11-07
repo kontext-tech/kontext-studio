@@ -1,9 +1,9 @@
 import PageHeader from "@/components/common/PageHeader";
 import useCanonicalUrl from "@/hooks/useCanonicalUrl";
 import { RouteNames } from "@/types";
-import type { ProjectModel, ProjectNavModel } from "@kontext-labs/schema";
-import { MetaTags } from "@kontext-labs/site";
-import { PageContainer as SharedPageContainer } from "@kontext-labs/ui";
+import type { ProjectModel, ProjectNavModel } from "@kontext-tech/schema";
+import { MetaTags } from "@kontext-tech/site";
+import { PageContainer as SharedPageContainer } from "@kontext-tech/ui";
 import React, { type ReactNode } from "react";
 import BreadcrumbNav from "./BreadcrumbNav";
 

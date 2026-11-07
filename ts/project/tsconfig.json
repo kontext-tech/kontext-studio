@@ -25,14 +25,14 @@
       "declarationMap": true,
       "sourceMap": true,
       "paths": {
-         "@kontext-labs/chart": ["../chart/src/index.ts"],
-         "@kontext-labs/chat": ["../chat/src/index.ts"],
-         "@kontext-labs/common": ["../common/src/index.ts"],
-         "@kontext-labs/identity": ["../identity/src/index.ts"],
-         "@kontext-labs/theme": ["../theme/src/index.ts"],
-         "@kontext-labs/ui": ["../ui/src/index.ts"],
-         "@kontext-labs/common/*": ["../common/src/*"],
-         "@kontext-labs/host-api": ["../host-api/src/index.ts"]
+         "@kontext-tech/chart": ["../chart/src/index.ts"],
+         "@kontext-tech/chat": ["../chat/src/index.ts"],
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/identity": ["../identity/src/index.ts"],
+         "@kontext-tech/theme": ["../theme/src/index.ts"],
+         "@kontext-tech/ui": ["../ui/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/host-api": ["../host-api/src/index.ts"]
       }
    },
    "references": [

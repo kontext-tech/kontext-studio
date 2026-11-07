@@ -1,6 +1,6 @@
-import type { ApiErrorResult } from "@kontext-labs/common";
-import { useService } from "@kontext-labs/app-runtime/hooks";
-import type { ProjectModel } from "@kontext-labs/schema";
+import type { ApiErrorResult } from "@kontext-tech/common";
+import { useService } from "@kontext-tech/app-runtime/hooks";
+import type { ProjectModel } from "@kontext-tech/schema";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProjectService } from "./ProjectService";

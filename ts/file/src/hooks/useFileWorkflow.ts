@@ -1,5 +1,5 @@
-import { useUiApp } from "@kontext-labs/ui";
-import type { ApiErrorResult } from "@kontext-labs/common/types";
+import { useUiApp } from "@kontext-tech/ui";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
 import type { DownloadProgressCallback, ResourceData } from "../types";
 import { downloadBlob } from "../utils/fileUtils";
 import { useFileOperations, type FileListState } from "./useFileOperations";
@@ -9,7 +9,7 @@ import type {
    FileModel,
    InlineData,
    PaginatedFileResponse
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { useCallback, useState } from "react";
 
 export interface UseFileWorkflowOptions {

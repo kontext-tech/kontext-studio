@@ -1,9 +1,9 @@
 import ProjectSelectorLazy from "@/shell/project/ProjectSelectorLazy";
-import { getBaseUrl } from "@kontext-labs/common/utils";
+import { getBaseUrl } from "@kontext-tech/common/utils";
 import {
    PanelLeftCloseOutlined,
    PanelLeftOpenOutlined
-} from "@kontext-labs/icons";
+} from "@kontext-tech/icons";
 import { Button, Flex, Tooltip, theme } from "antd";
 import { Suspense } from "react";
 

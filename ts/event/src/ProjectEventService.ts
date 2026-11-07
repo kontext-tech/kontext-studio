@@ -1,9 +1,9 @@
-import type { ApiAuthContext, ApiErrorResult } from "@kontext-labs/common";
-import { ApiResult, DataApiBaseService } from "@kontext-labs/common";
+import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
+import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
 import type {
    EventType,
    PaginatedListOfEventModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 
 /**
  * Service for managing project-level events from the Data-AI API.

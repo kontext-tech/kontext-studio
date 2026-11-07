@@ -1,6 +1,6 @@
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { useUser } from "@kontext-labs/identity";
+import { useUser } from "@kontext-tech/identity";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 

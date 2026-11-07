@@ -1,4 +1,4 @@
-# @kontext-labs/schema
+# @kontext-tech/schema
 
 Shared domain schemas for Kontext, authored Zod-first and consumed across
 TypeScript and Python, including the generated TypeScript API types.
@@ -32,29 +32,29 @@ OpenAPI/Pydantic artifacts are generated from them.
 
 ```ts
 // Core domain schemas
-import { ProjectModelSchema, CreateProjectRequestSchema } from "@kontext-labs/schema";
+import { ProjectModelSchema, CreateProjectRequestSchema } from "@kontext-tech/schema";
 
 // Tabular primitives
-import { DataTableSchema, DataColumnSchema } from "@kontext-labs/schema";
+import { DataTableSchema, DataColumnSchema } from "@kontext-tech/schema";
 
 // Chart schemas
-import { ChartConfigSchema, CHART_SCHEMAS, getAllChartTypes } from "@kontext-labs/schema";
+import { ChartConfigSchema, CHART_SCHEMAS, getAllChartTypes } from "@kontext-tech/schema";
 
 // Notebook schemas
-import { NotebookDocumentSchema, NotebookBlockSchema, SqlBlockSchema } from "@kontext-labs/schema";
+import { NotebookDocumentSchema, NotebookBlockSchema, SqlBlockSchema } from "@kontext-tech/schema";
 
 // Type inference
-import type { NotebookDocument, ChartConfig, DataTable, ProjectModel } from "@kontext-labs/schema";
+import type { NotebookDocument, ChartConfig, DataTable, ProjectModel } from "@kontext-tech/schema";
 ```
 
 The committed OpenAPI specs are also exported as subpaths:
 
-- `@kontext-labs/schema/specs/core` → `kontext.api.core.openapi.json`
-- `@kontext-labs/schema/specs/api` → `kontext.api.openapi.json`
+- `@kontext-tech/schema/specs/core` → `kontext.api.core.openapi.json`
+- `@kontext-tech/schema/specs/api` → `kontext.api.openapi.json`
 
 ## Scripts
 
-All scripts run from this package (`pnpm --filter @kontext-labs/schema run <script>`).
+All scripts run from this package (`pnpm --filter @kontext-tech/schema run <script>`).
 
 ### Refresh the OpenAPI specs
 
@@ -86,7 +86,7 @@ pnpm run check:generator-smoke  # validates generated types/models
 ## Package Architecture
 
 ```text
-@kontext-labs/schema (Zod-first source of truth)
+@kontext-tech/schema (Zod-first source of truth)
 ├── src/
 │   ├── core/                 # Hand-authored core domains + primitives
 │   │   ├── domains/          # identity, projects, jobs, events, ...

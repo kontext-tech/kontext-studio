@@ -1,10 +1,10 @@
 import { useRoute } from "@/hooks/useRoute";
 import { RouteNames } from "@/types";
-import { AuthService, K_RETURN_URL } from "@kontext-labs/auth";
-import { navigateToUrl } from "@kontext-labs/common/utils";
-import { MetaTags } from "@kontext-labs/site";
-import { useIsLocalMode, useSiteConfigStore } from "@kontext-labs/site";
-import { useUser, useUserStore } from "@kontext-labs/identity";
+import { AuthService, K_RETURN_URL } from "@kontext-tech/auth";
+import { navigateToUrl } from "@kontext-tech/common/utils";
+import { MetaTags } from "@kontext-tech/site";
+import { useIsLocalMode, useSiteConfigStore } from "@kontext-tech/site";
+import { useUser, useUserStore } from "@kontext-tech/identity";
 import { Alert, Button, Flex, Spin } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";

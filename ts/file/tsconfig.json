@@ -25,12 +25,12 @@
       "declarationMap": true,
       "sourceMap": true,
       "paths": {
-         "@kontext-labs/auth": ["../auth/src/index.ts"],
-         "@kontext-labs/common": ["../common/src/index.ts"],
-         "@kontext-labs/common/*": ["../common/src/*"],
-         "@kontext-labs/icons": ["../icons/src/index.ts"],
-         "@kontext-labs/site": ["../site/src/index.ts"],
-         "@kontext-labs/ui": ["../ui/src/index.ts"]
+         "@kontext-tech/auth": ["../auth/src/index.ts"],
+         "@kontext-tech/common": ["../common/src/index.ts"],
+         "@kontext-tech/common/*": ["../common/src/*"],
+         "@kontext-tech/icons": ["../icons/src/index.ts"],
+         "@kontext-tech/site": ["../site/src/index.ts"],
+         "@kontext-tech/ui": ["../ui/src/index.ts"]
       }
    },
    "references": [

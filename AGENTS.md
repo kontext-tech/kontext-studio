@@ -22,11 +22,11 @@ Tool-specific entry points are thin adapters with no unique content:
   `[tool.commitizen]` in `pyproject.toml`; bump with `pnpm run version:labs`.
 - Follow Conventional Commits (see `.github/skills/commit-message`).
 - Shared TS packages must not import app-local modules. The `@/` alias is for
-  `app/src` only; packages under `ts/` import each other via `@kontext-labs/*`.
+  `app/src` only; packages under `ts/` import each other via `@kontext-tech/*`.
 - Feature placement: workspace packages own state, services, and domain
   components; `app/` owns screens, routing, and composition. Do not move
   screens into packages or business rules into `app/`; import packages through
-  their public entry points, never `@kontext-labs/*/src/...`.
+  their public entry points, never `@kontext-tech/*/src/...`.
 - Python distributions must declare exactly the workspace packages their source
   imports (`py/kontext-common/tests/test_dependency_metadata.py` enforces this;
   only `kontext-api`, `kontext-runtime`, and `kontext-studio` may pin unimported
@@ -61,7 +61,7 @@ pnpm run validate:workspace-graph
 pnpm run validate:workspace-versions
 ```
 
-App only: `pnpm --filter @kontext-labs/app {dev,build,lint,type-check}`
+App only: `pnpm --filter @kontext-tech/app {dev,build,lint,type-check}`
 (no dedicated app test script).
 
 Python suites (pytest configured at the workspace root; markers like

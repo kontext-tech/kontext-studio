@@ -1,5 +1,5 @@
-import { formatFileSize } from "@kontext-labs/common";
-import type { FileModel } from "@kontext-labs/schema";
+import { formatFileSize } from "@kontext-tech/common";
+import type { FileModel } from "@kontext-tech/schema";
 import { Descriptions, Typography } from "antd";
 
 const { Text } = Typography;

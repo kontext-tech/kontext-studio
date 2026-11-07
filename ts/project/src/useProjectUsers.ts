@@ -1,12 +1,12 @@
-import { ProjectRole } from "@kontext-labs/auth";
-import { useService } from "@kontext-labs/app-runtime/hooks";
-import { useUiApp } from "@kontext-labs/ui";
-import { ApiResult } from "@kontext-labs/common";
-import type { ApiErrorResult } from "@kontext-labs/common/types";
+import { ProjectRole } from "@kontext-tech/auth";
+import { useService } from "@kontext-tech/app-runtime/hooks";
+import { useUiApp } from "@kontext-tech/ui";
+import { ApiResult } from "@kontext-tech/common";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
 import type {
    PaginatedListOfUserWithProjectRolesModel,
    UserWithProjectRolesModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ProjectService } from "./ProjectService";
 

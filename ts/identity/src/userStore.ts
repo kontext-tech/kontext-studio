@@ -1,14 +1,14 @@
-import { logger } from "@kontext-labs/common";
-import { AuthService } from "@kontext-labs/auth";
-import { ServiceContainer } from "@kontext-labs/common/container";
-import { setAuthAccessToken } from "@kontext-labs/common/stores";
-import type { ApiErrorResult } from "@kontext-labs/common/types";
-import { isLocalMode } from "@kontext-labs/common/utils";
+import { logger } from "@kontext-tech/common";
+import { AuthService } from "@kontext-tech/auth";
+import { ServiceContainer } from "@kontext-tech/common/container";
+import { setAuthAccessToken } from "@kontext-tech/common/stores";
+import type { ApiErrorResult } from "@kontext-tech/common/types";
+import { isLocalMode } from "@kontext-tech/common/utils";
 import type {
    AccessTokenResponse,
    LoginRequest,
    UserWithRolesModel
-} from "@kontext-labs/schema";
+} from "@kontext-tech/schema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { IdentityService } from "./IdentityService";

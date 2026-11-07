@@ -1,7 +1,7 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
-import { AccountService } from "@kontext-labs/account";
-import { useService } from "@kontext-labs/app-runtime/hooks";
-import type { PythonEnvironmentInfo } from "@kontext-labs/schema";
+import { AccountService } from "@kontext-tech/account";
+import { useService } from "@kontext-tech/app-runtime/hooks";
+import type { PythonEnvironmentInfo } from "@kontext-tech/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const PYTHON_ENVIRONMENT_QUERY_KEY = ["python-environment"] as const;

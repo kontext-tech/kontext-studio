@@ -1,14 +1,14 @@
 import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import { usePythonEnvironment } from "@/hooks/usePythonEnvironment";
-import { useDataService, useService } from "@kontext-labs/app-runtime/hooks";
-import { ChatService, ModelProviderService } from "@kontext-labs/chat";
+import { useDataService, useService } from "@kontext-tech/app-runtime/hooks";
+import { ChatService, ModelProviderService } from "@kontext-tech/chat";
 import {
    SiteFeature,
    type ChatSessionModel,
    type ModelConnection,
    type ProjectModel
-} from "@kontext-labs/schema";
-import { useSiteConfigStore } from "@kontext-labs/site";
+} from "@kontext-tech/schema";
+import { useSiteConfigStore } from "@kontext-tech/site";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 

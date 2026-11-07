@@ -892,7 +892,7 @@ function registerDefinitions() {
    z.globalRegistry.add(DataRefSchema, { id: "DataRef" });
    z.globalRegistry.add(NotebookDocumentSchema, { id: "NotebookDocument" });
    // Hoist notebook document metadata and the image file reference into named
-   // components so they resolve from @kontext-labs/schema rather than being
+   // components so they resolve from @kontext-tech/schema rather than being
    // regenerated as API-only schemas.
    z.globalRegistry.add(NotebookDocumentMetadataSchema, {
       id: "NotebookDocumentMetadata"

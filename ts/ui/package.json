@@ -1,5 +1,5 @@
 {
-   "name": "@kontext-labs/ui",
+   "name": "@kontext-tech/ui",
    "version": "0.261.0",
    "type": "module",
    "description": "Generic UI facade extracted from shared components",
@@ -19,8 +19,8 @@
       "dev": "tsc --watch"
    },
    "dependencies": {
-      "@kontext-labs/icons": "workspace:*",
-      "@kontext-labs/schema": "workspace:*",
+      "@kontext-tech/icons": "workspace:*",
+      "@kontext-tech/schema": "workspace:*",
       "antd": "^6.6.7",
       "react": "^19.3.1"
    },

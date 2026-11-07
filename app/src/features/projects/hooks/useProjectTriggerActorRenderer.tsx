@@ -1,6 +1,6 @@
-import { getTriggerActorLabel } from "@kontext-labs/job";
-import { useProject } from "@kontext-labs/project";
-import type { TriggerActorModel } from "@kontext-labs/schema";
+import { getTriggerActorLabel } from "@kontext-tech/job";
+import { useProject } from "@kontext-tech/project";
+import type { TriggerActorModel } from "@kontext-tech/schema";
 import { useCallback, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useRoute } from "@/hooks/useRoute";

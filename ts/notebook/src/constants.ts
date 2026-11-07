@@ -2,7 +2,7 @@
  * Constants for notebook-related functionality
  */
 
-import { notebookInstanceId } from "@kontext-labs/common";
+import { notebookInstanceId } from "@kontext-tech/common";
 
 export { notebookInstanceId };
 

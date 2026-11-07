@@ -4,12 +4,9 @@ name: Publish TypeScript Packages
 # `pnpm run version:labs` (`uv run cz bump`). No changesets PR flow: the bump
 # commit and tag are created locally and pushed by a maintainer.
 #
-# The packages keep the `@kontext-labs` npm scope while the repo lives under
-# `kontext-tech`. KONTEXT_PACKAGES_TOKEN must be a PAT with `write:packages`
-# access to whichever account owns that scope; the workflow's GITHUB_TOKEN only
-# covers the `kontext-tech` owner and cannot publish the `@kontext-labs` scope.
-# Moving the scope to `@kontext-tech` is a breaking rename of every package and
-# must update `setup-node.scope` here in the same change.
+# The packages publish under the `@kontext-tech` scope, matching the repository
+# owner, so the workflow's GITHUB_TOKEN (`packages: write`) can publish them.
+# No PAT is needed; cross-org consumers still need `read:packages` access.
 on:
   push:
     tags:
@@ -41,22 +38,13 @@ jobs:
         with:
           node-version: 22.23.4
           registry-url: https://npm.pkg.github.com
-          scope: "@kontext-labs"
+          scope: "@kontext-tech"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build shared packages
         run: pnpm run build:shared
-
-      - name: Check package publish token
-        env:
-          PACKAGE_TOKEN: ${{ secrets.KONTEXT_PACKAGES_TOKEN }}
-        run: |
-          if [ -z "$PACKAGE_TOKEN" ]; then
-            echo "::error::KONTEXT_PACKAGES_TOKEN is required to publish @kontext-labs/* packages from ${{ github.repository }}. Add a PAT with write:packages access to the account that owns the @kontext-labs scope."
-            exit 1
-          fi
 
       - name: Verify package versions are in lockstep
         run: pnpm run validate:workspace-versions
@@ -74,4 +62,4 @@ jobs:
       - name: Publish packages
         run: pnpm --filter "./ts/*" publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.KONTEXT_PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
