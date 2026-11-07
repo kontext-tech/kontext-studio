@@ -85,15 +85,23 @@ const { version: commitizenVersion, versionFiles } = readCommitizenConfig();
 // same lockstep version: `ts/*` npm packages and `py/*` uv packages.
 const registeredDirs = new Set();
 const registeredPythonDirs = new Set();
+const registeredExtraFiles = new Set();
 let rootRegistered = false;
-let appRegistered = false;
+
+// Workspace files that share the lockstep version without naming the key
+// `version`. `cz bump` rewrites the listed pointer.
+const EXTRA_VERSION_FILES = new Map([
+   ["app/package.json", "version"],
+   ["docs/user-guide/_meta.json", "capturedWith"],
+]);
 
 for (const entry of versionFiles) {
    const [filePath, pointer] = entry.split(":");
+   const expectedPointer = EXTRA_VERSION_FILES.get(filePath) ?? "version";
 
-   if (pointer !== "version") {
+   if (pointer !== expectedPointer) {
       violations.push(
-         `version_files entry "${entry}" targets "${pointer ?? "(none)"}"; only "version" is supported`
+         `version_files entry "${entry}" targets "${pointer ?? "(none)"}"; expected "${expectedPointer}"`
       );
       continue;
    }
@@ -108,12 +116,11 @@ for (const entry of versionFiles) {
       continue;
    }
 
-   const isAppPackage = filePath === "app/package.json";
    const isTsPackage = filePath.startsWith("ts/") && filePath.endsWith("/package.json");
    const isPyPackage = filePath.startsWith("py/") && filePath.endsWith("/pyproject.toml");
 
-   if (isAppPackage) {
-      appRegistered = true;
+   if (EXTRA_VERSION_FILES.has(filePath)) {
+      registeredExtraFiles.add(filePath);
 
       if (!fs.existsSync(path.join(rootDir, filePath))) {
          violations.push(`version_files entry "${entry}" points at a missing file`);
@@ -218,23 +225,27 @@ if (rootPackageJson && commitizenVersion !== null && rootPackageJson.version !==
    );
 }
 
-// `app` is a pnpm workspace member but is not a published package. Nothing reads
-// its version, so it drifts unless `cz bump` writes it too: keep it registered in
-// `version_files` so "the workspace version" has one meaning.
-const appPackageJsonPath = path.join(rootDir, "app", "package.json");
+// Neither `app` (a pnpm workspace member) nor the captured user guide is a
+// published package, but both carry the workspace version. They drift unless
+// `cz bump` writes them too, so keep them registered in `version_files`.
+for (const [filePath, pointer] of EXTRA_VERSION_FILES) {
+   const absolutePath = path.join(rootDir, filePath);
 
-if (fs.existsSync(appPackageJsonPath)) {
-   const appPackageJson = readJson(appPackageJsonPath);
+   if (!fs.existsSync(absolutePath)) {
+      continue;
+   }
 
-   if (!appRegistered) {
+   if (!registeredExtraFiles.has(filePath)) {
       violations.push(
-         "app/package.json is not registered in [tool.commitizen].version_files, so `cz bump` will not update it"
+         `${filePath} is not registered in [tool.commitizen].version_files, so \`cz bump\` will not update it`
       );
    }
 
-   if (appPackageJson && commitizenVersion !== null && appPackageJson.version !== commitizenVersion) {
+   const contents = readJson(absolutePath);
+
+   if (contents && commitizenVersion !== null && contents[pointer] !== commitizenVersion) {
       violations.push(
-         `app/package.json version (${JSON.stringify(appPackageJson.version)}) does not match [tool.commitizen] version (${commitizenVersion})`
+         `${filePath} ${pointer} (${JSON.stringify(contents[pointer])}) does not match [tool.commitizen] version (${commitizenVersion})`
       );
    }
 }

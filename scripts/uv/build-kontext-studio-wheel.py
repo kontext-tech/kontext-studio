@@ -22,79 +22,125 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = ROOT_DIR / "dist" / "python"
 
 
-def parse_requirement(req_str: str) -> tuple[str, str, str]:
-    """Parse a requirement string into (lowercase_name, extras_str, specifier_str).
+def parse_requirement(req_str: str) -> tuple[str, str, str, str]:
+    """Parse a requirement into (lowercase_name, extras, specifier, marker).
 
     Handles both PEP 508 style (``requests>=2.0``) and the uv-style
     parenthesized form used by generated manifests (``requests (>=2.0)``).
     """
     req_str = req_str.strip()
-    # Normalize the uv-style parenthesized specifier: "name (>=1,<2)" -> "name >=1,<2"
+    marker = ""
+    if ";" in req_str:
+        req_str, _, marker = req_str.partition(";")
+        req_str, marker = req_str.strip(), marker.strip()
+
     m = re.match(r"^([a-zA-Z0-9_\-\.]+)(?:\[(.*?)\])?\s*\((.*)\)$", req_str)
     if m:
         name, extras, spec = m.groups()
-        return name.lower(), extras or "", f" {spec.strip()}" if spec.strip() else ""
+        return name.lower(), extras or "", spec.strip(), marker
 
     m = re.match(r"^([a-zA-Z0-9_\-\.]+)(?:\[(.*?)\])?(.*)$", req_str)
     if not m:
-        return req_str.lower(), "", ""
+        return req_str.lower(), "", "", marker
     name, extras, spec = m.groups()
-    return name.lower(), extras or "", spec or ""
+    return name.lower(), extras or "", spec.strip(), marker
+
+
+def _display_name(raw: str) -> str:
+    """Keep the author's casing for a package name; pip normalizes it anyway."""
+    head = re.split(r"\s*[([]|[<>=!~;\s]", raw.strip(), maxsplit=1)[0].strip()
+    return head
 
 
 def aggregate_external_dependencies(py_dir: Path) -> list[str]:
     """
     Collect and deduplicate external dependencies across all py/*/pyproject.toml files.
-    Excludes workspace internal `kontext-*` packages.
+
+    Workspace `kontext-*` packages are vendored into the wheel instead of being
+    installed, so their dependencies are hoisted here. A workspace dependency
+    that requests an extra (`kontext-job[catalog]`) is expanded: otherwise the
+    packages and version bounds that extra adds would be missing from the wheel.
     """
-    internal_packages = set()
-
-    for pyproject in py_dir.glob("*/pyproject.toml"):
+    projects: dict[str, dict] = {}
+    for pyproject in sorted(py_dir.glob("*/pyproject.toml")):
         with open(pyproject, "rb") as f:
             data = tomllib.load(f)
-            p_name = data.get("project", {}).get("name")
-            if p_name:
-                internal_packages.add(p_name)
+        project_name = data.get("project", {}).get("name")
+        if project_name:
+            projects[project_name] = data["project"]
 
-    raw_deps: list[str] = []
-    for pyproject in py_dir.glob("*/pyproject.toml"):
-        with open(pyproject, "rb") as f:
-            data = tomllib.load(f)
-            for d in data.get("project", {}).get("dependencies", []):
-                if not any(d.startswith(i) for i in internal_packages):
-                    raw_deps.append(d)
+    requirements: list[str] = []
 
-    req_map: dict[str, dict] = {}
-    for r in raw_deps:
-        norm_name, extras, spec = parse_requirement(r)
-        key = norm_name
-        if key not in req_map:
-            # Derive the display name (with original casing) from the raw requirement.
-            head = re.split(r"\s*[([]|[<>=!~;\s]", r.strip(), maxsplit=1)[0].strip()
-            req_map[key] = {
-                "orig_name": head or norm_name,
-                "extras": set(),
-                "specs": set(),
-            }
-        if extras:
-            for ex in extras.split(","):
-                req_map[key]["extras"].add(ex.strip())
-        if spec:
-            # Keep only well-formed specifier clauses (drop stray parens).
-            for clause in spec.strip().strip("()").split(","):
-                clause = clause.strip()
-                if re.match(r"^[<>=!~]", clause):
-                    req_map[key]["specs"].add(clause)
+    def collect(dep: str, seen: frozenset[tuple[str, str]]) -> None:
+        norm_name, extras, _, _ = parse_requirement(dep)
+        if norm_name not in projects:
+            requirements.append(dep)
+            return
+        for extra in {item.strip() for item in extras.split(",") if item.strip()}:
+            if (norm_name, extra) in seen:
+                continue
+            extra_deps = projects[norm_name].get("optional-dependencies", {}).get(extra, [])
+            for extra_dep in extra_deps:
+                collect(extra_dep, seen | {(norm_name, extra)})
+
+    for project in projects.values():
+        for dep in project.get("dependencies", []):
+            collect(dep, frozenset())
+
+    # Merge requirements per (package, marker) pair: extras union, and every
+    # specifier clause is kept so no bound is silently dropped when members
+    # disagree.
+    grouped: dict[tuple[str, str], dict] = {}
+    for raw in requirements:
+        norm_name, extras, spec, marker = parse_requirement(raw)
+        info = grouped.setdefault(
+            (norm_name, marker),
+            {"orig_name": _display_name(raw) or norm_name, "extras": set(), "specs": set()},
+        )
+        info["extras"].update(item.strip() for item in extras.split(",") if item.strip())
+        for clause in spec.strip().strip("()").split(","):
+            clause = clause.strip()
+            if re.match(r"^[<>=!~]", clause):
+                info["specs"].add(clause)
 
     final_deps: list[str] = []
-    for info in sorted(req_map.values(), key=lambda entry: entry["orig_name"].lower()):
-        name = info["orig_name"]
+    for (_, marker), info in sorted(
+        grouped.items(), key=lambda entry: (entry[1]["orig_name"].lower(), entry[0][1])
+    ):
         extras_str = f"[{','.join(sorted(info['extras']))}]" if info["extras"] else ""
-        specs = sorted(info["specs"], reverse=True)
-        spec_str = specs[0] if specs else ""
-        final_deps.append(f"{name}{extras_str}{spec_str}".strip())
+        spec_str = ",".join(sorted(info["specs"]))
+        marker_str = f"; {marker}" if marker else ""
+        final_deps.append(f"{info['orig_name']}{extras_str}{spec_str}{marker_str}".strip())
 
     return final_deps
+
+
+# `kontext-common` declares a pytest plugin for this repository's own suite.
+# Re-exporting it would inject that plugin into every project that happens to
+# have kontext-studio installed.
+_UNEXPORTED_ENTRY_POINT_GROUPS = {"pytest11"}
+
+
+def aggregate_entry_points(py_dir: Path) -> dict[str, dict[str, str]]:
+    """
+    Collect entry points declared across all py/*/pyproject.toml files.
+
+    The unified wheel vendors every workspace package into one distribution, so
+    an entry point declared by a member (the agent harness plugin, for example)
+    only exists if the staged metadata repeats it.
+    """
+    groups: dict[str, dict[str, str]] = {}
+
+    for pyproject in sorted(py_dir.glob("*/pyproject.toml")):
+        with open(pyproject, "rb") as f:
+            data = tomllib.load(f)
+        declared = data.get("project", {}).get("entry-points", {})
+        for group, entries in declared.items():
+            if group in _UNEXPORTED_ENTRY_POINT_GROUPS:
+                continue
+            groups.setdefault(group, {}).update(entries)
+
+    return groups
 
 
 def copy_namespace_packages(py_dir: Path, target_src_kontext: Path) -> None:
@@ -170,6 +216,9 @@ def main() -> None:
 
     # Aggregate all external dependencies
     aggregated_deps = aggregate_external_dependencies(py_dir)
+    # Merge entry points from every member so plugins such as the agent harness
+    # stay discoverable in the unified distribution.
+    aggregated_entry_points = aggregate_entry_points(py_dir)
 
     staging_dir = Path(tempfile.mkdtemp(prefix="kontext_studio_build_"))
     try:
@@ -197,6 +246,11 @@ def main() -> None:
         # 4. Construct staged pyproject.toml
         staged_project = labs_toml["project"].copy()
         staged_project["dependencies"] = aggregated_deps
+        if aggregated_entry_points:
+            staged_project["entry-points"] = {
+                **staged_project.get("entry-points", {}),
+                **aggregated_entry_points,
+            }
         if args.version:
             staged_project["version"] = args.version
 
@@ -231,6 +285,12 @@ def main() -> None:
                 lines.append("\n[project.scripts]")
                 for k, v in p["scripts"].items():
                     lines.append(f'{k} = "{v}"')
+
+            if p.get("entry-points"):
+                for group, entries in sorted(p["entry-points"].items()):
+                    lines.append(f'\n[project.entry-points."{group}"]')
+                    for name, value in sorted(entries.items()):
+                        lines.append(f'{name} = "{value}"')
 
             if "optional-dependencies" in p:
                 lines.append("\n[project.optional-dependencies]")
