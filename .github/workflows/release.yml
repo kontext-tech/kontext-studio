@@ -1,24 +1,27 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Create GitHub Release
+name: Release
 
-# Dispatch-only. Creates or promotes the v<version> GitHub Release; it does not
-# build the wheel. publish-pypi.yml owns the single wheel build: it verifies,
-# checksums, smoke-tests, publishes to PyPI, then attaches the wheel and
-# SHA256SUMS to this release. One build per release, and nothing reaches PyPI
-# before the release exists.
+# Single, maintainer-dispatched release entry point.
 #
-# Intended sequence:
+#   bump (Commitizen) -> push bump commit + ts-packages-v<version> tag
+#     -> create v<version> GitHub Release
+#     -> publish docs site
+#     -> dispatch publish-pypi.yml
 #
-#   1. dispatch this workflow       -> validates version/tag, creates or promotes
-#                                      the GitHub Release, and (by default)
-#                                      publishes the docs site
-#   2. dispatch publish-pypi.yml    -> target=pypi, version=<version>,
-#                                      confirm=<version>; publishes and attaches
-#                                      the assets
+# This workflow never runs on a push or a merged pull request: merging cannot
+# publish an artifact by itself. The tag push to `ts-packages-v*` is what
+# publishes the @kontext-labs/* packages, exactly as before.
 #
-# Docs are published by calling publish-docs.yml as a reusable workflow rather
-# than relying on a tag push event: tags created by gh release create with
-# GITHUB_TOKEN do not start new workflow runs.
+# Resume paths:
+#   - bump/tag/release succeeded but a publish failed: re-dispatch the failed
+#     workflow directly (publish-pypi.yml or publish-docs.yml).
+#   - the tag was pushed but the Release was never created: re-dispatch this
+#     workflow with `version=<version>` to skip the bump and redo the release.
+#
+# secrets.PAT_FOR_TAG_PUSH must be a token with contents:write (to push the
+# bump commit to a protected main and to push tags) and actions:write (to
+# dispatch publish-pypi.yml). GITHUB_TOKEN cannot push to main, and pushes it
+# makes do not start other workflows.
 #
 # Do NOT add `push: tags: ["v*"]`: gh release create without --verify-tag
 # creates the tag from --target, so a dispatch is the deliberate act that cuts
@@ -26,68 +29,233 @@ name: Create GitHub Release
 on:
   workflow_dispatch:
     inputs:
+      bump:
+        description: "Version increment. Ignored when `version` is set."
+        required: true
+        type: choice
+        options:
+          - auto
+          - patch
+          - minor
+          - major
+        default: auto
       version:
-        description: "Version to release, without the leading v (e.g., 0.261.0)"
-        required: true
+        description: "Release an already-bumped version, without the leading v (skips the bump)."
+        required: false
         type: string
-      release_tag:
-        description: "GitHub Release tag to create or update (e.g., v0.261.0)"
-        required: true
-        type: string
-      prerelease:
-        description: "Mark the GitHub Release as a prerelease"
+        default: ""
+      publish_pypi:
+        description: "Dispatch the PyPI wheel publish after the Release exists"
         required: false
         type: boolean
-        default: false
+        default: true
       publish_docs:
         description: "Build and publish docs-site to docs.kontext.tech"
         required: false
         type: boolean
         default: true
+      prerelease:
+        description: "Mark the GitHub Release as a prerelease"
+        required: false
+        type: boolean
+        default: false
 
-concurrency: release-${{ inputs.release_tag }}
+run-name: "Release ${{ inputs.version || inputs.bump }} by @${{ github.actor }}"
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
-  release:
-    name: Create GitHub Release
+  prepare:
+    name: Bump and tag
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      sha: ${{ steps.version.outputs.sha }}
     steps:
-      - name: Verify release tag matches version
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_FOR_TAG_PUSH }}
+
+      - name: Require main and a push token
         env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
-          VERSION: ${{ inputs.version }}
+          PAT: ${{ secrets.PAT_FOR_TAG_PUSH }}
+          REF: ${{ github.ref }}
         run: |
-          if [ "$RELEASE_TAG" != "v${VERSION}" ]; then
-            echo "::error::release_tag '$RELEASE_TAG' must be 'v${VERSION}'"
+          set -euo pipefail
+          if [ "$REF" != "refs/heads/main" ]; then
+            echo "::error::Releases must be dispatched from main (got $REF)."
             exit 1
           fi
-          echo "Release tag matches version: $RELEASE_TAG"
+          if [ -z "$PAT" ]; then
+            echo "::error::PAT_FOR_TAG_PUSH is required: GITHUB_TOKEN cannot push the bump commit to main or start the publish workflow."
+            exit 1
+          fi
 
-      - name: Create or update GitHub Release
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Prepare main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --tags --force origin
+          # Release from the tip of origin/main, not from whatever ref the
+          # dispatcher had selected.
+          git checkout -B main origin/main
+
+      - name: Bump version and push tag
+        id: version
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
-          PRERELEASE: ${{ inputs.prerelease }}
-          VERSION: ${{ inputs.version }}
+          BUMP: ${{ inputs.bump }}
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
 
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            if [ "$PRERELEASE" = "true" ]; then
-              gh release edit "$RELEASE_TAG" --prerelease
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="${INPUT_VERSION#v}"
+            if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+              echo "::error::version '$INPUT_VERSION' is not a valid semantic version."
+              exit 1
+            fi
+            WORKSPACE_VERSION="$(node -p "require('./package.json').version")"
+            if [ "$WORKSPACE_VERSION" != "$VERSION" ]; then
+              echo "::error::package.json is $WORKSPACE_VERSION but version input is $VERSION."
+              exit 1
+            fi
+            pnpm run validate:workspace-versions
+            if git rev-parse -q --verify "refs/tags/ts-packages-v$VERSION" >/dev/null; then
+              echo "Releasing existing tag ts-packages-v$VERSION without bumping."
             else
-              gh release edit "$RELEASE_TAG" --latest
+              echo "ts-packages-v$VERSION is missing; tagging the current origin/main tip ($(git rev-parse --short HEAD))."
+              git tag "ts-packages-v$VERSION"
+              git push origin "ts-packages-v$VERSION"
+            fi
+          else
+            pnpm run validate:workspace-versions
+            CURRENT="$(uv run cz version --project)"
+            echo "Current version: $CURRENT"
+
+            ARGS=(bump --yes --no-verify)
+            if [ "$BUMP" != "auto" ]; then
+              ARGS+=(--increment="$BUMP")
+            fi
+
+            set +e
+            uv run cz "${ARGS[@]}"
+            STATUS=$?
+            set -e
+
+            case "$STATUS" in
+              0)
+                VERSION="$(uv run cz version --project)"
+                pnpm run validate:workspace-versions
+                git push origin main
+                git push origin "ts-packages-v$VERSION"
+                ;;
+              3 | 21)
+                echo "::error::No release-worthy commits since ts-packages-v$CURRENT. Only docs/chore commits produce no bump; use 'version' to re-release an existing tag."
+                exit 1
+                ;;
+              7)
+                echo "::error::Commitizen could not create the release tag, which usually means it already exists. Re-dispatch with version=<version> to release the existing tag, or remove the stray tag first."
+                exit 1
+                ;;
+              *)
+                echo "::error::cz bump failed with exit code $STATUS."
+                exit "$STATUS"
+                ;;
+            esac
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          if head -n 1 CHANGELOG.md | grep -qF "$VERSION"; then
+            # Section body only: drop the version header, stop at the next one.
+            awk 'NR==1 {next} /^## / {exit} {print}' CHANGELOG.md > release-notes.md
+          else
+            echo "Release $VERSION." > release-notes.md
+          fi
+          echo "" >> release-notes.md
+          echo "Install with: \`uv tool install kontext-studio==${VERSION}\`" >> release-notes.md
+          cat release-notes.md
+
+      - name: Upload release notes
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release-notes.md
+
+  release:
+    name: Create GitHub Release
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_TAG_PUSH }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          SHA: ${{ needs.prepare.outputs.sha }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          TAG="v$VERSION"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            if [ "$PRERELEASE" = "true" ]; then
+              gh release edit "$TAG" --prerelease --notes-file release-notes.md
+            else
+              gh release edit "$TAG" --latest --notes-file release-notes.md
             fi
           else
             args=(
-              "$RELEASE_TAG"
-              --target "$GITHUB_SHA"
+              "$TAG"
               --title "Kontext $VERSION"
-              --notes "Kontext $VERSION. Install with: uv tool install kontext-labs==${VERSION}"
+              --notes-file release-notes.md
             )
+            # --target creates the tag, but fails when the tag already exists
+            # (for example, a release that was deleted after its tag was cut).
+            if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" >/dev/null 2>&1; then
+              args+=(--verify-tag)
+            else
+              args+=(--target "$SHA")
+            fi
             if [ "$PRERELEASE" = "true" ]; then
               args+=(--prerelease)
             else
@@ -98,12 +266,43 @@ jobs:
 
   publish-docs:
     name: Publish Docs
-    needs: release
+    needs: [prepare, release]
     if: inputs.publish_docs
     permissions:
       contents: read
       id-token: write
     uses: ./.github/workflows/publish-docs.yml
     with:
-      version: ${{ inputs.version }}
+      version: ${{ needs.prepare.outputs.version }}
     secrets: inherit
+
+  publish-pypi:
+    name: Dispatch PyPI publish
+    needs: [prepare, release]
+    if: inputs.publish_pypi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch publish-pypi.yml
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_TAG_PUSH }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          # publish-pypi.yml must stay the top-level workflow named in the PyPI
+          # trusted-publisher config, so it cannot be a workflow_call callee.
+          gh workflow run publish-pypi.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f target=pypi \
+            -f "version=$VERSION" \
+            -f "confirm=$VERSION"
+
+          for _ in $(seq 1 10); do
+            RUN_ID="$(gh run list --workflow publish-pypi.yml --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            if [ -n "$RUN_ID" ]; then
+              echo "Started PyPI publish: ${{ github.server_url }}/$GITHUB_REPOSITORY/actions/runs/$RUN_ID"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::warning::publish-pypi.yml was dispatched but no run has appeared yet; check the Actions tab."

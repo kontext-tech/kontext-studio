@@ -1,35 +1,63 @@
 # Releasing
 
-There are three release artifacts. They use separate triggers and tag
-namespaces, so they never contend for the same GitHub Release. The docs site
-piggybacks on the `v<version>` release and has no tag of its own.
+A release is cut by one maintainer-dispatched workflow, `release.yml`. It never
+runs on a push or a merged pull request, so merging cannot publish an artifact
+by itself. The three release artifacts keep separate tag namespaces so they
+never contend for the same GitHub Release; the docs site piggybacks on the
+`v<version>` release and has no tag of its own.
 
 | Artifact | Workflow | Trigger | Release tag |
 | -------- | -------- | ------- | ----------- |
-| Unified Python wheel (`kontext_labs-<version>-py3-none-any.whl`) | `publish-pypi.yml` | `workflow_dispatch` only | `v<version>` (GitHub Release + PyPI) |
+| Unified Python wheel (`kontext_studio-<version>-py3-none-any.whl`) | `publish-pypi.yml` | dispatched by `release.yml`, or `workflow_dispatch` | `v<version>` (GitHub Release + PyPI) |
 | `@kontext-labs/*` TypeScript packages (GitHub Packages) | `publish-ts-packages.yml` | `push: tags: ["ts-packages-v*"]` | `ts-packages-v<version>` |
 | Docs site (`docs.kontext.tech`) | `publish-docs.yml` | `workflow_call` from `release.yml`, or `workflow_dispatch` | none |
 
-## Releasing a `v<version>` version
+## Cut a release
 
-The unified wheel is built once, by `publish-pypi.yml`. `release.yml` only
-creates or promotes the GitHub Release, so the two dispatch steps are
-deliberately ordered: the release exists before anything reaches PyPI.
+Dispatch `release.yml` from `main` with:
 
-1. Dispatch `release.yml` with `version=<version>` and
-   `release_tag=v<version>`. It validates `release_tag == "v" + version`, then
-   creates the release (the tag is created from the dispatched commit if it
-   does not exist) or promotes an existing one (`--latest`, or `--prerelease`
-   when that input is set). Unless `publish_docs` is false, it then publishes
-   the docs site.
-2. Dispatch `publish-pypi.yml` with `target=pypi`, `version=<version>`, and
-   `confirm=<version>`. It builds the wheel, verifies its version, writes
-   `SHA256SUMS`, smoke-tests both CLI entry points, publishes to PyPI, then
-   attaches the wheel and `SHA256SUMS` to the release.
+| Input | Meaning |
+| ----- | ------- |
+| `bump` | `auto` (Commitizen reads the Conventional Commits), or force `patch`/`minor`/`major`. Ignored when `version` is set. |
+| `version` | Release an already-tagged version without bumping. Used to resume. |
+| `publish_pypi` | Dispatch `publish-pypi.yml` once the Release exists (default `true`). |
+| `publish_docs` | Publish the docs site (default `true`). |
+| `prerelease` | Mark the GitHub Release as a prerelease. |
+
+The workflow:
+
+1. Checks out `origin/main`, requires `secrets.PAT_FOR_TAG_PUSH` (see below),
+   and runs `validate:workspace-versions`.
+2. Runs `cz bump`. It rewrites every `version_files` entry, prepends
+   `CHANGELOG.md`, creates the `chore(release): version <old> -> <new>` commit,
+   pushes it to `main`, and pushes `ts-packages-v<new>`, which publishes the
+   `@kontext-labs/*` packages.
+3. Creates or promotes the `v<version>` GitHub Release at the bump commit,
+   using the generated changelog section as the release notes.
+4. Publishes the docs site (unless `publish_docs` is false).
+5. Dispatches `publish-pypi.yml` with `target=pypi`, `version`, and `confirm`
+   (unless `publish_pypi` is false). It stays a top-level workflow because PyPI
+   trusted publishing does not support reusable workflows.
 
 `publish-pypi.yml` refuses a production publish when `version` differs from the
 workspace version or `confirm` differs from `version`, so a typo fails the run
 instead of publishing the wrong artifact.
+
+`PAT_FOR_TAG_PUSH` must carry `contents:write` (to push the bump commit to a
+protected `main` and to push tags) and `actions:write` (to dispatch
+`publish-pypi.yml`). The workflow `GITHUB_TOKEN` cannot push to `main`, and
+pushes it makes do not start other workflows.
+
+### Resume a partial release
+
+Publishing is the only stage that can fail after the version is immutable.
+Re-dispatch the failed workflow directly:
+
+- **PyPI failed** — dispatch `publish-pypi.yml` with `target=pypi`, `version`,
+  and `confirm`.
+- **Docs failed** — dispatch `publish-docs.yml`.
+- **Tag pushed but the GitHub Release was never created** — re-dispatch
+  `release.yml` with `version=<version>`; it skips the bump.
 
 ### Docs site
 
@@ -46,7 +74,7 @@ environment. The S3 bucket, distribution, and Route53 record are defined in
 
 Dispatch `publish-pypi.yml` with `target=testpypi`. It derives a
 `<version>.dev<run><attempt>` version so repeat uploads do not collide,
-publishes, then reinstalls from TestPyPI and runs `kontext-labs --help`.
+publishes, then reinstalls from TestPyPI and runs `kontext --help`.
 
 Both indexes authenticate with PyPI trusted publishing (OIDC); no API token is
 stored. The upload job must stay in this top-level workflow because PyPI does
@@ -59,14 +87,20 @@ both environments only allow deployments from `main`.
 The `@kontext-labs/*` TypeScript packages are versioned in lockstep with
 [Commitizen](https://commitizen-tools.github.io/commitizen/), configured under
 `[tool.commitizen]` in the root `pyproject.toml`. There is no release PR step:
-the version bump, changelog, commit, and tag are all produced locally by one
-command, and pushing the tag publishes.
+`release.yml` produces the bump, changelog, commit, and tag in one action, and
+pushing the tag publishes.
 
 ### Bump and tag
 
+`release.yml` runs `uv run cz bump` for you. To do the same locally:
+
 ```bash
 pnpm run version:labs
+git push --follow-tags
 ```
+
+Do not use both paths for one release: `release.yml` always starts from
+`origin/main`, so a local bump must be pushed before dispatching it.
 
 That runs `uv run cz bump`, which:
 
@@ -132,13 +166,9 @@ release.
 
 ### Publish
 
-```bash
-git push --follow-tags
-```
-
-`publish-ts-packages.yml` triggers on `ts-packages-v*`, builds the shared
-packages, and runs `pnpm --filter "./ts/*" publish` against
-`npm.pkg.github.com`.
+`publish-ts-packages.yml` triggers on `ts-packages-v*` — pushed by
+`release.yml` or by `git push --follow-tags` — builds the shared packages, and
+runs `pnpm --filter "./ts/*" publish` against `npm.pkg.github.com`.
 
 The packages keep the `@kontext-labs` scope while the repository lives under
 `kontext-tech`. Publishing therefore needs `KONTEXT_PACKAGES_TOKEN`, a PAT with
