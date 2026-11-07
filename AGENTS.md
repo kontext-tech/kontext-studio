@@ -78,6 +78,9 @@ verification matrix, see `.github/skills/verify-workspace`.
 
 ## High-level architecture
 
+A system map (processes, layers, data flow, and technology) lives in
+[`docs/development/architecture.md`](docs/development/architecture.md).
+
 - `app/` is the React + Vite frontend. `app/src/app/bootstrap.tsx` composes
   `QueryClientProvider` + `ThemeProvider` + `PermissionProvider` + `RouterProvider`.
   Routing is metadata-driven: start from `app/src/routing/routes.ts`.

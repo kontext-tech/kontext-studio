@@ -19,6 +19,8 @@ The user guide assumes the installed `kontext-labs` package and
 
 Architecture, conventions, and design decisions for contributors.
 
+- [Architecture overview](development/architecture.md) — the system map:
+  processes, layers, data flow, and technology choices.
 - [AI architecture](ai/ai-architecture.md) — agents, tools, and the request
   path.
 - [Harness abstraction](ai/harness-abstraction.md) — the swappable agent

@@ -9,6 +9,9 @@ setup, the commands we expect you to run, and how to get a change merged.
 > the human contributor onboarding view. Common commands are mirrored in both —
 > update both when adding one.
 
+For the system map — processes, layers, data flow, and technology choices — see
+[the architecture overview](docs/development/architecture.md).
+
 - **Node.js** `>=22.23.4` and **pnpm** `>=10.0.0`
 - **Python** `>=3.12` and [**uv**](https://docs.astral.sh/uv/)
 - **Git**

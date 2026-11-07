@@ -31,6 +31,7 @@ export const userGuidePagesByGroup = pageGroups
    .filter((group) => group.pages.length > 0);
 
 export const developerGroups = [
+   { id: "architecture", label: "Architecture" },
    { id: "ai", label: "AI architecture" },
    { id: "notebook", label: "Notebook" },
    { id: "concepts", label: "Concepts" },
@@ -38,6 +39,15 @@ export const developerGroups = [
 ];
 
 export const developerDocs = [
+   {
+      source: "development/architecture.md",
+      route: "develop/architecture",
+      title: "Architecture overview",
+      description:
+         "The system map: layers, processes, data flow, and technology choices.",
+      group: "architecture",
+      order: 1
+   },
    {
       source: "ai/ai-architecture.md",
       route: "develop/ai/ai-architecture",
