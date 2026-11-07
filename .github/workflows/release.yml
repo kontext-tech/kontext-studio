@@ -175,6 +175,16 @@ jobs:
               0)
                 VERSION="$(uv run cz version --project)"
                 pnpm run validate:workspace-versions
+                # cz rewrites the manifests but not uv.lock, which records the
+                # workspace versions too; fold the refresh into the release
+                # commit so main is not left dirty for the next `uv sync`.
+                uv lock
+                if ! git diff --quiet -- uv.lock; then
+                  git add uv.lock
+                  git commit --amend --no-edit
+                  git tag -f "ts-packages-v$VERSION"
+                fi
+                pnpm run validate:workspace-versions
                 git push origin main
                 git push origin "ts-packages-v$VERSION"
                 ;;
