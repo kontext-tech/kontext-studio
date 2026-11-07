@@ -20,7 +20,7 @@ release only.
 Please do **not** report security vulnerabilities through public GitHub issues.
 
 Report vulnerabilities through
-[GitHub's private vulnerability reporting](https://github.com/kontext-tech/kontext-labs/security/advisories/new),
+[GitHub's private vulnerability reporting](https://github.com/kontext-tech/kontext-studio/security/advisories/new),
 or by emailing [hello@kontext.tech](mailto:hello@kontext.tech) with the subject
 "Security report".
 

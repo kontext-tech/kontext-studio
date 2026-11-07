@@ -36,7 +36,7 @@ The local deployment has four trust levels:
 The local API validates every HTTP and WebSocket request:
 
 - **Host allowlist.** Only loopback names (`127.0.0.1`, `localhost`, `::1`) and
-  explicitly configured names pass. `kontext-labs serve` adds this machine's
+  explicitly configured names pass. `kontext serve` adds this machine's
   interface addresses for wildcard or non-loopback binds. A DNS-rebinding page
   sends its own hostname as `Host`, so it is rejected.
 - **Origin check.** Requests with a foreign `Origin` are rejected. This stops
@@ -59,7 +59,7 @@ Reverse proxies must add their public hostname through
 The launch token is the proof that a browser was opened by the local launcher
 rather than by a page that reached loopback on its own.
 
-- Generated per run (`secrets.token_urlsafe(32)`) by `kontext-labs serve` or the
+- Generated per run (`secrets.token_urlsafe(32)`) by `kontext serve` or the
   dev launcher. The worker inherits it through the environment.
 - Printed in the URL fragment (`/#token=...`), which the app reads and then
   strips from the address bar. The fragment is never sent to the server or its

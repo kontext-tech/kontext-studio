@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build script for kontext-labs unified single-wheel distribution.
+Build script for kontext-studio unified single-wheel distribution.
 
 Bundles all `kontext.*` namespace packages (from py/kontext-*) and static
 frontend app assets into a single wheel archive ready for PyPI or pip
@@ -124,7 +124,7 @@ def copy_namespace_packages(py_dir: Path, target_src_kontext: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build unified kontext-labs wheel distribution")
+    parser = argparse.ArgumentParser(description="Build unified kontext-studio wheel distribution")
     parser.add_argument(
         "--out-dir",
         type=Path,
@@ -171,9 +171,9 @@ def main() -> None:
     # Aggregate all external dependencies
     aggregated_deps = aggregate_external_dependencies(py_dir)
 
-    staging_dir = Path(tempfile.mkdtemp(prefix="kontext_labs_build_"))
+    staging_dir = Path(tempfile.mkdtemp(prefix="kontext_studio_build_"))
     try:
-        print(f"🏗️  Staging unified kontext-labs package in {staging_dir}...")
+        print(f"🏗️  Staging unified kontext-studio package in {staging_dir}...")
         staged_src_kontext = staging_dir / "src" / "kontext"
         staged_src_kontext.mkdir(parents=True, exist_ok=True)
 
@@ -257,8 +257,8 @@ def main() -> None:
             check=True,
         )
 
-        print(f"✨ Successfully built unified kontext-labs distribution in {out_dir}:")
-        for dist_file in sorted(out_dir.glob("kontext_labs*")):
+        print(f"✨ Successfully built unified kontext-studio distribution in {out_dir}:")
+        for dist_file in sorted(out_dir.glob("kontext_studio*")):
             print(f"  - {dist_file.name}")
 
     finally:

@@ -1,13 +1,13 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="app/public/resources/logo-dark-small.svg">
-    <img src="app/public/resources/logo-small.svg" alt="Kontext Labs logo" width="72" height="72">
+    <img src="app/public/resources/logo-small.svg" alt="Kontext Studio logo" width="72" height="72">
   </picture>
 </p>
 
-<h1 align="center">Kontext Labs</h1>
+<h1 align="center">Kontext Studio</h1>
 
-**Kontext Labs is a local-first, open-source AI data workspace.** Ask questions in
+**Kontext Studio is a local-first, open-source AI data workspace.** Ask questions in
 plain language and a team of agents queries your files and databases, then
 returns SQL results, charts, and reproducible notebooks. Bring your own model —
 local or cloud — and keep the workspace on your machine.
@@ -31,13 +31,13 @@ local or cloud — and keep the workspace on your machine.
 
 ## Install
 
-Kontext Labs is published to PyPI as the `kontext-labs` package. Each GitHub
+Kontext Studio is published to PyPI as the `kontext-studio` package. Each GitHub
 Release also carries the matching wheel.
 
 With `uv`:
 
 ```bash
-uv tool install kontext-labs
+uv tool install kontext-studio
 ```
 
 With `pip` in a virtual environment:
@@ -45,17 +45,17 @@ With `pip` in a virtual environment:
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-labs
+pip install kontext-studio
 ```
 
 Then start the local server from the directory that holds your project:
 
 ```bash
-kontext-labs serve
+kontext serve
 ```
 
 This starts the local API server, serves the web app, and runs the embedded
-local worker. `kontext-labs-serve` is the legacy alias for the same command.
+local worker.
 
 > Requires Python 3.12 or newer. Use `uv`, `pipx`, or `pip` in a virtual
 > environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
@@ -104,7 +104,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow and
 
 ## License
 
-Kontext Labs is released under the [MIT License](LICENSE). Third-party
+Kontext Studio is released under the [MIT License](LICENSE). Third-party
 dependencies and their licenses are listed in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). See [TERMS.md](TERMS.md) for
 the AI usage terms and [PRIVACY.md](PRIVACY.md) for the privacy notice.

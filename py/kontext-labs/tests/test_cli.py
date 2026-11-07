@@ -192,7 +192,7 @@ class TestGetProjectIndex:
 
 class TestCliEntrypoint:
     def test_no_command_shows_help(self, capsys):
-        with patch("sys.argv", ["kontext-labs"]):
+        with patch("sys.argv", ["kontext"]):
             with pytest.raises(SystemExit) as exc_info:
                 cli()
             assert exc_info.value.code == 0

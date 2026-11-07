@@ -31,7 +31,7 @@ const repoRoot = path.resolve(siteRoot, "..");
 const docsRoot = path.join(repoRoot, "docs");
 const contentRoot = path.join(siteRoot, "src", "content", "docs");
 const PREVIEW_BANNER =
-   "Preview: Kontext Labs launches soon. Install commands will work once the package is published.";
+   "Preview: Kontext Studio launches soon. Install commands will work once the package is published.";
 
 const entries = [
    {
@@ -185,10 +185,10 @@ function writeHomePage() {
 
    const body = `---
 title: Home
-description: "Kontext Labs documentation: install the local AI data workspace, connect sources and model providers, and work with agent chat, notebooks, charts, and jobs."
+description: "Kontext Studio documentation: install the local AI data workspace, connect sources and model providers, and work with agent chat, notebooks, charts, and jobs."
 ${banner}template: splash
 hero:
-  title: Kontext Labs Docs
+  title: Kontext Studio Docs
   tagline: Ask your data in plain language. A team of agents returns SQL, charts, and reproducible notebooks — with your sources, your model, and your machine.
   actions:
     - text: ${primaryAction.text}

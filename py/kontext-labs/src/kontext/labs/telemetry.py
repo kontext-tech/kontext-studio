@@ -13,7 +13,7 @@ Behaviour
 Env vars honoured
 -----------------
 OTEL_EXPORTER_OTLP_ENDPOINT   OTLP collector HTTP endpoint (optional)
-OTEL_SERVICE_NAME             Service name override (default: kontext-labs)
+OTEL_SERVICE_NAME             Service name override (default: kontext-studio)
 OTEL_SDK_DISABLED             Set to "true" to skip all telemetry setup
 """
 
@@ -26,7 +26,7 @@ import os
 logger = logging.getLogger(__name__)
 
 
-def configure_telemetry(service_name: str = "kontext-labs") -> None:
+def configure_telemetry(service_name: str = "kontext-studio") -> None:
     """
     Set up OpenTelemetry tracing for the console process.
 

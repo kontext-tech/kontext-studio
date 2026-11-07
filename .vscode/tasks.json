@@ -247,7 +247,7 @@
          "args": ["${workspaceFolder}/tools/start-local-mode.mjs"],
          "group": "build",
          "problemMatcher": [],
-         "detail": "Runs `pnpm run dev:local`: kontext-labs API on :8000 plus the app on :8002. Use the Debug panel for either process on its own.",
+         "detail": "Runs `pnpm run dev:local`: kontext-studio API on :8000 plus the app on :8002. Use the Debug panel for either process on its own.",
          "presentation": {
             "reveal": "always",
             "panel": "new"
@@ -256,10 +256,10 @@
       {
          "label": "build: labs wheel",
          "type": "shell",
-         "command": "uv run python scripts/uv/build-kontext-labs-wheel.py",
+         "command": "uv run python scripts/uv/build-kontext-studio-wheel.py",
          "group": "build",
          "problemMatcher": [],
-         "detail": "Builds the kontext-labs Python wheel.",
+         "detail": "Builds the kontext-studio Python wheel.",
          "options": {
             "cwd": "${workspaceFolder}"
          }

@@ -44,7 +44,7 @@ kontext-file = { workspace = true }
 kontext-harness-agno = { workspace = true }
 kontext-job = { workspace = true }
 kontext-kernel = { workspace = true }
-kontext-labs = { workspace = true }
+kontext-studio = { workspace = true }
 kontext-llm = { workspace = true }
 kontext-okf = { workspace = true }
 kontext-project = { workspace = true }

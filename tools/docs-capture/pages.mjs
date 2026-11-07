@@ -29,7 +29,7 @@ export const pageGroups = [
 export const pages = [
    {
       slug: "01-install-and-start",
-      title: "Install and start Kontext Labs",
+      title: "Install and start Kontext Studio",
       group: "get-started",
       order: 1,
       status: "published",

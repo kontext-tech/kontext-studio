@@ -89,7 +89,7 @@ function prepareFixtureData(server) {
       "connection.close()"
    ].join("\n");
 
-   execFileSync("uv", ["run", "--package", "kontext-labs", "python", "-"], {
+   execFileSync("uv", ["run", "--package", "kontext-studio", "python", "-"], {
       cwd: repoRoot,
       input: script,
       env: {
@@ -174,7 +174,7 @@ export function stabilizeTimestamps(server) {
       "connection.close()"
    ].join("\n");
 
-   execFileSync("uv", ["run", "--package", "kontext-labs", "python", "-"], {
+   execFileSync("uv", ["run", "--package", "kontext-studio", "python", "-"], {
       cwd: repoRoot,
       input: script,
       env: {

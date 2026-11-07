@@ -135,7 +135,7 @@ jobs:
           NODE_ENV: production
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          python scripts/uv/build-kontext-labs-wheel.py \
+          python scripts/uv/build-kontext-studio-wheel.py \
             --build-app \
             --version "$VERSION" \
             --out-dir dist/python
@@ -145,10 +145,10 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           set -euo pipefail
-          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
           echo "Built wheel: $WHEEL"
           case "$WHEEL" in
-            *"kontext_labs-${VERSION}-"*) echo "Wheel version matches $VERSION" ;;
+            *"kontext_studio-${VERSION}-"*) echo "Wheel version matches $VERSION" ;;
             *)
               echo "::error::Wheel version does not match $VERSION"
               exit 1
@@ -163,15 +163,15 @@ jobs:
       - name: Smoke test CLI entry points
         run: |
           set -euo pipefail
-          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
           uv tool install --force "$WHEEL"
-          kontext-labs --help
-          kontext-labs-serve --help
+          kontext --help
+          kontext serve --help
 
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v7
         with:
-          name: kontext-labs-wheel
+          name: kontext-studio-wheel
           path: |
             dist/python/
             dist/SHA256SUMS
@@ -191,7 +191,7 @@ jobs:
       - name: Download wheel artifact
         uses: actions/download-artifact@v7
         with:
-          name: kontext-labs-wheel
+          name: kontext-studio-wheel
           path: dist
 
       - name: Publish to TestPyPI
@@ -212,8 +212,8 @@ jobs:
           uv tool install --force \
             --index-url https://test.pypi.org/simple/ \
             --extra-index-url https://pypi.org/simple \
-            "kontext-labs==${VERSION}"
-          kontext-labs --help
+            "kontext-studio==${VERSION}"
+          kontext --help
 
   publish-pypi:
     name: Publish to PyPI
@@ -229,7 +229,7 @@ jobs:
       - name: Download wheel artifact
         uses: actions/download-artifact@v7
         with:
-          name: kontext-labs-wheel
+          name: kontext-studio-wheel
           path: dist
 
       - name: Verify GitHub Release exists

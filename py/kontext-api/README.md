@@ -2,7 +2,7 @@
 
 Unified FastAPI application that exposes the Kontext Data & AI API surface.
 It is a regular workspace member of the `py/` uv workspace and is normally
-started through the `kontext-labs` console package rather than directly.
+started through the `kontext-studio` console package rather than directly.
 
 ## Architecture
 
@@ -13,7 +13,7 @@ started through the `kontext-labs` console package rather than directly.
 - **Catalog / OKF**: catalog indexing and Open Knowledge Format bundles
 - **Health**: health and ping endpoints
 
-`kontext-labs` reuses these same routers for local mode, serves the built React
+`kontext-studio` reuses these same routers for local mode, serves the built React
 app, and runs an embedded worker. Keep local routes compatible with the API
 contract defined in this package rather than inventing separate local shapes.
 
@@ -70,7 +70,7 @@ The committed generator-facing spec lives at
 Every data endpoint requires JWT authentication via the
 `Authorization: Bearer <token>` header. Local mode mints tokens only for
 callers that present the per-run launch token in `X-Kontext-Launch-Token`;
-`kontext-labs serve` prints that token in the URL it opens
+`kontext serve` prints that token in the URL it opens
 (`http://127.0.0.1:<port>/#token=...`) and writes it to
 `~/.kontext/runtime/launch.token` plus a per-port `launch-<port>.token`
 (owner-only) so a lost URL can be recovered even with several local servers

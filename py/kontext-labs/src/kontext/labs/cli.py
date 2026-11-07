@@ -1,9 +1,9 @@
 """
 Kontext Console CLI entry points.
 
-  kontext-labs-serve  [--port PORT] [--host HOST] [--dist-dir PATH] [--open]
-  kontext-labs        serve | project list | project create | project import
-                         | import | job run | job list
+  kontext serve  [--port PORT] [--host HOST] [--dist-dir PATH] [--open]
+  kontext        serve | project list | project create | project import
+                 | import | job run | job list
 
 Starts the local HTTP + WebSocket server that hosts the React UI and exposes the
 same API contract as the cloud deployment.  Subcommands let you manage
@@ -114,7 +114,7 @@ def _resolve_project_id(project_arg: str | None) -> str:
         return project_arg
     index = _get_project_index()
     if not index:
-        print("No projects found. Create one first with `kontext-labs project create <name>`.")
+        print("No projects found. Create one first with `kontext project create <name>`.")
         sys.exit(1)
     return index[0]["id"]
 
@@ -163,7 +163,7 @@ def _add_serve_parser(subparsers: argparse._SubParsersAction) -> None:
 
 
 class _WorkerSupervisor:
-    """Owns a child ``kontext-labs worker`` process for the life of ``serve``.
+    """Owns a child ``kontext worker`` process for the life of ``serve``.
 
     The worker runs in its own process/session, so a hung or crashed job can
     never wedge the API process. Stopping the supervisor stops the worker. The
@@ -436,7 +436,7 @@ def _cmd_project_create(args: argparse.Namespace) -> None:
     profile = read_profile()
     if profile is None:
         print(
-            "No local profile found. Run `kontext-labs serve` once to complete setup.",
+            "No local profile found. Run `kontext serve` once to complete setup.",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -554,7 +554,7 @@ async def _run_job(project_id: str, job_type: str, params: dict[str, Any]) -> No
     job_instance = registry.create_job_instance(job_type)
     if job_instance is None:
         print(f"Unknown job type: {job_type}", file=sys.stderr)
-        print("Run `kontext-labs job list` to see available types.")
+        print("Run `kontext job list` to see available types.")
         sys.exit(1)
 
     from kontext.runtime.providers.local import LocalRuntimeProvider
@@ -604,9 +604,9 @@ async def _run_job(project_id: str, job_type: str, params: dict[str, Any]) -> No
 
 
 def cli(argv: list[str] | None = None) -> None:
-    """Unified CLI entry point: ``kontext-labs``."""
+    """Unified CLI entry point: ``kontext``."""
     parser = argparse.ArgumentParser(
-        prog="kontext-labs",
+        prog="kontext",
         description="Kontext — local-first AI data workspace.",
     )
     subs = parser.add_subparsers(dest="command")
@@ -630,15 +630,14 @@ def cli(argv: list[str] | None = None) -> None:
         sys.exit(1)
 
 
-# ── Legacy entry-point (``kontext-labs-serve``) ─────────────────────────────
+# ── Programmatic serve entry point ─────────────────────────────────────
 
 
 def serve() -> None:
-    """CLI entry point: ``kontext-labs-serve``.
+    """Start the local server without going through argument parsing.
 
     Boots a uvicorn server running the local Kontext FastAPI application.
     Pass ``--open`` to launch the browser automatically. Flag parsing and
-    execution live in the unified ``serve`` subcommand so the two entry points
-    cannot drift.
+    execution live in the unified ``serve`` subcommand.
     """
     cli(["serve", *sys.argv[1:]])

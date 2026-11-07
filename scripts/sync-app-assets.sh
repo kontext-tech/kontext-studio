@@ -32,7 +32,7 @@ APP_DIST="$LABS_DIR/app/dist"
 LABS_DIST_TARGET="$LABS_DIR/py/kontext-labs/src/kontext/labs/_app_dist"
 
 if [ -d "$APP_DIST" ]; then
-    echo "📦 Syncing built app/dist into kontext-labs package..."
+    echo "📦 Syncing built app/dist into kontext-studio package..."
     rm -rf "$LABS_DIST_TARGET"
     mkdir -p "$LABS_DIST_TARGET"
     cp -R "$APP_DIST"/* "$LABS_DIST_TARGET/"

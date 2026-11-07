@@ -141,13 +141,13 @@ function spawnService(name, command, args, options) {
 }
 
 spawnService(
-   "kontext-labs",
+   "kontext-studio",
    uvCommand,
    [
       "run",
       "--env-file",
       envFile,
-      "kontext-labs",
+      "kontext",
       "serve",
       "--reload",
       "--host",

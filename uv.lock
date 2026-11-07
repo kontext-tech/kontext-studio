@@ -29,7 +29,6 @@ members = [
     "kontext-harness-agno",
     "kontext-job",
     "kontext-kernel",
-    "kontext-labs",
     "kontext-llm",
     "kontext-okf",
     "kontext-project",
@@ -37,6 +36,7 @@ members = [
     "kontext-runtime",
     "kontext-schema",
     "kontext-storage",
+    "kontext-studio",
 ]
 
 [manifest.dependency-groups]
@@ -2252,66 +2252,6 @@ dependencies = [
 requires-dist = [{ name = "kontext-common", editable = "py/kontext-common" }]
 
 [[package]]
-name = "kontext-labs"
-version = "0.261.0"
-source = { editable = "py/kontext-labs" }
-dependencies = [
-    { name = "fastapi", extra = ["standard"] },
-    { name = "kontext-account" },
-    { name = "kontext-agentic", extra = ["inprocess"] },
-    { name = "kontext-api" },
-    { name = "kontext-auth" },
-    { name = "kontext-common" },
-    { name = "kontext-data" },
-    { name = "kontext-engine" },
-    { name = "kontext-execution" },
-    { name = "kontext-harness-agno" },
-    { name = "kontext-job" },
-    { name = "kontext-kernel" },
-    { name = "kontext-project" },
-    { name = "kontext-runtime" },
-    { name = "kontext-schema" },
-    { name = "kontext-storage" },
-    { name = "pyfiglet" },
-    { name = "rich" },
-    { name = "uvicorn", extra = ["standard"] },
-]
-
-[package.optional-dependencies]
-telemetry = [
-    { name = "opentelemetry-exporter-otlp-proto-http" },
-    { name = "opentelemetry-instrumentation-fastapi" },
-    { name = "opentelemetry-sdk" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "fastapi", extras = ["standard"], specifier = ">=0.161.1" },
-    { name = "kontext-account", editable = "py/kontext-account" },
-    { name = "kontext-agentic", extras = ["inprocess"], editable = "py/kontext-agentic" },
-    { name = "kontext-api", editable = "py/kontext-api" },
-    { name = "kontext-auth", editable = "py/kontext-auth" },
-    { name = "kontext-common", editable = "py/kontext-common" },
-    { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-engine", editable = "py/kontext-engine" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
-    { name = "kontext-harness-agno", editable = "py/kontext-harness-agno" },
-    { name = "kontext-job", editable = "py/kontext-job" },
-    { name = "kontext-kernel", editable = "py/kontext-kernel" },
-    { name = "kontext-project", editable = "py/kontext-project" },
-    { name = "kontext-runtime", editable = "py/kontext-runtime" },
-    { name = "kontext-schema", editable = "py/kontext-schema" },
-    { name = "kontext-storage", editable = "py/kontext-storage" },
-    { name = "opentelemetry-exporter-otlp-proto-http", marker = "extra == 'telemetry'", specifier = ">=1.25.0" },
-    { name = "opentelemetry-instrumentation-fastapi", marker = "extra == 'telemetry'", specifier = ">=0.46b0" },
-    { name = "opentelemetry-sdk", marker = "extra == 'telemetry'", specifier = ">=1.45.1" },
-    { name = "pyfiglet", specifier = ">=1.0.0" },
-    { name = "rich", specifier = ">=15.0.0" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.54.0" },
-]
-provides-extras = ["telemetry"]
-
-[[package]]
 name = "kontext-llm"
 version = "0.261.0"
 source = { editable = "py/kontext-llm" }
@@ -2474,6 +2414,66 @@ requires-dist = [
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "pydantic", specifier = ">=2.14.1,<3.0.0" },
 ]
+
+[[package]]
+name = "kontext-studio"
+version = "0.261.0"
+source = { editable = "py/kontext-labs" }
+dependencies = [
+    { name = "fastapi", extra = ["standard"] },
+    { name = "kontext-account" },
+    { name = "kontext-agentic", extra = ["inprocess"] },
+    { name = "kontext-api" },
+    { name = "kontext-auth" },
+    { name = "kontext-common" },
+    { name = "kontext-data" },
+    { name = "kontext-engine" },
+    { name = "kontext-execution" },
+    { name = "kontext-harness-agno" },
+    { name = "kontext-job" },
+    { name = "kontext-kernel" },
+    { name = "kontext-project" },
+    { name = "kontext-runtime" },
+    { name = "kontext-schema" },
+    { name = "kontext-storage" },
+    { name = "pyfiglet" },
+    { name = "rich" },
+    { name = "uvicorn", extra = ["standard"] },
+]
+
+[package.optional-dependencies]
+telemetry = [
+    { name = "opentelemetry-exporter-otlp-proto-http" },
+    { name = "opentelemetry-instrumentation-fastapi" },
+    { name = "opentelemetry-sdk" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.161.1" },
+    { name = "kontext-account", editable = "py/kontext-account" },
+    { name = "kontext-agentic", extras = ["inprocess"], editable = "py/kontext-agentic" },
+    { name = "kontext-api", editable = "py/kontext-api" },
+    { name = "kontext-auth", editable = "py/kontext-auth" },
+    { name = "kontext-common", editable = "py/kontext-common" },
+    { name = "kontext-data", editable = "py/kontext-data" },
+    { name = "kontext-engine", editable = "py/kontext-engine" },
+    { name = "kontext-execution", editable = "py/kontext-execution" },
+    { name = "kontext-harness-agno", editable = "py/kontext-harness-agno" },
+    { name = "kontext-job", editable = "py/kontext-job" },
+    { name = "kontext-kernel", editable = "py/kontext-kernel" },
+    { name = "kontext-project", editable = "py/kontext-project" },
+    { name = "kontext-runtime", editable = "py/kontext-runtime" },
+    { name = "kontext-schema", editable = "py/kontext-schema" },
+    { name = "kontext-storage", editable = "py/kontext-storage" },
+    { name = "opentelemetry-exporter-otlp-proto-http", marker = "extra == 'telemetry'", specifier = ">=1.25.0" },
+    { name = "opentelemetry-instrumentation-fastapi", marker = "extra == 'telemetry'", specifier = ">=0.46b0" },
+    { name = "opentelemetry-sdk", marker = "extra == 'telemetry'", specifier = ">=1.45.1" },
+    { name = "pyfiglet", specifier = ">=1.0.0" },
+    { name = "rich", specifier = ">=15.0.0" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.54.0" },
+]
+provides-extras = ["telemetry"]
 
 [[package]]
 name = "lance-namespace"

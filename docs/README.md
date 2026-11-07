@@ -8,12 +8,12 @@ to do rather than by subject area.
 Task documentation for people running the released product, with screenshots
 and numbered steps.
 
-- [Kontext Labs user guide](user-guide/README.md) — install, set up a profile, and
+- [Kontext Studio user guide](user-guide/README.md) — install, set up a profile, and
   work with projects, data sources, notebooks, and chats.
 - [Install Kontext](../README.md#install) in the repository README.
 
-The user guide assumes the installed `kontext-labs` package and
-`kontext-labs serve`; it does not require a repository checkout.
+The user guide assumes the installed `kontext-studio` package and
+`kontext serve`; it does not require a repository checkout.
 
 ## Understand Kontext
 

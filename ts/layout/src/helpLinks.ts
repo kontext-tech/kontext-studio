@@ -42,15 +42,15 @@ export const getHelpLinks = (): HelpLink[] => [
       key: "license",
       icon: React.createElement(FileTextOutlined),
       label: "License",
-      url: "https://github.com/kontext-tech/kontext-labs/blob/main/LICENSE",
-      description: "Kontext Labs is released under the MIT License"
+      url: "https://github.com/kontext-tech/kontext-studio/blob/main/LICENSE",
+      description: "Kontext Studio is released under the MIT License"
    },
    {
       key: "notices",
       icon: React.createElement(FileTextOutlined),
       label: "Third-party notices",
-      url: "https://github.com/kontext-tech/kontext-labs/blob/main/THIRD_PARTY_NOTICES.md",
-      description: "Licenses for the open-source packages Kontext Labs uses"
+      url: "https://github.com/kontext-tech/kontext-studio/blob/main/THIRD_PARTY_NOTICES.md",
+      description: "Licenses for the open-source packages Kontext Studio uses"
    }
 ];
 

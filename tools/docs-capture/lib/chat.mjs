@@ -132,7 +132,7 @@ export async function readSessionMessages(server, sessionId) {
       "print(json.dumps([json.loads(row[1]) for row in rows]))"
    ].join("\n");
 
-   const output = execFileSync("uv", ["run", "--package", "kontext-labs", "python", "-"], {
+   const output = execFileSync("uv", ["run", "--package", "kontext-studio", "python", "-"], {
       cwd: repoRoot,
       input: script,
       env: {
@@ -255,7 +255,7 @@ export function seedChatTranscript(server, { projectId, modelSelectionId, epoch 
       "connection.close()"
    ].join("\n");
 
-   execFileSync("uv", ["run", "--package", "kontext-labs", "python", "-"], {
+   execFileSync("uv", ["run", "--package", "kontext-studio", "python", "-"], {
       cwd: repoRoot,
       input: script,
       env: {

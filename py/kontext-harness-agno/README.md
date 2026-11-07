@@ -11,7 +11,7 @@ neutral layers:
 - `kontext.agent` — neutral agent contracts (specs, toolkits, systems, tools)
 - `kontext-agentic` — harness-neutral blueprints, domain tools, and chat workflows
 
-Composition roots (`kontext-labs`, `kontext-api`) install this package to
+Composition roots (`kontext-studio`, `kontext-api`) install this package to
 select the Agno harness; a future ADK distribution would register under the
 same entry-point group and become selectable via `KONTEXT_AGENT_FRAMEWORK`
 without changes to the neutral layers. See `docs/ai/harness-abstraction.md`.

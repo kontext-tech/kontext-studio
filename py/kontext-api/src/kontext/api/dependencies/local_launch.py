@@ -14,7 +14,7 @@ LAUNCH_TOKEN_HEADER = "X-Kontext-Launch-Token"
 
 _MISSING_TOKEN_DETAIL = (
     "Missing or invalid local launch token. Open the URL printed by "
-    "`kontext-labs serve` (direct server starts: see "
+    "`kontext serve` (direct server starts: see "
     "~/.kontext/runtime/launch.token)."
 )
 

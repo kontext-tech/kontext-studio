@@ -7,7 +7,7 @@
  *   - the Vite dev server on `appPort`
  *
  * The dev server is used instead of the packaged `app/dist` because
- * `kontext-labs serve` mounts `/assets` and `/static` but not `/icons`, so the
+ * `kontext serve` mounts `/assets` and `/static` but not `/icons`, so the
  * header logo and favicons 404 when the built app is served by the Python
  * process. Vite serves `app/public` at the root, which is what users see behind
  * nginx in a release.
@@ -175,7 +175,7 @@ export async function startServer({ apiPort, appPort } = {}) {
       throw new Error(`Local launch token was not written to ${tokenFile}`);
    }
 
-   // `kontext-labs serve` resolves the local data directory from `Path.home()`
+   // `kontext serve` resolves the local data directory from `Path.home()`
    // (profiles, project storage, the internal lakehouse). `KONTEXT_LAKE_PATH`
    // alone is not enough: uploads otherwise land in the developer's real
    // `~/.kontext`. Give the API process a throwaway HOME, and point uv at the
@@ -201,8 +201,8 @@ export async function startServer({ apiPort, appPort } = {}) {
       args: [
          "run",
          "--package",
-         "kontext-labs",
-         "kontext-labs",
+         "kontext-studio",
+         "kontext",
          "serve",
          "--host",
          "127.0.0.1",
@@ -228,7 +228,7 @@ export async function startServer({ apiPort, appPort } = {}) {
    let launchToken = "";
 
    try {
-      await waitForHttp(`${apiUrl}/health`, { label: "kontext-labs", process: api });
+      await waitForHttp(`${apiUrl}/health`, { label: "kontext-studio", process: api });
       launchToken = await readLaunchToken();
 
       const app = spawnLogged({
@@ -275,7 +275,7 @@ export async function startServer({ apiPort, appPort } = {}) {
          args: [
             "run",
             "--package",
-            "kontext-labs",
+            "kontext-studio",
             "python",
             "-m",
             "kontext.labs.local_worker"

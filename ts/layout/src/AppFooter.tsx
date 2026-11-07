@@ -33,7 +33,7 @@ const AppFooter: React.FC<AppFooterProps> = ({ showDetails = false }) => {
 
             <Flex gap="small" align="center">
                <Link
-                  href="https://github.com/kontext-tech/kontext-labs/blob/main/LICENSE"
+                  href="https://github.com/kontext-tech/kontext-studio/blob/main/LICENSE"
                   target="_blank"
                   style={linkStyle}
                >
@@ -43,7 +43,7 @@ const AppFooter: React.FC<AppFooterProps> = ({ showDetails = false }) => {
                   ·
                </Text>
                <Link
-                  href="https://github.com/kontext-tech/kontext-labs/blob/main/THIRD_PARTY_NOTICES.md"
+                  href="https://github.com/kontext-tech/kontext-studio/blob/main/THIRD_PARTY_NOTICES.md"
                   target="_blank"
                   style={linkStyle}
                >

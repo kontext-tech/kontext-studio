@@ -9,9 +9,9 @@ people hit most often. Variables are defined in the
 
 | Process | Default | Started by | Notes |
 | --- | --- | --- | --- |
-| API (uvicorn) | `127.0.0.1:8000` | `kontext-labs serve` | Serves the API and, when a build exists, the React app. |
+| API (uvicorn) | `127.0.0.1:8000` | `kontext serve` | Serves the API and, when a build exists, the React app. |
 | Vite dev app | `127.0.0.1:8002` | `pnpm run dev:local` | Separate from the API; API URL is injected. |
-| Job worker | Child process | `kontext-labs serve` | Polls queued runs from SQLite; `--no-worker` disables it. |
+| Job worker | Child process | `kontext serve` | Polls queued runs from SQLite; `--no-worker` disables it. |
 | Python kernels | Child processes | Worker | One-shot run kernels and persistent session kernels. |
 | Project database | `~/.kontext/kontext.db` | API/worker | SQLite in local mode. |
 | Lake/storage | `~/.kontext` | API/worker | `KONTEXT_LAKE_PATH` or `--lake-path` overrides the lake root. |
@@ -28,12 +28,12 @@ pnpm run dev:app       # app only; expects an API
 Installed package:
 
 ```bash
-kontext-labs serve
-kontext-labs serve --open                 # open the tokenized URL
-kontext-labs serve --host 127.0.0.1 --port 8000
-kontext-labs serve --lake-path ./workspace
-kontext-labs serve --no-worker            # API only
-kontext-labs serve --reload               # uvicorn reload
+kontext serve
+kontext serve --open                 # open the tokenized URL
+kontext serve --host 127.0.0.1 --port 8000
+kontext serve --lake-path ./workspace
+kontext serve --no-worker            # API only
+kontext serve --reload               # uvicorn reload
 ```
 
 `Ctrl-C` stops the server and its worker. The worker supervisor restarts a
@@ -42,7 +42,7 @@ crashed worker up to five times; `KONTEXT_LOCAL_WORKER_ENABLED=false` or
 
 ## Launch URL and token
 
-`kontext-labs serve` prints the URL to open, the latest token file, and a
+`kontext serve` prints the URL to open, the latest token file, and a
 tokenized URL of the form `http://127.0.0.1:8000/#token=...`. The dev launcher
 prints the same banner again once both services answer and writes the app URL
 to `~/.kontext/runtime/launch.url` (plus `launch-8002.url`).

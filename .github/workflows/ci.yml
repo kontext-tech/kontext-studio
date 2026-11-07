@@ -82,7 +82,7 @@ jobs:
               - "pnpm-workspace.yaml"
               - "pyproject.toml"
               - "uv.lock"
-              - "scripts/uv/build-kontext-labs-wheel.py"
+              - "scripts/uv/build-kontext-studio-wheel.py"
               - ".github/workflows/ci.yml"
             toolpins:
               - "pyproject.toml"
@@ -212,7 +212,7 @@ jobs:
       # Proves the Starlight build used by publish-docs.yml still succeeds.
       - name: Build docs site
         env:
-          DOCS_REPO_URL: https://github.com/kontext-tech/kontext-labs
+          DOCS_REPO_URL: https://github.com/kontext-tech/kontext-studio
         run: pnpm docs:site:build
 
   typescript-test:
@@ -456,11 +456,11 @@ jobs:
       - name: Build unified wheel
         env:
           NODE_ENV: production
-        run: python scripts/uv/build-kontext-labs-wheel.py --build-app --out-dir dist/python
+        run: python scripts/uv/build-kontext-studio-wheel.py --build-app --out-dir dist/python
 
       - name: Verify wheel contents
         run: |
-          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
           echo "Built wheel: $WHEEL"
           python - "$WHEEL" <<'PY'
           import sys
@@ -483,10 +483,10 @@ jobs:
 
       - name: Install wheel with uv tool install
         run: |
-          WHEEL=$(ls dist/python/kontext_labs-*.whl | head -n1)
+          WHEEL=$(ls dist/python/kontext_studio-*.whl | head -n1)
           uv tool install --force "$WHEEL"
 
       - name: Smoke test CLI entry points
         run: |
-          kontext-labs --help
-          kontext-labs-serve --help
+          kontext --help
+          kontext serve --help

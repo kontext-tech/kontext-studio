@@ -1,7 +1,7 @@
 """
 Local job worker (supervisor) for Kontext.
 
-Runs as its own process (``kontext-labs worker``), separate from the API
+Runs as its own process (``kontext worker``), separate from the API
 server. The worker is a *supervisor*: it discovers queued work through an
 :class:`~kontext.common.jobs.transport.IJobRunClaimTransport` (the local DB
 poll), then delegates execution. It never executes job code itself.
@@ -527,7 +527,7 @@ def run_worker_process() -> None:
     Initializes local mode (database, migrations, default data), installs
     SIGINT/SIGTERM handlers for graceful shutdown, and runs the poll loop.
     """
-    # Direct `kontext-labs worker` invocations bypass the server CLI guard.
+    # Direct `kontext worker` invocations bypass the server CLI guard.
     try:
         ensure_supported_sqlite()
     except RuntimeError as exc:

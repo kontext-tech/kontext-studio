@@ -29,7 +29,7 @@ Tool-specific entry points are thin adapters with no unique content:
   their public entry points, never `@kontext-labs/*/src/...`.
 - Python distributions must declare exactly the workspace packages their source
   imports (`py/kontext-common/tests/test_dependency_metadata.py` enforces this;
-  only `kontext-api`, `kontext-runtime`, and `kontext-labs` may pin unimported
+  only `kontext-api`, `kontext-runtime`, and `kontext-studio` may pin unimported
   packages as composition roots).
 - Keep `package.json` deps and `tsconfig.json` project references aligned inside
   `ts/*` (`tools/validate-workspace-graph.mjs` fails otherwise).
@@ -93,7 +93,7 @@ A system map (processes, layers, data flow, and technology) lives in
   `kontext-schema`); `kontext-query` orchestrates engines only through the
   `QueryRuntimeProviderProtocol` port; `kontext-engine` is compute and never
   imports query/catalog; `kontext-kernel` is the separate-process Python
-  topology and depends only on common; `kontext-runtime` + `kontext-labs` are
+  topology and depends only on common; `kontext-runtime` + `kontext-studio` are
   the composition roots. The import graph is acyclic and enforced by
   `py/kontext-common/tests/test_architecture_boundaries.py`
   (see `.github/skills/python-boundaries`).

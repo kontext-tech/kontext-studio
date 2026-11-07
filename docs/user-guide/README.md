@@ -1,6 +1,6 @@
-# Kontext Labs user guide
+# Kontext Studio user guide
 
-Kontext Labs is a local-first AI data workspace. Connect your files and
+Kontext Studio is a local-first AI data workspace. Connect your files and
 databases, bring your own model, and ask questions in plain language. A team of
 agents returns SQL results, charts, and reproducible notebooks — all on your
 machine.
@@ -11,7 +11,7 @@ jump to the page for the task you are doing.
 
 ## Get started
 
-- [Install and start Kontext Labs](01-install-and-start.md) — Install the released wheel, start the local server, and replace the placeholder profile.
+- [Install and start Kontext Studio](01-install-and-start.md) — Install the released wheel, start the local server, and replace the placeholder profile.
 - [Open or create a project](02-create-a-project.md) — Projects hold data sources, files, chats, and settings.
 
 ## Data

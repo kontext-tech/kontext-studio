@@ -20,7 +20,7 @@ TOP_LEVEL_MODULE_TO_PACKAGE = {
     "file": "kontext-file",
     "jobs": "kontext-job",
     "kernel": "kontext-kernel",
-    "labs": "kontext-labs",
+    "labs": "kontext-studio",
     "llm": "kontext-llm",
     "okf": "kontext-okf",
     "project": "kontext-project",
@@ -274,13 +274,13 @@ def test_only_the_composition_layer_imports_the_engine() -> None:
 
     Engine selection goes through the ``QueryRuntimeProviderProtocol`` seam, so
     swapping the engine stays a composition change. ``kontext-runtime`` wires
-    the concrete engine (and ``kontext-labs`` as the local server/CLI
+    the concrete engine (and ``kontext-studio`` as the local server/CLI
     composition root); everyone else resolves engines through ports.
     """
     offenders = {
         pkg
         for pkg in TOP_LEVEL_MODULE_TO_PACKAGE.values()
-        if pkg not in {"kontext-runtime", "kontext-labs", "kontext-engine"}
+        if pkg not in {"kontext-runtime", "kontext-studio", "kontext-engine"}
         and "kontext-engine" in _collect_imports(pkg)
     }
     assert not offenders, "Unexpected engine importers outside the composition layer: " + (
@@ -312,7 +312,7 @@ def test_kernel_imports_stay_confined_to_composition_layers() -> None:
     """
     offenders: set[str] = set()
     for pkg in sorted(set(TOP_LEVEL_MODULE_TO_PACKAGE.values())):
-        if pkg in {"kontext-runtime", "kontext-kernel", "kontext-labs"}:
+        if pkg in {"kontext-runtime", "kontext-kernel", "kontext-studio"}:
             continue
         offenders |= _files_importing_package(pkg, "kernel")
     unexpected = offenders - set(KNOWN_EXTERNAL_KERNEL_OFFENDERS)

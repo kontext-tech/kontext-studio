@@ -1,6 +1,6 @@
-# Install and start Kontext Labs
+# Install and start Kontext Studio
 
-Kontext Labs runs on your own machine. The local server, the data engine, and
+Kontext Studio runs on your own machine. The local server, the data engine, and
 the web app all start together, and everything you create stays in a workspace
 directory on disk.
 
@@ -14,13 +14,13 @@ environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
 ### With uv (recommended)
 
 ```bash
-uv tool install kontext-labs
+uv tool install kontext-studio
 ```
 
 ### With pipx
 
 ```bash
-pipx install kontext-labs
+pipx install kontext-studio
 ```
 
 ### With pip in a virtual environment
@@ -28,23 +28,23 @@ pipx install kontext-labs
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-labs
+pip install kontext-studio
 ```
 
 To pin a specific release, add the version number to any install command:
 
 ```bash
-uv tool install "kontext-labs==0.261.0"
-pipx install "kontext-labs==0.261.0"
-pip install "kontext-labs==0.261.0"
+uv tool install "kontext-studio==0.261.0"
+pipx install "kontext-studio==0.261.0"
+pip install "kontext-studio==0.261.0"
 ```
 
 To upgrade later:
 
 ```bash
-uv tool upgrade kontext-labs
-pipx upgrade kontext-labs
-pip install --upgrade kontext-labs
+uv tool upgrade kontext-studio
+pipx upgrade kontext-studio
+pip install --upgrade kontext-studio
 ```
 
 > Pip installs into the active Python environment; use a virtual environment.
@@ -56,7 +56,7 @@ pip install --upgrade kontext-labs
 Run the server from the directory that should hold your workspace:
 
 ```bash
-kontext-labs serve
+kontext serve
 ```
 
 The first start creates a workspace in `~/.kontext/` and prints the URL to open.
@@ -68,7 +68,7 @@ reports a missing launch token, a Host/Origin error, or a port conflict, see
 To open the browser automatically:
 
 ```bash
-kontext-labs serve --open
+kontext serve --open
 ```
 
 Use `--host`, `--port`, or `--lake-path` to bind a different address, change
@@ -93,24 +93,24 @@ as the app, for example <http://localhost:8000/setup>.
 
 ## Connect a model provider
 
-Kontext Labs does not bundle a model. After signing in, open **LLM Providers** and
+Kontext Studio does not bundle a model. After signing in, open **LLM Providers** and
 add a local or cloud provider, then choose the default model for your work. See
 [Connect a model provider](10-connect-a-model-provider.md) for the supported
 providers and settings.
 
 ## CLI commands
 
-Most work happens in the browser, but `kontext-labs` also exposes the local
+Most work happens in the browser, but `kontext-studio` also exposes the local
 workspace from the terminal:
 
 | Command | Description |
 | --- | --- |
-| `kontext-labs serve` | Start the local server and UI |
-| `kontext-labs project list` | List projects in the local workspace |
-| `kontext-labs project create <name>` | Create a project |
-| `kontext-labs project import <files…>` | Import data files into a project |
-| `kontext-labs job list` | List available job types |
-| `kontext-labs job run <type>` | Run a job synchronously |
+| `kontext serve` | Start the local server and UI |
+| `kontext project list` | List projects in the local workspace |
+| `kontext project create <name>` | Create a project |
+| `kontext project import <files…>` | Import data files into a project |
+| `kontext job list` | List available job types |
+| `kontext job run <type>` | Run a job synchronously |
 
 `project import` accepts CSV, Parquet, JSON, and other data files. Pass
 `--project` to target a project other than the first one, and `--subdir` to

@@ -1,4 +1,4 @@
-# Kontext Labs docs site
+# Kontext Studio docs site
 
 Astro Starlight site that publishes the user guide and selected developer
 reference pages. The Markdown under `docs/` remains the source of truth; the
@@ -48,7 +48,7 @@ directory trees, and literal command output as text.
 | --- | --- | --- |
 | `DOCS_SITE_URL` | `https://docs.kontext.tech` | Canonical site URL used by Starlight and the sitemap |
 | `DOCS_BASE` | `/` | Base path when hosting under a prefix instead of a subdomain |
-| `DOCS_REPO_URL` | `https://github.com/kontext-tech/kontext-labs` | Repository used for source links and the GitHub icon |
+| `DOCS_REPO_URL` | `https://github.com/kontext-tech/kontext-studio` | Repository used for source links and the GitHub icon |
 
 The sync step rewrites relative source links to site routes, links to source
 files to repository URLs, and strips the capture markers that the user-guide
@@ -67,7 +67,7 @@ Content is published by `.github/workflows/publish-docs.yml`, either manually
 (`publish_docs`, default `true`). The workflow builds `docs-site/dist`, syncs it
 to S3, invalidates CloudFront, and smoke-tests the distribution.
 
-Required repository configuration in `kontext-tech/kontext-labs`:
+Required repository configuration in `kontext-tech/kontext-studio`:
 
 - secret `AWS_DEPLOYMENT_ROLE_ARN_GLOBAL` — the
   `kontext-production-cicd-global` role ARN

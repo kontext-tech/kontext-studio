@@ -38,7 +38,7 @@ Those layers are complementary, not competing:
 | `kontext-kernel` | Separate-process Python execution topology | Execution contracts, validation policy, child harness, wire protocol, kernel manager/pool, runner backends | Deployment composition, other Kontext domain deps, provider selection |
 | `kontext-runtime` | Deployment composition/bootstrap | Provider/backend selection, local process composition, managed Python environment, startup glue | Domain logic, heavy compute engines, API router logic |
 | `kontext-api` | HTTP/SSE/WebSocket transport | Routers, dependencies, request/auth context, thin application services, transport mapping | Direct persistence internals in routers, heavy compute implementations |
-| `kontext-labs` | Local shell/bootstrap application | Local CLI/server composition, developer workflows | Reusable domain logic that belongs in packages above |
+| `kontext-studio` | Local shell/bootstrap application | Local CLI/server composition, developer workflows | Reusable domain logic that belongs in packages above |
 | `kontext-agentic` | Agent application layer | Blueprints, blueprint registry, domain tools, chat workflow, `create_agentic_system` composition | Generic API routing, relational persistence internals, harness SPI definitions |
 | `kontext-agent` | Agent contracts + harness SPI | `BaseAgenticSystem`, harness SPI, run-state port, tool/streaming/client-policy primitives | LLM wiring, domain tools, blueprints, imports of `agentic`/`chat`/`data` |
 | `kontext-harness-agno` | Agno harness adapter (plugin) | `AgentSpec` materialization, native model construction, event translation, Agno-specific storage bridging | Domain policy, blueprints, imports of `kontext-agentic`/`kontext-data` |
@@ -70,7 +70,7 @@ existing manifest rather than only the fields you happen to need:
 
 - `description`, `readme`, `requires-python = ">=3.12"`, `license = { text = "MIT" }`, `authors`
 - `classifiers` including `License :: OSI Approved :: MIT License` and `Programming Language :: Python :: 3.12`
-- `[project.urls]` with `Repository = "https://github.com/kontext-tech/kontext-labs"`
+- `[project.urls]` with `Repository = "https://github.com/kontext-tech/kontext-studio"`
 
 Two placement rules matter because TOML tables are positional:
 
@@ -293,7 +293,7 @@ The claim contract lives in `kontext-common` (not `kontext-job`) because its
 consumer, the engine's DB-poll transport, must not depend on the job framework:
 `kontext-engine` sits below `kontext-job` in the graph, so hosting the contract
 there would invert the layering. It stays out of `kontext-engine` itself because
-the supervisor (in `kontext-labs`) is the consumer, and a deployment could swap
+the supervisor (in `kontext-studio`) is the consumer, and a deployment could swap
 in a different transport without touching engine compute.
 
 Do not add concrete cloud backends (S3, Azure Blob, SQS, Azure Queue, managed

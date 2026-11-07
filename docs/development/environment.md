@@ -14,7 +14,7 @@ example with copy-paste values; this page is the reference.
 ## Ownership
 
 - **User-tunable** — safe to set in `.env.local` or the process environment.
-- **Launcher-managed** — set by `kontext-labs serve` or the API entrypoint.
+- **Launcher-managed** — set by `kontext serve` or the API entrypoint.
   Do not set these by hand; the launcher overwrites or derives them.
 - **Internal / test-only** — used by the test suite or automation. Leave unset.
 
@@ -49,16 +49,16 @@ example with copy-paste values; this page is the reference.
 | `ENVIRONMENT` | `development` | `development` enables `/docs`, `/openapi.json`, detailed errors, and uvicorn reload in the standalone entrypoint. |
 | `HOST` | `127.0.0.1` local, `0.0.0.0` otherwise | Standalone `kontext-api` bind address. |
 | `PORT` | `8000` | Standalone API port. |
-| `KONTEXT_HOST` | `127.0.0.1` | `kontext-labs serve --host`. |
-| `KONTEXT_PORT` | `8000` | `kontext-labs serve --port`. |
+| `KONTEXT_HOST` | `127.0.0.1` | `kontext serve --host`. |
+| `KONTEXT_PORT` | `8000` | `kontext serve --port`. |
 | `SERVICE_NAME` | `kontext-api` | Service name for logging and telemetry. |
 | `CORS_ALLOWED_ORIGINS` | Profile default | Comma-separated origins. Empty or `*` falls back to the local/production default list; credentials cannot be combined with `*`. |
 | `KONTEXT_DIST_DIR` | Bundled `app/dist` | Launcher-managed React build served by the local server. |
-| `KONTEXT_LAKE_PATH` | `.kontext` | Local lake root; `kontext-labs serve --lake-path` overrides it. |
+| `KONTEXT_LAKE_PATH` | `.kontext` | Local lake root; `kontext serve --lake-path` overrides it. |
 | `KONTEXT_API_URL` | `http://localhost:8101` | API base URL used by interactive authentication. |
 | `KONTEXT_LOCAL_MODE` | `true` in the local composition | Internal deployment-profile switch. The frontend reads the same name from `window.ENV` for early local-auth decisions. |
 | `KONTEXT_LOCAL_LAUNCH_TOKEN` | Per-run random | Launcher-managed credential. Persisted to `~/.kontext/runtime/launch.token` and `launch-<port>.token`. |
-| `KONTEXT_ALLOWED_HOSTS` | Loopback plus local interfaces | Comma-separated Host allowlist. `kontext-labs serve` adds this machine's addresses for wildcard binds. |
+| `KONTEXT_ALLOWED_HOSTS` | Loopback plus local interfaces | Comma-separated Host allowlist. `kontext serve` adds this machine's addresses for wildcard binds. |
 | `KONTEXT_SITE_FEATURES` | Unset | Comma-separated features to enable on top of the profile defaults. |
 | `KONTEXT_DISABLED_SITE_FEATURES` | Unset | Comma-separated features to disable; disable wins over enable. |
 
@@ -114,7 +114,7 @@ example with copy-paste values; this page is the reference.
 
 | Variable | Default | Notes |
 | --- | --- | --- |
-| `KONTEXT_LOCAL_WORKER_ENABLED` | `true` | Start the job worker alongside `kontext-labs serve`. |
+| `KONTEXT_LOCAL_WORKER_ENABLED` | `true` | Start the job worker alongside `kontext serve`. |
 | `KONTEXT_LOCAL_WORKER_CONCURRENCY` | `2` | Concurrent jobs per worker. |
 | `KONTEXT_LOCAL_WORKER_POLL_INTERVAL` | `0.5` | Idle poll interval in seconds. |
 | `KONTEXT_LOCAL_WORKER_WATCHDOG` | `true` | Restart the worker if it exits unexpectedly. |
@@ -177,7 +177,7 @@ AWS SDK variables used by Bedrock) are documented with the provider matrix in
 | `UVICORN_ACCESS_LOG_FORMAT` | Unset | Override for the uvicorn access-log format. |
 | `OTEL_SDK_DISABLED` | `false` | Set `true` to skip telemetry setup entirely. |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | Unset | OTLP HTTP collector endpoint; unset keeps traces local. |
-| `OTEL_SERVICE_NAME` | `kontext-labs` | Telemetry service-name override. |
+| `OTEL_SERVICE_NAME` | `kontext-studio` | Telemetry service-name override. |
 
 ## Tooling-only variables
 

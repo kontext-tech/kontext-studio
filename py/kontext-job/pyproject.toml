@@ -33,7 +33,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/kontext-tech/kontext-labs"
+Repository = "https://github.com/kontext-tech/kontext-studio"
 
 [project.optional-dependencies]
 dev = [

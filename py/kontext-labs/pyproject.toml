@@ -1,5 +1,5 @@
 [project]
-name = "kontext-labs"
+name = "kontext-studio"
 version = "0.261.0"
 description = "Local-first AI data workspace: server, CLI, and runtime"
 authors = [
@@ -38,7 +38,7 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [project.urls]
-Repository = "https://github.com/kontext-tech/kontext-labs"
+Repository = "https://github.com/kontext-tech/kontext-studio"
 
 [project.optional-dependencies]
 telemetry = [
@@ -48,8 +48,7 @@ telemetry = [
 ]
 
 [project.scripts]
-kontext-labs = "kontext.labs.cli:cli"
-kontext-labs-serve = "kontext.labs.cli:serve"
+kontext = "kontext.labs.cli:cli"
 
 [build-system]
 requires = ["hatchling"]

@@ -1,7 +1,7 @@
 # Kontext (local runtime)
 
 Local server and CLI composition root for Kontext. It is the end-user
-entry point: `kontext-labs` starts the local API server, serves the built React
+entry point: `kontext-studio` starts the local API server, serves the built React
 app, and runs an embedded local job worker.
 
 ## Features
@@ -16,7 +16,7 @@ app, and runs an embedded local job worker.
 
 ## Installation
 
-This package is installed as part of the unified `kontext-labs` wheel. See the
+This package is installed as part of the unified `kontext-studio` wheel. See the
 repository [README](../../README.md#install) for the end-user install path.
 
 For local development, sync the whole uv workspace from the repository root:
@@ -31,21 +31,21 @@ uv sync
 
 ```bash
 # Start the local server and web app (default command)
-kontext-labs
+kontext
 
 # Same, via the explicit serve entry point
-kontext-labs-serve
+kontext serve
 
 # Manage projects, import data, run jobs, and query
-kontext-labs project list
-kontext-labs project create --name "My project"
-kontext-labs project import --project <id> ./data
-kontext-labs job list
-kontext-labs job run <job> --project <id>
-kontext-labs query "select * from my_table limit 10" --project <id>
+kontext project list
+kontext project create --name "My project"
+kontext project import --project <id> ./data
+kontext job list
+kontext job run <job> --project <id>
+kontext query "select * from my_table limit 10" --project <id>
 ```
 
-Run `kontext-labs --help` or `kontext-labs <subcommand> --help` for flags.
+Run `kontext --help` or `kontext <subcommand> --help` for flags.
 
 At startup the server prints the URL to open, including a per-run launch token
 in the fragment (`http://127.0.0.1:8000/#token=...`). Open that URL rather than
@@ -59,7 +59,7 @@ in `launch-<port>.token` when several servers run.
 
 ```text
 src/kontext/labs/
-├── cli.py          # argparse entry points (kontext-labs, kontext-labs-serve)
+├── cli.py          # argparse entry points (kontext)
 ├── server.py       # FastAPI app: serves the UI and the local API surface
 ├── local_worker.py # Embedded local job worker
 ├── async_cleanup.py
@@ -67,8 +67,8 @@ src/kontext/labs/
 └── _app_dist/      # Built React app synced in at package time
 ```
 
-The `kontext-labs` and `kontext-labs-serve` console scripts both point at
-`kontext.labs.cli`. Local routers reuse the standard routers from
+The `kontext` console script points at `kontext.labs.cli`. Local routers reuse
+the standard routers from
 `kontext-api`; keep local routes compatible with that contract rather than
 inventing separate local shapes.
 
@@ -79,7 +79,7 @@ inventing separate local shapes.
 pnpm run dev:local
 
 # Package tests
-uv run --package kontext-labs pytest py/kontext-labs/tests
+uv run --package kontext-studio pytest py/kontext-labs/tests
 ```
 
 ## License

@@ -1,6 +1,6 @@
 # Architecture overview
 
-Kontext Labs is a local-first, single-user AI data workspace. This page is
+Kontext Studio is a local-first, single-user AI data workspace. This page is
 the system map: the processes, layers, data flow, and technology choices. The
 detailed rules live in the linked canonical pages.
 
@@ -27,7 +27,7 @@ flowchart TB
     App["app/<br/>screens, routing, composition"]
     TS["ts/*<br/>shared frontend packages"]
     API["kontext-api<br/>HTTP / SSE / WS transport"]
-    Labs["kontext-labs<br/>local CLI + server shell"]
+    Labs["kontext-studio<br/>local CLI + server shell"]
     Runtime["kontext-runtime<br/>deployment composition"]
     Domain["Domain packages<br/>query, engine, data, storage, file, project,<br/>job, execution, chat, agentic, catalog, ..."]
     Contracts["kontext-common + kontext-schema<br/>contracts and generated models"]
@@ -49,7 +49,7 @@ flowchart TB
 | `app/` | Screens, routing metadata, providers, and composition | [App README](../../app/README.md) |
 | `ts/*` | Shared React state, services, domain components, schema contracts, theme, and host client | `ts/*/package.json`, [AGENTS.md](../../AGENTS.md) |
 | `kontext-api` | Routers, dependencies, request/auth context, thin application services | [Python package boundaries](python-package-boundaries.md) |
-| `kontext-labs` | Installed local CLI/server composition, process supervision, developer workflows | [Local operations](local-operations.md) |
+| `kontext-studio` | Installed local CLI/server composition, process supervision, developer workflows | [Local operations](local-operations.md) |
 | `kontext-runtime` | Provider/backend selection and deployment-profile composition | [Python package boundaries](python-package-boundaries.md) |
 | Domain packages | Query, compute, persistence, storage, files, projects, jobs, execution, chat, agents, catalog, knowledge | [Python package boundaries](python-package-boundaries.md) |
 | `kontext-common` / `kontext-schema` | Protocols, shared contracts, generated Pydantic models | [Contract pipeline](generated-code.md) |

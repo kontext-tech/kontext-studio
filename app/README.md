@@ -9,8 +9,8 @@ pnpm run dev:app
 ```
 
 It consumes the shared workspace packages (`@kontext-labs/*`) built by
-`pnpm run build:shared`, and talks to the local `kontext-labs` server
-(`uv run --env-file .env.local kontext-labs serve --reload`).
+`pnpm run build:shared`, and talks to the local `kontext-studio` server
+(`uv run --env-file .env.local kontext serve --reload`).
 
 You can also start the app together with the local server via
 `pnpm run dev:local` (see the repository [CONTRIBUTING.md](../CONTRIBUTING.md)).

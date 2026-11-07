@@ -523,7 +523,7 @@ const HomePage = () => {
             Watch the demo
          </button>
          <span className="home-footer__spacer" />
-         <span>Kontext Labs · local-first</span>
+         <span>Kontext Studio · local-first</span>
       </footer>
    );
 

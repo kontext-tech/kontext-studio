@@ -175,9 +175,9 @@ function writeGuideIndex() {
       .sort((a, b) => a.order - b.order);
 
    const lines = [
-      "# Kontext Labs user guide",
+      "# Kontext Studio user guide",
       "",
-      "Kontext Labs is a local-first AI data workspace. Connect your files and",
+      "Kontext Studio is a local-first AI data workspace. Connect your files and",
       "databases, bring your own model, and ask questions in plain language. A team of",
       "agents returns SQL results, charts, and reproducible notebooks — all on your",
       "machine.",

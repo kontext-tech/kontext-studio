@@ -29,7 +29,7 @@ function getEnvVar(key: string): string | undefined {
 export const DEFAULT_PLATFORM_URL = "https://kontext.tech";
 
 /**
- * Canonical documentation site for the Kontext Labs product. Kept separate
+ * Canonical documentation site for the Kontext Studio product. Kept separate
  * from the platform URL so Help links land on product docs, not platform docs.
  */
 export const DEFAULT_DOCS_URL = "https://docs.kontext.tech";

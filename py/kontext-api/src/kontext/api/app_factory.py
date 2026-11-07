@@ -1,6 +1,6 @@
 """Shared FastAPI application factory for every Kontext entrypoint.
 
-`kontext-api` (hosted) and `kontext-labs` (local server) previously built their
+`kontext-api` (hosted) and `kontext-studio` (local server) previously built their
 own ``FastAPI`` instances, CORS policies, exception handlers, and router
 registrations. The two copies drifted (different origins, methods, and exposed
 headers). Everything that must be identical lives here; entrypoints only supply

@@ -1,7 +1,7 @@
 /**
  * Flow: first run (before setup).
  *
- * `kontext-labs serve` seeds a placeholder local profile, so the app usually
+ * `kontext serve` seeds a placeholder local profile, so the app usually
  * opens directly on the home page. `/setup` is the optional way to replace that
  * placeholder before adding data.
  *
@@ -20,7 +20,7 @@ export default {
          caption:
             "Kontext starts with a placeholder profile. Open `/setup` before you add any data to replace it with your own name and email.",
          target: (page) =>
-            page.getByRole("heading", { name: "Set up Kontext Labs" })
+            page.getByRole("heading", { name: "Set up Kontext Studio" })
       },
       {
          id: "profile",

@@ -52,7 +52,7 @@ _EXECUTOR_SHUTDOWN_GRACE_SECONDS = 5.0
 
 # Environment variables that local-mode startup mutates process-wide via
 # ``kontext.runtime.local.config``. Tests that boot the local app (for example
-# the kontext-labs server) leak these into later tests, flipping the whole
+# the kontext-studio server) leak these into later tests, flipping the whole
 # process into local mode and changing auth/routing behavior. Snapshot and
 # restore them around every test so a test's environment cannot leak into the
 # next one, regardless of collection order.

@@ -13,7 +13,7 @@ import {
 export const docsPreview = process.env.DOCS_PREVIEW === "true";
 
 export const repoUrl =
-   process.env.DOCS_REPO_URL ?? "https://github.com/kontext-tech/kontext-labs";
+   process.env.DOCS_REPO_URL ?? "https://github.com/kontext-tech/kontext-studio";
 
 export function cleanUserGuideSlug(slug) {
    return slug.replace(/^\d+-/, "");

@@ -51,7 +51,7 @@ env:
   AWS_REGION: us-east-1
   # Source links and the GitHub icon point at the live repository, not the
   # archived kontext-labs/kontext-labs history.
-  DOCS_REPO_URL: https://github.com/kontext-tech/kontext-labs
+  DOCS_REPO_URL: https://github.com/kontext-tech/kontext-studio
 
 jobs:
   build:

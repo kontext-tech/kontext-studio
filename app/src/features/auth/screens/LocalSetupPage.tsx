@@ -16,9 +16,9 @@ const { Paragraph } = Typography;
 
 const TERMS_VERSION = "1.0";
 const TERMS_URL =
-   "https://github.com/kontext-tech/kontext-labs/blob/main/TERMS.md";
+   "https://github.com/kontext-tech/kontext-studio/blob/main/TERMS.md";
 const PRIVACY_URL =
-   "https://github.com/kontext-tech/kontext-labs/blob/main/PRIVACY.md";
+   "https://github.com/kontext-tech/kontext-studio/blob/main/PRIVACY.md";
 
 const LocalSetupPage = () => {
    const [loading, setLoading] = useState(false);
@@ -127,13 +127,13 @@ const LocalSetupPage = () => {
       <Flex vertical gap="middle">
          <MetaTags
             title="Local Setup"
-            description="Create your local Kontext Labs profile"
+            description="Create your local Kontext Studio profile"
             type="website"
             canonicalUrl={window.location.href}
          />
-         <h1>Set up Kontext Labs</h1>
+         <h1>Set up Kontext Studio</h1>
          <Paragraph type="secondary">
-            Kontext Labs uses a local profile instead of an email/password
+            Kontext Studio uses a local profile instead of an email/password
             sign-in flow. Create it once and the app will reuse it on subsequent
             launches.
          </Paragraph>

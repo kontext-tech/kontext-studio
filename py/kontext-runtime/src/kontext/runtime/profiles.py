@@ -134,7 +134,7 @@ _LOCAL_RUNTIME_PROFILE = RuntimeProfile(
 #: Non-local (cloud/hosted) composition. This is a **contract placeholder**, not
 #: an implemented backend: it exists so the identity/routing split (JWT vs local
 #: identity) stays selectable and testable. No cloud executor, queue worker or
-#: managed database ships in this repository; kontext-labs runs the same kernel
+#: managed database ships in this repository; kontext-studio runs the same kernel
 #: in a hosted container as it does locally, so ``execution_backend`` is the
 #: same process-isolated kernel either way.
 _CLOUD_RUNTIME_PROFILE = RuntimeProfile(

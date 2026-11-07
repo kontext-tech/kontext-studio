@@ -5,7 +5,7 @@ lakehouse, and you can add external databases beside it.
 
 ## The default lakehouse
 
-**Default Lakehouse** is an Iceberg catalog that Kontext Labs manages for the
+**Default Lakehouse** is an Iceberg catalog that Kontext Studio manages for the
 project. It needs no credentials, it is always present, and it is where imported
 files and generated artifacts are registered. Agents and the query editor can
 read it without extra setup, which is why a new project can answer questions

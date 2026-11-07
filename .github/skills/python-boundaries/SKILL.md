@@ -25,7 +25,7 @@ by an AST-based test:
 | `kontext-llm` | model resolution | never `runtime`/`account` |
 | `kontext-harness-agno` | Agno adapter plugin | `agent`/`common`/`llm`/`schema` + `agno`; never `agentic`/`data` |
 | `kontext-okf` | knowledge format | never `catalog` |
-| `kontext-runtime`, `kontext-labs` | composition roots | may wire everything |
+| `kontext-runtime`, `kontext-studio` | composition roots | may wire everything |
 
 Additional rules:
 

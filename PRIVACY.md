@@ -1,6 +1,6 @@
-# Kontext Labs Privacy Notice
+# Kontext Studio Privacy Notice
 
-Kontext Labs is local-first. The application, its API, job worker, and Python
+Kontext Studio is local-first. The application, its API, job worker, and Python
 kernels run on your machine, and workspace data is stored in the local workspace
 directory you choose (by default `.kontext/`).
 
@@ -12,7 +12,7 @@ directory you choose (by default `.kontext/`).
 
 ## When data leaves your machine
 
-Kontext Labs contacts an external service only when you configure or use one:
+Kontext Studio contacts an external service only when you configure or use one:
 
 - **Model providers** receive the prompts, context, and tool results needed to
   answer your request. Their handling is governed by their own terms and privacy
@@ -22,7 +22,7 @@ Kontext Labs contacts an external service only when you configure or use one:
 - **Update and installation** traffic goes to PyPI or GitHub only when you run
   an install or upgrade command.
 
-Kontext Labs does not include analytics or telemetry by default.
+Kontext Studio does not include analytics or telemetry by default.
 
 ## Your choices
 

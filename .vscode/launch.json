@@ -2,10 +2,10 @@
    "version": "0.2.0",
    "configurations": [
       {
-         "name": "debug: kontext-labs server",
+         "name": "debug: kontext-studio server",
          "type": "debugpy",
          "request": "launch",
-         "program": "${workspaceFolder}/.venv/bin/kontext-labs",
+         "program": "${workspaceFolder}/.venv/bin/kontext",
          "args": ["serve", "--host", "0.0.0.0", "--port", "8000"],
          "cwd": "${workspaceFolder}",
          "envFile": "${workspaceFolder}/.env.local",

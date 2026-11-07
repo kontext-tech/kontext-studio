@@ -14,7 +14,7 @@ Rules:
 
 - Every package imported from a package's source must be declared.
 - Extra declared dependencies are allowed only for the composition roots
-  (``kontext-api`` and ``kontext-labs``), which intentionally pin the full
+  (``kontext-api`` and ``kontext-studio``), which intentionally pin the full
   runtime graph for deployment.
 - ``ALLOWED_IMPLICIT`` lists the *known* violations that are intentionally
   retained. Add a package there only with an inline justification.
@@ -34,9 +34,9 @@ ALLOWED_IMPLICIT: dict[str, set[str]] = {}
 
 #: Packages that may declare dependencies they do not import directly
 #: (composition roots pinning a deployable graph). Per AGENTS.md,
-#: ``kontext-runtime`` and ``kontext-labs`` are the composition roots;
+#: ``kontext-runtime`` and ``kontext-studio`` are the composition roots;
 #: ``kontext-api`` is the hosted entrypoint with the same role.
-COMPOSITION_ROOTS = {"kontext-api", "kontext-labs", "kontext-runtime"}
+COMPOSITION_ROOTS = {"kontext-api", "kontext-studio", "kontext-runtime"}
 
 _IMPORT_ROOT_RE = re.compile(r"^\s*(?:from|import)\s+kontext\.([a-z_][a-z0-9_]*)", re.MULTILINE)
 
@@ -45,7 +45,12 @@ def _workspace_packages() -> dict[str, Path]:
     members = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text())["tool"]["uv"]["workspace"][
         "members"
     ]
-    return {Path(member).name: REPO_ROOT / member for member in members}
+    packages: dict[str, Path] = {}
+    for member in members:
+        package_dir = REPO_ROOT / member
+        manifest = tomllib.loads((package_dir / "pyproject.toml").read_text())
+        packages[manifest["project"]["name"]] = package_dir
+    return packages
 
 
 def _import_roots(package_dir: Path) -> set[str]:

@@ -50,7 +50,7 @@ def test_skips_this_process_and_kernel_harness_without_isolation_flag() -> None:
 
 def test_never_kills_processes_with_live_parents() -> None:
     snapshots = [
-        _snapshot(50, 1, "uv run kontext-labs serve"),  # live server
+        _snapshot(50, 1, "uv run kontext serve"),  # live server
         _snapshot(100, 50, WORKER),  # live server's worker
         _snapshot(600, 100, KERNEL_INVOKED),  # live worker's kernel
     ]

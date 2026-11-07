@@ -11,7 +11,7 @@ Bootstraps a FastAPI application that:
   - Manages a local lake directory (~/.kontext/) for file-based storage
 
 Usage:
-    kontext-labs serve [--port 8000] [--dist-dir /path/to/app/dist]
+    kontext serve [--port 8000] [--dist-dir /path/to/app/dist]
 """
 
 from __future__ import annotations
@@ -57,8 +57,8 @@ async def lifespan(app: FastAPI):
     cfg = get_config()
     runtime_profile = get_local_runtime_profile()
 
-    configure_runtime_logging("kontext-labs")
-    configure_telemetry(service_name="kontext-labs")
+    configure_runtime_logging("kontext-studio")
+    configure_telemetry(service_name="kontext-studio")
 
     logger.info("Starting Kontext local server...")
 
@@ -72,7 +72,7 @@ async def lifespan(app: FastAPI):
     yield
 
     # The API process does not execute jobs; that runs in a separate worker
-    # process (``kontext-labs worker``) so a hung job cannot wedge the server.
+    # process (``kontext worker``) so a hung job cannot wedge the server.
     await drain_async_finalizers()
 
     logger.info("Kontext server stopped.")

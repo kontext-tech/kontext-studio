@@ -1,6 +1,6 @@
 # Third-party notices
 
-Kontext Labs is MIT licensed. This file lists the third-party packages it uses
+Kontext Studio is MIT licensed. This file lists the third-party packages it uses
 and their licenses. It is generated from the committed lockfiles by
 `node scripts/generate-third-party-notices.mjs`; do not hand-edit it.
 
@@ -616,7 +616,7 @@ Production npm dependencies across the workspace:
 
 ## Python packages
 
-Runtime Python dependencies of the unified `kontext-labs` wheel:
+Runtime Python dependencies of the unified `kontext-studio` wheel:
 
 | Package | Version | License | URL |
 | --- | --- | --- | --- |
