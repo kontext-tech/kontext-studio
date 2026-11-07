@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/file",
-   "version": "0.261.0",
+   "version": "0.261.1",
    "type": "module",
    "description": "Shared file domain services, hooks, types, and components for Kontext",
    "license": "MIT",

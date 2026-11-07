@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-storage"
-version = "0.261.0"
+version = "0.261.1"
 description = "Storage engine and provider layer for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"

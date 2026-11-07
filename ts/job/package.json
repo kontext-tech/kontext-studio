@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/job",
-   "version": "0.261.0",
+   "version": "0.261.1",
    "type": "module",
    "description": "Shared job management UI components for Kontext",
    "license": "MIT",

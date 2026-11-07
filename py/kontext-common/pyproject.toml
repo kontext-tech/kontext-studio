@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-common"
-version = "0.261.0"
+version = "0.261.1"
 description = "Shared contracts and cross-cutting primitives for Kontext Python components"
 readme = "README.md"
 requires-python = ">=3.12"

@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/chart",
-   "version": "0.261.0",
+   "version": "0.261.1",
    "type": "module",
    "description": "Chart components and utilities for Kontext",
    "files": [

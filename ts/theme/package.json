@@ -1,7 +1,7 @@
 {
    "type": "module",
    "name": "@kontext-tech/theme",
-   "version": "0.261.0",
+   "version": "0.261.1",
    "description": "Kontext shared theme runtime and design tokens",
    "license": "MIT",
    "main": "./dist/index.js",

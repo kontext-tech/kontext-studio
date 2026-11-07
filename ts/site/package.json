@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/site",
-   "version": "0.261.0",
+   "version": "0.261.1",
    "type": "module",
    "description": "Site-level configuration and local-mode state for Kontext",
    "license": "MIT",

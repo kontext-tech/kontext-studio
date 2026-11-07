@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-account"
-version = "0.261.0"
+version = "0.261.1"
 description = "Account and local identity services for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"
