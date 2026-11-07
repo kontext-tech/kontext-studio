@@ -49,9 +49,9 @@ uv tool install kontext-studio
 With `pip` in a virtual environment:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-studio
+python -m pip install kontext-studio
 ```
 
 Then start the local server from the directory that holds your project:
@@ -63,8 +63,11 @@ kontext serve
 This starts the local API server, serves the web app, and runs the embedded
 local worker.
 
-> Requires Python 3.12 or newer. Use `uv`, `pipx`, or `pip` in a virtual
-> environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
+> Requires Python 3.12–3.14; 3.15 is not yet supported. Create the virtual
+> environment with an explicit version (`python3.13 -m venv .venv`), because
+> a bare `python3` may point at an unsupported release. `uv` picks a supported
+> interpreter on its own. [Install `uv`](https://docs.astral.sh/uv/) if you
+> prefer it.
 
 Continue with the [user guide](https://docs.kontext.tech/user-guide/) to create
 a project, connect data, and start a notebook.

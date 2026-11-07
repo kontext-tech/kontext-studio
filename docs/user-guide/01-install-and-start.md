@@ -6,8 +6,27 @@ directory on disk.
 
 ## Before you start
 
-You need Python 3.12 or newer. Install with `uv`, `pipx`, or `pip` in a virtual
-environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
+You need Python 3.12–3.14; 3.15 is not yet supported. Install with `uv`,
+`pipx`, or `pip` in a virtual environment.
+[Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
+
+The interpreter name matters: a bare `python3` may point at a release outside
+the supported range. Name the version when you create the environment.
+
+| Platform      | Create the environment            |
+| ------------- | --------------------------------- |
+| macOS / Linux | `python3.13 -m venv .venv`        |
+| Windows       | `py -3.13 -m venv .venv`          |
+| uv            | `uv venv --python 3.13`           |
+
+Any of `3.12`, `3.13`, or `3.14` works. Check the result before installing:
+
+```bash
+python -c "import sys; print(sys.version)"
+```
+
+`uv tool install` selects a supported interpreter for you, so it needs no
+version argument.
 
 ## Install
 
@@ -26,9 +45,9 @@ pipx install kontext-studio
 ### With pip in a virtual environment
 
 ```bash
-python -m venv .venv
+python3.13 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-studio
+python -m pip install kontext-studio
 ```
 
 To pin a specific release, add the version number to any install command:
@@ -36,7 +55,7 @@ To pin a specific release, add the version number to any install command:
 ```bash
 uv tool install "kontext-studio==0.261.0"
 pipx install "kontext-studio==0.261.0"
-pip install "kontext-studio==0.261.0"
+python -m pip install "kontext-studio==0.261.0"
 ```
 
 To upgrade later:
@@ -44,7 +63,7 @@ To upgrade later:
 ```bash
 uv tool upgrade kontext-studio
 pipx upgrade kontext-studio
-pip install --upgrade kontext-studio
+python -m pip install --upgrade kontext-studio
 ```
 
 > Pip installs into the active Python environment; use a virtual environment.
@@ -124,4 +143,4 @@ choose where the files land under the project's data directory.
 | Linux | x86_64 |
 | Windows | x86_64 |
 
-Python 3.12 or newer is required.
+Python 3.12–3.14 is required.
