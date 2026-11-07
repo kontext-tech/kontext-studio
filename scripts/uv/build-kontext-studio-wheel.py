@@ -97,6 +97,34 @@ def aggregate_external_dependencies(py_dir: Path) -> list[str]:
     return final_deps
 
 
+# `kontext-common` declares a pytest plugin for this repository's own suite.
+# Re-exporting it would inject that plugin into every project that happens to
+# have kontext-studio installed.
+_UNEXPORTED_ENTRY_POINT_GROUPS = {"pytest11"}
+
+
+def aggregate_entry_points(py_dir: Path) -> dict[str, dict[str, str]]:
+    """
+    Collect entry points declared across all py/*/pyproject.toml files.
+
+    The unified wheel vendors every workspace package into one distribution, so
+    an entry point declared by a member (the agent harness plugin, for example)
+    only exists if the staged metadata repeats it.
+    """
+    groups: dict[str, dict[str, str]] = {}
+
+    for pyproject in sorted(py_dir.glob("*/pyproject.toml")):
+        with open(pyproject, "rb") as f:
+            data = tomllib.load(f)
+        declared = data.get("project", {}).get("entry-points", {})
+        for group, entries in declared.items():
+            if group in _UNEXPORTED_ENTRY_POINT_GROUPS:
+                continue
+            groups.setdefault(group, {}).update(entries)
+
+    return groups
+
+
 def copy_namespace_packages(py_dir: Path, target_src_kontext: Path) -> None:
     """Copy all py/*/src/kontext/* subpackages into the unified target src/kontext directory."""
     for package_dir in sorted(py_dir.glob("kontext-*")):
@@ -170,6 +198,9 @@ def main() -> None:
 
     # Aggregate all external dependencies
     aggregated_deps = aggregate_external_dependencies(py_dir)
+    # Merge entry points from every member so plugins such as the agent harness
+    # stay discoverable in the unified distribution.
+    aggregated_entry_points = aggregate_entry_points(py_dir)
 
     staging_dir = Path(tempfile.mkdtemp(prefix="kontext_studio_build_"))
     try:
@@ -197,6 +228,11 @@ def main() -> None:
         # 4. Construct staged pyproject.toml
         staged_project = labs_toml["project"].copy()
         staged_project["dependencies"] = aggregated_deps
+        if aggregated_entry_points:
+            staged_project["entry-points"] = {
+                **staged_project.get("entry-points", {}),
+                **aggregated_entry_points,
+            }
         if args.version:
             staged_project["version"] = args.version
 
@@ -231,6 +267,12 @@ def main() -> None:
                 lines.append("\n[project.scripts]")
                 for k, v in p["scripts"].items():
                     lines.append(f'{k} = "{v}"')
+
+            if p.get("entry-points"):
+                for group, entries in sorted(p["entry-points"].items()):
+                    lines.append(f'\n[project.entry-points."{group}"]')
+                    for name, value in sorted(entries.items()):
+                        lines.append(f'{name} = "{value}"')
 
             if "optional-dependencies" in p:
                 lines.append("\n[project.optional-dependencies]")

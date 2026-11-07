@@ -469,13 +469,23 @@ jobs:
           wheel = sys.argv[1]
           with zipfile.ZipFile(wheel) as archive:
               names = archive.namelist()
+              entry_points_paths = [n for n in names if n.endswith(".dist-info/entry_points.txt")]
+              entry_points = archive.read(entry_points_paths[0]).decode() if entry_points_paths else ""
 
           required = [
               "kontext/labs/cli.py",
+              # The harness adapter is discovered through a `kontext.agent_harnesses`
+              # entry point; without both the module and the metadata, `kontext serve`
+              # fails at startup with "Unknown agent framework adapter".
+              "kontext/harness/agno/factory.py",
           ]
           missing = [entry for entry in required if not any(n.startswith(entry) for n in names)]
           if missing:
               print(f"::error::Wheel is missing expected entries: {missing}", file=sys.stderr)
+              sys.exit(1)
+
+          if "kontext.agent_harnesses" not in entry_points:
+              print("::error::Wheel metadata is missing the kontext.agent_harnesses entry point", file=sys.stderr)
               sys.exit(1)
 
           print(f"Wheel contains {len(names)} entries including the local server and app assets.")
