@@ -31,7 +31,8 @@ def ensure_supported_sqlite() -> None:
         f"SQLite {detected} has a WAL deadlock (fixed in SQLite 3.51.2) that can "
         "hang the local server. Upgrade the SQLite library used by this Python "
         "(Homebrew: `brew upgrade sqlite`; Debian/Ubuntu: upgrade `libsqlite3-0`), "
-        "or use a Python build that bundles a fixed SQLite, for example "
-        "`uv tool install --managed-python ...`. Reinstalling this Python package "
-        "does not change the SQLite library it links against."
+        "or use a Python build that bundles a fixed SQLite, such as uv's "
+        "`--managed-python` or a python.org build with SQLite 3.51.2+. "
+        "Reinstalling this Python package does not change the SQLite library "
+        "it links against."
     )

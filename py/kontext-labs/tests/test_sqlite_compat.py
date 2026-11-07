@@ -35,7 +35,7 @@ def test_rejects_deadlocking_sqlite_versions(
     message = str(excinfo.value)
     assert f"SQLite {'.'.join(map(str, version))}" in message
     assert "3.51.2" in message
-    assert "uv tool install --managed-python" in message
+    assert "--managed-python" in message
 
 
 def test_serve_exits_cleanly_on_unsafe_sqlite(monkeypatch: pytest.MonkeyPatch) -> None:
