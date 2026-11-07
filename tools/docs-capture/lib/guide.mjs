@@ -76,13 +76,13 @@ export function captionText(caption) {
       .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
 }
 
-export function renderSteps(story, steps) {
+export function renderSteps(story, steps, { extension = "png" } = {}) {
    const lines = [];
    let index = 1;
    for (const step of steps) {
       lines.push(`${index}. ${step.caption}`);
       if (step.shot !== false) {
-         const image = imagePath(story.page, step.imageId ?? step.id);
+         const image = imagePath(story.page, step.imageId ?? step.id, extension);
          const alt = captionText(step.caption);
          lines.push(`   ![${alt}](${image})`);
       }
@@ -91,8 +91,8 @@ export function renderSteps(story, steps) {
    return `${lines.join("\n")}\n`;
 }
 
-export function imagePath(pageSlug, stepId) {
-   return `assets/${pageSlug}/${stepId}.png`;
+export function imagePath(pageSlug, stepId, extension = "png") {
+   return `assets/${pageSlug}/${stepId}.${extension}`;
 }
 
 export function replaceBlock(markdown, slug, slot, content) {
@@ -179,6 +179,36 @@ export function validateStories(stories) {
          problems.push(`${story.source}: stage must be unconfigured or configured.`);
       }
 
+      const kind = story.kind ?? "screen";
+      if (!["screen", "media"].includes(kind)) {
+         problems.push(`${story.source}: kind must be screen or media.`);
+      }
+      if (kind === "media") {
+         // Media stories record continuously after setup, so they cannot drive
+         // the unconfigured screens that run before fixtures are seeded.
+         if (story.stage !== "configured") {
+            problems.push(`${story.source}: media stories must use stage configured.`);
+         }
+         if (!["docs", "site"].includes(story.destination ?? "docs")) {
+            problems.push(`${story.source}: destination must be docs or site.`);
+         }
+         if (!story.goto) {
+            problems.push(`${story.source}: media story ${story.id} needs a goto route.`);
+         }
+         if (story.slot && !story.caption) {
+            problems.push(
+               `${story.source}: media story ${story.id} needs a caption to write a guide block.`
+            );
+         }
+         if (
+            story.formats &&
+            (!Array.isArray(story.formats) ||
+               story.formats.some((format) => !["gif", "mp4"].includes(format)))
+         ) {
+            problems.push(`${story.source}: formats may only contain gif and mp4.`);
+         }
+      }
+
       const stepIds = new Set();
       for (const step of story.steps ?? []) {
          if (!step.id) problems.push(`${story.source}: a step is missing id.`);
@@ -186,7 +216,9 @@ export function validateStories(stories) {
             problems.push(`${story.source}: duplicate step id ${step.id}.`);
          }
          stepIds.add(step.id);
-         if (!step.caption) {
+         // Media steps are timed actions inside one clip; the story-level
+         // caption describes the whole recording.
+         if (kind !== "media" && !step.caption) {
             problems.push(`${story.source}: step ${step.id} is missing a caption.`);
          }
       }

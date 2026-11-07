@@ -44,6 +44,11 @@ runtime, stores the output with the notebook, and links the block to the managed
 
 ## Outputs
 
+<!-- docs:capture 07-python-and-data-frames#3 hash=b76fe3bcd977 -->
+1. Select **Run** on a Python block. The code executes in the project runtime and its output is stored with the notebook.
+   ![Select Run on a Python block. The code executes in the project runtime and its output is stored with the notebook.](assets/07-python-and-data-frames/python-execution.gif)
+<!-- /docs:capture -->
+
 A Python block can return plain text, a JSON payload such as a dataframe
 preview, an image, or a reference to an uploaded file. All of them are saved
 with the notebook and survive a reload.

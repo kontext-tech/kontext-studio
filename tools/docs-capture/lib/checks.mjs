@@ -3,7 +3,13 @@ import path from "node:path";
 
 import { EXCLUSION_REASONS, manifest } from "../manifest.mjs";
 import { pages } from "../pages.mjs";
-import { assetsDir, docsDir, guideDir, repoRoot } from "./paths.mjs";
+import {
+   assetsDir,
+   docsDir,
+   guideDir,
+   mediaManifestFile,
+   repoRoot
+} from "./paths.mjs";
 import { buildInventory, serializeInventory } from "./inventory.mjs";
 import {
    MARKER,
@@ -34,6 +40,11 @@ const CREDENTIAL_PATTERNS = [
 ];
 
 const IMAGE_LINK = /!\[[^\]]*\]\(([^)\s]+)\)/g;
+
+// Clips are recorded continuously, so they cannot be hashed like screenshots.
+// These bounds keep a page's GIF from turning into a multi-megabyte download.
+const MAX_MEDIA_BYTES = 8 * 1024 * 1024;
+const MAX_MEDIA_SECONDS = 20;
 
 function relative(file) {
    return path.relative(repoRoot, file);
@@ -258,6 +269,47 @@ export async function runChecks({ strict = false } = {}) {
          if (pattern.test(text)) {
             add("error", "secrets", `${relative(file)} looks like it contains a credential.`);
             break;
+         }
+      }
+   }
+
+   // 11. Recorded clips exist and stay within the guide's size budget.
+   if (fs.existsSync(mediaManifestFile)) {
+      let media = null;
+      try {
+         media = JSON.parse(fs.readFileSync(mediaManifestFile, "utf8"));
+      } catch (error) {
+         add("error", "media", `media.generated.json is not valid JSON: ${error.message}`);
+      }
+      for (const item of media?.items ?? []) {
+         for (const [label, relativePath] of [
+            ["GIF", item.gif],
+            ["MP4", item.mp4],
+            ["poster", item.poster]
+         ]) {
+            if (!relativePath) continue;
+            if (!fs.existsSync(path.join(repoRoot, relativePath))) {
+               add(
+                  "error",
+                  "media",
+                  `${item.id} is missing its ${label} at ${relativePath}. Run \`pnpm docs:media\`.`
+               );
+            }
+         }
+         if (item.gifBytes > MAX_MEDIA_BYTES) {
+            add(
+               "warn",
+               "media",
+               `${item.id} GIF is ${(item.gifBytes / 1024 / 1024).toFixed(1)} MB; ` +
+                  `keep clips under ${MAX_MEDIA_BYTES / 1024 / 1024} MB.`
+            );
+         }
+         if (item.durationSeconds > MAX_MEDIA_SECONDS) {
+            add(
+               "warn",
+               "media",
+               `${item.id} runs ${item.durationSeconds}s; keep clips under ${MAX_MEDIA_SECONDS}s.`
+            );
          }
       }
    }

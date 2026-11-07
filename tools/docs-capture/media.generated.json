@@ -1,0 +1,99 @@
+{
+   "generatedAt": "2026-11-07T23:29:46.611Z",
+   "items": [
+      {
+         "id": "media:chart-types",
+         "page": "06-chart-results",
+         "destination": "docs",
+         "formats": [
+            "gif",
+            "mp4"
+         ],
+         "gif": "docs/user-guide/assets/06-chart-results/chart-types.gif",
+         "mp4": "docs/user-guide/assets/06-chart-results/chart-types.mp4",
+         "poster": null,
+         "width": 1200,
+         "height": 750,
+         "fps": 15,
+         "durationSeconds": 10.67,
+         "gifBytes": 1411292,
+         "mp4Bytes": 218471,
+         "encoder": "ffmpeg"
+      },
+      {
+         "id": "media:chat-chart",
+         "page": "08-chat-with-an-agent",
+         "destination": "docs",
+         "formats": [
+            "gif",
+            "mp4"
+         ],
+         "gif": "docs/user-guide/assets/08-chat-with-an-agent/chat-chart.gif",
+         "mp4": "docs/user-guide/assets/08-chat-with-an-agent/chat-chart.mp4",
+         "poster": null,
+         "width": 1200,
+         "height": 750,
+         "fps": 15,
+         "durationSeconds": 9.8,
+         "gifBytes": 1045743,
+         "mp4Bytes": 187061,
+         "encoder": "ffmpeg"
+      },
+      {
+         "id": "media:chat-demo",
+         "page": "08-chat-with-an-agent",
+         "destination": "site",
+         "formats": [
+            "mp4"
+         ],
+         "gif": null,
+         "mp4": "docs-site/public/media/chat-demo.mp4",
+         "poster": "docs-site/public/media/chat-demo-poster.png",
+         "width": 1200,
+         "height": 750,
+         "fps": 15,
+         "durationSeconds": 8.33,
+         "gifBytes": 0,
+         "mp4Bytes": 119570,
+         "encoder": null
+      },
+      {
+         "id": "media:python-execution",
+         "page": "07-python-and-data-frames",
+         "destination": "docs",
+         "formats": [
+            "gif",
+            "mp4"
+         ],
+         "gif": "docs/user-guide/assets/07-python-and-data-frames/python-execution.gif",
+         "mp4": "docs/user-guide/assets/07-python-and-data-frames/python-execution.mp4",
+         "poster": null,
+         "width": 1200,
+         "height": 750,
+         "fps": 15,
+         "durationSeconds": 7.47,
+         "gifBytes": 960269,
+         "mp4Bytes": 160684,
+         "encoder": "ffmpeg"
+      },
+      {
+         "id": "media:sql-run",
+         "page": "05-work-with-notebooks",
+         "destination": "docs",
+         "formats": [
+            "gif",
+            "mp4"
+         ],
+         "gif": "docs/user-guide/assets/05-work-with-notebooks/sql-run.gif",
+         "mp4": "docs/user-guide/assets/05-work-with-notebooks/sql-run.mp4",
+         "poster": null,
+         "width": 1200,
+         "height": 750,
+         "fps": 15,
+         "durationSeconds": 7.93,
+         "gifBytes": 1064810,
+         "mp4Bytes": 186292,
+         "encoder": "ffmpeg"
+      }
+   ]
+}

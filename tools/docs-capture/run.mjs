@@ -4,6 +4,7 @@
  *
  *   node tools/docs-capture/run.mjs check [--strict]
  *   node tools/docs-capture/run.mjs capture [--only <page|story|flow>]
+ *   node tools/docs-capture/run.mjs media [--only <page|story>]
  *   node tools/docs-capture/run.mjs prune
  *   node tools/docs-capture/run.mjs report
  */
@@ -18,10 +19,11 @@ import { writeReport } from "./lib/report.mjs";
 const argv = process.argv.slice(2);
 const command = argv[0] ?? "check";
 
-const COMMANDS = new Set(["check", "capture", "record", "scaffold", "prune", "report"]);
+const COMMANDS = new Set(["check", "capture", "media", "record", "scaffold", "prune", "report"]);
 const FLAGS_BY_COMMAND = {
    check: new Set(["--strict"]),
-   capture: new Set(["--only"])
+   capture: new Set(["--only"]),
+   media: new Set(["--only"])
 };
 
 function usage() {
@@ -32,6 +34,7 @@ function usage() {
          "Commands:",
          "  check [--strict]           Verify coverage, links, images, and block hashes",
          "  capture [--only <target>]  Capture screenshots and regenerate guide blocks",
+         "  media [--only <target>]    Record GIF and MP4 clips for media stories",
          "  record                     Record the chat transcript (needs a provider key)",
          "  scaffold                   Create missing page files",
          "  prune                      Delete images no page references",
@@ -84,8 +87,8 @@ for (const flag of flags) {
       fail(`Option "${flag}" is not valid for "${command}".`);
    }
 }
-if (only !== null && command !== "capture") {
-   fail("--only is only valid for the capture command.");
+if (only !== null && command !== "capture" && command !== "media") {
+   fail("--only is only valid for the capture and media commands.");
 }
 
 function printCheck(result) {
@@ -157,6 +160,23 @@ async function main() {
       console.log(
          `Stamped ${result.meta.capturedWith} @ ${result.meta.commit} (${result.meta.capturedAt}).`
       );
+      process.exit(0);
+   }
+
+   if (command === "media") {
+      const { captureMedia } = await import("./lib/media.mjs");
+      const result = await captureMedia({ only });
+      console.log(
+         `Recorded ${result.records.length} clip${result.records.length === 1 ? "" : "s"}, ` +
+            `wrote ${result.written.length} page block${result.written.length === 1 ? "" : "s"}.`
+      );
+      console.log(`Manifest: ${result.manifest}`);
+      for (const record of result.records) {
+         console.log(
+            `  ${record.id}  ${record.durationSeconds}s  ` +
+               `${(record.gifBytes / 1024 / 1024).toFixed(1)} MB GIF  (${record.encoder})`
+         );
+      }
       process.exit(0);
    }
 

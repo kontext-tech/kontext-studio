@@ -37,6 +37,11 @@ notebook query points at that result table.
    ![Open a .chart file and select Edit to change its type, fields, palette, and number format.](assets/06-chart-results/edit-chart.png)
 <!-- /docs:capture -->
 
+<!-- docs:capture 06-chart-results#3 hash=fdd1b38b18fe -->
+1. Select **Edit** on a chart and change its type. The preview updates before you save the file.
+   ![Select Edit on a chart and change its type. The preview updates before you save the file.](assets/06-chart-results/chart-types.gif)
+<!-- /docs:capture -->
+
 ## Export a chart
 
 Select the download icon in the chart's top-right corner to open the export

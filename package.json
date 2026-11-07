@@ -13,6 +13,7 @@
       "docs:inventory": "node ./tools/docs-capture/inventory.mjs",
       "docs:check": "node ./tools/docs-capture/run.mjs check",
       "docs:capture": "node ./tools/docs-capture/run.mjs capture",
+      "docs:media": "node ./tools/docs-capture/run.mjs media",
       "docs:scaffold": "node ./tools/docs-capture/run.mjs scaffold",
       "docs:lint": "markdownlint-cli2 \"docs/user-guide/**/*.md\" \"docs/README.md\" \"docs/development/*.md\"",
       "docs:prune": "node ./tools/docs-capture/run.mjs prune",

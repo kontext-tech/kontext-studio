@@ -43,6 +43,43 @@
    height: 1.5rem;
 }
 
+/* Home page product demo. */
+.home-demo {
+   margin: 2rem auto 0;
+   max-width: 60rem;
+}
+
+.home-demo video,
+.home-demo-poster {
+   display: block;
+   width: 100%;
+   height: auto;
+   border: 1px solid var(--sl-color-gray-6);
+   border-radius: 0.75rem;
+   box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 12%);
+}
+
+.home-demo-poster {
+   display: none;
+}
+
+.home-demo figcaption {
+   margin-top: 0.6rem;
+   text-align: center;
+   font-size: var(--sl-text-sm);
+   color: var(--sl-color-gray-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .home-demo video {
+      display: none;
+   }
+
+   .home-demo-poster {
+      display: block;
+   }
+}
+
 /* Home page workflow steps, aligned with the platform home page. */
 .home-steps {
    display: grid;
