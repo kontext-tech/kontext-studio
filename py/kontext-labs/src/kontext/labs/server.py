@@ -22,7 +22,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from kontext.api.app_factory import (
@@ -136,7 +136,15 @@ def create_app(dist_dir: str | Path | None = None) -> FastAPI:
 
         @app.get("/{full_path:path}", include_in_schema=False)
         async def spa_fallback(full_path: str):
-            """Return index.html for any unknown path so React Router works."""
+            """Serve a bundled file when one exists, else index.html for SPA routes.
+
+            Vite copies `public/` verbatim, so logos and icons live at `/resources`
+            and `/icons` rather than under `/assets`. Anything that is not a real
+            file has to fall through to the app shell for React Router.
+            """
+            candidate = (dist_path / full_path).resolve()
+            if candidate.is_file() and candidate.is_relative_to(dist_path):
+                return FileResponse(candidate)
             if _patched_html is not None:
                 return HTMLResponse(content=_patched_html)
             return JSONResponse(
