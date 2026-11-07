@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-engine"
-version = "0.261.1"
+version = "0.261.2"
 description = "In-process engine implementations for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"

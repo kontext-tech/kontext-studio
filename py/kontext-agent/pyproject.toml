@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-agent"
-version = "0.261.1"
+version = "0.261.2"
 description = "Framework-agnostic agent core primitives for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"

@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/auth",
-   "version": "0.261.1",
+   "version": "0.261.2",
    "type": "module",
    "description": "Shared authentication and permission components for Kontext",
    "license": "MIT",

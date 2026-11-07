@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/app-runtime",
-   "version": "0.261.1",
+   "version": "0.261.2",
    "type": "module",
    "description": "Shared React service-context and lazy-loading helpers for Kontext",
    "license": "MIT",

@@ -1,3 +1,10 @@
+## ts-packages-v0.261.2 (2026-11-07)
+
+### Fix
+
+- **packaging**: ship the agent harness entry point in the unified wheel (#11)
+- **release**: give the PyPI dispatch lookup a repository (#10)
+
 ## ts-packages-v0.261.1 (2026-11-07)
 
 ### Feat

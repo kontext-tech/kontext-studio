@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/common",
-   "version": "0.261.1",
+   "version": "0.261.2",
    "type": "module",
    "description": "Shared common package for Kontext with Ant Design customization and Lucide icons",
    "main": "./dist/index.js",
