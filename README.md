@@ -63,9 +63,11 @@ kontext serve
 This starts the local API server, serves the web app, and runs the embedded
 local worker.
 
-> Requires Python 3.12–3.14; 3.15 is not yet supported. Use `uv`, `pipx`, or
-> `pip` in a virtual environment.
-> [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
+> Requires Python 3.12–3.14; 3.15 is not yet supported. Create the virtual
+> environment with an explicit version (`python3.13 -m venv .venv`), because
+> a bare `python3` may point at an unsupported release. `uv` picks a supported
+> interpreter on its own. [Install `uv`](https://docs.astral.sh/uv/) if you
+> prefer it.
 
 Continue with the [user guide](https://docs.kontext.tech/user-guide/) to create
 a project, connect data, and start a notebook.

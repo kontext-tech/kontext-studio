@@ -10,6 +10,24 @@ You need Python 3.12–3.14; 3.15 is not yet supported. Install with `uv`,
 `pipx`, or `pip` in a virtual environment.
 [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
 
+The interpreter name matters: a bare `python3` may point at a release outside
+the supported range. Name the version when you create the environment.
+
+| Platform      | Create the environment            |
+| ------------- | --------------------------------- |
+| macOS / Linux | `python3.13 -m venv .venv`        |
+| Windows       | `py -3.13 -m venv .venv`          |
+| uv            | `uv venv --python 3.13`           |
+
+Any of `3.12`, `3.13`, or `3.14` works. Check the result before installing:
+
+```bash
+python -c "import sys; print(sys.version)"
+```
+
+`uv tool install` selects a supported interpreter for you, so it needs no
+version argument.
+
 ## Install
 
 ### With uv (recommended)
@@ -27,7 +45,7 @@ pipx install kontext-studio
 ### With pip in a virtual environment
 
 ```bash
-python3 -m venv .venv
+python3.13 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 python -m pip install kontext-studio
 ```
