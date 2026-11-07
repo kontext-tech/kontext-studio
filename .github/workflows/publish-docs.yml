@@ -217,7 +217,17 @@ jobs:
           check /user-guide/install-and-start 200
           check /does-not-exist 404
 
-          curl -fsS "https://${DOMAIN}/" | grep -q "Kontext Studio Docs"
+          # `grep -q` exits at the first match, which closes the pipe while curl
+          # is still writing; under `pipefail` that fails the job with exit 23
+          # even though the deploy succeeded.
+          body=$(curl -fsS "https://${DOMAIN}/")
+          case "$body" in
+            *"Kontext Studio Docs"*) ;;
+            *)
+              echo "::error::Deployed docs page is missing the expected title"
+              exit 1
+              ;;
+          esac
 
       - name: Deployment summary
         run: |
