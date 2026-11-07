@@ -159,6 +159,30 @@ class TestCreateApp:
 
         assert response.status_code == 403
 
+    def test_serves_bundled_assets_outside_assets_dir(self, monkeypatch, tmp_path):
+        """Vite's `public/` files (logos, icons) must be served, not the app shell."""
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
+        dist = tmp_path / "dist"
+        (dist / "resources").mkdir(parents=True)
+        (dist / "resources" / "logo.svg").write_text("<svg id='logo'/>", encoding="utf-8")
+        (dist / "index.html").write_text("<html>app shell</html>", encoding="utf-8")
+        app = create_app(dist_dir=str(dist))
+
+        try:
+            with TestClient(app) as client:
+                asset = client.get("/resources/logo.svg", headers=_launch_headers())
+                spa_route = client.get("/projects/123", headers=_launch_headers())
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert asset.status_code == 200
+        assert "logo" in asset.text
+        assert asset.headers["content-type"].startswith("image/svg")
+        assert spa_route.status_code == 200
+        assert "app shell" in spa_route.text
+
     def test_create_app_registers_problem_detail_handler(self, tmp_path):
         """Local Kontext server should reuse the API problem-detail handlers."""
         app = create_app(dist_dir=str(tmp_path / "nonexistent"))

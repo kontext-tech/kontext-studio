@@ -213,12 +213,13 @@ class TestServeSetup:
             patch("kontext.labs.cli._init_engine", return_value=MagicMock()),
             patch("kontext.labs.cli.ensure_supported_sqlite"),
             patch("kontext.labs.cli._print_startup_banner"),
-            patch("uvicorn.run") as mock_uvicorn_run,
+            patch("uvicorn.Config"),
+            patch("uvicorn.Server") as mock_server,
             patch("kontext.labs.server.create_app", return_value=MagicMock()),
         ):
             _cmd_serve(args)
 
-        mock_uvicorn_run.assert_called_once()
+        mock_server.return_value.run.assert_called_once()
 
 
 class TestInitEngine:

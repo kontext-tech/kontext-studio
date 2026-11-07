@@ -23,6 +23,7 @@ import signal
 import subprocess
 import sys
 import threading
+import time
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
@@ -302,18 +303,29 @@ def _cmd_serve(args: argparse.Namespace) -> None:
 
     import uvicorn
 
-    _print_startup_banner()
-
     url = f"http://{browser_host(args.host)}:{args.port}"
     launch_url = f"{url}/#token={quote(launch_token, safe='')}"
-    print(
-        "\n"
-        "============================================================\n"
-        f"  Kontext local: {url}\n"
-        f"  Open with token: {launch_url}\n"
-        f"  Token file: {token_file}\n"
-        "============================================================\n"
-    )
+
+    def _print_launch_info() -> None:
+        _print_startup_banner()
+        print(
+            "\n"
+            "============================================================\n"
+            f"  Kontext local: {url}\n"
+            f"  Open with token: {launch_url}\n"
+            f"  Token file: {token_file}\n"
+            "============================================================\n"
+        )
+
+    def _open_browser() -> None:
+        import webbrowser
+
+        webbrowser.open(launch_url)
+
+    def _open_browser_after_reload() -> None:
+        time.sleep(1.5)
+        _open_browser()
+
     if not is_loopback_host(args.host):
         print(
             "Warning: the server is bound to a non-loopback address without "
@@ -322,22 +334,17 @@ def _cmd_serve(args: argparse.Namespace) -> None:
             file=sys.stderr,
         )
 
-    if args.open:
-        import time
-        import webbrowser
-
-        def _open_browser() -> None:
-            time.sleep(1.5)
-            webbrowser.open(launch_url)
-
-        threading.Thread(target=_open_browser, daemon=True).start()
-
     supervisor = _WorkerSupervisor()
     if not getattr(args, "no_worker", False):
         supervisor.start()
 
     try:
         if args.reload:
+            # The reload supervisor owns its child process, so there is no
+            # ready signal to wait for; print before handing over.
+            _print_launch_info()
+            if args.open:
+                threading.Thread(target=_open_browser_after_reload, daemon=True).start()
             uvicorn.run(
                 "kontext.labs.server:create_app",
                 factory=True,
@@ -351,7 +358,24 @@ def _cmd_serve(args: argparse.Namespace) -> None:
         from kontext.labs.server import create_app
 
         app = create_app(dist_dir=args.dist_dir)
-        uvicorn.run(app, host=args.host, port=args.port, reload=False, log_level="info")
+        server = uvicorn.Server(
+            uvicorn.Config(app, host=args.host, port=args.port, log_level="info")
+        )
+
+        def _announce_when_ready() -> None:
+            # Uvicorn logs its startup lines after this banner is printed if we
+            # print first, which pushes the launch URL off screen. Wait for the
+            # server to accept connections so the URL is the last thing shown.
+            while not server.started and not server.should_exit:
+                time.sleep(0.05)
+            if not server.started:
+                return
+            _print_launch_info()
+            if args.open:
+                _open_browser()
+
+        threading.Thread(target=_announce_when_ready, daemon=True).start()
+        server.run()
     finally:
         supervisor.stop()
 
