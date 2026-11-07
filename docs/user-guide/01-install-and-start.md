@@ -6,8 +6,9 @@ directory on disk.
 
 ## Before you start
 
-You need Python 3.12 or newer. Install with `uv`, `pipx`, or `pip` in a virtual
-environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
+You need Python 3.12–3.14; 3.15 is not yet supported. Install with `uv`,
+`pipx`, or `pip` in a virtual environment.
+[Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
 
 ## Install
 
@@ -124,4 +125,4 @@ choose where the files land under the project's data directory.
 | Linux | x86_64 |
 | Windows | x86_64 |
 
-Python 3.12 or newer is required.
+Python 3.12–3.14 is required.
