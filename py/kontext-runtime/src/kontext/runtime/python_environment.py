@@ -73,6 +73,22 @@ def _python_executable_path(env_dir: Path) -> Path:
     return env_dir / "bin" / "python"
 
 
+def _create_managed_venv(env_dir: Path) -> None:
+    """Create the venv with symlinked interpreters on POSIX.
+
+    uv-managed CPython builds resolve libpython relative to the executable
+    (``@executable_path/../lib``). Copying the interpreter into the venv leaves
+    that library behind and ensurepip aborts, so keep the base executable as a
+    symlink. Windows keeps the copy behaviour because symlinks need privileges.
+    """
+    builder = venv.EnvBuilder(
+        with_pip=True,
+        clear=True,
+        symlinks=os.name != "nt",
+    )
+    builder.create(env_dir)
+
+
 def managed_environment_for_profile(
     runtime_profile: str,
     *,
@@ -299,8 +315,7 @@ def ensure_managed_python_environment(
         tmp_root.mkdir(parents=True, exist_ok=True)
         tmp_env_dir = tmp_root / "venv"
 
-        builder = venv.EnvBuilder(with_pip=True, clear=True)
-        builder.create(tmp_env_dir)
+        _create_managed_venv(tmp_env_dir)
 
         tmp_python = _python_executable_path(tmp_env_dir)
         subprocess.run(
