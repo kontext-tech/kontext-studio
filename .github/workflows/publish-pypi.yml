@@ -238,7 +238,7 @@ jobs:
           VERSION: ${{ needs.build.outputs.version }}
         run: |
           set -euo pipefail
-          gh release view "v${VERSION}" --json tagName --jq .tagName >/dev/null
+          gh release view "v${VERSION}" --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName >/dev/null
           echo "GitHub Release v${VERSION} exists"
 
       - name: Publish to PyPI
@@ -255,5 +255,5 @@ jobs:
           VERSION: ${{ needs.build.outputs.version }}
         run: |
           set -euo pipefail
-          gh release upload "v${VERSION}" dist/python/*.whl dist/SHA256SUMS --clobber
+          gh release upload "v${VERSION}" dist/python/*.whl dist/SHA256SUMS --repo "$GITHUB_REPOSITORY" --clobber
           echo "Attached wheel and SHA256SUMS to v${VERSION}"
