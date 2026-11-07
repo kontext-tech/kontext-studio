@@ -34,8 +34,18 @@ local or cloud — and keep the workspace on your machine.
 Kontext Labs is published to PyPI as the `kontext-labs` package. Each GitHub
 Release also carries the matching wheel.
 
+With `uv`:
+
 ```bash
 uv tool install kontext-labs
+```
+
+With `pip` in a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install kontext-labs
 ```
 
 Then start the local server from the directory that holds your project:
@@ -47,8 +57,8 @@ kontext-labs serve
 This starts the local API server, serves the web app, and runs the embedded
 local worker. `kontext-labs-serve` is the legacy alias for the same command.
 
-> Requires Python 3.12 or newer. [Install `uv`](https://docs.astral.sh/uv/) if
-> you do not have it yet.
+> Requires Python 3.12 or newer. Use `uv`, `pipx`, or `pip` in a virtual
+> environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
 
 Continue with the [user guide](https://docs.kontext.tech/user-guide/) to create
 a project, connect data, and start a notebook.

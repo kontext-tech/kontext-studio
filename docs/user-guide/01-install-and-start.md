@@ -6,25 +6,50 @@ directory on disk.
 
 ## Before you start
 
-You need Python 3.12 or newer and [`uv`](https://docs.astral.sh/uv/).
+You need Python 3.12 or newer. Install with `uv`, `pipx`, or `pip` in a virtual
+environment. [Install `uv`](https://docs.astral.sh/uv/) if you prefer it.
 
 ## Install
+
+### With uv (recommended)
 
 ```bash
 uv tool install kontext-labs
 ```
 
-To pin a specific release, use the version number, for example `0.261.0`:
+### With pipx
+
+```bash
+pipx install kontext-labs
+```
+
+### With pip in a virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install kontext-labs
+```
+
+To pin a specific release, add the version number to any install command:
 
 ```bash
 uv tool install "kontext-labs==0.261.0"
+pipx install "kontext-labs==0.261.0"
+pip install "kontext-labs==0.261.0"
 ```
 
 To upgrade later:
 
 ```bash
 uv tool upgrade kontext-labs
+pipx upgrade kontext-labs
+pip install --upgrade kontext-labs
 ```
+
+> Pip installs into the active Python environment; use a virtual environment.
+> If the server reports an unsupported SQLite version, use a Python build with
+> SQLite 3.51.2 or newer, or uv's managed Python.
 
 ## Start the server
 
