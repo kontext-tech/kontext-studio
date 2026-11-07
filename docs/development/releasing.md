@@ -106,9 +106,9 @@ That runs `uv run cz bump`, which:
 
 1. Reads the Conventional Commits since the last `ts-packages-v*` tag.
 2. Computes the next version and rewrites `version` in every
-   `ts/*/package.json` file plus the root `package.json` (the `version_files`
-   list). The root version is not cosmetic: `scripts/build-app-image.sh` reads
-   it as `PUBLIC_KONTEXT_VERSION`.
+   `ts/*/package.json` and `py/*/pyproject.toml` file, the root `package.json`,
+   and `app/package.json` (the `version_files` list). The root version is not
+   cosmetic: `scripts/build-app-image.sh` reads it as `PUBLIC_KONTEXT_VERSION`.
 3. Prepends the release notes to the root `CHANGELOG.md`.
 4. Creates the `chore(release): version <old> -> <new>` commit and the
    `ts-packages-v<new>` tag.
