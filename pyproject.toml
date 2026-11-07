@@ -146,6 +146,10 @@ addopts = [
     "--disable-warnings",
     "-ra"
 ]
+# Every `py/*/tests` directory has an `__init__.py` while its parent does not,
+# so importlib mode names them all `tests.conftest` and pytest rejects the
+# duplicate. Namespace-package discovery gives each one a unique name.
+consider_namespace_packages = true
 # Fail fast on a wedged test instead of letting the CI job hang for ~47
 # minutes: dump every thread's traceback after 120s and exit the process. The
 # slowest legitimate test is ~1.5s, so this only fires on a real stall.
