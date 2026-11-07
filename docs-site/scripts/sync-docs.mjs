@@ -211,10 +211,10 @@ hero:
     <strong>Analyze</strong>
     <span>Ask questions, write SQL, and build notebooks, charts, and Python.</span>
   </a>
-  <a class="home-step" href="user-guide/jobs/">
+  <a class="home-step" href="user-guide/chart-results/">
     <span class="home-step-number">03</span>
-    <strong>Track</strong>
-    <span>Run background jobs and inspect their parameters, logs, and timing.</span>
+    <strong>Keep</strong>
+    <span>Save the SQL, charts, and notebooks the agents produce, with results stored in the document.</span>
   </a>
 </div>
 `;
