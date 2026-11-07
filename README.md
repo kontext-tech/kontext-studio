@@ -49,9 +49,9 @@ uv tool install kontext-studio
 With `pip` in a virtual environment:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-studio
+python -m pip install kontext-studio
 ```
 
 Then start the local server from the directory that holds your project:

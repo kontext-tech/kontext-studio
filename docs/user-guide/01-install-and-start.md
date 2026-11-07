@@ -27,9 +27,9 @@ pipx install kontext-studio
 ### With pip in a virtual environment
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install kontext-studio
+python -m pip install kontext-studio
 ```
 
 To pin a specific release, add the version number to any install command:
@@ -37,7 +37,7 @@ To pin a specific release, add the version number to any install command:
 ```bash
 uv tool install "kontext-studio==0.261.0"
 pipx install "kontext-studio==0.261.0"
-pip install "kontext-studio==0.261.0"
+python -m pip install "kontext-studio==0.261.0"
 ```
 
 To upgrade later:
@@ -45,7 +45,7 @@ To upgrade later:
 ```bash
 uv tool upgrade kontext-studio
 pipx upgrade kontext-studio
-pip install --upgrade kontext-studio
+python -m pip install --upgrade kontext-studio
 ```
 
 > Pip installs into the active Python environment; use a virtual environment.
