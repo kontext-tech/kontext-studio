@@ -3,25 +3,31 @@ name: Release
 
 # Single, maintainer-dispatched release entry point.
 #
-#   bump (Commitizen) -> push bump commit + ts-packages-v<version> tag
-#     -> create v<version> GitHub Release
-#     -> publish docs site
-#     -> dispatch publish-pypi.yml
+#   bump (Commitizen) -> push release branch and open a pull request
+#     -> maintainer squash-merges the PR
+#     -> re-dispatch with version=<version> to tag the merged commit,
+#        create the v<version> GitHub Release, publish docs, and dispatch
+#        publish-pypi.yml
 #
 # This workflow never runs on a push or a merged pull request: merging cannot
 # publish an artifact by itself. The tag push to `ts-packages-v*` is what
 # publishes the @kontext-tech/* packages, exactly as before.
 #
+# main is protected and has no bypass actors, so the bump commit must land
+# through a pull request like any other change.
+#
 # Resume paths:
+#   - the release PR is open but the squash merge was not done: merge it, then
+#     re-dispatch with `version=<version>`.
 #   - bump/tag/release succeeded but a publish failed: re-dispatch the failed
 #     workflow directly (publish-pypi.yml or publish-docs.yml).
 #   - the tag was pushed but the Release was never created: re-dispatch this
 #     workflow with `version=<version>` to skip the bump and redo the release.
 #
 # secrets.PAT_FOR_TAG_PUSH must be a token with contents:write (to push the
-# bump commit to a protected main and to push tags) and actions:write (to
-# dispatch publish-pypi.yml). GITHUB_TOKEN cannot push to main, and pushes it
-# makes do not start other workflows.
+# release branch and tags), pull_requests:write (to open the release PR), and
+# actions:write (to dispatch publish-pypi.yml). GITHUB_TOKEN cannot open a
+# cross-workflow PR here, and pushes it makes do not start other workflows.
 #
 # Do NOT add `push: tags: ["v*"]`: gh release create without --verify-tag
 # creates the tag from --target, so a dispatch is the deliberate act that cuts
@@ -77,6 +83,8 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       sha: ${{ steps.version.outputs.sha }}
+      pr_created: ${{ steps.version.outputs.pr_created }}
+      pr_url: ${{ steps.pr.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -95,7 +103,7 @@ jobs:
             exit 1
           fi
           if [ -z "$PAT" ]; then
-            echo "::error::PAT_FOR_TAG_PUSH is required: GITHUB_TOKEN cannot push the bump commit to main or start the publish workflow."
+            echo "::error::PAT_FOR_TAG_PUSH is required: it opens the release pull request, pushes tags, and dispatches the publish workflow."
             exit 1
           fi
 
@@ -129,13 +137,14 @@ jobs:
           # dispatcher had selected.
           git checkout -B main origin/main
 
-      - name: Bump version and push tag
+      - name: Bump version and prepare release
         id: version
         env:
           BUMP: ${{ inputs.bump }}
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
+          PR_CREATED="false"
 
           if [ -n "$INPUT_VERSION" ]; then
             VERSION="${INPUT_VERSION#v}"
@@ -177,16 +186,18 @@ jobs:
                 pnpm run validate:workspace-versions
                 # cz rewrites the manifests but not uv.lock, which records the
                 # workspace versions too; fold the refresh into the release
-                # commit so main is not left dirty for the next `uv sync`.
+                # commit so the branch is not left dirty.
                 uv lock
                 if ! git diff --quiet -- uv.lock; then
                   git add uv.lock
                   git commit --amend --no-edit
-                  git tag -f "ts-packages-v$VERSION"
                 fi
                 pnpm run validate:workspace-versions
-                git push origin main
-                git push origin "ts-packages-v$VERSION"
+                # main is protected with no bypass actors, so the bump lands
+                # through a pull request. Drop the local tag cz created; the
+                # tag is created after the merge by the `version` dispatch.
+                git tag -d "ts-packages-v$VERSION" >/dev/null 2>&1 || true
+                PR_CREATED="true"
                 ;;
               3 | 21)
                 echo "::error::No release-worthy commits since ts-packages-v$CURRENT. Only docs/chore commits produce no bump; use 'version' to re-release an existing tag."
@@ -203,8 +214,17 @@ jobs:
             esac
           fi
 
+          if [ "$PR_CREATED" = "true" ]; then
+            BRANCH="release/v$VERSION"
+            # The branch is disposable; force-pushing makes a retried run
+            # replace the previous attempt instead of failing on divergence.
+            git push --force origin "HEAD:refs/heads/$BRANCH"
+            echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          fi
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "pr_created=$PR_CREATED" >> "$GITHUB_OUTPUT"
 
       - name: Extract release notes
         env:
@@ -232,9 +252,43 @@ jobs:
           name: release-notes
           path: release-notes.md
 
+      - name: Open release pull request
+        id: pr
+        if: steps.version.outputs.pr_created == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_TAG_PUSH }}
+          VERSION: ${{ steps.version.outputs.version }}
+          BRANCH: ${{ steps.version.outputs.branch }}
+        run: |
+          set -euo pipefail
+          PR_URL="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" \
+            --state open --json url --jq '.[0].url // empty')"
+          if [ -z "$PR_URL" ]; then
+            {
+              echo "Automated release bump for v$VERSION."
+              echo
+              echo "Merge with **Squash and merge**, then re-dispatch **Release**"
+              echo "with \`version=$VERSION\` to tag the merge commit and publish."
+              echo
+              cat release-notes.md
+            } > pr-body.md
+            PR_URL="$(gh pr create --repo "$GITHUB_REPOSITORY" \
+              --base main --head "$BRANCH" \
+              --title "chore(release): version $VERSION" \
+              --body-file pr-body.md)"
+          fi
+          echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Release pull request ready"
+            echo
+            echo "Merge $PR_URL with **Squash and merge**, then re-dispatch"
+            echo "**Release** with \`version=$VERSION\` to tag and publish."
+          } >> "$GITHUB_STEP_SUMMARY"
+
   release:
     name: Create GitHub Release
     needs: prepare
+    if: needs.prepare.outputs.pr_created != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Download release notes
@@ -282,7 +336,7 @@ jobs:
   publish-docs:
     name: Publish Docs
     needs: [prepare, release]
-    if: inputs.publish_docs
+    if: needs.prepare.outputs.pr_created != 'true' && inputs.publish_docs
     permissions:
       contents: read
       id-token: write
@@ -294,7 +348,7 @@ jobs:
   publish-pypi:
     name: Dispatch PyPI publish
     needs: [prepare, release]
-    if: inputs.publish_pypi
+    if: needs.prepare.outputs.pr_created != 'true' && inputs.publish_pypi
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch publish-pypi.yml
