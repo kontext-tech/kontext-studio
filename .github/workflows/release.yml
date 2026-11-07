@@ -302,8 +302,11 @@ jobs:
             -f "version=$VERSION" \
             -f "confirm=$VERSION"
 
+          # This job has no checkout, so gh cannot infer the repository; without
+          # --repo the lookup aborts under `set -e` and fails an otherwise
+          # successful dispatch.
           for _ in $(seq 1 10); do
-            RUN_ID="$(gh run list --workflow publish-pypi.yml --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            RUN_ID="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow publish-pypi.yml --limit 1 --json databaseId --jq '.[0].databaseId // empty' || true)"
             if [ -n "$RUN_ID" ]; then
               echo "Started PyPI publish: ${{ github.server_url }}/$GITHUB_REPOSITORY/actions/runs/$RUN_ID"
               exit 0
