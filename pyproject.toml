@@ -86,6 +86,7 @@ changelog_file = "CHANGELOG.md"
 bump_message = "chore(release): version $current_version -> $new_version"
 version_files = [
     "package.json:version",
+    "app/package.json:version",
     "py/kontext-account/pyproject.toml:version",
     "py/kontext-agent/pyproject.toml:version",
     "py/kontext-agentic/pyproject.toml:version",

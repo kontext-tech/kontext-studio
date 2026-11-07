@@ -86,6 +86,7 @@ const { version: commitizenVersion, versionFiles } = readCommitizenConfig();
 const registeredDirs = new Set();
 const registeredPythonDirs = new Set();
 let rootRegistered = false;
+let appRegistered = false;
 
 for (const entry of versionFiles) {
    const [filePath, pointer] = entry.split(":");
@@ -107,8 +108,19 @@ for (const entry of versionFiles) {
       continue;
    }
 
+   const isAppPackage = filePath === "app/package.json";
    const isTsPackage = filePath.startsWith("ts/") && filePath.endsWith("/package.json");
    const isPyPackage = filePath.startsWith("py/") && filePath.endsWith("/pyproject.toml");
+
+   if (isAppPackage) {
+      appRegistered = true;
+
+      if (!fs.existsSync(path.join(rootDir, filePath))) {
+         violations.push(`version_files entry "${entry}" points at a missing file`);
+      }
+
+      continue;
+   }
 
    if (!isTsPackage && !isPyPackage) {
       violations.push(
@@ -206,13 +218,19 @@ if (rootPackageJson && commitizenVersion !== null && rootPackageJson.version !==
    );
 }
 
-// `app` is a pnpm workspace member but is not a published package, so it is not
-// registered in `version_files`. Nothing reads its version, which is exactly why
-// it drifted: keep it aligned anyway so "the workspace version" has one meaning.
+// `app` is a pnpm workspace member but is not a published package. Nothing reads
+// its version, so it drifts unless `cz bump` writes it too: keep it registered in
+// `version_files` so "the workspace version" has one meaning.
 const appPackageJsonPath = path.join(rootDir, "app", "package.json");
 
 if (fs.existsSync(appPackageJsonPath)) {
    const appPackageJson = readJson(appPackageJsonPath);
+
+   if (!appRegistered) {
+      violations.push(
+         "app/package.json is not registered in [tool.commitizen].version_files, so `cz bump` will not update it"
+      );
+   }
 
    if (appPackageJson && commitizenVersion !== null && appPackageJson.version !== commitizenVersion) {
       violations.push(
