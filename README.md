@@ -14,6 +14,12 @@ local or cloud — and keep the workspace on your machine.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+<p align="center">
+  <a href="https://www.producthunt.com/products/kontext?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kontext-studio" target="_blank" rel="noopener noreferrer">
+    <img alt="Kontext Studio - AI-Native Data Analysis Workspace | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1307287&amp;theme=light&amp;t=1794024018734">
+  </a>
+</p>
+
 ## What you get
 
 - **Ask, don't assemble** — a coordinator routes work to SQL, chart, notebook,
