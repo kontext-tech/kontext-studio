@@ -1,3 +1,10 @@
+## ts-packages-v0.261.3 (2026-11-07)
+
+### Fix
+
+- **local**: serve bundled public assets and print the launch URL last (#13)
+- **release**: stop leaving stale artifacts after a bump (#12)
+
 ## ts-packages-v0.261.2 (2026-11-07)
 
 ### Fix

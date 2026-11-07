@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/notebook",
-   "version": "0.261.2",
+   "version": "0.261.3",
    "type": "module",
    "description": "Notebook editor library for Kontext",
    "license": "MIT",

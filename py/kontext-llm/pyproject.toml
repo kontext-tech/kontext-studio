@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-llm"
-version = "0.261.2"
+version = "0.261.3"
 description = "Language model registry and configuration services for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"

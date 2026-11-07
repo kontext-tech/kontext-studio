@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/host-api",
-   "version": "0.261.2",
+   "version": "0.261.3",
    "type": "module",
    "description": "Host API for Kontext local and hosted runtimes",
    "license": "MIT",

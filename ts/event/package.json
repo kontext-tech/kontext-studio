@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/event",
-   "version": "0.261.2",
+   "version": "0.261.3",
    "type": "module",
    "description": "Shared event display components for Kontext",
    "license": "MIT",

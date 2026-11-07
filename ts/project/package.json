@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/project",
-   "version": "0.261.2",
+   "version": "0.261.3",
    "type": "module",
    "description": "Domain facade for project state, services, and shared project hooks",
    "license": "MIT",
