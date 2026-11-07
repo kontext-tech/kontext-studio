@@ -230,6 +230,75 @@ function makeHelpers(page) {
    return { moveTo, click, pause: (ms) => page.waitForTimeout(ms) };
 }
 
+async function api(server, token, pathname, init = {}) {
+   const response = await fetch(`${server.apiUrl}${pathname}`, {
+      ...init,
+      headers: {
+         Authorization: `Bearer ${token}`,
+         "content-type": "application/json",
+         ...init.headers
+      }
+   });
+   const text = await response.text();
+   let body = text;
+   try {
+      body = text ? JSON.parse(text) : null;
+   } catch {
+      // Keep non-JSON error payloads for the thrown message.
+   }
+   if (!response.ok) {
+      throw new Error(
+         `Query session request ${pathname} failed with ${response.status}: ${text.slice(0, 400)}`
+      );
+   }
+   return body?.data ?? body;
+}
+
+/**
+ * Seed an active query session bound to the fixture's catalog connection.
+ *
+ * A notebook SQL block executes through the project's session; a session
+ * created from the UI defaults to the internal lakehouse, where the fixture's
+ * tables do not exist. The worker occasionally starts before it can see the
+ * seeded connection, so a failed initialization is retried once with a fresh
+ * session.
+ */
+async function ensureQuerySession(server, { project, catalogConnection, token }) {
+   let lastFailure = null;
+   for (let attempt = 0; attempt < 2; attempt += 1) {
+      const created = await api(server, token, "/session", {
+         method: "POST",
+         body: JSON.stringify({
+            projectId: project.id,
+            sessionName: "Docs capture",
+            catalogConnectionId: catalogConnection.id
+         })
+      });
+      const sessionId = created?.id;
+      if (!sessionId) {
+         throw new Error("Query session creation returned no id.");
+      }
+
+      const initialized = await api(server, token, "/session/init", {
+         method: "POST",
+         body: JSON.stringify({
+            projectId: project.id,
+            sessionId,
+            catalogConnectionId: catalogConnection.id
+         })
+      });
+      if (initialized?.success !== false) {
+         return created;
+      }
+      lastFailure = initialized;
+      await new Promise((resolve) => setTimeout(resolve, 1_500));
+   }
+
+   throw new Error(
+      `Query session failed to initialize: ${JSON.stringify(lastFailure)}`
+   );
+}
+
 async function recordStory({ browser, server, story, launchToken }) {
    requireFfmpeg();
 
@@ -427,7 +496,10 @@ export async function captureMedia({ only = null } = {}) {
 
    try {
       browser = await launchBrowser();
-      await prepareConfiguredState(server, selected);
+      const prepared = await prepareConfiguredState(server, selected);
+      if (selected.some((story) => story.needsQuerySession)) {
+         await ensureQuerySession(server, prepared);
+      }
 
       for (const story of selected) {
          console.log(`Recording ${story.id}...`);

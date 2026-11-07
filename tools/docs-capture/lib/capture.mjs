@@ -247,15 +247,18 @@ export async function prepareConfiguredState(server, stories) {
          "Local console did not issue a token after setup; cannot seed fixtures."
       );
    }
-   const { project } = await seedFixtures({ server, token });
-   const connection = await ensureModelConnection(server, {
+   const { project, connection: catalogConnection } = await seedFixtures({
+      server,
+      token
+   });
+   const modelConnection = await ensureModelConnection(server, {
       token,
       apiKey: "docs-fixture-key"
    });
    if (readTranscript()) {
       seedChatTranscript(server, {
          projectId: project.id,
-         modelSelectionId: connection.id,
+         modelSelectionId: modelConnection.id,
          epoch: FIXTURE_EPOCH
       });
    }
@@ -268,7 +271,7 @@ export async function prepareConfiguredState(server, stories) {
       stabilizeTimestamps(server);
    }
 
-   return token;
+   return { token, project, catalogConnection, modelConnection };
 }
 
 export async function capture({ only = null } = {}) {

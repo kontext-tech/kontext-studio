@@ -1,5 +1,5 @@
 {
-   "generatedAt": "2026-11-07T23:29:46.611Z",
+   "generatedAt": "2026-11-07T23:39:49.295Z",
    "items": [
       {
          "id": "media:chart-types",
@@ -90,9 +90,9 @@
          "width": 1200,
          "height": 750,
          "fps": 15,
-         "durationSeconds": 7.93,
-         "gifBytes": 1064810,
-         "mp4Bytes": 186292,
+         "durationSeconds": 8.27,
+         "gifBytes": 1245265,
+         "mp4Bytes": 197627,
          "encoder": "ffmpeg"
       }
    ]
