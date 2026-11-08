@@ -111,10 +111,15 @@ there is no separate list to keep in sync.
 
 ## CI and releases
 
-`.github/workflows/desktop.yml` builds both macOS architectures on
-`macos-15` and `macos-15-intel`. It checks out the `v<version>` tag, assembles
-the runtime, builds the app, verifies the signature and the bundled server, and
-uploads `Kontext-Studio-<version>-macOS-<arch>.dmg`.
+`.github/workflows/desktop.yml` builds Apple Silicon on `macos-15`. It checks
+out the `v<version>` tag, assembles the runtime, builds the app, verifies the
+signature and the bundled server, and uploads
+`Kontext-Studio-<version>-macOS-arm64.dmg`.
+
+Intel is blocked until `lancedb` publishes a macOS x86_64 wheel: no 0.38+
+release has one, and the project requires 0.38 or newer. The x64 assembly path
+stays available (`--arch x64`) for when that changes; re-add the
+`macos-15-intel` matrix entry at the same time.
 
 Push-triggered releases dispatch it from `release.yml` after the GitHub Release
 exists. A manual dispatch is the retry path:
@@ -123,9 +128,9 @@ exists. A manual dispatch is the retry path:
 gh workflow run desktop.yml -f version=0.262.0 -f upload=true
 ```
 
-The release job downloads both DMGs, writes `SHA256SUMS-desktop.txt`, and
-attaches all three assets to `v<version>`. The Python wheel and its
-`SHA256SUMS` stay untouched.
+The release job downloads the DMG, writes `SHA256SUMS-desktop.txt`, and attaches
+both assets to `v<version>`. The Python wheel and its `SHA256SUMS` stay
+untouched.
 
 Pull requests that touch `desktop/`, the wheel builder, the labs/runtime
 packages, or `ts/file/` run Rust formatting, clippy, and the frontend bridge

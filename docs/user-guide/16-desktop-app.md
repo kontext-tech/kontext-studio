@@ -13,10 +13,11 @@ and download the file for your Mac:
 | Mac | File |
 | --- | --- |
 | Apple Silicon (M1 and later) | `Kontext-Studio-<version>-macOS-arm64.dmg` |
-| Intel | `Kontext-Studio-<version>-macOS-x64.dmg` |
 
-Not sure which Mac you have? Choose  → About This Mac. The Chip row shows
-Apple M… or Intel.
+Only Apple Silicon Macs are supported in this beta. To check, choose  → About
+This Mac; the Chip row should say Apple M…. Intel Macs can use the
+[command-line install](https://docs.kontext.tech/user-guide/install-and-start/)
+instead.
 
 ## Install
 
