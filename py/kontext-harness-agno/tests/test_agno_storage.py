@@ -107,8 +107,9 @@ async def test_preload_is_idempotent(db: NeutralBackedDb) -> None:
 async def test_write_through_preserves_order_even_with_a_slow_store() -> None:
     """A slow first write must not overwrite a newer snapshot.
 
-    The facade chains fire-and-forget writes, so the durable blob reflects the
-    last mutation rather than whichever port call finished last.
+    The facade queues fire-and-forget writes on one serialized worker, so the
+    durable blob reflects the last mutation rather than whichever port call
+    finished last.
     """
 
     class _DelayedFirstWrite(InMemorySessionPersistence):
@@ -124,7 +125,43 @@ async def test_write_through_preserves_order_even_with_a_slow_store() -> None:
     db = NeutralBackedDb(store, label="ordered")
     db.upsert_session(_session_row("sess-1", user_id="first"))
     db.rename_session("sess-1", SessionType.AGENT, "new-name")
-    await db._pending_background()
+    await db.persist_now("sess-1")
+
+    stored = await store.load_harness_state("sess-1")
+    assert stored is not None
+    assert json.loads(stored)["session_data"]["session_name"] == "new-name"
+
+
+@pytest.mark.asyncio
+async def test_persist_now_flushes_writes_queued_on_another_loop() -> None:
+    """The pause seam runs on the request loop after an agent-loop turn.
+
+    Agno mutates the row on the agent thread's own event loop; the request loop
+    then flushes the pause snapshot. That flush must not await a task bound to
+    the agent loop, and it must still write the newest row.
+    """
+
+    class _SlowFirstWrite(InMemorySessionPersistence):
+        calls = 0
+
+        async def save_harness_state(self, session_id: str, state_json: str) -> None:
+            type(self).calls += 1
+            if type(self).calls == 1:
+                await asyncio.sleep(0.05)
+            await super().save_harness_state(session_id, state_json)
+
+    store = _SlowFirstWrite()
+    db = NeutralBackedDb(store, label="cross-loop")
+
+    def agent_loop_turn() -> None:
+        async def run() -> None:
+            db.upsert_session(_session_row("sess-1", user_id="first"))
+
+        asyncio.run(run())
+
+    await asyncio.to_thread(agent_loop_turn)
+    db.rename_session("sess-1", SessionType.AGENT, "new-name")
+    await db.persist_now("sess-1")
 
     stored = await store.load_harness_state("sess-1")
     assert stored is not None
