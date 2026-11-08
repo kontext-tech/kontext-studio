@@ -149,6 +149,15 @@ def _runtime_packages_for_profile(runtime_profile: str) -> tuple[str, ...]:
     return _DEFAULT_PACKAGES
 
 
+def default_runtime_packages() -> tuple[str, ...]:
+    """Return the shipped kernel package pins.
+
+    This is the public source of truth for the offline desktop wheelhouse; it
+    intentionally ignores the deployment-time package override.
+    """
+    return _DEFAULT_PACKAGES
+
+
 def _runtime_wheelhouse() -> Path | None:
     """Return the configured offline wheelhouse, or ``None``.
 

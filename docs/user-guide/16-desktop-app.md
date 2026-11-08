@@ -1,7 +1,9 @@
 # Use the macOS desktop app
 
 The macOS app includes Kontext Studio, its Python runtime, and the packages
-notebooks need. There is no separate Python install and no terminal step.
+notebooks need. There is no separate Python install and no terminal step. It
+requires macOS 13 Ventura or later. The download is large — several hundred
+megabytes — because the analysis runtime is bundled.
 
 ## Download
 

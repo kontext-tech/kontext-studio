@@ -64,8 +64,11 @@ repos:
             (?x)^(
                 docs/development/environment\.md|
                 \.env\.example|
-                py/kontext-common/src/kontext/common/constants/env_vars\.py|
-                tools/validate-env-docs\.mjs
+                py/.*|
+                app/.*|
+                ts/.*|
+                tools/.*|
+                docs-site/.*
             )$
 
        - id: regenerate-api-types-reminder

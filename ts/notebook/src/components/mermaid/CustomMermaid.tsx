@@ -1,3 +1,4 @@
+import { downloadBlob } from "@kontext-tech/common";
 import {
    CodeOutlined,
    DownloadOutlined,
@@ -95,14 +96,7 @@ export const CustomMermaid: React.FC<CustomMermaidProps> = ({
          const blob = new Blob([svgData], {
             type: "image/svg+xml;charset=utf-8"
          });
-         const url = URL.createObjectURL(blob);
-         const link = document.createElement("a");
-         link.href = url;
-         link.download = `${title.replace(/\s+/g, "_")}.svg`;
-         document.body.appendChild(link);
-         link.click();
-         document.body.removeChild(link);
-         URL.revokeObjectURL(url);
+         downloadBlob(blob, `${title.replace(/\s+/g, "_")}.svg`);
       }
    };
 

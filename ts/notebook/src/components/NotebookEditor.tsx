@@ -1,4 +1,4 @@
-import { logger } from "@kontext-tech/common";
+import { downloadBlob, logger } from "@kontext-tech/common";
 import type { ArtifactAction } from "@kontext-tech/schema";
 import { type BlockAPI, default as EditorJS } from "@editorjs/editorjs";
 import {
@@ -1341,14 +1341,10 @@ const NotebookEditor: React.FC<NotebookEditorProps> = ({
                   [JSON.stringify(updatedDocument, null, 2)],
                   { type: "application/json" }
                );
-               const url = URL.createObjectURL(blob);
-               const a = window.document.createElement("a");
-               a.href = url;
-               a.download = `${
-                  updatedDocument.title || "notebook"
-               }${NOTEBOOK_FILE_EXTENSION}`;
-               a.click();
-               URL.revokeObjectURL(url);
+               downloadBlob(
+                  blob,
+                  `${updatedDocument.title || "notebook"}${NOTEBOOK_FILE_EXTENSION}`
+               );
             }
             message.success("Notebook exported successfully");
          } catch (error) {

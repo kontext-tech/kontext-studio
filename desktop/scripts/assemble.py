@@ -30,7 +30,6 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DESKTOP_DIR = REPO_ROOT / "desktop"
 LOCK_FILE = DESKTOP_DIR / "runtime.lock.json"
-KERNEL_REQUIREMENTS = DESKTOP_DIR / "requirements" / "kernel.txt"
 DEFAULT_OUT = DESKTOP_DIR / "src-tauri" / "resources"
 WHEEL_DIR = REPO_ROOT / "dist" / "desktop"
 CACHE_DIR = DESKTOP_DIR / ".cache" / "python-build-standalone"
@@ -184,6 +183,31 @@ def _platform_tag(arch: dict, deployment_target: str) -> str:
     return f"macosx_{deployment_target.replace('.', '_')}_{machine}"
 
 
+def _runtime_kernel_packages(python: Path) -> list[str]:
+    """Read the kernel pins from the runtime installed in the bundle.
+
+    The desktop wheel is installed into the runtime before this runs, so the
+    wheelhouse cannot drift from the code that will execute notebook cells.
+    """
+    result = subprocess.run(
+        [
+            str(python),
+            "-E",
+            "-s",
+            "-c",
+            "from kontext.runtime.python_environment import default_runtime_packages; "
+            "print('\\n'.join(default_runtime_packages()))",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    packages = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    if not packages:
+        raise SystemExit("The bundled runtime did not report its kernel packages.")
+    return packages
+
+
 def _build_kernel_wheelhouse(
     python: Path,
     arch: dict,
@@ -211,11 +235,10 @@ def _build_kernel_wheelhouse(
             abi,
             "--dest",
             str(wheelhouse),
-            "--requirement",
-            str(KERNEL_REQUIREMENTS),
             "--disable-pip-version-check",
             "--progress-bar",
             "off",
+            *_runtime_kernel_packages(python),
         ]
     )
 

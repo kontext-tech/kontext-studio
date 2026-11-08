@@ -4,6 +4,7 @@
  */
 
 import type { Chart } from "@ant-design/plots";
+import { downloadBlob, hasDesktopSaveBridge } from "@kontext-tech/common";
 import type { TabularData } from "@kontext-tech/schema";
 
 export type ExportFormat = "png";
@@ -58,6 +59,7 @@ export const downloadChart = async (
       // @ant-design/plots charts expose a downloadImage method for PNG
       if (
          format === "png" &&
+         !hasDesktopSaveBridge() &&
          typeof chartInstance.downloadImage === "function"
       ) {
          await chartInstance.downloadImage(fullFilename, mimeType);
@@ -89,11 +91,11 @@ export const downloadChart = async (
       // Draw chart on top
       ctx.drawImage(canvasElement, 0, 0);
 
-      // Convert to data URL
+      // Convert to a blob and use the shared download path so the desktop
+      // shell can save it through its native bridge.
       const dataUrl = tempCanvas.toDataURL(mimeType, 0.95);
-
-      // Trigger download
-      triggerDownload(dataUrl, fullFilename);
+      const blob = await (await fetch(dataUrl)).blob();
+      downloadBlob(blob, fullFilename);
    } catch (error) {
       console.error("Chart export failed:", error);
       throw Object.assign(
@@ -105,18 +107,6 @@ export const downloadChart = async (
          { cause: error }
       );
    }
-};
-
-/**
- * Triggers a browser download for a data URL or blob URL
- */
-const triggerDownload = (url: string, filename: string): void => {
-   const link = document.createElement("a");
-   link.href = url;
-   link.download = filename;
-   document.body.appendChild(link);
-   link.click();
-   document.body.removeChild(link);
 };
 
 /**
@@ -173,11 +163,11 @@ export const exportDataToCSV = (
       ];
 
       const csvContent = csvRows.join("\n");
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
+      const blob = new Blob([csvContent], {
+         type: "text/csv;charset=utf-8;"
+      });
 
-      triggerDownload(url, `${filename}.csv`);
-      URL.revokeObjectURL(url);
+      downloadBlob(blob, `${filename}.csv`);
    } catch (error) {
       console.error("CSV export failed:", error);
       throw Object.assign(
@@ -210,10 +200,8 @@ export const exportDataToJSON = (
       const blob = new Blob([jsonContent], {
          type: "application/json;charset=utf-8;"
       });
-      const url = URL.createObjectURL(blob);
 
-      triggerDownload(url, `${filename}.json`);
-      URL.revokeObjectURL(url);
+      downloadBlob(blob, `${filename}.json`);
    } catch (error) {
       console.error("JSON export failed:", error);
       throw Object.assign(

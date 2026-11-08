@@ -1,5 +1,6 @@
 export * from "./apiError";
 export * from "./dataTableUtils";
+export * from "./download";
 export * from "./dateUtils";
 export {
    API_BASE_PATH,

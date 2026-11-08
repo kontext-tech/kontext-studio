@@ -22,6 +22,8 @@ const LOG_LIMIT_BYTES: u64 = 10 * 1024 * 1024;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct ReadyPayload {
+    port: u16,
+    pid: u32,
     launch_url: String,
 }
 
@@ -83,20 +85,21 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
         let ready_flag = ready.clone();
         thread::spawn(move || {
             for line in BufReader::new(stdout).lines().map_while(Result::ok) {
-                // The ready line carries the launch URL, including the token.
-                let log_line = if line.starts_with(READY_MARKER) {
-                    "@@KONTEXT_READY@@ (ready)"
-                } else {
-                    &line
-                };
-                append_log(&log_path, log_line);
                 let Some(json) = line.strip_prefix(READY_MARKER) else {
+                    append_log(&log_path, &line);
                     continue;
                 };
                 let Ok(payload) = serde_json::from_str::<ReadyPayload>(json) else {
                     append_log(&log_path, "invalid ready payload");
                     continue;
                 };
+                append_log(
+                    &log_path,
+                    &format!(
+                        "server ready on port {} (pid {})",
+                        payload.port, payload.pid
+                    ),
+                );
                 ready_flag.store(true, Ordering::SeqCst);
                 let app_for_main = app_handle.clone();
                 let _ = app_handle.run_on_main_thread(move || {

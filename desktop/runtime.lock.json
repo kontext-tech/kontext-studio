@@ -3,7 +3,6 @@
    "pythonVersion": "3.12.16",
    "release": "20261026",
    "deploymentTarget": "13.0",
-   "kernelRequirements": "requirements/kernel.txt",
    "architectures": {
       "arm64": {
          "platform": "macos",

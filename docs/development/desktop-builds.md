@@ -29,7 +29,6 @@ flowchart LR
 ```text
 desktop/
   runtime.lock.json        # pinned python-build-standalone assets
-  requirements/kernel.txt  # offline kernel packages
   scripts/assemble.py      # runtime + wheelhouse assembly
   scripts/ensure-resources.mjs
   scripts/make-icon.py
@@ -105,9 +104,10 @@ The kernel venv is created from the bundled interpreter on first use.
 `Contents/Resources/wheelhouse`; `python_environment.py` then installs with
 `--no-index --find-links` and skips the pip upgrade step.
 
-`desktop/requirements/kernel.txt` mirrors `_DEFAULT_PACKAGES` in
-`py/kontext-runtime/src/kontext/runtime/python_environment.py`;
-`py/kontext-runtime/tests/test_python_environment.py` fails if they drift.
+`desktop/scripts/assemble.py` asks the installed runtime for
+`default_runtime_packages()` and passes those specs to `pip download`. The
+wheelhouse is therefore derived from the exact code that ships in the app;
+there is no separate list to keep in sync.
 
 ## CI and releases
 

@@ -59,16 +59,11 @@ class TestBoundPort:
 
 
 class TestReadyHandshake:
-    def test_writes_ready_file_and_prints_marker(
+    def test_prints_ready_payload(
         self,
         monkeypatch: pytest.MonkeyPatch,
-        tmp_path,
         capsys: pytest.CaptureFixture[str],
     ) -> None:
-        monkeypatch.setattr(
-            "kontext.runtime.local.config.get_local_data_dir",
-            lambda: tmp_path,
-        )
         persist = MagicMock()
         monkeypatch.setattr(
             "kontext.runtime.local.launch_token.persist_launch_token",
@@ -85,13 +80,16 @@ class TestReadyHandshake:
 
         desktop._announce_when_ready(server, "test-token", "127.0.0.1")
 
-        payload = json.loads((tmp_path / "runtime" / desktop.READY_FILENAME).read_text())
+        output = capsys.readouterr().out
+        line = next(line for line in output.splitlines() if line.startswith(desktop.READY_MARKER))
+        payload = json.loads(line[len(desktop.READY_MARKER) :])
+
         assert payload["event"] == "ready"
         assert payload["port"] == 4321
         assert payload["url"] == "http://127.0.0.1:4321"
         assert payload["launchUrl"] == "http://127.0.0.1:4321/#token=test-token"
         assert payload["pid"] == os.getpid()
-        assert desktop.READY_MARKER in capsys.readouterr().out
+        assert "version" not in payload
         persist.assert_called_once_with("test-token", port=4321)
 
 
@@ -194,8 +192,6 @@ class TestDesktopCommand:
                 process.wait(timeout=5)
 
         assert process.returncode == 0, "".join(stderr_lines)
-        ready_file = tmp_path / ".kontext" / "runtime" / desktop.READY_FILENAME
-        assert not ready_file.exists()
 
 
 class TestParentWatchdog:

@@ -27,6 +27,7 @@ from kontext.runtime.python_environment import (
     _parse_package_spec,
     _python_executable_path,
     _runtime_packages_for_profile,
+    default_runtime_packages,
     ensure_managed_python_environment,
 )
 
@@ -113,22 +114,16 @@ def test_missing_wheelhouse_fails_closed(
         ensure_managed_python_environment()
 
 
-def test_desktop_kernel_requirements_match_runtime_defaults(
+def test_default_runtime_packages_ignores_the_deployment_override(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """The desktop wheelhouse must install exactly what the runtime expects."""
-    monkeypatch.delenv("KONTEXT_PYTHON_RUNTIME_PACKAGES", raising=False)
-    repo_root = Path(__file__).resolve().parents[3]
-    kernel_file = repo_root / "desktop" / "requirements" / "kernel.txt"
-    assert kernel_file.is_file(), f"missing {kernel_file}"
+    """The desktop wheelhouse must use the shipped pins, not a deployment override."""
+    monkeypatch.setenv("KONTEXT_PYTHON_RUNTIME_PACKAGES", "numpy==1.0")
 
-    pinned = [
-        line.strip()
-        for line in kernel_file.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.strip().startswith("#")
-    ]
+    packages = default_runtime_packages()
 
-    assert pinned == list(_runtime_packages_for_profile(DEFAULT_RUNTIME_PROFILE))
+    assert "numpy==2.2.5" in packages
+    assert "numpy==1.0" not in packages
 
 
 def test_managed_venv_interpreter_can_run_pip(tmp_path: Path) -> None:

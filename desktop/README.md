@@ -9,7 +9,6 @@ without installing a toolchain.
 ```text
 desktop/
   runtime.lock.json        # pinned python-build-standalone assets
-  requirements/kernel.txt  # offline kernel packages (mirrors the runtime default)
   scripts/assemble.py      # builds resources/python + resources/wheelhouse
   scripts/make-dmg.sh      # hdiutil DMG (no Finder automation)
   splash/index.html        # local page shown while Python starts
@@ -37,6 +36,8 @@ reuse the current `app/dist`, or `--arch arm64|x64|win-x64` to cross-assemble.
 - The desktop wheel profile drops the warehouse drivers (`psycopg`, `pymysql`,
   `pyodbc`, `oracledb`, `teradatasql`); those connectors are not available in
   the desktop build.
+- The assembly reads `default_runtime_packages()` from the runtime it just
+  installed, so the wheelhouse cannot drift from the kernel package pins.
 - The kernel packages are duplicated in the wheelhouse on purpose: the kernel
   venv is isolated from the server environment.
 - `build-info.json` records the resolved packages and assembled sizes.

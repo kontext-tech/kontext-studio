@@ -1,9 +1,9 @@
 """Desktop-managed launch mode.
 
 The Tauri shell starts this module as a child process, reads one readiness
-line from stdout (or the ready file), and points its webview at the URL. The
-server remains the only API entry point; this module only adds a deterministic
-port, a machine-readable handshake, and a shutdown path tied to the shell.
+line from stdout, and points its webview at the URL. The server remains the
+only API entry point; this module only adds a deterministic port, a
+machine-readable handshake, and a shutdown path tied to the shell.
 """
 
 from __future__ import annotations
@@ -17,7 +17,6 @@ import sys
 import threading
 import time
 from collections.abc import Iterator
-from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
@@ -27,7 +26,6 @@ from .parent_watchdog import parent_pid_from_env, start_parent_watchdog
 from .sqlite_compat import ensure_supported_sqlite
 
 READY_MARKER = "@@KONTEXT_READY@@"
-READY_FILENAME = "desktop-ready.json"
 DEFAULT_PREFERRED_PORT = 47800
 
 _READY_POLL_SECONDS = 0.05
@@ -36,7 +34,6 @@ _READY_POLL_SECONDS = 0.05
 def run_desktop(args: Any) -> None:
     """Run the local server in the shape the desktop shell expects."""
     os.environ["KONTEXT_LOCAL_MODE"] = "true"
-    os.environ["KONTEXT_DESKTOP"] = "true"
 
     try:
         ensure_supported_sqlite()
@@ -76,7 +73,6 @@ def run_desktop(args: Any) -> None:
         _run_server(args, token, host=host, parent_pid=parent_pid)
     finally:
         supervisor.stop()
-        _remove_ready_file()
 
 
 def _run_server(args: Any, token: str, *, host: str, parent_pid: int | None) -> None:
@@ -105,7 +101,6 @@ def _run_server(args: Any, token: str, *, host: str, parent_pid: int | None) -> 
         if parent_pid is not None:
 
             def _request_shutdown(target: Any = server) -> None:
-                _remove_ready_file()
                 target.should_exit = True
 
             start_parent_watchdog(_request_shutdown, watch_stdin=True)
@@ -131,15 +126,14 @@ def _graceful_signal_handlers(server: Any) -> Iterator[None]:
 
     After a graceful shutdown uvicorn restores the original handlers and
     re-raises SIGINT/SIGTERM. With the default disposition that terminates the
-    process before our ``finally`` can remove the ready file. Installing a
-    handler that only flips ``should_exit`` turns the re-raise into a no-op.
+    process before our ``finally`` runs. Installing a handler that only flips
+    ``should_exit`` turns the re-raise into a no-op.
     """
     if threading.current_thread() is not threading.main_thread():
         yield
         return
 
     def _handle(_signum: int, _frame: object) -> None:
-        _remove_ready_file()
         server.should_exit = True
 
     original: dict[int, Any] = {}
@@ -175,9 +169,7 @@ def _announce_when_ready(server: Any, token: str, host: str) -> None:
         "port": port,
         "url": url,
         "launchUrl": launch_url,
-        "version": _package_version(),
     }
-    _write_ready_file(payload)
     print(f"{READY_MARKER}{json.dumps(payload)}", flush=True)
 
 
@@ -204,36 +196,6 @@ def _port_available(host: str, port: int) -> bool:
         except OSError:
             return False
     return True
-
-
-def _ready_path() -> Path:
-    from kontext.runtime.local.config import get_local_data_dir
-
-    runtime_dir = get_local_data_dir() / "runtime"
-    runtime_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
-    return runtime_dir / READY_FILENAME
-
-
-def _write_ready_file(payload: dict[str, Any]) -> Path:
-    path = _ready_path()
-    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    with contextlib.suppress(OSError):
-        os.chmod(path, 0o600)
-    return path
-
-
-def _remove_ready_file() -> None:
-    with contextlib.suppress(OSError):
-        _ready_path().unlink(missing_ok=True)
-
-
-def _package_version() -> str:
-    from importlib.metadata import PackageNotFoundError, version
-
-    try:
-        return version("kontext-studio")
-    except PackageNotFoundError:
-        return "0.0.0"
 
 
 if __name__ == "__main__":
