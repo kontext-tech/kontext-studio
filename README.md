@@ -20,6 +20,14 @@ local or cloud — and keep the workspace on your machine.
   </a>
 </p>
 
+<p align="center">
+  <a href="https://docs.kontext.tech/user-guide/">
+    <img src=".github/assets/chat-notebook-demo.gif" alt="A chat answer beside the SQL, chart, and Python notebook it produced" width="900">
+  </a>
+</p>
+
+<p align="center"><sub>Ask a question. The agent returns the SQL, chart, and reproducible notebook.</sub></p>
+
 ## What you get
 
 - **Ask, don't assemble** — a coordinator routes work to SQL, chart, notebook,
