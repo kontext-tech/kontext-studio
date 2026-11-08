@@ -1,10 +1,13 @@
 # Releasing
 
-A release is cut by one maintainer-dispatched workflow, `release.yml`. It never
-runs on a push or a merged pull request, so merging cannot publish an artifact
-by itself. The three release artifacts keep separate tag namespaces so they
-never contend for the same GitHub Release; the docs site piggybacks on the
-`v<version>` release and has no tag of its own.
+A release is cut by two maintainer-dispatched runs of `release.yml`: the first
+opens a release pull request, the second tags and publishes after it merges.
+The workflow never runs on a push or a merged pull request, so merging cannot
+publish an artifact by itself. `main` is protected with no bypass actors, so
+the version bump lands through a pull request like any other change. The three
+release artifacts keep separate tag namespaces so they never contend for the
+same GitHub Release; the docs site piggybacks on the `v<version>` release and
+has no tag of its own.
 
 | Artifact | Workflow | Trigger | Release tag |
 | -------- | -------- | ------- | ----------- |
@@ -24,16 +27,32 @@ Dispatch `release.yml` from `main` with:
 | `publish_docs` | Publish the docs site (default `true`). |
 | `prerelease` | Mark the GitHub Release as a prerelease. |
 
-The workflow:
+### 1. Open the release pull request
+
+The first dispatch with an empty `version` input:
 
 1. Checks out `origin/main`, requires `secrets.PAT_FOR_TAG_PUSH` (see below),
    and runs `validate:workspace-versions`.
 2. Runs `cz bump`. It rewrites every `version_files` entry, prepends
-   `CHANGELOG.md`, creates the `chore(release): version <old> -> <new>` commit,
-   pushes it to `main`, and pushes `ts-packages-v<new>`, which publishes the
+   `CHANGELOG.md`, and creates the `chore(release): version <old> -> <new>`
+   commit. The workflow drops the local tag, pushes a `release/v<new>` branch,
+   and opens a pull request titled `chore(release): version <new>` with the
+   generated release notes in its body.
+3. Stops there. The `release`, `publish-docs`, and `publish-pypi` jobs are
+   skipped until the PR merges.
+4. Approve and **Squash and merge** the PR. The ruleset only allows squash
+   merges.
+
+### 2. Tag and publish
+
+Re-dispatch `release.yml` from `main` with `version=<new>` (`bump` is ignored).
+This run:
+
+1. Validates that `package.json` on `main` is already at `<new>`.
+2. Creates and pushes `ts-packages-v<new>`, which publishes the
    `@kontext-tech/*` packages.
-3. Creates or promotes the `v<version>` GitHub Release at the bump commit,
-   using the generated changelog section as the release notes.
+3. Creates or promotes the `v<new>` GitHub Release at the merge commit, using
+   the changelog section as the release notes.
 4. Publishes the docs site (unless `publish_docs` is false).
 5. Dispatches `publish-pypi.yml` with `target=pypi`, `version`, and `confirm`
    (unless `publish_pypi` is false). It stays a top-level workflow because PyPI
@@ -43,16 +62,19 @@ The workflow:
 workspace version or `confirm` differs from `version`, so a typo fails the run
 instead of publishing the wrong artifact.
 
-`PAT_FOR_TAG_PUSH` must carry `contents:write` (to push the bump commit to a
-protected `main` and to push tags) and `actions:write` (to dispatch
-`publish-pypi.yml`). The workflow `GITHUB_TOKEN` cannot push to `main`, and
-pushes it makes do not start other workflows.
+`PAT_FOR_TAG_PUSH` must carry `contents:write` (to push the release branch and
+tags), `pull_requests:write` (to open the release pull request), and
+`actions:write` (to dispatch `publish-pypi.yml`). The workflow `GITHUB_TOKEN`
+cannot open a cross-workflow PR here, and pushes it makes do not start other
+workflows.
 
 ### Resume a partial release
 
 Publishing is the only stage that can fail after the version is immutable.
 Re-dispatch the failed workflow directly:
 
+- **Release PR is open but not merged** — approve and squash-merge it, then
+  re-dispatch `release.yml` with `version=<version>`.
 - **PyPI failed** — dispatch `publish-pypi.yml` with `target=pypi`, `version`,
   and `confirm`.
 - **Docs failed** — dispatch `publish-docs.yml`.
