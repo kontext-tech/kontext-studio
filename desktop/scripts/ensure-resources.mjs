@@ -5,7 +5,8 @@ import fs from "node:fs";
 
 for (const dir of [
    "desktop/src-tauri/resources/python",
-   "desktop/src-tauri/resources/wheelhouse"
+   "desktop/src-tauri/resources/wheelhouse",
+   "desktop/src-tauri/resources/third-party"
 ]) {
    fs.mkdirSync(dir, { recursive: true });
 }
