@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/build-config",
-   "version": "0.262.0",
+   "version": "0.263.0",
    "type": "module",
    "description": "Shared Vite and TypeScript configuration for frontend packages",
    "license": "MIT",

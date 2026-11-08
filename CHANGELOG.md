@@ -1,3 +1,9 @@
+## ts-packages-v0.263.0 (2026-11-08)
+
+### Feat
+
+- **desktop**: add macOS app with a bundled Python runtime (#20)
+
 ## ts-packages-v0.262.0 (2026-11-08)
 
 ### Feat

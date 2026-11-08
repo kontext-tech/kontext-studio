@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-agentic"
-version = "0.262.0"
+version = "0.263.0"
 description = "Agentic application layer for Kontext: agent blueprints, domain tools, and the chat workflow"
 readme = "README.md"
 requires-python = ">=3.12"

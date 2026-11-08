@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/schema",
-   "version": "0.262.0",
+   "version": "0.263.0",
    "type": "module",
    "description": "Shared domain schemas and API type generation for Kontext",
    "main": "dist/index.js",
