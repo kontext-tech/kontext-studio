@@ -74,6 +74,11 @@ types. The editor is the place to iterate on a query before saving the block.
    ![Select the code icon on a SQL block to open the full editor. It shows the query, the catalog scope, and the run controls.](assets/05-work-with-notebooks/sql-drawer.png)
 <!-- /docs:capture -->
 
+<!-- docs:capture 05-work-with-notebooks#4 hash=f9bd97ecbbee -->
+1. Open a SQL block in the full editor, run the query, and inspect the result without leaving the notebook.
+   ![Open a SQL block in the full editor, run the query, and inspect the result without leaving the notebook.](assets/05-work-with-notebooks/sql-run.gif)
+<!-- /docs:capture -->
+
 ## Saved data tables
 
 A result can also be stored as a standalone `.dt` data table in the project

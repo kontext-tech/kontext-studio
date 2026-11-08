@@ -229,8 +229,55 @@ function writeMeta() {
    return meta;
 }
 
+/**
+ * Complete setup, seed the fixture workspace, and start the job worker when a
+ * story needs real executions.
+ *
+ * Shared with media capture: recording starts from the same seeded state as
+ * screenshots, so a clip shows the same data as the page beside it.
+ */
+export async function prepareConfiguredState(server, stories) {
+   if (!(await server.setupStatus())) {
+      await server.completeSetup();
+   }
+
+   const token = await server.getToken();
+   if (!token) {
+      throw new Error(
+         "Local console did not issue a token after setup; cannot seed fixtures."
+      );
+   }
+   const { project, connection: catalogConnection } = await seedFixtures({
+      server,
+      token
+   });
+   const modelConnection = await ensureModelConnection(server, {
+      token,
+      apiKey: "docs-fixture-key"
+   });
+   if (readTranscript()) {
+      seedChatTranscript(server, {
+         projectId: project.id,
+         modelSelectionId: modelConnection.id,
+         epoch: FIXTURE_EPOCH
+      });
+   }
+
+   if (stories.some((story) => story.needsWorker)) {
+      await server.startWorker();
+      await server.waitForIdleJobs();
+      // The worker completed the runs that were queued during seeding; stamp
+      // their times again so the list and drawer are stable.
+      stabilizeTimestamps(server);
+   }
+
+   return { token, project, catalogConnection, modelConnection };
+}
+
 export async function capture({ only = null } = {}) {
-   const stories = await loadStories();
+   const stories = (await loadStories()).filter(
+      (story) => (story.kind ?? "screen") !== "media"
+   );
    let selected = only
       ? stories.filter(
            (story) => story.page === only || story.id === only || story.id === `flow:${only}`
@@ -280,36 +327,7 @@ export async function capture({ only = null } = {}) {
          }))
       );
 
-      if (!(await server.setupStatus())) {
-         await server.completeSetup();
-      }
-
-      const token = await server.getToken();
-      if (!token) {
-         throw new Error(
-            "Local console did not issue a token after setup; cannot seed fixtures."
-         );
-      }
-      const { project } = await seedFixtures({ server, token });
-      const connection = await ensureModelConnection(server, {
-         token,
-         apiKey: "docs-fixture-key"
-      });
-      if (readTranscript()) {
-         seedChatTranscript(server, {
-            projectId: project.id,
-            modelSelectionId: connection.id,
-            epoch: FIXTURE_EPOCH
-         });
-      }
-
-      if (selected.some((story) => story.needsWorker)) {
-         await server.startWorker();
-         await server.waitForIdleJobs();
-         // The worker completed the runs that were queued during seeding; stamp
-         // their times again so the list and drawer are stable.
-         stabilizeTimestamps(server);
-      }
+      await prepareConfiguredState(server, selected);
 
       const configured = selected.filter((story) => story.stage === "configured");
       results.push(

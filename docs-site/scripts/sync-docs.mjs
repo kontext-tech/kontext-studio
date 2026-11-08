@@ -200,6 +200,28 @@ hero:
       icon: open-book
 ---
 
+<figure class="home-demo">
+  <video
+    src="media/chat-demo.mp4"
+    poster="media/chat-demo-poster.png"
+    width="1200"
+    height="750"
+    autoplay
+    loop
+    muted
+    playsinline
+    aria-label="A chat answer with a revenue chart artifact open beside it"
+  ></video>
+  <img
+    class="home-demo-poster"
+    src="media/chat-demo-poster.png"
+    alt="A chat answer with a revenue-by-country chart open beside it."
+    width="1200"
+    height="750"
+  />
+  <figcaption>Ask a question in plain language. The agent returns its answer, the tool calls it used, and a chart you can inspect.</figcaption>
+</figure>
+
 <div class="home-steps">
   <a class="home-step" href="${connectHref}">
     <span class="home-step-number">01</span>

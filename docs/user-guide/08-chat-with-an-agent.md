@@ -69,6 +69,11 @@ the bottom so you can continue without scrolling back.
 
 ## Artifacts
 
+<!-- docs:capture 08-chat-with-an-agent#4 hash=f7578720a98b -->
+1. A session keeps the answer and the tool calls that produced it. Artifacts open beside the conversation, so the chart and its data are one click away.
+   ![A session keeps the answer and the tool calls that produced it. Artifacts open beside the conversation, so the chart and its data are one click away.](assets/08-chat-with-an-agent/chat-chart.gif)
+<!-- /docs:capture -->
+
 When a run creates a chart, data table, notebook, or image, it becomes an artifact
 of the session. The artifact panel opens beside the conversation with a tab per
 artifact. A chart artifact shows **Chart**, **Data**, and **Metadata** tabs, and
