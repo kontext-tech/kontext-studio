@@ -1,0 +1,29 @@
+Kontext Studio - macOS
+======================
+
+1. Drag "Kontext Studio" into the Applications folder.
+2. Open Applications and double-click Kontext Studio.
+
+This beta is not yet notarized by Apple.
+
+If macOS says:
+
+  "Apple could not verify 'Kontext Studio' is free of malware that may harm
+   your Mac or compromise your privacy."
+
+then macOS blocked the first launch. Allow this copy once:
+
+  a. Open System Settings > Privacy & Security.
+  b. Scroll to Security and click "Open Anyway" next to Kontext Studio.
+  c. Confirm, then open Kontext Studio again within about an hour.
+
+Or run this in Terminal:
+
+  xattr -dr com.apple.quarantine "/Applications/Kontext Studio.app"
+
+Only use these steps for the copy you downloaded from:
+
+  https://github.com/kontext-tech/kontext-studio/releases
+
+Your projects and settings live in ~/.kontext.
+Logs live in ~/Library/Logs/Kontext Studio.
