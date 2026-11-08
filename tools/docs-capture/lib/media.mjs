@@ -270,7 +270,7 @@ async function ensureQuerySession(server, { project, catalogConnection, token })
          method: "POST",
          body: JSON.stringify({
             projectId: project.id,
-            sessionName: "Docs capture",
+            sessionName: "Music store analysis",
             catalogConnectionId: catalogConnection.id
          })
       });
@@ -306,13 +306,14 @@ async function recordStory({ browser, server, story, launchToken }) {
    const fps = story.fps ?? DEFAULT_FPS;
    const width = story.width ?? DEFAULT_WIDTH;
    const formats = new Set(story.formats ?? ["gif", "mp4"]);
+   const colorScheme = story.colorScheme ?? "light";
    let trimStart = story.trimStart ?? 0;
    const videoDir = fs.mkdtempSync(path.join(os.tmpdir(), "kontext-media-"));
 
    const context = await browser.newContext({
       viewport,
       deviceScaleFactor: 1,
-      colorScheme: "light",
+      colorScheme,
       locale: "en-US",
       timezoneId: "UTC",
       // Unlike screenshots, a clip needs motion and a live clock.

@@ -1,5 +1,5 @@
 {
-   "generatedAt": "2026-11-07T23:39:49.295Z",
+   "generatedAt": "2026-11-08T00:27:12.373Z",
    "items": [
       {
          "id": "media:chart-types",
@@ -58,6 +58,42 @@
          "encoder": null
       },
       {
+         "id": "media:notebook-tour-dark",
+         "page": "05-work-with-notebooks",
+         "destination": "site",
+         "formats": [
+            "mp4"
+         ],
+         "gif": null,
+         "mp4": "docs-site/public/media/notebook-tour-dark.mp4",
+         "poster": "docs-site/public/media/notebook-tour-dark-poster.png",
+         "width": 1200,
+         "height": 900,
+         "fps": 15,
+         "durationSeconds": 11.93,
+         "gifBytes": 0,
+         "mp4Bytes": 190836,
+         "encoder": null
+      },
+      {
+         "id": "media:notebook-tour-light",
+         "page": "05-work-with-notebooks",
+         "destination": "site",
+         "formats": [
+            "mp4"
+         ],
+         "gif": null,
+         "mp4": "docs-site/public/media/notebook-tour-light.mp4",
+         "poster": "docs-site/public/media/notebook-tour-light-poster.png",
+         "width": 1200,
+         "height": 900,
+         "fps": 15,
+         "durationSeconds": 11.93,
+         "gifBytes": 0,
+         "mp4Bytes": 174360,
+         "encoder": null
+      },
+      {
          "id": "media:python-execution",
          "page": "07-python-and-data-frames",
          "destination": "docs",
@@ -90,9 +126,9 @@
          "width": 1200,
          "height": 750,
          "fps": 15,
-         "durationSeconds": 8.27,
-         "gifBytes": 1245265,
-         "mp4Bytes": 197627,
+         "durationSeconds": 8.13,
+         "gifBytes": 1209101,
+         "mp4Bytes": 197194,
          "encoder": "ffmpeg"
       }
    ]
