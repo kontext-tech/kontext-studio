@@ -1,3 +1,10 @@
+## ts-packages-v0.262.0 (2026-11-08)
+
+### Feat
+
+- **docs**: add notebook demo and AI chat hero clips (#16)
+- **docs**: add recorded clips for the guide and docs home (#14)
+
 ## ts-packages-v0.261.3 (2026-11-07)
 
 ### Fix

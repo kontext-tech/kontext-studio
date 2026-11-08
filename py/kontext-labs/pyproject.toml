@@ -1,6 +1,6 @@
 [project]
 name = "kontext-studio"
-version = "0.261.3"
+version = "0.262.0"
 description = "Local-first AI data workspace: server, CLI, and runtime"
 authors = [
     { name = "Kontext Team", email = "hello@kontext.tech" },

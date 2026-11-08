@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/query",
-   "version": "0.261.3",
+   "version": "0.262.0",
    "type": "module",
    "description": "Domain facade for query-related state, services, and UI",
    "license": "MIT",
