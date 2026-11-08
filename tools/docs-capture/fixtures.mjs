@@ -16,7 +16,8 @@ import {
    featureTourNotebook,
    FIXTURE_EPOCH,
    pythonExecutionNotebook,
-   pythonWorkflowNotebook
+   pythonWorkflowNotebook,
+   revenueNotebook
 } from "./fixtures/notebooks.mjs";
 
 export { FIXTURE_EPOCH };
@@ -165,6 +166,11 @@ export const seedFiles = [
       name: "python-execution.kontext",
       contentType: "application/json",
       content: `${JSON.stringify(pythonExecutionNotebook, null, 3)}\n`
+   },
+   {
+      name: "revenue-notebook.kontext",
+      contentType: "application/json",
+      content: `${JSON.stringify(revenueNotebook, null, 3)}\n`
    },
    {
       name: "revenue-by-country.chart",

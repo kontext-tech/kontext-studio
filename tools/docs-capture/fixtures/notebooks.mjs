@@ -364,6 +364,42 @@ export const featureTourNotebook = {
    ]
 };
 
+const featureTourBlock = (id) => {
+   const block = featureTourNotebook.blocks.find((candidate) => candidate.id === id);
+   if (!block) throw new Error(`Missing feature tour block ${id}`);
+   return block;
+};
+
+/**
+ * The notebook the recorded chat hands back: one document with the SQL query,
+ * the chart, and the Python share calculation.
+ */
+export const revenueNotebook = {
+   title: "Revenue by country notebook",
+   created: 1771232400000,
+   modified: 1771232400000,
+   blocks: [
+      {
+         id: "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+         type: "header",
+         data: {
+            text: "Revenue by country",
+            level: 2
+         }
+      },
+      {
+         id: "b4e2d3c5-6f70-4b8c-9d0e-1f2a3b4c5d6e",
+         type: "paragraph",
+         data: {
+            text: "The query, the chart, and the Python share calculation live in one document. Reopen it and rerun any block."
+         }
+      },
+      featureTourBlock(blockIds.featureTour.sql),
+      featureTourBlock(blockIds.featureTour.chart),
+      featureTourBlock(blockIds.featureTour.code)
+   ]
+};
+
 export const chartsGalleryNotebook = {
    "title": "Chart gallery",
    "created": 1771232400000,

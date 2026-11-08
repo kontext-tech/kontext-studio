@@ -1,5 +1,5 @@
 {
-   "generatedAt": "2026-11-08T00:27:12.373Z",
+   "generatedAt": "2026-11-08T00:39:57.195Z",
    "items": [
       {
          "id": "media:chart-types",
@@ -55,6 +55,42 @@
          "durationSeconds": 8.33,
          "gifBytes": 0,
          "mp4Bytes": 119570,
+         "encoder": null
+      },
+      {
+         "id": "media:chat-notebook-dark",
+         "page": "08-chat-with-an-agent",
+         "destination": "site",
+         "formats": [
+            "mp4"
+         ],
+         "gif": null,
+         "mp4": "docs-site/public/media/chat-notebook-dark.mp4",
+         "poster": "docs-site/public/media/chat-notebook-dark-poster.png",
+         "width": 1200,
+         "height": 900,
+         "fps": 15,
+         "durationSeconds": 13.73,
+         "gifBytes": 0,
+         "mp4Bytes": 281401,
+         "encoder": null
+      },
+      {
+         "id": "media:chat-notebook-light",
+         "page": "08-chat-with-an-agent",
+         "destination": "site",
+         "formats": [
+            "mp4"
+         ],
+         "gif": null,
+         "mp4": "docs-site/public/media/chat-notebook-light.mp4",
+         "poster": "docs-site/public/media/chat-notebook-light-poster.png",
+         "width": 1200,
+         "height": 900,
+         "fps": 15,
+         "durationSeconds": 13.67,
+         "gifBytes": 0,
+         "mp4Bytes": 284909,
          "encoder": null
       },
       {
