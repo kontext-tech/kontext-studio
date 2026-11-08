@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@kontext-tech/common/utils";
+import { getAppUrl } from "@kontext-tech/common/utils";
 import { useTheme } from "@kontext-tech/theme";
 import { Card, Col, Flex, Grid, Layout, Row, Typography } from "antd";
 import type { ReactNode } from "react";
@@ -19,7 +19,7 @@ export const AuthCardLayout = ({
    isFullWidth = false,
    footer,
    logoAlt,
-   logoHref = getBaseUrl(),
+   logoHref = getAppUrl(),
    logoWrapper = "anchor"
 }: AuthCardLayoutProps) => {
    const screens = useBreakpoint();

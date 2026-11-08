@@ -1,16 +1,16 @@
-import { getBaseUrl } from "./envUtils";
+import { getPlatformPageUrl } from "./envUtils";
 
 /**
- * Creates a full URL by combining the base URL from environment with a path
- * Ensures proper formatting with a single slash between base URL and path
+ * Creates a full URL for a public platform page.
  *
- * @param path - The path to append to the base URL
- * @returns A string with the properly formatted full URL
+ * Local builds point `PUBLIC_KONTEXT_URL` at the dev server, which does not
+ * serve the public docs; `getPlatformPageUrl` falls back to the canonical
+ * platform in that case.
+ *
+ * @param path - The path to append to the platform base URL
+ * @returns A string with the properly formatted public URL
  */
-export const getFullUrl = (path: string): string => {
-   const baseUrl = getBaseUrl();
-   return `${baseUrl.endsWith("/") ? baseUrl : baseUrl + "/"}${path}`;
-};
+export const getFullUrl = (path: string): string => getPlatformPageUrl(path);
 
 /**
  * Navigates to a URL using browser navigation.
