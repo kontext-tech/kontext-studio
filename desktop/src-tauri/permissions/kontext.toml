@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-save-bytes"
+description = "Allow the local Kontext page to save a download through a native dialog."
+commands.allow = ["save_bytes"]

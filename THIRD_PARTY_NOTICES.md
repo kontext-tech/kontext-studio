@@ -57,7 +57,11 @@ Production npm dependencies across the workspace:
 | @bruits/satteri-darwin-arm64 | 0.10.5 | MIT |
 | @bufbuild/protobuf | 2.16.0 | (Apache-2.0 AND BSD-3-Clause) |
 | @capsizecss/unpack | 4.0.1 | MIT |
-| @chevrotain/types | 11.1.2 | Apache-2.0 |
+| @chevrotain/cst-dts-gen | 13.2.0 | Apache-2.0 |
+| @chevrotain/gast | 13.2.0 | Apache-2.0 |
+| @chevrotain/regexp-to-ast | 13.2.0 | Apache-2.0 |
+| @chevrotain/types | 11.1.2, 13.2.0 | Apache-2.0 |
+| @chevrotain/utils | 13.2.0 | Apache-2.0 |
 | @clack/core | 1.5.1 | MIT |
 | @clack/prompts | 1.8.1 | MIT |
 | @codemirror/autocomplete | 6.20.3 | MIT |
@@ -105,7 +109,7 @@ Production npm dependencies across the workspace:
 | @lezer/lr | 1.4.10 | MIT |
 | @lezer/python | 1.1.19 | MIT |
 | @marijn/find-cluster-break | 1.0.4 | MIT |
-| @mermaid-js/parser | 1.2.0 | MIT |
+| @mermaid-js/parser | 1.2.0, 2.0.1 | MIT |
 | @oslojs/encoding | 1.1.0 | MIT |
 | @oxc-project/types | 0.155.0 | MIT |
 | @pagefind/darwin-arm64 | 1.6.0 | MIT |
@@ -226,6 +230,7 @@ Production npm dependencies across the workspace:
 | aria-query | 5.3.2 | Apache-2.0 |
 | astro | 7.4.5 | MIT |
 | astro-expressive-code | 0.44.3 | MIT |
+| astro-mermaid | 2.2.0 | MIT |
 | axobject-query | 4.1.0 | Apache-2.0 |
 | bail | 2.0.2 | MIT |
 | base64-arraybuffer | 1.0.2 | MIT |
@@ -240,6 +245,7 @@ Production npm dependencies across the workspace:
 | character-entities-html4 | 2.1.0 | MIT |
 | character-entities-legacy | 3.0.0 | MIT |
 | character-reference-invalid | 2.0.1 | MIT |
+| chevrotain | 13.2.0 | Apache-2.0 |
 | chokidar | 5.0.0 | MIT |
 | ci-info | 4.4.0 | MIT |
 | clsx | 2.1.1 | MIT |
@@ -250,7 +256,7 @@ Production npm dependencies across the workspace:
 | color-string | 1.9.1 | MIT |
 | colorjs.io | 0.7.1 | MIT |
 | comma-separated-tokens | 2.0.3 | MIT |
-| commander | 2.20.3, 7.2.0, 8.3.0, 11.1.0 | MIT |
+| commander | 2.20.3, 7.2.0, 8.3.0, 11.1.0, 15.0.0 | MIT |
 | common-ancestor-path | 2.0.0 | BlueOak-1.0.0 |
 | compute-scroll-into-view | 3.1.1 | MIT |
 | cookie | 1.1.1, 2.0.1 | MIT |
@@ -327,9 +333,10 @@ Production npm dependencies across the workspace:
 | dom-serializer | 2.0.0 | MIT |
 | domelementtype | 2.3.0 | BSD-2-Clause |
 | domhandler | 5.0.3 | BSD-2-Clause |
-| dompurify | 3.4.12 | (MPL-2.0 OR Apache-2.0) |
+| dompurify | 3.4.12, 3.4.17 | (MPL-2.0 OR Apache-2.0) |
 | domutils | 3.2.2 | BSD-2-Clause |
 | dset | 3.1.4 | MIT |
+| elkjs | 0.12.1 | EPL-2.0 OR GPL-3.0-or-later |
 | entities | 4.5.0, 6.0.1 | BSD-2-Clause |
 | es-module-lexer | 3.0.4 | MIT |
 | es-toolkit | 1.50.0 | MIT |
@@ -406,7 +413,7 @@ Production npm dependencies across the workspace:
 | js-yaml | 4.3.2 | MIT |
 | json2mq | 0.2.0 | MIT |
 | jsonc-parser | 3.3.1 | MIT |
-| katex | 0.16.47 | MIT |
+| katex | 0.16.47, 0.18.10 | MIT |
 | khroma | 2.1.0 | Unknown |
 | klona | 2.0.6 | MIT |
 | layout-base | 1.0.2, 2.0.1 | MIT |
@@ -440,7 +447,7 @@ Production npm dependencies across the workspace:
 | mdast-util-to-markdown | 2.1.2, 2.2.1 | MIT |
 | mdast-util-to-string | 4.0.0 | MIT |
 | mdn-data | 2.0.28, 2.27.1 | CC0-1.0 |
-| mermaid | 11.16.0 | MIT |
+| mermaid | 11.16.0, 12.3.0 | MIT |
 | micromark | 4.0.2 | MIT |
 | micromark-core-commonmark | 2.0.3 | MIT |
 | micromark-extension-directive | 4.0.0 | MIT |
@@ -489,7 +496,7 @@ Production npm dependencies across the workspace:
 | p-limit | 7.3.3 | MIT |
 | p-queue | 9.3.5 | MIT |
 | p-timeout | 7.0.2 | MIT |
-| package-manager-detector | 1.8.0, 1.9.0 | MIT |
+| package-manager-detector | 1.9.0 | MIT |
 | pagefind | 1.6.0 | MIT |
 | parse-entities | 4.0.2 | MIT |
 | parse5 | 7.3.0 | MIT |
@@ -571,7 +578,7 @@ Production npm dependencies across the workspace:
 | throttle-debounce | 5.0.2 | MIT |
 | tiny-inflate | 1.0.3 | MIT |
 | tinyclip | 1.0.3 | MIT |
-| tinyexec | 1.2.4, 1.3.1 | MIT |
+| tinyexec | 1.3.1 | MIT |
 | tinyglobby | 0.2.17 | MIT |
 | tinyps | 0.5.1 | MIT |
 | trim-lines | 3.0.1 | MIT |
@@ -785,3 +792,18 @@ Runtime Python dependencies of the unified `kontext-studio` wheel:
 | wsproto | 1.3.2 | MIT | <https://github.com/python-hyper/wsproto/> |
 | yarl | 1.25.1 | Apache-2.0 | <https://github.com/aio-libs/yarl> |
 | zstandard | 0.25.0 | BSD-3-Clause | <https://github.com/indygreg/python-zstandard> |
+
+## Desktop bundle
+
+The macOS app also bundles:
+
+| Component | Version | License |
+| --- | --- | --- |
+| CPython | 3.12.16 | PSF-2.0 |
+| python-build-standalone | 20261026 | MIT |
+| pip | bundled with CPython | MIT |
+| Tauri | 2.12 | MIT OR Apache-2.0 |
+| Rust dependencies | see `desktop/src-tauri/Cargo.lock` | MIT / Apache-2.0 / others |
+
+The full texts ship in
+`Kontext Studio.app/Contents/Resources/third-party/`.

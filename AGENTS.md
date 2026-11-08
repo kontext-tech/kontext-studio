@@ -17,6 +17,8 @@ Tool-specific entry points are thin adapters with no unique content:
 - Use `pnpm` for Node/TypeScript and `uv` for Python. Never `npm`, `yarn`, or `pip`.
 - Verify before finishing: run the affected package's tests, or its
   lint/typecheck/build when it has no tests. State what you ran and did not run.
+- If you add, rename, or remove an environment variable, update
+  `docs/development/environment.md` and run `pnpm run validate:env-docs`.
 - Never hand-edit a package version. All `ts/*` packages plus Python packages
   and the root `package.json` share one lockstep version owned by
   `[tool.commitizen]` in `pyproject.toml`; bump with `pnpm run version:labs`.

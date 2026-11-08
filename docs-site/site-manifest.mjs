@@ -148,6 +148,15 @@ export const developerDocs = [
       order: 6
    },
    {
+      source: "development/desktop-builds.md",
+      route: "develop/workflows/desktop-builds",
+      title: "Desktop builds",
+      description:
+         "Bundling CPython and the local runtime into the macOS app, and publishing DMGs.",
+      group: "workflows",
+      order: 7
+   },
+   {
       source: "development/security-model.md",
       route: "develop/concepts/security-model",
       title: "Security and trust model",

@@ -183,6 +183,28 @@ class TestCreateApp:
         assert spa_route.status_code == 200
         assert "app shell" in spa_route.text
 
+    def test_runtime_env_pins_the_app_url_to_the_local_origin(self, monkeypatch, tmp_path):
+        """The desktop logo must not point at the build-time dev-server port."""
+        monkeypatch.setenv("KONTEXT_LOCAL_MODE", "true")
+        _use_temp_database(monkeypatch, tmp_path)
+        dist = tmp_path / "dist"
+        dist.mkdir()
+        (dist / "index.html").write_text(
+            "<html><head></head><body>app shell</body></html>",
+            encoding="utf-8",
+        )
+        app = create_app(dist_dir=str(dist))
+
+        try:
+            with TestClient(app) as client:
+                response = client.get("/", headers=_launch_headers())
+        finally:
+            get_engine.cache_clear()
+            get_session_factory.cache_clear()
+
+        assert response.status_code == 200
+        assert "PUBLIC_KONTEXT_APP_URL=window.location.origin" in response.text
+
     def test_create_app_registers_problem_detail_handler(self, tmp_path):
         """Local Kontext server should reuse the API problem-detail handlers."""
         app = create_app(dist_dir=str(tmp_path / "nonexistent"))

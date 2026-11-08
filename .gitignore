@@ -5,6 +5,12 @@ dist
 data/kontext
 _app_dist/
 
+# Desktop runtime: assembled locally and in CI, never committed
+desktop/src-tauri/resources/
+desktop/src-tauri/target/
+desktop/src-tauri/gen/
+desktop/.cache/
+
 # Ignore python virtual environments
 .venv
 venv

@@ -1,5 +1,9 @@
 import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
-import { ApiResult, DataApiBaseService } from "@kontext-tech/common";
+import {
+   ApiResult,
+   DataApiBaseService,
+   downloadBlob
+} from "@kontext-tech/common";
 import type { OkfConcept } from "@kontext-tech/schema";
 import type { paths } from "@kontext-tech/schema/api";
 
@@ -161,14 +165,7 @@ export class KnowledgeService extends DataApiBaseService {
                parseAs: "blob"
             })
          );
-         const url = window.URL.createObjectURL(blob);
-         const link = document.createElement("a");
-         link.href = url;
-         link.download = `okf-bundle-${projectId}.tar.gz`;
-         document.body.appendChild(link);
-         link.click();
-         document.body.removeChild(link);
-         window.URL.revokeObjectURL(url);
+         downloadBlob(blob, `okf-bundle-${projectId}.tar.gz`);
          return ApiResult.success(undefined);
       } catch (error) {
          return ApiResult.failure(await this.handleApiError(error));

@@ -51,6 +51,7 @@ example with copy-paste values; this page is the reference.
 | `PORT` | `8000` | Standalone API port. |
 | `KONTEXT_HOST` | `127.0.0.1` | `kontext serve --host`. |
 | `KONTEXT_PORT` | `8000` | `kontext serve --port`. |
+| `KONTEXT_DESKTOP_PORT` | `47800` | Preferred port for `kontext desktop`; an occupied port falls back to an ephemeral one. |
 | `SERVICE_NAME` | `kontext-api` | Service name for logging and telemetry. |
 | `CORS_ALLOWED_ORIGINS` | Profile default | Comma-separated origins. Empty or `*` falls back to the local/production default list; credentials cannot be combined with `*`. |
 | `KONTEXT_DIST_DIR` | Bundled `app/dist` | Launcher-managed React build served by the local server. |
@@ -127,6 +128,8 @@ example with copy-paste values; this page is the reference.
 | `KONTEXT_JOB_RUN_MAX_LEASE_RECLAIMS` | `5` | Dead-letter a run after this many reclaims. |
 | `KONTEXT_PYTHON_MAX_CONSECUTIVE_KERNEL_FAILURES` | `3` | Stop retrying agent Python execution after this many infrastructure failures. |
 | `KONTEXT_PYTHON_RUNTIME_PACKAGES` | Unset | Comma-separated packages installed into the managed Python environment. Pin versions. |
+| `KONTEXT_PYTHON_RUNTIME_WHEELHOUSE` | Unset | Offline wheel directory for the managed kernel venv; the desktop app points at its bundled wheelhouse. |
+| `KONTEXT_PARENT_PID` | Unset | Internal: parent process to watch; the desktop server and worker exit when it disappears. |
 | `KONTEXT_JOB_DISCOVERY_PACKAGES` | Unset | Comma-separated packages scanned for job definitions. |
 
 ## Agent, models, and prompts

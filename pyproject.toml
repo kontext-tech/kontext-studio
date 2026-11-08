@@ -88,6 +88,8 @@ version_files = [
     "package.json:version",
     "app/package.json:version",
     "docs/user-guide/_meta.json:capturedWith",
+    "desktop/src-tauri/Cargo.toml:version",
+    "desktop/src-tauri/tauri.conf.json:version",
     "py/kontext-account/pyproject.toml:version",
     "py/kontext-agent/pyproject.toml:version",
     "py/kontext-agentic/pyproject.toml:version",

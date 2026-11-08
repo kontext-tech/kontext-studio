@@ -1,5 +1,7 @@
 import type { FileModel } from "@kontext-tech/schema";
 
+export { downloadBlob } from "@kontext-tech/common";
+
 /**
  * Checks if a resource is an image based on its content type
  */
@@ -12,20 +14,6 @@ export const isImageResource = (resource: FileModel): boolean => {
       "image/svg+xml"
    ];
    return imageTypes.includes(resource.contentType?.toLowerCase() || "");
-};
-
-/**
- * Creates a download link for a blob and triggers the download
- */
-export const downloadBlob = (blob: Blob, filename: string): void => {
-   const url = window.URL.createObjectURL(blob);
-   const link = document.createElement("a");
-   link.href = url;
-   link.download = filename;
-   document.body.appendChild(link);
-   link.click();
-   document.body.removeChild(link);
-   window.URL.revokeObjectURL(url);
 };
 
 /**

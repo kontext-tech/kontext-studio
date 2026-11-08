@@ -18,6 +18,7 @@ pnpm test:python               # Python workspace tests
 pnpm typecheck:python          # pyright across py/*
 pnpm run validate:workspace-graph
 pnpm run validate:workspace-versions
+pnpm run validate:env-docs
 ```
 
 Ruff covers Python style: `uv run ruff check --fix py && uv run ruff format py`.
@@ -86,3 +87,4 @@ subset.
 | `ts/schema` | schema contract checks + regen pipeline (see `.github/skills/contract-pipeline`) |
 | app feature code | app lint + type-check + build |
 | shared ts package | that package's jest tests + app type-check |
+| environment variable added, renamed, or removed | `pnpm run validate:env-docs` plus a `docs/development/environment.md` update |

@@ -129,6 +129,9 @@ def create_app(dist_dir: str | Path | None = None) -> FastAPI:
                 # and PUBLIC_KONTEXT_DATA_API_URL (envUtils.ts canonical key)
                 "window.ENV.PUBLIC_KONTEXT_DA_API_URL=window.location.origin;"
                 "window.ENV.PUBLIC_KONTEXT_DATA_API_URL=window.location.origin;"
+                # The app's own links (logo, app navigation) must stay on this
+                # origin; the build-time value points at the dev server port.
+                "window.ENV.PUBLIC_KONTEXT_APP_URL=window.location.origin;"
                 "</script>"
             )
             # Inject AFTER Vite's window.ENV script so our values win

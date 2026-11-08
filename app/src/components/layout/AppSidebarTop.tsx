@@ -1,5 +1,5 @@
 import ProjectSelectorLazy from "@/shell/project/ProjectSelectorLazy";
-import { getBaseUrl } from "@kontext-tech/common/utils";
+import { getAppUrl } from "@kontext-tech/common/utils";
 import {
    PanelLeftCloseOutlined,
    PanelLeftOpenOutlined
@@ -68,7 +68,7 @@ const AppSidebarTop = ({
             }}
          >
             <a
-               href={getBaseUrl()}
+               href={getAppUrl()}
                style={{
                   minWidth: 0,
                   flex: 1,

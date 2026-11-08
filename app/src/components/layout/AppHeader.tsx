@@ -1,7 +1,7 @@
 import ProjectSelectorLazy from "@/shell/project/ProjectSelectorLazy";
 import { useProject } from "@kontext-tech/project";
 import { useUser } from "@kontext-tech/identity";
-import { getBaseUrl } from "@kontext-tech/common/utils";
+import { getAppUrl } from "@kontext-tech/common/utils";
 import { MenuOutlined, QuestionCircleOutlined } from "@kontext-tech/icons";
 import { getHelpMenuItems } from "@kontext-tech/layout";
 import { ThemeSelector } from "@kontext-tech/theme";
@@ -71,7 +71,7 @@ const AppHeader = ({
             )}
 
             <a
-               href={getBaseUrl()}
+               href={getAppUrl()}
                style={{
                   display: "flex",
                   alignItems: "center",

@@ -36,6 +36,7 @@ from kontext.schema import (
 )
 
 _MANAGED_BACKEND_ID = "managed_cpython_local"
+_WHEELHOUSE_ENV = "KONTEXT_PYTHON_RUNTIME_WHEELHOUSE"
 _DEFAULT_PACKAGES = (
     "numpy==2.2.5",
     "pandas==2.2.3",
@@ -146,6 +147,31 @@ def _runtime_packages_for_profile(runtime_profile: str) -> tuple[str, ...]:
         return tuple(spec.strip() for spec in override.split(",") if spec.strip())
 
     return _DEFAULT_PACKAGES
+
+
+def default_runtime_packages() -> tuple[str, ...]:
+    """Return the shipped kernel package pins.
+
+    This is the public source of truth for the offline desktop wheelhouse; it
+    intentionally ignores the deployment-time package override.
+    """
+    return _DEFAULT_PACKAGES
+
+
+def _runtime_wheelhouse() -> Path | None:
+    """Return the configured offline wheelhouse, or ``None``.
+
+    The desktop bundle ships wheels for the kernel packages so first use does
+    not depend on the network. A configured-but-missing directory is a
+    deployment error, not a silent fallback to PyPI.
+    """
+    raw = os.getenv(_WHEELHOUSE_ENV, "").strip()
+    if not raw:
+        return None
+    path = Path(raw).expanduser().resolve()
+    if not path.is_dir():
+        raise RuntimeError(f"{_WHEELHOUSE_ENV} points to a missing directory: {path}")
+    return path
 
 
 def _parse_package_spec(spec: str) -> tuple[str, str]:
@@ -310,6 +336,10 @@ def ensure_managed_python_environment(
         if _is_environment_initialized(environment, desired_state):
             return environment
 
+        # Only needed for a fresh bootstrap; an existing venv keeps working
+        # even if the bundled wheelhouse is removed or moved.
+        wheelhouse = _runtime_wheelhouse()
+
         tmp_root = runtime_root.with_name(f"{runtime_root.name}.tmp")
         shutil.rmtree(tmp_root, ignore_errors=True)
         tmp_root.mkdir(parents=True, exist_ok=True)
@@ -318,34 +348,36 @@ def ensure_managed_python_environment(
         _create_managed_venv(tmp_env_dir)
 
         tmp_python = _python_executable_path(tmp_env_dir)
-        subprocess.run(
-            [
-                str(tmp_python),
-                "-m",
-                "pip",
-                "install",
-                "--disable-pip-version-check",
-                "--no-input",
-                "--upgrade",
-                "pip",
-                "setuptools",
-                "wheel",
-            ],
-            check=True,
-        )
-        subprocess.run(
-            [
-                str(tmp_python),
-                "-m",
-                "pip",
-                "install",
-                "--disable-pip-version-check",
-                "--no-input",
-                "--only-binary=:all:",
-                *_runtime_packages_for_profile(runtime_profile),
-            ],
-            check=True,
-        )
+        if wheelhouse is None:
+            subprocess.run(
+                [
+                    str(tmp_python),
+                    "-m",
+                    "pip",
+                    "install",
+                    "--disable-pip-version-check",
+                    "--no-input",
+                    "--upgrade",
+                    "pip",
+                    "setuptools",
+                    "wheel",
+                ],
+                check=True,
+            )
+
+        install_command = [
+            str(tmp_python),
+            "-m",
+            "pip",
+            "install",
+            "--disable-pip-version-check",
+            "--no-input",
+            "--only-binary=:all:",
+        ]
+        if wheelhouse is not None:
+            install_command.extend(["--no-index", "--find-links", str(wheelhouse)])
+        install_command.extend(_runtime_packages_for_profile(runtime_profile))
+        subprocess.run(install_command, check=True)
 
         (tmp_root / "state.json").write_text(
             json.dumps(desired_state, ensure_ascii=True, indent=2),
