@@ -71,11 +71,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Intel is blocked: lancedb has no macOS x86_64 wheel.
         include:
           - arch: arm64
             runner: macos-15
-          - arch: x64
-            runner: macos-15-intel
     env:
       CARGO_INCREMENTAL: "0"
     steps:
