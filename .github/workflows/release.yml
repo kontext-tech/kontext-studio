@@ -378,3 +378,33 @@ jobs:
             sleep 3
           done
           echo "::warning::publish-pypi.yml was dispatched but no run has appeared yet; check the Actions tab."
+
+  publish-desktop:
+    name: Dispatch desktop build
+    needs: [prepare, release]
+    if: needs.prepare.outputs.pr_created != 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch desktop.yml
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_TAG_PUSH }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          gh workflow run desktop.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f "version=$VERSION" \
+            -f upload=true
+
+          for _ in $(seq 1 10); do
+            RUN_ID="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow desktop.yml --limit 1 --json databaseId --jq '.[0].databaseId // empty' || true)"
+            if [ -n "$RUN_ID" ]; then
+              echo "Started desktop build: ${{ github.server_url }}/$GITHUB_REPOSITORY/actions/runs/$RUN_ID"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::warning::desktop.yml was dispatched but no run has appeared yet; check the Actions tab."

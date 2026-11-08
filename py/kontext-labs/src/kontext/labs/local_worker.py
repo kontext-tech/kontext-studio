@@ -30,6 +30,7 @@ from kontext.execution.scheduling import handle_run_status_change_hook
 from kontext.jobs.job_execution_service import JobExecutionService
 from kontext.runtime.providers.local import LocalRuntimeProvider
 
+from .parent_watchdog import parent_pid_from_env, start_parent_watchdog
 from .sqlite_compat import ensure_supported_sqlite
 
 logger = logging.getLogger(__name__)
@@ -561,9 +562,25 @@ def run_worker_process() -> None:
         with contextlib.suppress(NotImplementedError, ValueError):
             loop.add_signal_handler(sig, _request_shutdown)
 
+    stop_watchdog = None
+    if parent_pid_from_env() is not None:
+
+        def _request_shutdown_from_parent() -> None:
+            logger.warning("Desktop parent exited; stopping the local worker")
+            with contextlib.suppress(RuntimeError):
+                loop.call_soon_threadsafe(shutdown.set)
+
+        # The worker does not own stdin; only watch the server process.
+        stop_watchdog = start_parent_watchdog(
+            _request_shutdown_from_parent,
+            watch_stdin=False,
+        )
+
     try:
         loop.run_until_complete(run_local_worker(shutdown=shutdown))
     finally:
+        if stop_watchdog is not None:
+            stop_watchdog()
         loop.close()
         logger.info("Local job worker stopped")
 

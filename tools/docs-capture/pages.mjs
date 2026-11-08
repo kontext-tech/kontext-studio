@@ -39,6 +39,16 @@ export const pages = [
       flow: "first-run"
    },
    {
+      slug: "16-desktop-app",
+      title: "Use the macOS desktop app",
+      group: "get-started",
+      order: 16,
+      status: "published",
+      summary:
+         "Download, install, and update the macOS app with a bundled Python runtime.",
+      routes: []
+   },
+   {
       slug: "02-create-a-project",
       title: "Open or create a project",
       group: "get-started",

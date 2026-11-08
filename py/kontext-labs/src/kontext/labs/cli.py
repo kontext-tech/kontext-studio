@@ -163,6 +163,45 @@ def _add_serve_parser(subparsers: argparse._SubParsersAction) -> None:
     p.set_defaults(func=_cmd_serve)
 
 
+def _add_desktop_parser(subparsers: argparse._SubParsersAction) -> None:
+    p = subparsers.add_parser(
+        "desktop",
+        help="Start the local server for the desktop app (machine-readable).",
+    )
+    p.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="Loopback bind address (default: 127.0.0.1)",
+    )
+    p.add_argument(
+        "--preferred-port",
+        type=int,
+        default=int(os.getenv("KONTEXT_DESKTOP_PORT", "47800")),
+        help="Preferred port; falls back to an ephemeral port when occupied.",
+    )
+    p.add_argument(
+        "--parent-pid",
+        type=int,
+        default=None,
+        help="Exit when this process disappears (normally the desktop shell).",
+    )
+    p.add_argument("--dist-dir", default=None, help="Path to the built React app.")
+    p.add_argument("--lake-path", default=None, help="Lake directory override.")
+    p.add_argument(
+        "--no-worker",
+        action="store_true",
+        default=False,
+        help="Do not start the local job worker process.",
+    )
+    p.set_defaults(func=_cmd_desktop)
+
+
+def _cmd_desktop(args: argparse.Namespace) -> None:
+    from .desktop import run_desktop
+
+    run_desktop(args)
+
+
 class _WorkerSupervisor:
     """Owns a child ``kontext worker`` process for the life of ``serve``.
 
@@ -176,15 +215,23 @@ class _WorkerSupervisor:
     _RESTART_BACKOFF_SECONDS = 1.0
     _WATCH_INTERVAL_SECONDS = 1.0
 
-    def __init__(self) -> None:
+    def __init__(self, *, quiet: bool = False) -> None:
         self._process: subprocess.Popen[Any] | None = None
         self._stopping = threading.Event()
         self._watch_thread: threading.Thread | None = None
         self._restarts = 0
+        self._quiet = quiet
+
+    def _info(self, message: str) -> None:
+        if not self._quiet:
+            print(message)
+
+    def _warn(self, message: str) -> None:
+        print(message, file=sys.stderr)
 
     def start(self) -> None:
         if os.getenv("KONTEXT_LOCAL_WORKER_ENABLED", "true").lower() != "true":
-            print("Local job worker disabled (KONTEXT_LOCAL_WORKER_ENABLED is not true).")
+            self._info("Local job worker disabled (KONTEXT_LOCAL_WORKER_ENABLED is not true).")
             return
 
         self._spawn()
@@ -196,6 +243,9 @@ class _WorkerSupervisor:
 
     def _spawn(self) -> None:
         env = dict(os.environ)
+        # The worker's parent is the server, not the shell. The worker watchdog
+        # uses this to stop kernels even if the server is SIGKILLed.
+        env["KONTEXT_PARENT_PID"] = str(os.getpid())
         kwargs: dict[str, Any] = {}
         if os.name == "nt":  # pragma: no cover - Windows-only process flags
             kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
@@ -207,7 +257,7 @@ class _WorkerSupervisor:
             env=env,
             **kwargs,
         )
-        print(f"Local job worker started (pid={self._process.pid}).")
+        self._info(f"Local job worker started (pid={self._process.pid}).")
 
     def _watch(self) -> None:
         """Restart the worker on unexpected exit, with a bounded retry budget."""
@@ -220,17 +270,15 @@ class _WorkerSupervisor:
             exit_code = process.returncode
             self._restarts += 1
             if self._restarts > self._MAX_RESTART_ATTEMPTS:
-                print(
+                self._warn(
                     "Local job worker exited repeatedly "
                     f"(last exit code {exit_code}); not restarting. "
-                    "Background jobs will not run until the server is restarted.",
-                    file=sys.stderr,
+                    "Background jobs will not run until the server is restarted."
                 )
                 return
-            print(
+            self._warn(
                 f"Local job worker exited unexpectedly (exit code {exit_code}); "
-                f"restarting (attempt {self._restarts}/{self._MAX_RESTART_ATTEMPTS}).",
-                file=sys.stderr,
+                f"restarting (attempt {self._restarts}/{self._MAX_RESTART_ATTEMPTS})."
             )
             self._stopping.wait(self._RESTART_BACKOFF_SECONDS)
             if self._stopping.is_set():
@@ -636,6 +684,7 @@ def cli(argv: list[str] | None = None) -> None:
     subs = parser.add_subparsers(dest="command")
 
     _add_serve_parser(subs)
+    _add_desktop_parser(subs)
     _add_worker_parser(subs)
     _add_project_parser(subs)
     _add_import_parser(subs)

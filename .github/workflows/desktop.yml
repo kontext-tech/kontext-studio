@@ -1,0 +1,186 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Desktop
+
+# Builds the macOS DMGs and attaches them to an existing v<version> release.
+# Dispatch this after the release exists; release.yml does that automatically.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version to build (the v<version> tag must exist)"
+        required: true
+        type: string
+      upload:
+        description: "Upload the DMGs to the GitHub Release"
+        required: false
+        default: true
+        type: boolean
+  pull_request:
+    paths:
+      - "desktop/**"
+      - "scripts/uv/**"
+      - "py/kontext-labs/**"
+      - "py/kontext-runtime/**"
+      - "ts/file/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate desktop changes
+    if: github.event_name == 'pull_request'
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Ensure placeholder resources
+        run: node desktop/scripts/ensure-resources.mjs
+      - name: Rust format
+        run: cargo fmt --manifest-path desktop/src-tauri/Cargo.toml -- --check
+      - name: Rust lint
+        run: cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets -- -D warnings
+      - name: Version lockstep
+        run: |
+          node -e "const root=require('./package.json').version; const tauri=require('./desktop/src-tauri/tauri.conf.json').version; if(root!==tauri){console.error(root,tauri);process.exit(1)}"
+      - name: Frontend bridge lint
+        run: pnpm exec eslint ts/file/src/utils/fileUtils.ts
+
+  build:
+    name: Build macOS ${{ matrix.arch }}
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+          - arch: x64
+            runner: macos-15-intel
+    env:
+      CARGO_INCREMENTAL: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ inputs.version }}
+      - name: Validate version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          ROOT_VERSION=$(node -p "require('./package.json').version")
+          if [ "$ROOT_VERSION" != "$VERSION" ]; then
+            echo "Requested $VERSION but the checkout is $ROOT_VERSION" >&2
+            exit 1
+          fi
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+      - name: Cache python-build-standalone
+        uses: actions/cache@v4
+        with:
+          path: desktop/.cache/python-build-standalone
+          key: pbs-${{ runner.os }}-${{ hashFiles('desktop/runtime.lock.json') }}
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build shared packages
+        run: pnpm run build:shared
+      - name: Assemble bundled Python
+        run: uv run python desktop/scripts/assemble.py --arch ${{ matrix.arch }}
+      - name: Build desktop app and DMG
+        run: pnpm run desktop:build
+      - name: Verify bundle
+        run: |
+          set -euo pipefail
+          APP="desktop/src-tauri/target/release/bundle/macos/Kontext Studio.app"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+
+          TMP=$(mktemp -d)
+          HOME="$TMP" KONTEXT_LOCAL_WORKER_ENABLED=false \
+            "$APP/Contents/Resources/python/bin/python3" -E -s -B -u \
+            -m kontext.labs desktop --preferred-port 0 --parent-pid $$ \
+            < /dev/zero > "$TMP/ready.log" 2>&1 &
+          SERVER_PID=$!
+          for _ in $(seq 1 300); do
+            grep -q '@@KONTEXT_READY@@' "$TMP/ready.log" && break
+            sleep 0.2
+          done
+          PORT=$(sed -n 's/^@@KONTEXT_READY@@//p' "$TMP/ready.log" | tail -1 | \
+            "$APP/Contents/Resources/python/bin/python3" -c \
+            'import json,sys; print(json.load(sys.stdin)["port"])')
+          curl -fsS "http://127.0.0.1:${PORT}/health" > /dev/null
+          kill -TERM "$SERVER_PID"
+          wait "$SERVER_PID"
+          rm -rf "$TMP"
+      - name: Free assembly resources
+        run: rm -rf desktop/src-tauri/resources
+      - name: Verify DMG
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          DMG="dist/Kontext-Studio-${VERSION}-macOS-${{ matrix.arch }}.dmg"
+          test -f "$DMG"
+          hdiutil verify "$DMG"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kontext-desktop-${{ matrix.arch }}
+          path: dist/*.dmg
+          if-no-files-found: error
+
+  release:
+    name: Attach DMGs to release
+    needs: build
+    if: github.event_name == 'workflow_dispatch' && inputs.upload
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: kontext-desktop-*
+          merge-multiple: true
+          path: dist
+      - name: Write checksums
+        run: |
+          cd dist
+          sha256sum *.dmg > SHA256SUMS-desktop.txt
+          cat SHA256SUMS-desktop.txt
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release upload "v${VERSION}" dist/*.dmg dist/SHA256SUMS-desktop.txt \
+            --clobber --repo "$GITHUB_REPOSITORY"

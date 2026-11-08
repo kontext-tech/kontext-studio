@@ -45,16 +45,31 @@ local or cloud — and keep the workspace on your machine.
 
 ## Install
 
+### macOS desktop app
+
+Download the latest DMG from
+[GitHub Releases](https://github.com/kontext-tech/kontext-studio/releases/latest):
+
+- Apple Silicon: `Kontext-Studio-<version>-macOS-arm64.dmg`
+- Intel: `Kontext-Studio-<version>-macOS-x64.dmg`
+
+The app bundles Python and the analysis packages; no toolchain is required. The
+current build is an unsigned beta, so on first launch use System Settings →
+Privacy & Security → Open Anyway. See the
+[desktop guide](docs/user-guide/16-desktop-app.md).
+
+### Command-line install
+
 Kontext Studio is published to PyPI as the `kontext-studio` package. Each GitHub
 Release also carries the matching wheel.
 
-With `uv`:
+#### With `uv`
 
 ```bash
 uv tool install kontext-studio
 ```
 
-With `pip` in a virtual environment:
+#### With `pip` in a virtual environment
 
 ```bash
 python3 -m venv .venv

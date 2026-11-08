@@ -21,6 +21,21 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = ROOT_DIR / "dist" / "python"
 
+# Warehouse drivers are deployment-specific: pyodbc needs a system unixODBC,
+# and teradatasql is a large proprietary client. The desktop build keeps the
+# code paths (they are lazy/SQLAlchemy dialect strings) but not the drivers.
+DESKTOP_EXCLUDED_PACKAGES = frozenset(
+    {
+        "psycopg",
+        "psycopg-binary",
+        "pymysql",
+        "pyodbc",
+        "oracledb",
+        "teradatasql",
+        "teradatasqlalchemy",
+    }
+)
+
 
 def parse_requirement(req_str: str) -> tuple[str, str, str, str]:
     """Parse a requirement into (lowercase_name, extras, specifier, marker).
@@ -189,6 +204,15 @@ def main() -> None:
             "Used for TestPyPI repeat uploads, which reject an existing version."
         ),
     )
+    parser.add_argument(
+        "--profile",
+        choices=("pypi", "desktop"),
+        default="pypi",
+        help=(
+            "Dependency profile. `pypi` keeps every external dependency; "
+            "`desktop` drops warehouse drivers that need system libraries."
+        ),
+    )
     args = parser.parse_args()
 
     out_dir = args.out_dir.resolve()
@@ -216,6 +240,17 @@ def main() -> None:
 
     # Aggregate all external dependencies
     aggregated_deps = aggregate_external_dependencies(py_dir)
+    if args.profile == "desktop":
+        before = len(aggregated_deps)
+        aggregated_deps = [
+            dep
+            for dep in aggregated_deps
+            if parse_requirement(dep)[0] not in DESKTOP_EXCLUDED_PACKAGES
+        ]
+        print(
+            f"🪶 Desktop profile: dropped {before - len(aggregated_deps)} "
+            "warehouse-driver dependencies."
+        )
     # Merge entry points from every member so plugins such as the agent harness
     # stay discoverable in the unified distribution.
     aggregated_entry_points = aggregate_entry_points(py_dir)

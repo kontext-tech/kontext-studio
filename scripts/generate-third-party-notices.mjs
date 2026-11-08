@@ -103,6 +103,21 @@ Runtime Python dependencies of the unified \`kontext-studio\` wheel:
 | Package | Version | License | URL |
 | --- | --- | --- | --- |
 ${rows(pythonPackages, true)}
+
+## Desktop bundle
+
+The macOS app also bundles:
+
+| Component | Version | License |
+| --- | --- | --- |
+| CPython | 3.12.16 | PSF-2.0 |
+| python-build-standalone | 20261026 | MIT |
+| pip | bundled with CPython | MIT |
+| Tauri | 2.12 | MIT OR Apache-2.0 |
+| Rust dependencies | see \`desktop/src-tauri/Cargo.lock\` | MIT / Apache-2.0 / others |
+
+The full texts ship in
+\`Kontext Studio.app/Contents/Resources/third-party/\`.
 `;
 
 writeFileSync("THIRD_PARTY_NOTICES.md", content);

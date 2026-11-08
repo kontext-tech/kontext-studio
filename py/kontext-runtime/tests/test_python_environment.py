@@ -27,6 +27,7 @@ from kontext.runtime.python_environment import (
     _parse_package_spec,
     _python_executable_path,
     _runtime_packages_for_profile,
+    ensure_managed_python_environment,
 )
 
 
@@ -56,6 +57,78 @@ def test_whitelist_matches_managed_venv_packages(
     assert installed_by_import_name == pinned
     assert set(DISTRIBUTION_TO_IMPORT_NAME) <= set(installed)
     assert set(pinned) == MANAGED_VENV_MODULES
+
+
+def test_ensure_managed_python_environment_uses_offline_wheelhouse(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """A desktop wheelhouse must install without touching an index."""
+    wheelhouse = tmp_path / "wheelhouse"
+    wheelhouse.mkdir()
+    monkeypatch.setenv("KONTEXT_PYTHON_RUNTIME_WHEELHOUSE", str(wheelhouse))
+    monkeypatch.delenv("KONTEXT_PYTHON_RUNTIME_PACKAGES", raising=False)
+    monkeypatch.setattr(
+        "kontext.runtime.python_environment.get_local_data_dir",
+        lambda: tmp_path,
+    )
+
+    calls: list[list[str]] = []
+
+    def fake_run(command: list[str], **_kwargs: object) -> subprocess.CompletedProcess:
+        calls.append(list(command))
+        return subprocess.CompletedProcess(command, 0)
+
+    def fake_create_venv(env_dir: Path) -> None:
+        env_dir.mkdir(parents=True, exist_ok=True)
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    monkeypatch.setattr(
+        "kontext.runtime.python_environment._create_managed_venv",
+        fake_create_venv,
+    )
+
+    ensure_managed_python_environment()
+
+    # The pip/setuptools upgrade step is skipped: those wheels may not be in
+    # the bundle, and ensurepip already provided a working pip.
+    assert len(calls) == 1
+    install = calls[0]
+    assert "--no-index" in install
+    assert "--find-links" in install
+    assert str(wheelhouse) in install
+    assert "--upgrade" not in install
+
+
+def test_missing_wheelhouse_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setenv(
+        "KONTEXT_PYTHON_RUNTIME_WHEELHOUSE",
+        str(tmp_path / "missing"),
+    )
+
+    with pytest.raises(RuntimeError, match="missing directory"):
+        ensure_managed_python_environment()
+
+
+def test_desktop_kernel_requirements_match_runtime_defaults(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The desktop wheelhouse must install exactly what the runtime expects."""
+    monkeypatch.delenv("KONTEXT_PYTHON_RUNTIME_PACKAGES", raising=False)
+    repo_root = Path(__file__).resolve().parents[3]
+    kernel_file = repo_root / "desktop" / "requirements" / "kernel.txt"
+    assert kernel_file.is_file(), f"missing {kernel_file}"
+
+    pinned = [
+        line.strip()
+        for line in kernel_file.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    ]
+
+    assert pinned == list(_runtime_packages_for_profile(DEFAULT_RUNTIME_PROFILE))
 
 
 def test_managed_venv_interpreter_can_run_pip(tmp_path: Path) -> None:

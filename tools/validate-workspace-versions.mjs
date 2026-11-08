@@ -93,11 +93,18 @@ let rootRegistered = false;
 const EXTRA_VERSION_FILES = new Map([
    ["app/package.json", "version"],
    ["docs/user-guide/_meta.json", "capturedWith"],
+   ["desktop/src-tauri/tauri.conf.json", "version"],
+]);
+
+// The Rust crate carries the same version, but it is TOML rather than JSON.
+const EXTRA_TOML_VERSION_FILES = new Map([
+   ["desktop/src-tauri/Cargo.toml", "version"],
 ]);
 
 for (const entry of versionFiles) {
    const [filePath, pointer] = entry.split(":");
-   const expectedPointer = EXTRA_VERSION_FILES.get(filePath) ?? "version";
+   const expectedPointer =
+      EXTRA_VERSION_FILES.get(filePath) ?? EXTRA_TOML_VERSION_FILES.get(filePath) ?? "version";
 
    if (pointer !== expectedPointer) {
       violations.push(
@@ -119,7 +126,7 @@ for (const entry of versionFiles) {
    const isTsPackage = filePath.startsWith("ts/") && filePath.endsWith("/package.json");
    const isPyPackage = filePath.startsWith("py/") && filePath.endsWith("/pyproject.toml");
 
-   if (EXTRA_VERSION_FILES.has(filePath)) {
+   if (EXTRA_VERSION_FILES.has(filePath) || EXTRA_TOML_VERSION_FILES.has(filePath)) {
       registeredExtraFiles.add(filePath);
 
       if (!fs.existsSync(path.join(rootDir, filePath))) {
@@ -246,6 +253,29 @@ for (const [filePath, pointer] of EXTRA_VERSION_FILES) {
    if (contents && commitizenVersion !== null && contents[pointer] !== commitizenVersion) {
       violations.push(
          `${filePath} ${pointer} (${JSON.stringify(contents[pointer])}) does not match [tool.commitizen] version (${commitizenVersion})`
+      );
+   }
+}
+
+for (const [filePath] of EXTRA_TOML_VERSION_FILES) {
+   const absolutePath = path.join(rootDir, filePath);
+
+   if (!fs.existsSync(absolutePath)) {
+      continue;
+   }
+
+   if (!registeredExtraFiles.has(filePath)) {
+      violations.push(
+         `${filePath} is not registered in [tool.commitizen].version_files, so \`cz bump\` will not update it`
+      );
+   }
+
+   const contents = fs.readFileSync(absolutePath, "utf8");
+   const match = contents.match(/^\s*version\s*=\s*"([^"]+)"/m);
+
+   if (match && commitizenVersion !== null && match[1] !== commitizenVersion) {
+      violations.push(
+         `${filePath} version (${JSON.stringify(match[1])}) does not match [tool.commitizen] version (${commitizenVersion})`
       );
    }
 }
