@@ -29,6 +29,7 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
 cp -R "$APP" "$STAGE/"
+cp "$ROOT/desktop/dmg/Read Me First.txt" "$STAGE/"
 ln -s /Applications "$STAGE/Applications"
 
 rm -f "$DMG"

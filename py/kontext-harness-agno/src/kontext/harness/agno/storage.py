@@ -20,8 +20,9 @@ Semantics:
 - every operation is loop-safe. `preload()` (awaited by the adapter at the
   start of each streaming turn) makes the working set warm before Agno touches
   the store, so Agno's sync db calls on the event loop serve memory and never
-  block. Calls from worker threads (`asyncio.to_thread` paths — pause
-  recovery, history reads) load or persist durably via `asyncio.run`.
+  block. All writes, from any thread or loop, go through one serialized worker;
+  `persist_now()` awaits the completion of the write it queues, so a pause
+  flush also flushes every earlier snapshot.
 
 - memories/evals/traces/knowledge keep `InMemoryDb`'s inherited in-memory
   behavior: documented no-ops for this adapter (enabled features do not touch
@@ -33,7 +34,10 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
-from contextlib import suppress
+import queue
+import threading
+from concurrent.futures import Future
+from dataclasses import dataclass
 from typing import Any
 
 from agno.db.base import SessionType
@@ -43,6 +47,43 @@ from kontext.agent.persistence import SessionPersistence
 __all__ = ["NeutralBackedDb"]
 
 _logger = logging.getLogger(__name__)
+
+
+@dataclass
+class _SaveJob:
+    persistence: SessionPersistence
+    session_id: str
+    state_json: str
+    future: Future[None]
+
+
+#: One daemon worker serializes every harness-state write, whichever thread or
+#: event loop produced it. The agent turn runs on its own loop while the request
+#: loop flushes the pause blob; chaining tasks per loop made that flush gather a
+#: future owned by another loop, so the paused run was never persisted.
+_persist_queue: queue.Queue[_SaveJob] = queue.Queue()
+
+
+def _persist_worker() -> None:
+    while True:
+        job = _persist_queue.get()
+        try:
+            asyncio.run(job.persistence.save_harness_state(job.session_id, job.state_json))
+        except BaseException as exc:
+            job.future.set_exception(exc)
+        else:
+            job.future.set_result(None)
+        finally:
+            _persist_queue.task_done()
+
+
+threading.Thread(target=_persist_worker, name="agno-harness-persist", daemon=True).start()
+
+
+def _submit_save(persistence: SessionPersistence, session_id: str, state_json: str) -> Future[None]:
+    future: Future[None] = Future()
+    _persist_queue.put(_SaveJob(persistence, session_id, state_json, future))
+    return future
 
 
 class NeutralBackedDb(InMemoryDb):
@@ -57,12 +98,6 @@ class NeutralBackedDb(InMemoryDb):
         super().__init__()
         self.persistence = persistence
         self.label = label
-        # Write-through from sync calls on the event loop is fire-and-forget
-        # but strictly ordered: the tail task of the chain is awaited by the
-        # next write, so an older full-row snapshot can never land after a
-        # newer one. Strong refs keep the scheduled tasks alive.
-        self._write_tail: asyncio.Task[None] | None = None
-        self._background: set[asyncio.Task[None]] = set()
 
     # ------------------------------------------------------------------
     # Blob serialization and hydration
@@ -98,13 +133,12 @@ class NeutralBackedDb(InMemoryDb):
     # ------------------------------------------------------------------
 
     def _persist_row(self, session_id: str) -> None:
-        """Write the current row through the port from a sync context.
+        """Queue the current row for the serialized persistence worker.
 
-        On a worker thread the write runs to completion (`asyncio.run`). On
-        the event-loop thread it must not block: the in-memory row is already
-        updated, so the durable write is scheduled fire-and-forget on an
-        ordered chain. Callers that need a durable read preload the session
-        through the async surface first.
+        Sync callers (Agno mutations) must not block; the in-memory row is
+        already updated. Serializing now captures the snapshot that is later
+        written, and the single worker preserves submission order so an older
+        snapshot can never land after a newer one.
         """
         if self.persistence is None:
             return
@@ -112,32 +146,14 @@ class NeutralBackedDb(InMemoryDb):
         if state_json is None:
             return
 
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            asyncio.run(self.persistence.save_harness_state(session_id, state_json))
+        future = _submit_save(self.persistence, session_id, state_json)
+        future.add_done_callback(self._on_save_done)
+
+    def _on_save_done(self, future: Future[None]) -> None:
+        """Surface background write failures instead of losing them."""
+        if future.cancelled():
             return
-
-        previous = self._write_tail
-        save = self.persistence.save_harness_state(session_id, state_json)
-
-        async def write() -> None:
-            if previous is not None:
-                with suppress(Exception):
-                    await previous
-            await save
-
-        task = loop.create_task(write())
-        self._write_tail = task
-        self._background.add(task)
-        task.add_done_callback(self._on_write_done)
-
-    def _on_write_done(self, task: asyncio.Task[None]) -> None:
-        """Retire a background write and surface its failure (never silent)."""
-        self._background.discard(task)
-        if task.cancelled():
-            return
-        error = task.exception()
+        error = future.exception()
         if error is not None:
             _logger.warning("[%s] harness-state write failed: %s", self.label, error)
 
@@ -153,24 +169,21 @@ class NeutralBackedDb(InMemoryDb):
         self._hydrate_row(session_id, state_json)
 
     async def persist_now(self, session_id: str) -> None:
-        """Await the durable write of the session row (flush pending writes).
+        """Await the durable write of the session row (flush earlier writes).
 
         Called at the pause seam so the persist-before-surface rule covers the
         harness-internal blob as well as the platform-facing rows: a crash
-        after the pause is surfaced can never lose the paused run.
+        after the pause is surfaced can never lose the paused run. The shared
+        single worker runs this snapshot after every earlier queued write, and
+        `await` may be used from any event loop.
         """
         if self.persistence is None or session_id not in self._sessions:
             return
-        await self._pending_background()
         state_json = self._serialize_row(session_id)
         if state_json is None:
             return
-        await self.persistence.save_harness_state(session_id, state_json)
-
-    async def _pending_background(self) -> None:
-        """Await any fire-and-forget persistence tasks already scheduled."""
-        if self._background:
-            await asyncio.gather(*self._background, return_exceptions=True)
+        future = _submit_save(self.persistence, session_id, state_json)
+        await asyncio.wrap_future(future)
 
     # ------------------------------------------------------------------
     # Sync overrides (what agno actually calls)

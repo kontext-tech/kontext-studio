@@ -27,8 +27,13 @@ instead.
 
 ### First launch of the unsigned beta
 
-The current beta is not yet notarized by Apple. On first launch macOS may say it
-cannot verify the app. Do one of these:
+The current beta is not yet notarized by Apple. On first launch macOS may say:
+
+> Apple could not verify “Kontext Studio” is free of malware that may harm
+> your Mac or compromise your privacy.
+
+Install the app in **Applications** before opening it; running it from the
+mounted disk image triggers the same warning. Then do one of these:
 
 - Open **System Settings → Privacy & Security**, scroll down, and click
   **Open Anyway** next to Kontext Studio. Try again within about an hour.
@@ -39,7 +44,7 @@ xattr -dr com.apple.quarantine "/Applications/Kontext Studio.app"
 ```
 
 Only use these steps for an app downloaded from this repository's Releases
-page.
+page. The DMG also includes a **Read Me First** file with these steps.
 
 ## First run
 
