@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/ui",
-   "version": "0.263.0",
+   "version": "0.263.1",
    "type": "module",
    "description": "Generic UI facade extracted from shared components",
    "license": "MIT",
