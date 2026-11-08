@@ -198,53 +198,160 @@ hero:
     - text: Developer guide
       link: develop/
       icon: open-book
+      variant: secondary
 ---
 
-<figure class="home-demo">
-  <video
-    src="media/chat-demo.mp4"
-    poster="media/chat-demo-poster.png"
-    width="1200"
-    height="750"
-    autoplay
-    loop
-    muted
-    playsinline
-    aria-label="A chat answer with a revenue chart artifact open beside it"
-  ></video>
-  <img
-    class="home-demo-poster"
-    src="media/chat-demo-poster.png"
-    alt="A chat answer with a revenue-by-country chart open beside it."
-    width="1200"
-    height="750"
-  />
-  <figcaption>Ask a question in plain language. The agent returns its answer, the tool calls it used, and a chart you can inspect.</figcaption>
-</figure>
+<div class="home-shell">
+  <figure class="home-demo">
+    <div class="home-demo-frame">
+      <div class="home-demo-chrome" aria-hidden="true">
+        <span class="home-demo-dot"></span>
+        <span class="home-demo-dot"></span>
+        <span class="home-demo-dot"></span>
+        <span class="home-demo-address"></span>
+      </div>
+      <video
+        id="home-demo-video"
+        src="media/chat-notebook-light.mp4"
+        poster="media/chat-notebook-light-poster.png"
+        data-light-src="media/chat-notebook-light.mp4"
+        data-dark-src="media/chat-notebook-dark.mp4"
+        data-light-poster="media/chat-notebook-light-poster.png"
+        data-dark-poster="media/chat-notebook-dark-poster.png"
+        width="1200"
+        height="900"
+        autoplay
+        loop
+        muted
+        playsinline
+        aria-label="A chat answer beside the SQL, chart, and Python notebook it produced"
+      ></video>
+      <img
+        id="home-demo-poster"
+        src="media/chat-notebook-light-poster.png"
+        data-light-src="media/chat-notebook-light-poster.png"
+        data-dark-src="media/chat-notebook-dark-poster.png"
+        alt="A chat answer beside the SQL, chart, and Python notebook it produced"
+        class="home-demo-poster"
+        width="1200"
+        height="900"
+      />
+    </div>
+    <figcaption>Ask a question. The agent returns the SQL, chart, and reproducible notebook.</figcaption>
+  </figure>
 
-<div class="home-steps">
-  <a class="home-step" href="${connectHref}">
-    <span class="home-step-number">01</span>
-    <strong>Connect</strong>
-    <span>Install locally, then connect files, databases, and a model provider.</span>
-  </a>
-  <a class="home-step" href="user-guide/work-with-notebooks/">
-    <span class="home-step-number">02</span>
-    <strong>Analyze</strong>
-    <span>Ask questions, write SQL, and build notebooks, charts, and Python.</span>
-  </a>
-  <a class="home-step" href="user-guide/chart-results/">
-    <span class="home-step-number">03</span>
-    <strong>Keep</strong>
-    <span>Save the SQL, charts, and notebooks the agents produce, with results stored in the document.</span>
-  </a>
+  <section class="home-section" aria-labelledby="home-features-title">
+    <header class="home-section-head">
+      <span class="home-eyebrow">What you can do</span>
+      <h2 id="home-features-title">One workspace from question to reproducible answer.</h2>
+      <p>Agents plan the work, query your sources, and leave behind SQL, charts, notebooks, and Python you can inspect and rerun.</p>
+    </header>
+    <div class="home-feature-grid">
+      <a class="home-feature" href="user-guide/chat-with-an-agent/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.9 8.9 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg>
+        </span>
+        <strong>Agent chat</strong>
+        <span>A coordinator delegates to SQL, chart, notebook, and Python specialists, with every tool call visible.</span>
+      </a>
+      <a class="home-feature" href="user-guide/work-with-notebooks/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5v-13Z"/><path d="M8 3v18"/></svg>
+        </span>
+        <strong>Reproducible notebooks</strong>
+        <span>Mix prose, SQL, Python, charts, tables, and diagrams in one document that saves its results.</span>
+      </a>
+      <a class="home-feature" href="user-guide/connect-a-data-source/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        </span>
+        <strong>SQL and your sources</strong>
+        <span>Query the managed local lakehouse plus DuckDB, SQLite, PostgreSQL, and MySQL connections.</span>
+      </a>
+      <a class="home-feature" href="user-guide/chart-results/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>
+        </span>
+        <strong>Charts</strong>
+        <span>Turn a result into a saved chart with its data, configuration, and editor kept together.</span>
+      </a>
+      <a class="home-feature" href="user-guide/python-and-data-frames/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/></svg>
+        </span>
+        <strong>Python and data frames</strong>
+        <span>Run Python blocks that load SQL results by alias, without re-querying the source.</span>
+      </a>
+      <a class="home-feature" href="user-guide/connect-a-model-provider/">
+        <span class="home-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.4 3 7.6 7 10 4-2.4 7-5.6 7-10V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.4-3.6"/></svg>
+        </span>
+        <strong>Local-first and your models</strong>
+        <span>Run the app, API, worker, and kernels on your machine; bring Ollama, LM Studio, or a cloud provider.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-quickstart" aria-labelledby="home-quickstart-title">
+    <div class="home-quickstart-copy">
+      <span class="home-eyebrow">Quick start</span>
+      <h2 id="home-quickstart-title">Run it on your machine in two commands.</h2>
+      <p>Install from PyPI, start the local server, and open the workspace. Your files, project database, and kernels stay on your machine.</p>
+      <a class="home-button" href="${connectHref}">Read the install guide</a>
+    </div>
+    <div class="home-terminal" aria-label="Terminal commands">
+      <div class="home-terminal-bar" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <pre><code><span class="home-terminal-prompt">$</span> uv tool install kontext-studio
+<span class="home-terminal-prompt">$</span> kontext serve</code></pre>
+    </div>
+  </section>
+
+  <nav class="home-links" aria-label="Documentation">
+    <a class="home-link" href="user-guide/">User guide <span aria-hidden="true">→</span></a>
+    <a class="home-link" href="develop/">Developer guide <span aria-hidden="true">→</span></a>
+  </nav>
+
+  <div class="home-badge">
+    <a href="https://www.producthunt.com/products/kontext?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kontext-studio" target="_blank" rel="noopener noreferrer">
+      <img alt="Kontext Studio - AI-Native Data Analysis Workspace | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1307287&amp;theme=light&amp;t=1794024018734">
+    </a>
+  </div>
 </div>
 
-<div align="center">
-  <a href="https://www.producthunt.com/products/kontext?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kontext-studio" target="_blank" rel="noopener noreferrer">
-    <img alt="Kontext Studio - AI-Native Data Analysis Workspace | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1307287&amp;theme=light&amp;t=1794024018734">
-  </a>
-</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("home-demo-video");
+    const poster = document.getElementById("home-demo-poster");
+    if (!video || !poster) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) {
+      video.style.display = "none";
+      poster.style.display = "block";
+    }
+    const applyTheme = () => {
+      const dark = document.documentElement.dataset.theme === "dark";
+      const videoSrc = video.dataset[dark ? "darkSrc" : "lightSrc"];
+      const posterSrc = video.dataset[dark ? "darkPoster" : "lightPoster"];
+      if (video.getAttribute("src") !== videoSrc) {
+        video.src = videoSrc;
+        video.poster = posterSrc;
+        video.load();
+        if (!reduceMotion) void video.play().catch(() => {});
+      }
+      poster.src =
+        poster.dataset[dark ? "darkSrc" : "lightSrc"] || posterSrc;
+    };
+    applyTheme();
+    new MutationObserver(applyTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"]
+    });
+  });
+</script>
 `;
 
    fs.writeFileSync(path.join(contentRoot, "index.md"), body);
