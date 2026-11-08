@@ -1,3 +1,10 @@
+## ts-packages-v0.263.1 (2026-11-08)
+
+### Fix
+
+- persist paused agent runs and explain the Gatekeeper block (#23)
+- **desktop**: ship Apple Silicon DMGs only (#22)
+
 ## ts-packages-v0.263.0 (2026-11-08)
 
 ### Feat
