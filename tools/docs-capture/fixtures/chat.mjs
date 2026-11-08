@@ -24,5 +24,10 @@ export const CHAT_ARTIFACTS = [
       name: "monthly-revenue.dt",
       artifactType: "DataTable",
       title: "Monthly revenue"
+   },
+   {
+      name: "revenue-notebook.kontext",
+      artifactType: "Notebook",
+      title: "Revenue by country notebook"
    }
 ];
