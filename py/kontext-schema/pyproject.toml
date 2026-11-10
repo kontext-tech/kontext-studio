@@ -21,7 +21,7 @@ classifiers = [
 ]
 keywords = ["kontext", "schemas", "pydantic", "models"]
 dependencies = [
-  "pydantic>=2.14.1,<3.0.0",
+  "pydantic>=2.14.3,<3.0.0",
 ]
 
 [project.urls]

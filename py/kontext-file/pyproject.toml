@@ -28,7 +28,7 @@ dependencies = [
     "kontext-job",
     "kontext-schema",
     "kontext-storage",
-    "pyarrow>=26.0.0",
+    "pyarrow>=26.0.1",
 ]
 
 [project.urls]
