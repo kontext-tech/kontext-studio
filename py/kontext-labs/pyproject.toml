@@ -28,7 +28,7 @@ dependencies = [
     "kontext-agentic[inprocess]",
     "kontext-harness-agno",
     "kontext-schema",
-    "fastapi[standard]>=0.161.1",
+    "fastapi[standard]>=0.162.1",
     "uvicorn[standard]>=0.54.0",
     "rich>=15.0.0",
     "pyfiglet>=1.0.0",
