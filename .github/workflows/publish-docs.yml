@@ -114,13 +114,13 @@ jobs:
       id-token: write
     steps:
       - name: Download docs artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: docs-site-dist
           path: docs-site/dist
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ secrets.AWS_DEPLOYMENT_ROLE_ARN_GLOBAL }}
           aws-region: ${{ env.AWS_REGION }}
