@@ -26,13 +26,13 @@
       "@kontext-tech/app-runtime": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "antd": "^6.6.7",
+      "antd": "^6.7.0",
       "cronstrue": "^3.38.0",
       "dayjs": "^1.11.23",
       "react": "^19.3.1"
    },
    "devDependencies": {
-      "@types/node": "^26.6.5",
+      "@types/node": "^26.6.6",
       "@types/react": "^19.3.0",
       "typescript": "~6.0.3"
    },

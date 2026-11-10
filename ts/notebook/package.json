@@ -33,7 +33,7 @@
    ],
    "author": "Kontext Team",
    "dependencies": {
-      "@ant-design/x": "^2.9.0",
+      "@ant-design/x": "^2.10.0",
       "@codemirror/lang-python": "^6.2.1",
       "@codemirror/view": "^6.43.15",
       "@editorjs/delimiter": "^1.4.2",
@@ -53,22 +53,22 @@
       "@kontext-tech/theme": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
       "@uiw/react-codemirror": "^4.25.12",
-      "antd": "^6.6.7",
+      "antd": "^6.7.0",
       "react": "^19.3.1",
       "react-dom": "^19.3.1",
       "react-error-boundary": "^6.1.5",
       "zod": "^4.6.7",
-      "zustand": "^5.0.15"
+      "zustand": "^5.1.0"
    },
    "devDependencies": {
       "@types/jest": "^30.0.0",
-      "@types/node": "^26.6.5",
+      "@types/node": "^26.6.6",
       "@types/react": "^19.3.0",
       "@types/react-dom": "^19.3.0",
-      "eslint": "^10.13.0",
+      "eslint": "^10.14.0",
       "jest": "^30.5.2",
       "ts-jest": "^29.4.15",
-      "tsc-alias": "^1.9.8",
+      "tsc-alias": "^1.9.10",
       "typescript": "~6.0.3"
    },
    "peerDependencies": {

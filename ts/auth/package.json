@@ -23,12 +23,12 @@
       "@kontext-tech/host-api": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "antd": "^6.6.7",
+      "antd": "^6.7.0",
       "react": "^19.3.1"
    },
    "devDependencies": {
       "@types/react": "^19.3.0",
-      "react-router-dom": "^7.18.4",
+      "react-router-dom": "^7.18.5",
       "typescript": "~6.0.3"
    },
    "peerDependencies": {

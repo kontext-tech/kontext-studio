@@ -24,7 +24,7 @@
       "@kontext-tech/identity": "workspace:*",
       "@kontext-tech/app-runtime": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
-      "antd": "^6.6.7",
+      "antd": "^6.7.0",
       "react": "^19.3.1"
    },
    "devDependencies": {

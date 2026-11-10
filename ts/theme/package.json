@@ -21,7 +21,7 @@
    "dependencies": {
       "@kontext-tech/common": "workspace:*",
       "@kontext-tech/icons": "workspace:*",
-      "antd": "^6.6.7",
+      "antd": "^6.7.0",
       "react": "^19.3.1"
    },
    "peerDependencies": {
@@ -29,7 +29,7 @@
       "react": ">=18.3.1"
    },
    "devDependencies": {
-      "@types/node": "^26.6.5",
+      "@types/node": "^26.6.6",
       "@types/react": "^19.3.0",
       "typescript": "~6.0.3"
    },
