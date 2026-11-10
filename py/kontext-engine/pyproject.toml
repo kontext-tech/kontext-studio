@@ -29,7 +29,7 @@ dependencies = [
     "pytz>=2025.2",
     "sqlalchemy>=2.1.6",
     "kontext-schema",
-    "psycopg[binary]>=3.3.6",
+    "psycopg[binary]>=3.3.8",
     "pymysql>=1.2.3",
     "pyodbc>=5.2.0",
     "oracledb>=26.0.0",
