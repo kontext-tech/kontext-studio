@@ -17,7 +17,6 @@ class UpdateUserCredentialsRequest(SchemaModel):
 
     model_config = ConfigDict(
         extra="forbid",
-        regex_engine="python-re",
     )
     new_email: Annotated[
         str | None,
@@ -28,12 +27,6 @@ class UpdateUserCredentialsRequest(SchemaModel):
         ),
     ] = None
     new_password: Annotated[
-        SecretStr | None,
-        Field(
-            alias="newPassword",
-            max_length=100,
-            min_length=8,
-            pattern='^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?""{}|<>])',
-        ),
+        SecretStr | None, Field(alias="newPassword", max_length=100, min_length=8)
     ] = None
     old_password: Annotated[SecretStr | None, Field(alias="oldPassword", min_length=1)] = None
