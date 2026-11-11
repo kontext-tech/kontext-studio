@@ -28,7 +28,7 @@
    },
    "dependencies": {
       "@ant-design/icons": "^6.3.4",
-      "@ant-design/x": "^2.9.0",
+      "@ant-design/x": "^2.10.0",
       "@kontext-tech/account": "workspace:*",
       "@kontext-tech/auth": "workspace:*",
       "@kontext-tech/chart": "workspace:*",
@@ -48,26 +48,26 @@
       "@kontext-tech/site": "workspace:*",
       "@kontext-tech/theme": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "@tanstack/react-query": "^5.104.5",
-      "antd": "^6.6.7",
+      "@tanstack/react-query": "^5.107.1",
+      "antd": "^6.7.0",
       "dayjs": "^1.11.23",
       "react": "^19.3.1",
       "react-dom": "^19.3.1",
-      "react-router-dom": "^7.18.4"
+      "react-router-dom": "^7.18.5"
    },
    "devDependencies": {
       "@kontext-tech/build-config": "workspace:*",
-      "@types/node": "^26.6.5",
+      "@types/node": "^26.6.6",
       "@types/react": "^19.3.0",
       "@types/react-dom": "^19.3.0",
-      "eslint": "^10.13.0",
+      "eslint": "^10.14.0",
       "prettier": "^3.9.10",
-      "rollup-plugin-visualizer": "^7.1.1",
-      "sass-embedded": "^1.106.0",
+      "rollup-plugin-visualizer": "^7.1.2",
+      "sass-embedded": "^1.108.1",
       "terser": "^5.51.2",
       "typescript": "~6.0.3",
-      "vite": "^8.3.5",
-      "vite-plugin-compression2": "^2.5.3",
+      "vite": "^8.3.6",
+      "vite-plugin-compression2": "^2.5.4",
       "vite-plugin-svgr": "^5.2.0"
    }
 }

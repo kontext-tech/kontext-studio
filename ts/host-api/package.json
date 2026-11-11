@@ -22,7 +22,7 @@
       "@kontext-tech/schema": "workspace:*"
    },
    "devDependencies": {
-      "@types/node": "^26.6.5",
+      "@types/node": "^26.6.6",
       "typescript": "~6.0.3"
    },
    "files": [

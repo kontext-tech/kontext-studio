@@ -57,12 +57,12 @@
    },
    "devDependencies": {
       "@types/jest": "^30.0.0",
-      "@types/node": "^26.6.5",
-      "eslint": "^10.13.0",
+      "@types/node": "^26.6.6",
+      "eslint": "^10.14.0",
       "jest": "^30.5.2",
       "openapi-typescript": "^7.13.0",
       "ts-jest": "^29.4.15",
-      "tsc-alias": "^1.9.8",
+      "tsc-alias": "^1.9.10",
       "tsx": "^4.23.13",
       "typescript": "~6.0.3"
    },
