@@ -20,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "fastapi[standard]>=0.161.1",
+    "fastapi[standard]>=0.162.1",
     "uvicorn[standard]>=0.54.0",
     "kontext-account",
     "kontext-agent",
