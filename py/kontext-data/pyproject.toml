@@ -23,7 +23,7 @@ dependencies = [
     "kontext-agent",
     "kontext-common",
     "kontext-schema",
-    "sqlalchemy>=2.1.6",
+    "sqlalchemy>=2.1.8",
 ]
 
 [project.urls]
