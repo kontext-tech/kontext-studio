@@ -33,7 +33,7 @@ dependencies = [
     "pymysql>=1.2.3",
     "pyodbc>=5.2.0",
     "oracledb>=26.0.0",
-    "teradatasql>=20.0.0.72",
+    "teradatasql>=20.0.0.75",
     "teradatasqlalchemy>=20.0.0.7",
 ]
 
