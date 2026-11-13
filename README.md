@@ -134,9 +134,3 @@ Kontext Studio is released under the [MIT License](LICENSE). Third-party
 dependencies and their licenses are listed in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). See [TERMS.md](TERMS.md) for
 the AI usage terms and [PRIVACY.md](PRIVACY.md) for the privacy notice.
-
-<p align="center">
-  <a href="https://www.producthunt.com/products/kontext?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kontext-studio" target="_blank" rel="noopener noreferrer">
-    <img alt="Kontext Studio - AI-Native Data Analysis Workspace | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1307287&amp;theme=light&amp;t=1794024018734">
-  </a>
-</p>

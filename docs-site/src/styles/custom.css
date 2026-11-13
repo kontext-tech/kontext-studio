@@ -330,11 +330,6 @@
    color: var(--sl-color-accent);
 }
 
-.home-badge {
-   margin-top: 3rem;
-   text-align: center;
-}
-
 @media (max-width: 50rem) {
    .home-quickstart {
       grid-template-columns: 1fr;
