@@ -2,8 +2,8 @@
 
 Kontext Studio is a local-first, open-source conversational analytics workspace.
 Connect your files and databases, bring your own model, and chat with your
-data — every answer comes with the SQL, charts, Python code, and notebook that
-produced it, reproducible on your machine.
+data — every answer comes with the SQL, charts, Python code, or notebooks
+behind it, ready to inspect and re-run on your machine.
 
 This guide is task-oriented: each page covers one workflow, with the
 screens and controls you need. Start with installation if you are new, or

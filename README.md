@@ -8,9 +8,9 @@
 <h1 align="center">Kontext Studio</h1>
 
 **Kontext Studio is an open-source, local-first conversational analytics
-workspace.** Chat with your data — every answer comes with the SQL, charts,
-Python code, and notebook that produced it. Reproducible, with the model you
-choose — local or cloud — and the workspace stays on your machine.
+workspace.** A team of agents, powered by the model you prefer, queries your
+files and databases — then returns the SQL, charts, Python code, or notebooks
+behind every answer, ready to inspect and re-run.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -20,7 +20,7 @@ choose — local or cloud — and the workspace stays on your machine.
   </a>
 </p>
 
-<p align="center"><sub>Ask a question. The answer comes with the SQL, chart, Python code, and reproducible notebook.</sub></p>
+<p align="center"><sub>Ask a question. The answer comes with the SQL, chart, Python code, or reproducible notebook.</sub></p>
 
 ## What you get
 

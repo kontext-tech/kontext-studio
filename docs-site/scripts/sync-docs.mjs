@@ -185,7 +185,7 @@ function writeHomePage() {
 
    const body = `---
 title: Home
-description: "Open-source, local-first conversational analytics. Chat with your data — every answer comes with the SQL, charts, Python code, and notebook that produced it. Reproducible, with the model you choose."
+description: "Kontext is a local-first conversational analytics workspace. Chat with your data on the model you prefer and get the SQL, charts, Python code, or notebooks behind each answer — reproducible, ready to re-run."
 ${banner}template: splash
 hero:
   title: Kontext Studio Docs
@@ -237,14 +237,14 @@ hero:
         height="900"
       />
     </div>
-    <figcaption>Ask a question. The answer comes with the SQL, chart, Python code, and reproducible notebook.</figcaption>
+    <figcaption>Ask a question. The answer comes with the SQL, chart, Python code, or reproducible notebook.</figcaption>
   </figure>
 
   <section class="home-section" aria-labelledby="home-features-title">
     <header class="home-section-head">
       <span class="home-eyebrow">What you can do</span>
       <h2 id="home-features-title">One workspace from question to answer you can re-run.</h2>
-      <p>Agents plan the work, query your sources, and leave behind SQL, charts, Python code, and notebooks you can inspect and reproduce.</p>
+      <p>Agents plan the work, query your sources, and leave behind SQL, charts, Python code, or notebooks you can inspect and re-run.</p>
     </header>
     <div class="home-feature-grid">
       <a class="home-feature" href="user-guide/chat-with-an-agent/">
