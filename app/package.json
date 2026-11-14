@@ -1,7 +1,7 @@
 {
    "name": "@kontext-tech/app",
    "private": true,
-   "version": "0.263.1",
+   "version": "0.264.0",
    "type": "module",
    "engines": {
       "node": ">=22.12.0"

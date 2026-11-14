@@ -1,6 +1,6 @@
 {
    "name": "@kontext-tech/chat",
-   "version": "0.263.1",
+   "version": "0.264.0",
    "type": "module",
    "description": "Shared chat state domain for Kontext",
    "license": "MIT",

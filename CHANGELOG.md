@@ -1,3 +1,15 @@
+## ts-packages-v0.264.0 (2026-11-14)
+
+### Feat
+
+- **release**: windows_upload input, restore windowsUpload desktop input (#35)
+- **desktop**: add Windows x64 NSIS installer lane to desktop release (#34)
+- **app**: prompt first-open Python environment setup (#33)
+
+### Refactor
+
+- naming consistency and structural cleanup (#32)
+
 ## ts-packages-v0.263.1 (2026-11-08)
 
 ### Fix

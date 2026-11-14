@@ -75,7 +75,7 @@ codegen = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.263.1"
+version = "0.264.0"
 version_scheme = "semver"
 tag_format = "ts-packages-v$version"
 major_version_zero = true
