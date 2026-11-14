@@ -26,6 +26,16 @@ on:
         required: false
         default: ""
         type: string
+      buildMacos:
+        description: "Build the macOS DMG"
+        required: false
+        default: true
+        type: boolean
+      buildWindows:
+        description: "Build the Windows installer"
+        required: false
+        default: true
+        type: boolean
   pull_request:
     paths:
       - "desktop/**"
@@ -96,22 +106,45 @@ jobs:
         shell: bash
         run: cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets -- -D warnings
 
+  matrix:
+    name: Select platforms
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - name: Select platforms
+        id: select
+        shell: bash
+        env:
+          MACOS: ${{ inputs.buildMacos }}
+          WINDOWS: ${{ inputs.buildWindows }}
+        run: |
+          set -euo pipefail
+          # macOS Intel would be unblocked by a lancedb x86_64 wheel; re-add
+          # a macos-15-intel entry alongside arm64 when that lands.
+          include="[]"
+          if [ "$MACOS" = "true" ] && [ "$WINDOWS" = "true" ]; then
+            include='[{"arch":"arm64","runner":"macos-15"},{"arch":"win-x64","runner":"windows-latest"}]'
+          elif [ "$MACOS" = "true" ]; then
+            include='[{"arch":"arm64","runner":"macos-15"}]'
+          elif [ "$WINDOWS" = "true" ]; then
+            include='[{"arch":"win-x64","runner":"windows-latest"}]'
+          else
+            echo "::error::Select at least one platform." >&2
+            exit 1
+          fi
+          echo "matrix=$(jq -nc --argjson include "$include" '{include: $include}')" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build ${{ matrix.arch }}
-    if: github.event_name == 'workflow_dispatch'
+    needs: matrix
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
     strategy:
       fail-fast: false
-      matrix:
-        # macOS Intel is blocked: lancedb has no macOS x86_64 wheel.
-        # Windows wheels all exist; desktop code paths already carry cfg gates.
-        include:
-          - arch: arm64
-            runner: macos-15
-          - arch: win-x64
-            runner: windows-latest
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     env:
       CARGO_INCREMENTAL: "0"
     steps:
