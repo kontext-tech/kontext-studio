@@ -185,11 +185,11 @@ function writeHomePage() {
 
    const body = `---
 title: Home
-description: "Kontext Studio documentation: install the local AI data workspace, connect sources and model providers, and work with agent chat, notebooks, charts, and jobs."
+description: "Kontext is a local-first conversational analytics workspace. Chat with your data on the model you prefer and get the SQL, charts, Python code, or notebooks behind each answer — reproducible, ready to re-run."
 ${banner}template: splash
 hero:
   title: Kontext Studio Docs
-  tagline: Ask your data in plain language. A team of agents returns SQL, charts, and reproducible notebooks — with your sources, your model, and your machine.
+  tagline: Chat with your data. Answers you can reproduce.
   actions:
     - text: ${primaryAction.text}
       link: ${primaryAction.link}
@@ -237,14 +237,14 @@ hero:
         height="900"
       />
     </div>
-    <figcaption>Ask a question. The agent returns the SQL, chart, and reproducible notebook.</figcaption>
+    <figcaption>Ask a question. The answer comes with the SQL, chart, Python code, or reproducible notebook.</figcaption>
   </figure>
 
   <section class="home-section" aria-labelledby="home-features-title">
     <header class="home-section-head">
       <span class="home-eyebrow">What you can do</span>
-      <h2 id="home-features-title">One workspace from question to reproducible answer.</h2>
-      <p>Agents plan the work, query your sources, and leave behind SQL, charts, notebooks, and Python you can inspect and rerun.</p>
+      <h2 id="home-features-title">One workspace from question to answer you can re-run.</h2>
+      <p>Agents plan the work, query your sources, and leave behind SQL, charts, Python code, or notebooks you can inspect and re-run.</p>
     </header>
     <div class="home-feature-grid">
       <a class="home-feature" href="user-guide/chat-with-an-agent/">

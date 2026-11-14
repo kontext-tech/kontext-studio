@@ -48,7 +48,7 @@ export default defineConfig({
       starlight({
          title: "Kontext Studio Docs",
          description:
-            "Kontext Studio documentation: install the local workspace, connect data and model providers, and work with notebooks, agents, and jobs.",
+            "Kontext Studio documentation: install the local-first conversational analytics workspace, connect data and model providers, and work with notebooks, agents, and jobs.",
          logo: {
             light: "./src/assets/logo.svg",
             dark: "./src/assets/logo-dark.svg",
