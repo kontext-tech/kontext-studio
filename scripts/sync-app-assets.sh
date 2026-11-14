@@ -29,7 +29,7 @@ else
 fi
 
 APP_DIST="$LABS_DIR/app/dist"
-LABS_DIST_TARGET="$LABS_DIR/py/kontext-labs/src/kontext/labs/_app_dist"
+LABS_DIST_TARGET="$LABS_DIR/py/kontext-studio/src/kontext/studio/_app_dist"
 
 if [ -d "$APP_DIST" ]; then
     echo "📦 Syncing built app/dist into kontext-studio package..."

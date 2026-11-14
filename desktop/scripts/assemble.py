@@ -35,7 +35,7 @@ WHEEL_DIR = REPO_ROOT / "dist" / "desktop"
 CACHE_DIR = DESKTOP_DIR / ".cache" / "python-build-standalone"
 
 _SMOKE_IMPORTS = (
-    "import kontext.labs, kontext.api, kontext.runtime;"
+    "import kontext.studio, kontext.api, kontext.runtime;"
     "import duckdb, pyarrow, pyiceberg, lancedb, fastembed, tantivy;"
     "print('kontext runtime ok')"
 )

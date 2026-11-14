@@ -32,7 +32,7 @@
             "py/kontext-file/src",
             "py/kontext-harness-agno/src",
             "py/kontext-job/src",
-            "py/kontext-labs/src",
+            "py/kontext-studio/src",
             "py/kontext-llm/src",
             "py/kontext-okf/src",
             "py/kontext-project/src",

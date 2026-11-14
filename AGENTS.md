@@ -21,7 +21,7 @@ Tool-specific entry points are thin adapters with no unique content:
   `docs/development/environment.md` and run `pnpm run validate:env-docs`.
 - Never hand-edit a package version. All `ts/*` packages plus Python packages
   and the root `package.json` share one lockstep version owned by
-  `[tool.commitizen]` in `pyproject.toml`; bump with `pnpm run version:labs`.
+  `[tool.commitizen]` in `pyproject.toml`; bump with `pnpm run version:studio`.
 - Follow Conventional Commits (see `.github/skills/commit-message`).
 - Shared TS packages must not import app-local modules. The `@/` alias is for
   `app/src` only; packages under `ts/` import each other via `@kontext-tech/*`.
@@ -89,7 +89,7 @@ A system map (processes, layers, data flow, and technology) lives in
 - `ts/` holds shared workspace packages. `ts/schema` is the contract hub
   (Zod-first source of truth + committed OpenAPI specs); changes there cascade
   into the generated API types and Pydantic models (see `.github/skills/contract-pipeline`).
-- `py/kontext-api` is the unified FastAPI backend. `py/kontext-labs` is the
+- `py/kontext-api` is the unified FastAPI backend. `py/kontext-studio` is the
   local server/CLI composition root reusing the same routers.
 - Python layering: `kontext-common` is the leaf contract layer (imports only
   `kontext-schema`); `kontext-query` orchestrates engines only through the

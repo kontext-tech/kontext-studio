@@ -20,7 +20,7 @@ TOP_LEVEL_MODULE_TO_PACKAGE = {
     "file": "kontext-file",
     "jobs": "kontext-job",
     "kernel": "kontext-kernel",
-    "labs": "kontext-studio",
+    "studio": "kontext-studio",
     "llm": "kontext-llm",
     "okf": "kontext-okf",
     "project": "kontext-project",

@@ -11,7 +11,7 @@ kept in sync):
 - Verify before finishing: run the affected package's tests, or its
   lint/typecheck/build when it has no tests. State what you ran and did not run.
 - Never hand-edit a package version; all packages share one lockstep version
-  bumped with `pnpm run version:labs`.
+  bumped with `pnpm run version:studio`.
 - Follow Conventional Commits (`.github/skills/commit-message`).
 - Shared TS packages must not import app-local modules; internal Python DTOs
   belong in `kontext-common` while wire payloads live in the `ts/schema`

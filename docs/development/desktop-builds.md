@@ -159,13 +159,13 @@ them.
 
 ## Verification
 
-- `uv run --package kontext-studio pytest py/kontext-labs/tests`
+- `uv run --package kontext-studio pytest py/kontext-studio/tests`
 - `uv run --package kontext-runtime pytest py/kontext-runtime/tests`
 - `pnpm run desktop:check`
 - `cargo test --manifest-path desktop/src-tauri/Cargo.toml`
 - Launch the assembled app on a Mac without Python: setup, create a project,
   upload a CSV, run SQL, chart it, chat, run a Python block, download a file,
-  open an external link, quit, and confirm no `kontext.labs` process remains.
+  open an external link, quit, and confirm no `kontext.studio` process remains.
 
 ## Troubleshooting
 

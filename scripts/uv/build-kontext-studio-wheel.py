@@ -229,7 +229,7 @@ def main() -> None:
         subprocess.run(["bash", str(sync_script)], cwd=ROOT_DIR, check=True)
 
     py_dir = ROOT_DIR / "py"
-    labs_pyproject_path = py_dir / "kontext-labs" / "pyproject.toml"
+    labs_pyproject_path = py_dir / "kontext-studio" / "pyproject.toml"
 
     if not labs_pyproject_path.is_file():
         print(f"❌ Error: {labs_pyproject_path} not found.", file=sys.stderr)
@@ -265,7 +265,7 @@ def main() -> None:
         copy_namespace_packages(py_dir, staged_src_kontext)
 
         # 2. Copy README.md and the license/notice files the wheel distributes.
-        labs_readme = py_dir / "kontext-labs" / "README.md"
+        labs_readme = py_dir / "kontext-studio" / "README.md"
         if labs_readme.is_file():
             shutil.copy2(labs_readme, staging_dir / "README.md")
         else:

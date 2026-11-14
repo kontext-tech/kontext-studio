@@ -2370,7 +2370,7 @@ requires-dist = [
 [[package]]
 name = "kontext-studio"
 version = "0.263.1"
-source = { editable = "py/kontext-labs" }
+source = { editable = "py/kontext-studio" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "kontext-account" },

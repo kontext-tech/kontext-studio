@@ -117,7 +117,7 @@ pushing the tag publishes.
 `release.yml` runs `uv run cz bump` for you. To do the same locally:
 
 ```bash
-pnpm run version:labs
+pnpm run version:studio
 git push --follow-tags
 ```
 
