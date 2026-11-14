@@ -242,11 +242,13 @@ def main() -> None:
             )
 
     # Sync app assets to the labs package
-    sync_script = ROOT_DIR / "scripts" / "sync-app-assets.sh"
+    sync_script = ROOT_DIR / "scripts" / "sync-app-assets.mjs"
     if sync_script.is_file():
         print("🔄 Running asset sync script...")
-        # as_posix: Git Bash on Windows cannot parse backslash-separated paths.
-        subprocess.run(["bash", sync_script.as_posix()], cwd=ROOT_DIR, check=True)
+        node = shutil.which("node")
+        if not node:
+            raise SystemExit("node not found. Install Node.js and retry.")
+        subprocess.run([node, str(sync_script)], cwd=ROOT_DIR, check=True)
 
     py_dir = ROOT_DIR / "py"
     labs_pyproject_path = py_dir / "kontext-studio" / "pyproject.toml"
