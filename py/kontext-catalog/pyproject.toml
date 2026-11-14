@@ -29,7 +29,6 @@ dependencies = [
     # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp).
     "pytz>=2025.2",
     "lancedb>=0.38.0",
-    "kontext-execution",
     "kontext-job",
     "markitdown[pdf]>=0.1.9",
     "openpyxl>=3.1.0",

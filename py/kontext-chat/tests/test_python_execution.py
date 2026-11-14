@@ -12,7 +12,7 @@ from kontext.chat.python_execution import (
     execute_chat_session_python_script,
 )
 from kontext.common.jobs.trigger_actor import chat_session_actor
-from kontext.execution import PythonExecutionServiceResult
+from kontext.jobs import PythonExecutionServiceResult
 from kontext.schema import (
     ArtifactType,
     ChatSessionArtifactModel,

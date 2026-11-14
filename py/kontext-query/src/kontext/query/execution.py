@@ -15,9 +15,9 @@ from kontext.data import (
     QueryHistoryDataService,
     QuerySessionDataService,
 )
-from kontext.execution.lifecycle import ExecutionLifecycleService
-from kontext.execution.polling import poll_job_run_completion
-from kontext.execution.scheduling import create_job_run_and_maybe_dispatch
+from kontext.jobs.job_run_dispatch import create_job_run_and_maybe_dispatch
+from kontext.jobs.lifecycle import ExecutionLifecycleService
+from kontext.jobs.polling import poll_job_run_completion
 from kontext.query.jobs.execute_query_job import ExecuteQueryJob, ExecuteQueryParams
 from kontext.schema import (
     ArtifactOrigin,

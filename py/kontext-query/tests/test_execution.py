@@ -130,7 +130,7 @@ async def test_create_query_execution_run_includes_session_scope() -> None:
 
     with (
         patch("kontext.data.JobDataService", return_value=job_service),
-        patch("kontext.execution.scheduling.JobRunDataService", return_value=job_run_service),
+        patch("kontext.jobs.job_run_dispatch.JobRunDataService", return_value=job_run_service),
         patch("kontext.jobs.dispatch.build_job_execution_message", return_value=message),
         patch("kontext.query.execution._upsert_query_execution_context", new=AsyncMock()),
     ):

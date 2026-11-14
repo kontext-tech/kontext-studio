@@ -14,8 +14,8 @@ from kontext.common.python_execution.helpers import (
     extract_kontext_load_data_ids,
     is_kontext_data_alias,
 )
-from kontext.execution import PythonExecutionService
 from kontext.file.notebook.editor import NotebookEditor
+from kontext.jobs import PythonExecutionService
 from kontext.schema import (
     ArtifactType,
     CodeExecutionOutput,

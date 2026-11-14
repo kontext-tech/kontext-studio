@@ -16,7 +16,6 @@ TOP_LEVEL_MODULE_TO_PACKAGE = {
     "common": "kontext-common",
     "data": "kontext-data",
     "engine": "kontext-engine",
-    "execution": "kontext-execution",
     "file": "kontext-file",
     "jobs": "kontext-job",
     "kernel": "kontext-kernel",
@@ -159,9 +158,10 @@ def test_query_does_not_depend_on_concrete_engine() -> None:
     assert "kontext-engine" not in _collect_imports("kontext-query")
 
 
-def test_execution_does_not_depend_on_query_or_engine() -> None:
-    assert "kontext-query" not in _collect_imports("kontext-execution")
-    assert "kontext-engine" not in _collect_imports("kontext-execution")
+def test_jobs_do_not_depend_on_query_or_engine() -> None:
+    """The merged jobs package must not pull orchestration targets into itself."""
+    assert "kontext-query" not in _collect_imports("kontext-job")
+    assert "kontext-engine" not in _collect_imports("kontext-job")
 
 
 def _cyclic_edges() -> set[tuple[str, str]]:
@@ -298,7 +298,7 @@ def test_only_the_composition_layer_imports_the_engine() -> None:
 # runtime provider to route through.
 KNOWN_EXTERNAL_KERNEL_OFFENDERS: frozenset[str] = frozenset(
     {
-        "py/kontext-execution/src/kontext/execution/runs.py",
+        "py/kontext-job/src/kontext/jobs/runs.py",
     }
 )
 
@@ -442,7 +442,6 @@ def test_only_the_harness_adapter_imports_a_harness_sdk_in_tests() -> None:
 # SQLite stack and breaks any hosted (API-backed) worker composition.
 JOB_DEFINITION_DIRS = (
     PY_ROOT / "kontext-job" / "src" / "kontext" / "jobs" / "definitions",
-    PY_ROOT / "kontext-execution" / "src" / "kontext" / "execution" / "job_definitions",
     PY_ROOT / "kontext-query" / "src" / "kontext" / "query" / "jobs",
     PY_ROOT / "kontext-catalog" / "src" / "kontext" / "catalog" / "jobs",
     PY_ROOT / "kontext-file" / "src" / "kontext" / "file" / "jobs",

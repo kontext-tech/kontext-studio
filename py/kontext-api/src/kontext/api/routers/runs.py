@@ -11,7 +11,7 @@ from fastapi.responses import StreamingResponse
 
 from kontext.auth import JobPermissions, QuerySessionPermissions
 from kontext.common.messaging import IQueueClient
-from kontext.execution.runs import ExecutionRunService
+from kontext.jobs.runs import ExecutionRunService
 from kontext.schema import (
     ExecutionEventModel,
     ExecutionLogModel,

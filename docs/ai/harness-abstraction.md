@@ -195,5 +195,5 @@ Loop-safety rules the facade guarantees (see `storage.py`):
   (`kontext/harness/agno/models.py`). Provider/user configuration is documented in
   [Model Provider Configuration](model-provider-configuration.md).
 - `BaseAgenticSystem` dropped the Agno-isms `arun` and `aprint_response`.
-- `kontext-execution` resolves the recorded engine name from
+- `kontext-job` resolves the recorded engine name from
   `KONTEXT_AGENT_FRAMEWORK` rather than a hardcoded `"agno"`.

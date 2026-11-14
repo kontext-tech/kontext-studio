@@ -24,7 +24,7 @@ dependencies = [
     "kontext-auth",
     "kontext-common",
     "kontext-data",
-    "kontext-execution",
+    "kontext-job",
     "kontext-llm",
     "kontext-schema",
 ]

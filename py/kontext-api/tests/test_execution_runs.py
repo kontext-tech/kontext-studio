@@ -14,8 +14,8 @@ from kontext.api.routers.query_sessions import SESSION_EXECUTE_AUTH
 from kontext.api.routers.runs import RUN_READ_AUTH, RUN_WRITE_AUTH
 from kontext.api.services.execution_runs import ResolvedExecutionRunInput
 from kontext.common.jobs.trigger_actor import user_actor
-from kontext.execution.lifecycle import ExecutionLifecycleService
-from kontext.execution.runs import (
+from kontext.jobs.lifecycle import ExecutionLifecycleService
+from kontext.jobs.runs import (
     infer_execution_run_kind,
     map_job_run_status,
     project_execution_run,
@@ -151,7 +151,7 @@ def test_get_run_endpoint_projects_job_run(client: TestClient):
 
     with (
         patch(
-            "kontext.execution.runs.JobRunDataService.get_run_by_id_async",
+            "kontext.jobs.runs.JobRunDataService.get_run_by_id_async",
             new=AsyncMock(
                 return_value=JobRunModel(
                     id=run_id,
@@ -170,7 +170,7 @@ def test_get_run_endpoint_projects_job_run(client: TestClient):
             ),
         ),
         patch(
-            "kontext.execution.runs.ExecutionRunContextDataService.get_by_run_id_async",
+            "kontext.jobs.runs.ExecutionRunContextDataService.get_by_run_id_async",
             new=AsyncMock(return_value=None),
         ),
     ):
@@ -450,11 +450,11 @@ async def test_validate_run_input_request_resolves_persisted_context():
     service = ExecutionLifecycleService()
     with (
         patch(
-            "kontext.execution.lifecycle.ExecutionRunService.get_run_async",
+            "kontext.jobs.lifecycle.ExecutionRunService.get_run_async",
             new=AsyncMock(return_value=waiting_run),
         ),
         patch(
-            "kontext.execution.lifecycle.ExecutionRunContextDataService.get_by_run_id_async",
+            "kontext.jobs.lifecycle.ExecutionRunContextDataService.get_by_run_id_async",
             new=AsyncMock(return_value=run_context),
         ),
     ):
@@ -491,15 +491,15 @@ async def test_persist_agent_execution_event_enriches_pause_with_platform_run_id
     service = ExecutionLifecycleService()
     with (
         patch(
-            "kontext.execution.lifecycle.JobRunDataService.update_status_async",
+            "kontext.jobs.lifecycle.JobRunDataService.update_status_async",
             new=AsyncMock(),
         ),
         patch(
-            "kontext.execution.lifecycle.JobRunLogDataService.add_log_async",
+            "kontext.jobs.lifecycle.JobRunLogDataService.add_log_async",
             new=AsyncMock(),
         ),
         patch(
-            "kontext.execution.lifecycle.ExecutionRunContextDataService.upsert_context_async",
+            "kontext.jobs.lifecycle.ExecutionRunContextDataService.upsert_context_async",
             new=AsyncMock(),
         ),
     ):

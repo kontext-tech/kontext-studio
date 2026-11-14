@@ -135,7 +135,6 @@
       "py/kontext-common/src",
       "py/kontext-data/src",
       "py/kontext-engine/src",
-      "py/kontext-execution/src",
       "py/kontext-file/src",
       "py/kontext-job/src",
       "py/kontext-agentic/src",

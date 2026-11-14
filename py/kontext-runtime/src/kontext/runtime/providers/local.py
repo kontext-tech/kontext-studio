@@ -36,7 +36,7 @@ from kontext.engine.adapters import (
     LocalExecutionRunContextService,
     LocalJobRunService,
 )
-from kontext.execution.scheduling import handle_run_status_change_hook
+from kontext.jobs.job_run_dispatch import handle_run_status_change_hook
 from kontext.llm import LanguageModelService
 from kontext.project import ProjectService
 from kontext.query.in_process_query_session_service import (

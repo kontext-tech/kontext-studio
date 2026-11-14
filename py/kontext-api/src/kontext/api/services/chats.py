@@ -62,14 +62,14 @@ from kontext.data import (
     ExecutionRunContextDataService,
     JobRunDataService,
 )
-from kontext.execution import (
+from kontext.file import create_file_service, infer_file_type
+from kontext.file.lakehouse_ingest_models import LakehouseIngestResultData
+from kontext.jobs import (
     ExecutionRunService,
     extract_workflow_projection_metadata,
     parse_engine_metadata_json,
 )
-from kontext.execution.runs import map_job_run_status
-from kontext.file import create_file_service, infer_file_type
-from kontext.file.lakehouse_ingest_models import LakehouseIngestResultData
+from kontext.jobs.runs import map_job_run_status
 from kontext.schema import (
     ArtifactListResponse,
     ChatAttachmentContext,

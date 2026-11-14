@@ -29,7 +29,7 @@ flowchart TB
     API["kontext-api<br/>HTTP / SSE / WS transport"]
     Labs["kontext-studio<br/>local CLI + server shell"]
     Runtime["kontext-runtime<br/>deployment composition"]
-    Domain["Domain packages<br/>query, engine, data, storage, file, project,<br/>job, execution, chat, agentic, catalog, ..."]
+    Domain["Domain packages<br/>query, engine, data, storage, file, project,<br/>job, chat, agentic, catalog, ..."]
     Contracts["kontext-common + kontext-schema<br/>contracts and generated models"]
     Kernel["kontext-kernel<br/>separate Python process"]
 
@@ -51,7 +51,7 @@ flowchart TB
 | `kontext-api` | Routers, dependencies, request/auth context, thin application services | [Python package boundaries](python-package-boundaries.md) |
 | `kontext-studio` | Installed local CLI/server composition, process supervision, developer workflows | [Local operations](local-operations.md) |
 | `kontext-runtime` | Provider/backend selection and deployment-profile composition | [Python package boundaries](python-package-boundaries.md) |
-| Domain packages | Query, compute, persistence, storage, files, projects, jobs, execution, chat, agents, catalog, knowledge | [Python package boundaries](python-package-boundaries.md) |
+| Domain packages | Query, compute, persistence, storage, files, projects, jobs, chat, agents, catalog, knowledge | [Python package boundaries](python-package-boundaries.md) |
 | `kontext-common` / `kontext-schema` | Protocols, shared contracts, generated Pydantic models | [Contract pipeline](generated-code.md) |
 | `kontext-kernel` | Separate-process Python execution, wire protocol, manager/pool | [Python package boundaries](python-package-boundaries.md) |
 

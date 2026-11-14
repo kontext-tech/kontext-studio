@@ -9,7 +9,7 @@ from kontext.common.jobs.trigger_actor import format_trigger_actor
 from kontext.common.messaging import IQueueClient
 from kontext.common.project_scoped import ProjectScopedService
 from kontext.data import CatalogDataService
-from kontext.execution.scheduling import create_queued_job_run_and_maybe_dispatch
+from kontext.jobs.job_run_dispatch import create_queued_job_run_and_maybe_dispatch
 from kontext.jobs.service import JobService
 from kontext.schema import CatalogConnection, CatalogConnectionKind, TriggerActorModel
 

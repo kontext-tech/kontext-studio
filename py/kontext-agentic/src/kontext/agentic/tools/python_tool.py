@@ -9,7 +9,7 @@ from kontext.chat import execute_chat_session_python_script
 from kontext.common.jobs.trigger_actor import agent_actor
 from kontext.common.protocols import AIToolkitServiceProviderProtocol, IFileServiceProtocol
 from kontext.common.python_execution.policy import WHITELISTED_MODULES, validate_python_code
-from kontext.execution import (
+from kontext.jobs import (
     NotebookPythonExecutionError,
     NotebookPythonExecutionService,
     PythonExecutionService,

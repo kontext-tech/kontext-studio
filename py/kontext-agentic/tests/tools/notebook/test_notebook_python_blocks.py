@@ -22,8 +22,8 @@ from kontext.agentic.tools.notebook_tool import NotebookTools
 from kontext.agentic.tools.python_tool import NotebookPythonTools
 from kontext.common.jobs.trigger_actor import agent_actor
 from kontext.common.protocols import IFileServiceProtocol, IQuerySessionServiceProtocol
-from kontext.execution import PythonExecutionServiceResult
 from kontext.file.notebook.editor import NotebookEditor
+from kontext.jobs import PythonExecutionServiceResult
 from kontext.schema import (
     ArtifactType,
     CodeBlock,
@@ -621,9 +621,11 @@ async def test_notebook_python_execution_attributes_runs_to_notebook_actor(sampl
         assert payload["success"] is True
         assert payload["executionMode"] == "draft"
 
-        execute_kwargs = (
-            tools.python_execution_service.execute_notebook_code_async.await_args.kwargs
+        notebook_exec_await_args = (
+            tools.python_execution_service.execute_notebook_code_async.await_args
         )
+        assert notebook_exec_await_args is not None
+        execute_kwargs = notebook_exec_await_args.kwargs
         assert execute_kwargs["triggered_by"] == agent_actor("notebook_tool")
         # A code-override draft must not touch the notebook document.
         file_service_mock.update_notebook.assert_not_awaited()

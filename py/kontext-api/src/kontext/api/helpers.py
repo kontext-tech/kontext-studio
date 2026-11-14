@@ -9,10 +9,10 @@ from fastapi.responses import JSONResponse
 
 from kontext.auth import JwtValidationError
 from kontext.common import KontextError
-from kontext.execution.polling import (
+from kontext.jobs.polling import (
     JobRunPollingResult as JobRunPollingResult,
 )
-from kontext.execution.polling import (
+from kontext.jobs.polling import (
     poll_job_run_completion as poll_job_run_completion,
 )
 

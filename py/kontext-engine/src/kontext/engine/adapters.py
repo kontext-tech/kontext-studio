@@ -72,7 +72,7 @@ class LocalJobRunService(IJobRunServiceProtocol):
         """``on_terminal_status(project_id, run_id)`` fires side effects when a
         run first enters a terminal state. The engine never imports the
         orchestration layer; composition supplies the hook
-        (:func:`kontext.execution.scheduling.handle_run_status_change_hook`)."""
+        (:func:`kontext.jobs.job_run_dispatch.handle_run_status_change_hook`)."""
         from kontext.data import (
             JobDataService,
             JobRunDataService,

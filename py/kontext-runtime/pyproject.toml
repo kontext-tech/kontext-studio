@@ -25,7 +25,6 @@ dependencies = [
     "kontext-common",
     "kontext-data",
     "kontext-engine",
-    "kontext-execution",
     "kontext-file",
     "kontext-auth",
     "kontext-query",

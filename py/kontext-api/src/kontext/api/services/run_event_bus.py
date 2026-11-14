@@ -24,7 +24,7 @@ from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from uuid import UUID
 
-from kontext.execution import (
+from kontext.jobs import (
     ExecutionRunService,
     build_log_event,
     build_status_event,

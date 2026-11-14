@@ -12,14 +12,14 @@ The Python workspace follows a domain-oriented split with four important cross-c
 - `kontext-runtime`: deployment composition and startup/bootstrap
 - `kontext-kernel`: the separate-process execution topology for Python jobs
 - `kontext-engine`: concrete in-process query compute implementations
-- `kontext-execution`: durable orchestration for long-running work
+- `kontext-job`: job framework plus durable run orchestration for long-running work
 
 Those layers are complementary, not competing:
 
 - `runtime` chooses how a deployment is wired
 - `kernel` runs Python jobs in an isolated child process (portable across profiles)
 - `engine` performs query compute inside a Python process
-- `execution` tracks and coordinates durable runs across transports and workers
+- `jobs` defines jobs and tracks and coordinates durable runs across transports and workers
 
 ## Package Responsibility Matrix
 
@@ -32,8 +32,7 @@ Those layers are complementary, not competing:
 | `kontext-file` | File, chart, and notebook domain logic | File services, notebook/chart editing, file-owned jobs | Generic query orchestration, auth concerns |
 | `kontext-project` | Project domain logic | Project services, project stats/events, project-owned jobs | Shared auth/config primitives |
 | `kontext-query` | Query sessions and query orchestration | Query submission, session services, SQL validation, session storage, the in-process query-session adapter | FastAPI routing, generic auth, importing `kontext-engine` |
-| `kontext-job` | Job framework and job registry | Job contracts, job context, scheduling, registry, job execution service | Central home for every domain-specific job definition |
-| `kontext-execution` | Durable long-running run orchestration | `ExecutionRun` projection/services, events/log shaping, run lifecycle helpers, worker coordination contracts | Concrete DuckDB engines, API bootstrap |
+| `kontext-job` | Job framework and durable run orchestration | Job contracts, job context, scheduling, registry, job execution service, the shared job-definitions home, `ExecutionRun` projection/services, events/log shaping, run lifecycle helpers, worker coordination contracts | Concrete DuckDB engines, API bootstrap, central home for every domain-specific job definition (those live in their domain packages) |
 | `kontext-engine` | In-process compute implementations | DuckDB engines, live-SQL engine, in-process chat/job adapters, in-process dispatchers | Deployment bootstrap, API transport, importing `kontext-query`/`kontext-catalog` |
 | `kontext-kernel` | Separate-process Python execution topology | Execution contracts, validation policy, child harness, wire protocol, kernel manager/pool, runner backends | Deployment composition, other Kontext domain deps, provider selection |
 | `kontext-runtime` | Deployment composition/bootstrap | Provider/backend selection, local process composition, managed Python environment, startup glue | Domain logic, heavy compute engines, API router logic |
@@ -85,7 +84,7 @@ placing new code — ask the question in order and stop at the first **yes**:
 
 1. **Does it track a durable run** (status, retries, cancellation, logs/events,
    run projection, worker coordination) across transports/processes?
-   → `kontext-execution`.
+   → `kontext-job`.
 2. **Does it submit or track a query session, validate SQL, or enforce
    query-session reuse/locking?**
    → `kontext-query`.
@@ -101,7 +100,7 @@ execution-stack concern.
 
 Examples:
 
-- `ExecutionRunService`, run status projection, run events/logs: `kontext-execution`
+- `ExecutionRunService`, run status projection, run events/logs: `kontext-job`
 - query submission, session reuse, SQL validation, `InProcessQuerySessionService`: `kontext-query`
 - DuckDB query engine, live-SQL engine, in-process dispatchers: `kontext-engine`
 - `RuntimeProfile`, `LocalRuntimeProvider`, local bootstrap, profile setup: `kontext-runtime`
@@ -124,7 +123,7 @@ flowchart BT
 - `kontext-query` must not import `kontext-engine`.
 - `kontext-engine` must not import `kontext-query`.
 - `kontext-common` imports nothing above it.
-- `kontext-execution` must not import `kontext-query` or `kontext-engine`.
+- `kontext-job` must not import `kontext-query` or `kontext-engine`.
 - `kontext-llm` must not import `kontext-account` or `kontext-runtime`
   (model resolution goes through the `kontext.llm` ports).
 - `kontext-okf` must not import `kontext-catalog` (the knowledge contract lives
@@ -287,7 +286,7 @@ Cloud support is kept as **contracts, not implementations**:
 - `IJobRunClaimTransport` in `kontext-common` abstracts *claiming* a queued run
   (distinct from a message queue); the local DB-poll implementation lives in
   `kontext-engine.transports`.
-- `kontext-execution` owns durable runs regardless of where execution happens.
+- `kontext-job` owns durable runs regardless of where execution happens.
 
 The claim contract lives in `kontext-common` (not `kontext-job`) because its
 consumer, the engine's DB-poll transport, must not depend on the job framework:

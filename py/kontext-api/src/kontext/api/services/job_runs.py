@@ -6,7 +6,7 @@ from uuid import UUID
 
 from fastapi import Request
 
-from kontext.execution.job_run_management import (
+from kontext.jobs.job_run_management import (
     add_job_run_log_service,
     get_job_run_logs_service,
     get_job_run_service,
@@ -16,7 +16,7 @@ from kontext.execution.job_run_management import (
     update_job_run_status_service,
     update_job_run_worker_service,
 )
-from kontext.execution.job_run_management import (
+from kontext.jobs.job_run_management import (
     get_job_run_resource_service as get_job_run_resource,
 )
 from kontext.schema import JobRunModel

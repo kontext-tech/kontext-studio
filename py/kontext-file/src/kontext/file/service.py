@@ -38,7 +38,7 @@ from kontext.common.utils.file_storage import (
 from kontext.data import FileDataService, get_sync_db_session
 from kontext.data.models import Project, ProjectFile
 from kontext.data.types import FileStats
-from kontext.execution.events import EventService
+from kontext.jobs.events import EventService
 from kontext.schema import (
     ArtifactProvenance,
     ChartDocument,

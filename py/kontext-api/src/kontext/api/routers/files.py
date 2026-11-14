@@ -18,13 +18,13 @@ from pydantic import BaseModel, ConfigDict, Field
 from kontext.auth import FilePermissions
 from kontext.common.jobs.trigger_actor import notebook_actor
 from kontext.common.messaging import IQueueClient
-from kontext.execution import (
-    NotebookPythonExecutionError,
-    NotebookPythonExecutionService,
-)
 from kontext.file import file_to_model, infer_file_type
 from kontext.file.factories import create_file_service
 from kontext.file.factories import get_file_resource as load_file_resource
+from kontext.jobs import (
+    NotebookPythonExecutionError,
+    NotebookPythonExecutionService,
+)
 from kontext.schema import (
     ArtifactOrigin,
     ArtifactProvenance,
