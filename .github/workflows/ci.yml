@@ -473,7 +473,7 @@ jobs:
               entry_points = archive.read(entry_points_paths[0]).decode() if entry_points_paths else ""
 
           required = [
-              "kontext/labs/cli.py",
+              "kontext/studio/cli.py",
               # The harness adapter is discovered through a `kontext.agent_harnesses`
               # entry point; without both the module and the metadata, `kontext serve`
               # fails at startup with "Unknown agent framework adapter".
