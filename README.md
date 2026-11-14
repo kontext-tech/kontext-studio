@@ -7,10 +7,10 @@
 
 <h1 align="center">Kontext Studio</h1>
 
-**Kontext Studio is a local-first, open-source AI data workspace.** Ask questions in
-plain language and a team of agents queries your files and databases, then
-returns SQL results, charts, and reproducible notebooks. Bring your own model —
-local or cloud — and keep the workspace on your machine.
+**Kontext Studio is an open-source, local-first conversational analytics
+workspace.** Chat with your data — every answer comes with the SQL, charts,
+Python code, and notebook that produced it. Reproducible, with the model you
+choose — local or cloud — and the workspace stays on your machine.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -20,7 +20,7 @@ local or cloud — and keep the workspace on your machine.
   </a>
 </p>
 
-<p align="center"><sub>Ask a question. The agent returns the SQL, chart, and reproducible notebook.</sub></p>
+<p align="center"><sub>Ask a question. The answer comes with the SQL, chart, Python code, and reproducible notebook.</sub></p>
 
 ## What you get
 

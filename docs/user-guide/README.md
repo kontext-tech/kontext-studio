@@ -1,9 +1,9 @@
 # Kontext Studio user guide
 
-Kontext Studio is a local-first AI data workspace. Connect your files and
-databases, bring your own model, and ask questions in plain language. A team of
-agents returns SQL results, charts, and reproducible notebooks — all on your
-machine.
+Kontext Studio is a local-first, open-source conversational analytics workspace.
+Connect your files and databases, bring your own model, and chat with your
+data — every answer comes with the SQL, charts, Python code, and notebook that
+produced it, reproducible on your machine.
 
 This guide is task-oriented: each page covers one workflow, with the
 screens and controls you need. Start with installation if you are new, or

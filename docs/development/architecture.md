@@ -1,6 +1,6 @@
 # Architecture overview
 
-Kontext Studio is a local-first, single-user AI data workspace. This page is
+Kontext Studio is a local-first, single-user conversational analytics workspace. This page is
 the system map: the processes, layers, data flow, and technology choices. The
 detailed rules live in the linked canonical pages.
 
