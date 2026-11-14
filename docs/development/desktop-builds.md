@@ -130,6 +130,16 @@ packages, or `ts/file/` run Rust formatting, clippy on `macos-15`, and clippy
 for the Windows cfg paths on `windows-latest` (`windows-lint` job), plus the
 frontend bridge lint on `macos-15`.
 
+A manual dispatch takes a `ref` input for pre-release test builds (built from
+any branch, never attached to a release) and `buildMacos`/`buildWindows`
+checkboxes to skip building a platform:
+
+```bash
+gh workflow run desktop.yml --ref fix-some-branch \
+  -f version=<current-version> -f ref=fix-some-branch \
+  -f upload=false -f buildMacos=false
+```
+
 macOS Intel is blocked until `lancedb` publishes a macOS x86_64 wheel: no 0.38+
 release has one, and the project requires 0.38 or newer. The x64 assembly path
 stays available (`--arch x64`) for when that changes; re-add the
