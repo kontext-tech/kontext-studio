@@ -243,7 +243,7 @@ fn log_dir(app: &AppHandle) -> tauri::Result<PathBuf> {
         .join("Logs")
         .join("Kontext Studio");
     #[cfg(target_os = "windows")]
-    let directory = app.path().local_app_data()?.join("Kontext").join("logs");
+    let directory = app.path().local_data_dir()?.join("Kontext").join("logs");
     #[cfg(all(not(target_os = "macos"), not(target_os = "windows")))]
     let directory = app.path().app_log_dir()?;
 

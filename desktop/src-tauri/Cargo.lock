@@ -1916,7 +1916,7 @@ dependencies = [
 
 [[package]]
 name = "kontext-desktop"
-version = "0.262.0"
+version = "0.263.1"
 dependencies = [
  "libc",
  "open",

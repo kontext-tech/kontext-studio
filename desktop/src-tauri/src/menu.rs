@@ -49,7 +49,7 @@ fn open_logs(app: &AppHandle) {
 
 #[cfg(target_os = "windows")]
 fn open_logs(app: &AppHandle) {
-    if let Ok(local) = app.path().local_app_data() {
+    if let Ok(local) = app.path().local_data_dir() {
         let _ = open::that(local.join("Kontext").join("logs"));
     }
 }

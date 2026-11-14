@@ -35,6 +35,7 @@
       "desktop:assemble": "uv run python desktop/scripts/assemble.py",
       "desktop:dev": "pnpm exec tauri dev --config desktop/src-tauri/tauri.conf.json",
       "desktop:build": "pnpm exec tauri build --config desktop/src-tauri/tauri.conf.json && bash desktop/scripts/make-dmg.sh",
+      "desktop:build:windows": "node desktop/scripts/bundle-windows.mjs",
       "desktop:check": "node desktop/scripts/ensure-resources.mjs && cargo fmt --manifest-path desktop/src-tauri/Cargo.toml -- --check && cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets -- -D warnings",
       "build:app": "pnpm --filter @kontext-tech/app build",
       "build:notebook-demo": "pnpm --filter notebook-demo build",

@@ -1,8 +1,8 @@
 # Desktop builds
 
 The desktop app is a Tauri 2 shell around the existing local server. It bundles
-CPython and every Python package the app needs, so a macOS user installs a DMG
-and opens it without a Python toolchain.
+CPython and every Python package the app needs, so a user installs a macOS DMG
+or a Windows NSIS installer and opens it without a Python toolchain.
 
 ## Architecture
 
@@ -30,6 +30,7 @@ flowchart LR
 desktop/
   runtime.lock.json        # pinned python-build-standalone assets
   scripts/assemble.py      # runtime + wheelhouse assembly
+  scripts/bundle-windows.mjs
   scripts/ensure-resources.mjs
   scripts/make-icon.py
   splash/index.html
@@ -60,7 +61,10 @@ pnpm run desktop:build
 that interpreter's own `site-packages`, and downloads the kernel wheelhouse.
 `desktop:build` produces the `.app` under
 `desktop/src-tauri/target/release/bundle/macos/` and
-`dist/Kontext-Studio-<version>-macOS-<arch>.dmg`.
+`dist/Kontext-Studio-<version>-macOS-<arch>.dmg`. On Windows,
+`desktop:build:windows` produces the NSIS installer and copies it to
+`dist/Kontext-Studio-<version>-Windows-x64.exe` (Windows-only; run it on a
+Windows machine).
 
 The DMG is created by `desktop/scripts/make-dmg.sh` with `hdiutil`, not by
 Tauri's built-in DMG bundler. Tauri styles its DMG window through Finder, which
@@ -111,15 +115,26 @@ there is no separate list to keep in sync.
 
 ## CI and releases
 
-`.github/workflows/desktop.yml` builds Apple Silicon on `macos-15`. It checks
-out the `v<version>` tag, assembles the runtime, builds the app, verifies the
-signature and the bundled server, and uploads
-`Kontext-Studio-<version>-macOS-arm64.dmg`.
+`.github/workflows/desktop.yml` builds Apple Silicon on `macos-15` and Windows
+x64 on `windows-latest`. Both entries check out the `v<version>` tag, assemble
+the runtime, build the installer, verify the bundled server, and upload
+`Kontext-Studio-<version>-macOS-arm64.dmg` respectively
+`Kontext-Studio-<version>-Windows-x64.exe`. The Windows packaging runs
+`desktop/scripts/bundle-windows.mjs`, which passes `--bundles nsis` so the
+macOS-only `app` target in `tauri.conf.json` is not picked up, and renames the
+NSIS setup executable to the release naming convention. Windows installers are
+unsigned for now.
 
-Intel is blocked until `lancedb` publishes a macOS x86_64 wheel: no 0.38+
+Pull requests that touch `desktop/`, the wheel builder, the labs/runtime
+packages, or `ts/file/` run Rust formatting, clippy on `macos-15`, and clippy
+for the Windows cfg paths on `windows-latest` (`windows-lint` job), plus the
+frontend bridge lint on `macos-15`.
+
+macOS Intel is blocked until `lancedb` publishes a macOS x86_64 wheel: no 0.38+
 release has one, and the project requires 0.38 or newer. The x64 assembly path
 stays available (`--arch x64`) for when that changes; re-add the
-`macos-15-intel` matrix entry at the same time.
+`macos-15-intel` matrix entry at the same time. All Windows-facing Python
+dependencies ship `win_amd64` wheels, so no equivalent blocker applies there.
 
 Push-triggered releases dispatch it from `release.yml` after the GitHub Release
 exists. A manual dispatch is the retry path:

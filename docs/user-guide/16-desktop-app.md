@@ -1,18 +1,24 @@
-# Use the macOS desktop app
+# Use the desktop app
 
-The macOS app includes Kontext Studio, its Python runtime, and the packages
-notebooks need. There is no separate Python install and no terminal step. It
-requires macOS 13 Ventura or later. The download is large — several hundred
-megabytes — because the analysis runtime is bundled.
+The desktop app includes Kontext Studio, its Python runtime, and the packages
+notebooks need. There is no separate Python install and no terminal step. The
+download is large — several hundred megabytes — because the analysis runtime is
+bundled.
 
 ## Download
 
 Open the [latest release](https://github.com/kontext-tech/kontext-studio/releases/latest)
-and download the file for your Mac:
+and download the file for your machine:
 
-| Mac | File |
+| System | File |
 | --- | --- |
-| Apple Silicon (M1 and later) | `Kontext-Studio-<version>-macOS-arm64.dmg` |
+| macOS Apple Silicon (M1 and later), macOS 13 Ventura or later | `Kontext-Studio-<version>-macOS-arm64.dmg` |
+| Windows x64, Windows 10 or later | `Kontext-Studio-<version>-Windows-x64.exe` |
+
+Only Apple Silicon Macs are supported in this beta. To check, choose  → About
+This Mac; the Chip row should say Apple M…. Intel Macs can use the
+[command-line install](https://docs.kontext.tech/user-guide/install-and-start/)
+instead.
 
 Only Apple Silicon Macs are supported in this beta. To check, choose  → About
 This Mac; the Chip row should say Apple M…. Intel Macs can use the
@@ -46,6 +52,16 @@ xattr -dr com.apple.quarantine "/Applications/Kontext Studio.app"
 Only use these steps for an app downloaded from this repository's Releases
 page. The DMG also includes a **Read Me First** file with these steps.
 
+## Install on Windows
+
+1. Run the downloaded `Kontext-Studio-<version>-Windows-x64.exe` installer and
+   follow its steps.
+2. Start Kontext Studio from the Start menu or the desktop shortcut.
+
+The current beta installer is not code-signed, so Windows may show a
+**SmartScreen** warning. Choose **More info → Run anyway** for the installer.
+Only do this for an app downloaded from this repository's Releases page.
+
 ## First run
 
 The app starts its local server and opens the workspace. Create the local
@@ -54,25 +70,26 @@ semantic search model may download data the first time you use them.
 
 ## Where your work lives
 
-| What | Where |
-| --- | --- |
-| Projects, files, chats, settings | `~/.kontext` |
-| Logs | `~/Library/Logs/Kontext Studio` |
+| What | macOS | Windows |
+| --- | --- | --- |
+| Projects, files, chats, settings | `~/.kontext` | `%USERPROFILE%\.kontext` |
+| Logs | `~/Library/Logs/Kontext Studio` | `%LOCALAPPDATA%\Kontext\logs` |
 
 The app and the command-line install share `~/.kontext`. Do not run both at the
 same time against the same workspace.
 
 ## Update
 
-Download the newer DMG from the latest release and replace the app in
-Applications. Your workspace is not touched. Use **Help → Check for Updates**
-to open the release page.
+macOS: download the newer DMG from the latest release and replace the app in
+Applications. Windows: run the newer installer. In both cases your workspace is
+not touched. Use **Help → Check for Updates** to open the release page.
 
 ## Uninstall
 
-Drag **Kontext Studio** from Applications to the Trash. To delete the workspace
-as well, remove `~/.kontext`. That permanently deletes projects, files, chats,
-and settings.
+macOS: drag **Kontext Studio** from Applications to the Trash. Windows: remove
+Kontext Studio from **Settings → Apps**. To delete the workspace as well, remove
+`~/.kontext` (macOS) or `%USERPROFILE%\.kontext` (Windows). That permanently
+deletes projects, files, chats, and settings.
 
 ## Troubleshooting
 
