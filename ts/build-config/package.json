@@ -23,7 +23,7 @@
       "./tsconfig/vite-node.json": "./tsconfig/vite-node.json"
    },
    "scripts": {
-      "build": "rm -rf dist tsconfig.build.tsbuildinfo && tsc -p tsconfig.build.json"
+      "build": "node ../../scripts/clean-dist.mjs dist tsconfig.build.tsbuildinfo && tsc -p tsconfig.build.json"
    },
    "publishConfig": {
       "registry": "https://npm.pkg.github.com",
