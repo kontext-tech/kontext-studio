@@ -16,6 +16,11 @@ on:
         required: false
         default: true
         type: boolean
+      windowsUpload:
+        description: "Upload the Windows installer to the release (download it from the workflow run instead when false)"
+        required: false
+        default: true
+        type: boolean
   pull_request:
     paths:
       - "desktop/**"
@@ -238,10 +243,16 @@ jobs:
           path: dist
       - name: Write checksums
         shell: bash
+        env:
+          WINDOWS_UPLOAD: ${{ inputs.windowsUpload }}
         run: |
           cd dist
           shopt -s nullglob
-          assets=(*.dmg *.exe)
+          if [ "$WINDOWS_UPLOAD" = "true" ]; then
+            assets=(*.dmg *.exe)
+          else
+            assets=(*.dmg)
+          fi
           sha256sum "${assets[@]}" > SHA256SUMS-desktop.txt
           cat SHA256SUMS-desktop.txt
       - name: Upload release assets
@@ -249,9 +260,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ inputs.version }}
+          WINDOWS_UPLOAD: ${{ inputs.windowsUpload }}
         run: |
           cd dist
           shopt -s nullglob
-          assets=(*.dmg *.exe)
+          if [ "$WINDOWS_UPLOAD" = "true" ]; then
+            assets=(*.dmg *.exe)
+          else
+            assets=(*.dmg)
+          fi
           gh release upload "v${VERSION}" "${assets[@]}" SHA256SUMS-desktop.txt \
             --clobber --repo "$GITHUB_REPOSITORY"
