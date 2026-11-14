@@ -234,10 +234,13 @@ jobs:
           PYTHON="desktop/src-tauri/resources/python/python.exe"
           TMP=$(mktemp -d)
           trap 'rm -rf "$TMP"' EXIT
-          KONTEXT_LOCAL_WORKER_ENABLED=false \
+          # Mimic the desktop shell: stdin is a pipe that stays open. The
+          # --parent-pid path is real-app territory only (bash's MSYS pid is
+          # not a Windows pid, so passing it here makes the watchdog quit
+          # immediately).
+          tail -f /dev/null | KONTEXT_LOCAL_WORKER_ENABLED=false \
             "$PYTHON" -E -s -B -u -m kontext.studio desktop \
-            --preferred-port 0 --parent-pid $$ \
-            < /dev/zero > "$TMP/ready.log" 2>&1 &
+            --preferred-port 0 > "$TMP/ready.log" 2>&1 &
           SERVER_PID=$!
           for _ in $(seq 1 300); do
             grep -q '@@KONTEXT_READY@@' "$TMP/ready.log" && break
@@ -252,9 +255,8 @@ jobs:
             "$PYTHON" -c \
             'import json,sys; print(json.load(sys.stdin)["port"])')
           curl -fsS "http://127.0.0.1:${PORT}/health" > /dev/null
-          kill -TERM "$SERVER_PID"
-          wait "$SERVER_PID"
-          rm -rf "$TMP"
+          kill -TERM "$SERVER_PID" 2>/dev/null || kill -W "$SERVER_PID" 2>/dev/null || true
+          wait "$SERVER_PID" 2>/dev/null || true
       - name: Free assembly resources
         shell: bash
         run: rm -rf desktop/src-tauri/resources
