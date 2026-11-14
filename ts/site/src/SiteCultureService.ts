@@ -20,12 +20,10 @@ export class SiteCultureService
    }
 
    async getCultures(): Promise<ApiResult<CultureInfoModel[]>> {
-      try {
+      return this.wrap(async () => {
          const cultures = await this.createHostClient().getCulture();
-         return ApiResult.success(cultures);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return cultures;
+      });
    }
 
    private createHostClient(): HostClient {

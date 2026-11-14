@@ -29,16 +29,14 @@ export class KnowledgeService extends DataApiBaseService {
    }
 
    async listConcepts(projectId: string): Promise<ApiResult<OkfConcept[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/okf/concepts", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result as OkfConcept[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept[];
+      });
    }
 
    async searchConcepts(
@@ -46,7 +44,7 @@ export class KnowledgeService extends DataApiBaseService {
       query: string,
       limit = 10
    ): Promise<ApiResult<OkfConcept[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/okf/concepts/search", {
                params: {
@@ -54,17 +52,15 @@ export class KnowledgeService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as OkfConcept[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept[];
+      });
    }
 
    async getConcept(
       projectId: string,
       conceptId: string
    ): Promise<ApiResult<OkfConcept | null>> {
-      try {
+      return this.wrapOptional(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/okf/concepts/{concept_id}", {
                params: {
@@ -73,33 +69,26 @@ export class KnowledgeService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as OkfConcept);
-      } catch (error) {
-         if (this.getErrorStatus(error) === 404) {
-            return ApiResult.success(null);
-         }
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept;
+      });
    }
 
    async listProposals(projectId: string): Promise<ApiResult<OkfConcept[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/okf/proposals", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result as OkfConcept[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept[];
+      });
    }
 
    async approveProposal(
       projectId: string,
       conceptId: string
    ): Promise<ApiResult<OkfConcept>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/catalog/okf/proposals/{concept_id}/approve", {
                params: {
@@ -108,10 +97,8 @@ export class KnowledgeService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as OkfConcept);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept;
+      });
    }
 
    async upsertConcept(
@@ -119,7 +106,7 @@ export class KnowledgeService extends DataApiBaseService {
       conceptId: string,
       concept: OkfConcept
    ): Promise<ApiResult<OkfConcept>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.PUT("/catalog/okf/concepts/{concept_id}", {
                params: {
@@ -132,17 +119,15 @@ export class KnowledgeService extends DataApiBaseService {
                body: concept as unknown as UpsertConceptBody
             })
          );
-         return ApiResult.success(result as OkfConcept);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as OkfConcept;
+      });
    }
 
    async deleteConcept(
       projectId: string,
       conceptId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/catalog/okf/concepts/{concept_id}", {
                params: {
@@ -151,14 +136,12 @@ export class KnowledgeService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async exportBundle(projectId: string): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          const blob = await this.request(
             this.apiClient.GET("/catalog/okf/export", {
                params: { query: { projectId } },
@@ -166,17 +149,15 @@ export class KnowledgeService extends DataApiBaseService {
             })
          );
          downloadBlob(blob, `okf-bundle-${projectId}.tar.gz`);
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async importBundle(
       projectId: string,
       file: Blob
    ): Promise<ApiResult<OkfImportResult>> {
-      try {
+      return this.wrap(async () => {
          const formData = new FormData();
          formData.append("file", file);
          const result = await this.request(
@@ -186,10 +167,8 @@ export class KnowledgeService extends DataApiBaseService {
             })
          );
          // Untyped payload from the generated contract; assert to the service contract.
-         return ApiResult.success(result as unknown as OkfImportResult);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as unknown as OkfImportResult;
+      });
    }
 }
 

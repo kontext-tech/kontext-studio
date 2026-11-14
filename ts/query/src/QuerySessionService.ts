@@ -34,32 +34,28 @@ export class QuerySessionService
    async createSession(
       request: CreateQuerySessionRequest
    ): Promise<ApiResult<QuerySessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/session", {
                body: request
             })
          );
-         return ApiResult.success(result as QuerySessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as QuerySessionModel;
+      });
    }
 
    /** Initialize a query session with catalog context. */
    async initializeSession(
       request: SessionInitRequest
    ): Promise<ApiResult<SessionInitResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/session/init", {
                body: request
             })
          );
-         return ApiResult.success(result as SessionInitResponse);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as SessionInitResponse;
+      });
    }
 
    /**
@@ -69,7 +65,7 @@ export class QuerySessionService
       projectId: string,
       sessionId: string
    ): Promise<ApiResult<QuerySessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/session/{sessionId}", {
                params: {
@@ -78,10 +74,8 @@ export class QuerySessionService
                }
             })
          );
-         return ApiResult.success(result as QuerySessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as QuerySessionModel;
+      });
    }
 
    /**
@@ -92,7 +86,7 @@ export class QuerySessionService
       sessionId: string,
       request: UpdateQuerySessionRequest
    ): Promise<ApiResult<QuerySessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.PATCH("/session/{sessionId}", {
                params: {
@@ -102,10 +96,8 @@ export class QuerySessionService
                body: request
             })
          );
-         return ApiResult.success(result as QuerySessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as QuerySessionModel;
+      });
    }
 
    /**
@@ -115,7 +107,7 @@ export class QuerySessionService
       projectId: string,
       sessionId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/session/{sessionId}", {
                params: {
@@ -124,10 +116,8 @@ export class QuerySessionService
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    /**
@@ -138,7 +128,7 @@ export class QuerySessionService
       pageIndex?: number,
       pageSize?: number
    ): Promise<ApiResult<PaginatedListOfQuerySessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/session", {
                params: {
@@ -146,10 +136,8 @@ export class QuerySessionService
                }
             })
          );
-         return ApiResult.success(result as PaginatedListOfQuerySessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedListOfQuerySessionModel;
+      });
    }
 
    /**
@@ -161,7 +149,7 @@ export class QuerySessionService
       pageIndex?: number,
       pageSize?: number
    ): Promise<ApiResult<{ queries: unknown[]; total: number }>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/query/sessions/{sessionId}/history", {
                params: {
@@ -170,11 +158,7 @@ export class QuerySessionService
                }
             })
          );
-         return ApiResult.success(
-            result as { queries: unknown[]; total: number }
-         );
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as { queries: unknown[]; total: number };
+      });
    }
 }

@@ -69,16 +69,14 @@ export class ChatService
    async createChatSession(
       input: CreateChatSessionRequest
    ): Promise<ApiResult<ChatSessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/ai/chat/session", {
                body: input
             })
          );
-         return ApiResult.success(result as ChatSessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as ChatSessionModel;
+      });
    }
 
    async updateChatSession(
@@ -86,7 +84,7 @@ export class ChatService
       projectId: string,
       input: UpdateChatSessionRequest
    ): Promise<ApiResult<ChatSessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.PUT("/ai/chat/session/{chatSessionId}", {
                params: {
@@ -96,17 +94,15 @@ export class ChatService
                body: input
             })
          );
-         return ApiResult.success(result as ChatSessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as ChatSessionModel;
+      });
    }
 
    async getChatSession(
       chatSessionId: string,
       projectId: string
    ): Promise<ApiResult<ChatSessionModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/session/{chatSessionId}", {
                params: {
@@ -115,17 +111,15 @@ export class ChatService
                }
             })
          );
-         return ApiResult.success(result as ChatSessionModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as ChatSessionModel;
+      });
    }
 
    async deleteChatSession(
       chatSessionId: string,
       projectId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/ai/chat/session/{chatSessionId}", {
                params: {
@@ -134,41 +128,35 @@ export class ChatService
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async getProjectTokenUsage(
       projectId: string
    ): Promise<ApiResult<ProjectTokenUsageResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/usage", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getProjectDailyTokenUsage(
       projectId: string,
       month?: string
    ): Promise<ApiResult<ProjectDailyTokenUsageResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/usage/daily", {
                params: { query: { projectId, month } }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getFilteredChatSessions(
@@ -178,7 +166,7 @@ export class ChatService
       pageSize?: number,
       mySessionsOnly?: boolean
    ): Promise<ApiResult<PaginatedChatSessionResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/session/filtered", {
                params: {
@@ -192,17 +180,15 @@ export class ChatService
                }
             })
          );
-         return ApiResult.success(result as PaginatedChatSessionResponse);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedChatSessionResponse;
+      });
    }
 
    async getChatSessionMessages(
       chatSessionId: string,
       projectId: string
    ): Promise<ApiResult<ChatMessage[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/session/{chatSessionId}/messages", {
                params: {
@@ -211,17 +197,15 @@ export class ChatService
                }
             })
          );
-         return ApiResult.success(result as ChatMessage[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as ChatMessage[];
+      });
    }
 
    async getChatSessionArtifacts(
       chatSessionId: string,
       projectId: string
    ): Promise<ApiResult<Artifact[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/session/{chatSessionId}/artifacts", {
                params: {
@@ -230,10 +214,8 @@ export class ChatService
                }
             })
          );
-         return ApiResult.success(result.artifacts ?? []);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result.artifacts ?? [];
+      });
    }
 
    async executePythonScript(
@@ -241,7 +223,9 @@ export class ChatService
       projectId: string,
       input: ExecutePythonScriptRequest
    ): Promise<ApiResult<PythonExecutionResult>> {
-      try {
+      // Execution failures are surfaced inline in the conversation (tool-call
+      // card + agent explanation), so do not raise the global error modal.
+      return this.wrapInline(async () => {
          const result = await this.request(
             this.apiClient.POST(
                "/ai/chat/session/{chatSessionId}/execute-python",
@@ -254,12 +238,8 @@ export class ChatService
                }
             )
          );
-         return ApiResult.success(result as PythonExecutionResult);
-      } catch (error) {
-         // Execution failures are surfaced inline in the conversation (tool-call
-         // card + agent explanation), so do not raise the global error modal.
-         return ApiResult.failure(await this.handleInlineApiError(error));
-      }
+         return result as PythonExecutionResult;
+      });
    }
 
    // ---------------- AI chat streaming ----------------

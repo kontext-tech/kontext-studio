@@ -25,23 +25,21 @@ export class DataJobService extends DataApiBaseService {
    async getJobTypes(
       projectId: string
    ): Promise<ApiResult<UnifiedJobTypeModel[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/jobs/types", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getJobType(
       projectId: string,
       jobType: string
    ): Promise<ApiResult<UnifiedJobTypeModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/jobs/types/{jobType}", {
                params: {
@@ -50,10 +48,8 @@ export class DataJobService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getJobs(
@@ -65,7 +61,7 @@ export class DataJobService extends DataApiBaseService {
          isEnabled?: boolean;
       } = {}
    ): Promise<ApiResult<PaginatedListOfJobModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/jobs", {
                params: {
@@ -79,17 +75,15 @@ export class DataJobService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as PaginatedListOfJobModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedListOfJobModel;
+      });
    }
 
    async getJob(
       projectId: string,
       jobId: string
    ): Promise<ApiResult<JobModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/jobs/{jobId}", {
                params: {
@@ -98,27 +92,23 @@ export class DataJobService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async createJob(
       projectId: string,
       job: CreateJobRequest
    ): Promise<ApiResult<JobModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/jobs", {
                params: { query: { projectId } },
                body: job
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async updateJob(
@@ -126,7 +116,7 @@ export class DataJobService extends DataApiBaseService {
       jobId: string,
       job: UpdateJobRequest
    ): Promise<ApiResult<JobModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.PUT("/jobs/{jobId}", {
                params: {
@@ -136,14 +126,12 @@ export class DataJobService extends DataApiBaseService {
                body: job
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async deleteJob(projectId: string, jobId: string): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/jobs/{jobId}", {
                params: {
@@ -152,10 +140,8 @@ export class DataJobService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async scheduleJob(
@@ -163,7 +149,7 @@ export class DataJobService extends DataApiBaseService {
       jobId: string,
       request?: ExecuteJobNowRequest
    ): Promise<ApiResult<JobRunModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/jobs/{jobId}/schedule", {
                params: {
@@ -173,9 +159,7 @@ export class DataJobService extends DataApiBaseService {
                body: request
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 }

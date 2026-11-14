@@ -28,7 +28,7 @@ export class DataJobRunService extends DataApiBaseService {
          pageSize?: number;
       } = {}
    ): Promise<ApiResult<PaginatedListOfJobRunModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/job-runs", {
                params: {
@@ -42,10 +42,8 @@ export class DataJobRunService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as PaginatedListOfJobRunModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedListOfJobRunModel;
+      });
    }
 
    async getJobRunsByJob(
@@ -57,7 +55,7 @@ export class DataJobRunService extends DataApiBaseService {
          pageSize?: number;
       } = {}
    ): Promise<ApiResult<PaginatedListOfJobRunModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/job-runs/job/{jobId}", {
                params: {
@@ -71,17 +69,15 @@ export class DataJobRunService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as PaginatedListOfJobRunModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedListOfJobRunModel;
+      });
    }
 
    async getJobRun(
       projectId: string,
       runId: string
    ): Promise<ApiResult<JobRunModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/job-runs/{runId}", {
                params: {
@@ -90,10 +86,8 @@ export class DataJobRunService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getJobRunLogs(
@@ -101,7 +95,7 @@ export class DataJobRunService extends DataApiBaseService {
       runId: string,
       limit?: number
    ): Promise<ApiResult<JobRunLogModel[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/job-runs/{runId}/logs", {
                params: {
@@ -110,10 +104,8 @@ export class DataJobRunService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async resetJobRuns(params: {
@@ -121,7 +113,7 @@ export class DataJobRunService extends DataApiBaseService {
       jobRunIds: string[];
       reason: string;
    }): Promise<ApiResult<JobResetResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/job-runs/reset", {
                params: { query: { projectId: params.projectId } },
@@ -131,9 +123,7 @@ export class DataJobRunService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 }

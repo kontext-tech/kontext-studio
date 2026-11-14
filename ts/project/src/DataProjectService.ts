@@ -13,16 +13,13 @@ export class DataProjectService extends DataApiBaseService {
    async getProjectStats(
       projectId: string
    ): Promise<ApiResult<ProjectStatsModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/project/{projectId}/stats", {
                params: { path: { projectId } }
             })
          );
-         return ApiResult.success(result as ProjectStatsModel);
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return result as ProjectStatsModel;
+      });
    }
 }
