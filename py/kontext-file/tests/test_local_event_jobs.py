@@ -23,10 +23,10 @@ from kontext.data import (
 )
 from kontext.data.database import get_engine, get_session_factory, get_sync_db_session
 from kontext.data.models import Project
-from kontext.execution.runs import ExecutionRunService
 from kontext.file.charts import ChartService
 from kontext.file.helpers import InMemoryUploadFile, infer_file_type
 from kontext.file.service import FileService
+from kontext.jobs.runs import ExecutionRunService
 from kontext.runtime.local.bootstrap import initialize_local_mode
 from kontext.runtime.local.config import get_default_local_file_types
 from kontext.schema import (

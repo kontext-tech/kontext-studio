@@ -2,15 +2,11 @@
 
 from __future__ import annotations
 
-import json
 import logging
 from collections.abc import AsyncGenerator, Mapping
-from typing import Any
 from uuid import UUID
 
 from fastapi import HTTPException, Request
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
-from pydantic.alias_generators import to_camel
 
 from kontext.agentic.chat_handler import DEFAULT_CHAT_AGENT_WORKFLOW
 from kontext.catalog import CatalogManagementService
@@ -62,14 +58,12 @@ from kontext.data import (
     ExecutionRunContextDataService,
     JobRunDataService,
 )
-from kontext.execution import (
+from kontext.file import create_file_service, infer_file_type
+from kontext.jobs import (
     ExecutionRunService,
     extract_workflow_projection_metadata,
-    parse_engine_metadata_json,
 )
-from kontext.execution.runs import map_job_run_status
-from kontext.file import create_file_service, infer_file_type
-from kontext.file.lakehouse_ingest_models import LakehouseIngestResultData
+from kontext.jobs.runs import map_job_run_status
 from kontext.schema import (
     ArtifactListResponse,
     ChatAttachmentContext,
@@ -77,7 +71,6 @@ from kontext.schema import (
     ChatAttachmentContextTable,
     ChatRequest,
     ChatSessionModel,
-    ChatUploadPreparationAcceptedFile,
     ChatUploadPreparationFailure,
     ChatUploadPreparationStatus,
     ChatUploadPreparationStep,
@@ -99,11 +92,20 @@ from ..transport_adapters import (
     domain_error_to_http,
 )
 from .agent_run_tracking import EXECUTION_RUN_TRACKER
+from .chat_upload_preparation import (
+    CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY,
+    ChatUploadPreparationMetadata,
+    as_optional_uuid_str,
+    chat_attachment_file_from_accepted_file,
+    chat_attachment_tables_from_catalog_details,
+    normalize_chat_upload_failure,
+    parse_chat_upload_preparation_metadata,
+    parse_lakehouse_ingest_result_data,
+    parse_payload_model,
+    to_chat_upload_accepted_file,
+    upsert_chat_upload_preparation_metadata_json,
+)
 from .runtime import build_authorized_runtime_provider
-
-_CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY = "chat_upload_preparation"
-_CHAT_UPLOAD_PREPARATION_METADATA_KEY = "chatUploadPreparation"
-_CHAT_UPLOAD_FAILURE_CODE_ALREADY_EXISTS = "already_exists"
 
 logger = logging.getLogger(__name__)
 
@@ -122,275 +124,6 @@ class _RuntimeFactory(ChatRuntimeProviderFactoryProtocol):
     ) -> RuntimeProviderProtocol:
         _ = (project_id, headers)
         return self._runtime_provider
-
-
-class _ChatPayloadModel(BaseModel):
-    """Base model for chat-service-owned serialized payloads."""
-
-    model_config = ConfigDict(
-        extra="ignore",
-        populate_by_name=True,
-    )
-
-
-class _ChatPayloadCamelModel(_ChatPayloadModel):
-    """Camel-case variant for payloads stored inside engine metadata."""
-
-    model_config = ConfigDict(
-        extra="ignore",
-        populate_by_name=True,
-        alias_generator=to_camel,
-    )
-
-
-def _parse_json_value(value: str | Mapping[str, Any] | None) -> Any | None:
-    if isinstance(value, Mapping):
-        return dict(value)
-    if not isinstance(value, str) or not value:
-        return None
-    try:
-        return json.loads(value)
-    except json.JSONDecodeError:
-        return None
-
-
-def _parse_payload_model[TModel: BaseModel](
-    value: str | Mapping[str, Any] | BaseModel | None,
-    model_type: type[TModel],
-) -> TModel | None:
-    if value is None:
-        return None
-    if isinstance(value, model_type):
-        return value
-
-    payload: Any
-    if isinstance(value, BaseModel):
-        payload = value.model_dump()
-    elif isinstance(value, str | Mapping):
-        payload = _parse_json_value(value)
-    else:
-        payload = value
-
-    if payload is None:
-        return None
-
-    try:
-        return model_type.model_validate(payload)
-    except ValidationError:
-        return None
-
-
-def _as_optional_str(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
-
-
-def _as_optional_uuid_str(value: Any) -> str | None:
-    text = _as_optional_str(value)
-    if text is None:
-        return None
-    try:
-        return str(UUID(text))
-    except (TypeError, ValueError):
-        return None
-
-
-def _classify_chat_upload_failure_code(error: str) -> str | None:
-    normalized_error = error.lower()
-    if "allow overwrite" in normalized_error or "already exists" in normalized_error:
-        return _CHAT_UPLOAD_FAILURE_CODE_ALREADY_EXISTS
-    return None
-
-
-def _normalize_chat_upload_failure(
-    *,
-    filename: str | None,
-    error: str,
-    file_id: str | None = None,
-    code: str | None = None,
-) -> ChatUploadPreparationFailure:
-    return ChatUploadPreparationFailure(
-        file_id=file_id,
-        filename=filename,
-        code=code or _classify_chat_upload_failure_code(error),
-        error=error,
-    )
-
-
-class _LooseChatUploadPreparationFailure(_ChatPayloadCamelModel):
-    """Tolerant parser for persisted upload failure payloads."""
-
-    file_id: str | None = None
-    filename: str | None = None
-    code: str | None = None
-    error: str = "Upload preparation failed"
-
-    @field_validator("file_id", "filename", "code", mode="before")
-    @classmethod
-    def _coerce_optional_text(cls, value: Any) -> str | None:
-        return _as_optional_str(value)
-
-    @field_validator("error", mode="before")
-    @classmethod
-    def _coerce_error(cls, value: Any) -> str:
-        return _as_optional_str(value) or "Upload preparation failed"
-
-
-def _parse_chat_upload_accepted_files(
-    value: Any,
-) -> list[ChatUploadPreparationAcceptedFile]:
-    if not isinstance(value, list):
-        return []
-
-    accepted_files: list[ChatUploadPreparationAcceptedFile] = []
-    for entry in value:
-        parsed = _parse_payload_model(entry, ChatUploadPreparationAcceptedFile)
-        if parsed is not None:
-            accepted_files.append(parsed)
-    return accepted_files
-
-
-def _parse_chat_upload_failures(value: Any) -> list[ChatUploadPreparationFailure]:
-    if not isinstance(value, list):
-        return []
-
-    failures: list[ChatUploadPreparationFailure] = []
-    for entry in value:
-        parsed = _parse_payload_model(entry, ChatUploadPreparationFailure)
-        if parsed is not None:
-            failures.append(parsed)
-            continue
-
-        loose_failure = _parse_payload_model(entry, _LooseChatUploadPreparationFailure)
-        if loose_failure is None:
-            continue
-
-        failures.append(
-            _normalize_chat_upload_failure(
-                filename=loose_failure.filename,
-                error=loose_failure.error,
-                file_id=_as_optional_uuid_str(loose_failure.file_id),
-                code=loose_failure.code,
-            )
-        )
-    return failures
-
-
-class _ChatUploadPreparationMetadata(_ChatPayloadCamelModel):
-    """Typed metadata stored on the chat upload preparation root run."""
-
-    internal_catalog_connection_id: str | None = None
-    accepted_files: list[ChatUploadPreparationAcceptedFile] = Field(default_factory=list)
-    upload_errors: list[ChatUploadPreparationFailure] = Field(default_factory=list)
-
-    @field_validator("internal_catalog_connection_id", mode="before")
-    @classmethod
-    def _coerce_connection_id(cls, value: Any) -> str | None:
-        return _as_optional_str(value)
-
-    @field_validator("accepted_files", mode="before")
-    @classmethod
-    def _coerce_accepted_files(cls, value: Any) -> list[ChatUploadPreparationAcceptedFile]:
-        return _parse_chat_upload_accepted_files(value)
-
-    @field_validator("upload_errors", mode="before")
-    @classmethod
-    def _coerce_upload_errors(cls, value: Any) -> list[ChatUploadPreparationFailure]:
-        return _parse_chat_upload_failures(value)
-
-
-class _StoredLakehouseIngestJobResult(_ChatPayloadModel):
-    """Typed view over persisted Python job results for lakehouse ingest."""
-
-    success: bool | None = None
-    message: str | None = None
-    data: LakehouseIngestResultData | None = None
-    error_code: str | None = None
-
-
-def _to_chat_upload_accepted_file(file_record) -> ChatUploadPreparationAcceptedFile:
-    return ChatUploadPreparationAcceptedFile(
-        file_id=str(file_record.id),
-        filename=file_record.name,
-        file_type=file_record.file_type,
-        size=file_record.size,
-    )
-
-
-def _get_chat_upload_preparation_metadata(
-    engine_metadata_json: str | None,
-) -> _ChatUploadPreparationMetadata | None:
-    metadata = parse_engine_metadata_json(engine_metadata_json)
-    return _parse_payload_model(
-        metadata.get(_CHAT_UPLOAD_PREPARATION_METADATA_KEY),
-        _ChatUploadPreparationMetadata,
-    )
-
-
-def _upsert_chat_upload_preparation_metadata_json(
-    engine_metadata_json: str | None,
-    *,
-    internal_catalog_connection_id: str | None,
-    accepted_files: list[ChatUploadPreparationAcceptedFile],
-    upload_errors: list[ChatUploadPreparationFailure],
-) -> str:
-    metadata = parse_engine_metadata_json(engine_metadata_json)
-    metadata[_CHAT_UPLOAD_PREPARATION_METADATA_KEY] = _ChatUploadPreparationMetadata(
-        internal_catalog_connection_id=internal_catalog_connection_id,
-        accepted_files=accepted_files,
-        upload_errors=upload_errors,
-    ).model_dump(by_alias=True, exclude_none=True)
-    return json.dumps(metadata, default=str, sort_keys=True)
-
-
-def _parse_lakehouse_ingest_result_data(
-    value: str | Mapping[str, Any] | None,
-) -> LakehouseIngestResultData:
-    envelope = _parse_payload_model(value, _StoredLakehouseIngestJobResult)
-    if envelope is not None and envelope.data is not None:
-        return envelope.data
-
-    direct_payload = _parse_payload_model(value, LakehouseIngestResultData)
-    return direct_payload or LakehouseIngestResultData()
-
-
-def _chat_attachment_file_from_accepted_file(
-    accepted_file: ChatUploadPreparationAcceptedFile,
-) -> ChatAttachmentContextFile:
-    return ChatAttachmentContextFile(
-        file_id=accepted_file.file_id,
-        file_name=accepted_file.filename,
-        file_type=accepted_file.file_type,
-    )
-
-
-def _chat_attachment_tables_from_catalog_details(
-    *,
-    file_id: str,
-    entity_details,
-) -> list[ChatAttachmentContextTable]:
-    tables: list[ChatAttachmentContextTable] = []
-    for detail in entity_details:
-        entity = getattr(detail, "entity", None)
-        if entity is None:
-            continue
-        tables.append(
-            ChatAttachmentContextTable(
-                file_id=file_id,
-                entity_id=str(entity.id),
-                namespace_name=str(entity.namespace_name),
-                entity_name=str(entity.entity_name),
-                row_count=entity.row_count,
-                column_names=[
-                    str(column.name)
-                    for column in getattr(detail, "columns", []) or []
-                    if getattr(column, "name", None)
-                ],
-            )
-        )
-    return tables
 
 
 async def get_chat_session_resource_service(
@@ -452,10 +185,10 @@ async def start_chat_upload_preparation_service(
     upload_failures = [*validation_batch.failures, *persisted_batch.failures]
     accepted_files = persisted_batch.successful_files
     accepted_file_models = [
-        _to_chat_upload_accepted_file(file_record) for file_record in accepted_files
+        to_chat_upload_accepted_file(file_record) for file_record in accepted_files
     ]
     upload_error_models = [
-        _normalize_chat_upload_failure(
+        normalize_chat_upload_failure(
             filename=failure.filename,
             error=failure.error,
             file_id=str(failure.file_id) if failure.file_id else None,
@@ -468,7 +201,7 @@ async def start_chat_upload_preparation_service(
         ip_address=ip_address,
         triggered_by=triggered_by,
         force_workflow=True,
-        workflow_key=_CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY,
+        workflow_key=CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY,
         workflow_name="Chat Upload Preparation",
         workflow_description=(
             "Prepares staged chat attachments by ingesting them into the "
@@ -486,7 +219,7 @@ async def start_chat_upload_preparation_service(
     root_context = await context_service.get_by_run_id_async(run_id)
     await context_service.upsert_context_async(
         run_id=run_id,
-        engine_metadata_json=_upsert_chat_upload_preparation_metadata_json(
+        engine_metadata_json=upsert_chat_upload_preparation_metadata_json(
             root_context.engine_metadata_json if root_context else None,
             internal_catalog_connection_id=internal_connection.id,
             accepted_files=accepted_file_models,
@@ -533,19 +266,19 @@ async def get_chat_upload_preparation_status_service(
     workflow_state = workflow_projection.workflow_state
     if (
         workflow_state is None
-        or workflow_state.workflow_key != _CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY
+        or workflow_state.workflow_key != CHAT_UPLOAD_PREPARATION_WORKFLOW_KEY
     ):
         raise HTTPException(status_code=404, detail="Chat upload preparation not found")
 
-    chat_preparation_metadata = _get_chat_upload_preparation_metadata(
+    chat_preparation_metadata = parse_chat_upload_preparation_metadata(
         root_context.engine_metadata_json if root_context else None
     )
-    initial_metadata = chat_preparation_metadata or _parse_payload_model(
+    initial_metadata = chat_preparation_metadata or parse_payload_model(
         root_job_run.parameters,
-        _ChatUploadPreparationMetadata,
+        ChatUploadPreparationMetadata,
     )
     if initial_metadata is None:
-        initial_metadata = _ChatUploadPreparationMetadata()
+        initial_metadata = ChatUploadPreparationMetadata()
 
     initial_failures = list(initial_metadata.upload_errors)
     accepted_files = list(initial_metadata.accepted_files)
@@ -557,7 +290,7 @@ async def get_chat_upload_preparation_status_service(
     child_contexts = await context_service.list_by_root_run_id_async(run_id)
     child_run_ids: list[UUID] = []
     for context in child_contexts:
-        child_run_id = _as_optional_uuid_str(getattr(context, "run_id", None))
+        child_run_id = as_optional_uuid_str(getattr(context, "run_id", None))
         if child_run_id is None or child_run_id == str(run_id):
             continue
         child_run_ids.append(UUID(child_run_id))
@@ -585,14 +318,14 @@ async def get_chat_upload_preparation_status_service(
             child_run.error_message if child_run is not None else None
         )
 
-        result_data = _parse_lakehouse_ingest_result_data(
+        result_data = parse_lakehouse_ingest_result_data(
             child_run.result_data if child_run is not None else None
         )
 
         ready_file_ids.extend(
             file_id
             for file_id in (
-                _as_optional_uuid_str(file_id) for file_id in result_data.successful_file_ids
+                as_optional_uuid_str(file_id) for file_id in result_data.successful_file_ids
             )
             if file_id is not None
         )
@@ -601,14 +334,14 @@ async def get_chat_upload_preparation_status_service(
             internal_connection_id = result_data.connection_id
 
         for failed_file in result_data.failed_files:
-            normalized_failed_file_id = _as_optional_uuid_str(failed_file.file_id)
+            normalized_failed_file_id = as_optional_uuid_str(failed_file.file_id)
             failed_filename = (
                 filename_by_file_id.get(normalized_failed_file_id)
                 if normalized_failed_file_id is not None
                 else None
             )
             failed_files.append(
-                _normalize_chat_upload_failure(
+                normalize_chat_upload_failure(
                     filename=failed_filename,
                     error=failed_file.error,
                     file_id=normalized_failed_file_id,
@@ -678,7 +411,7 @@ async def seed_chat_attachment_context_service(
     if root_context is None:
         raise HTTPException(status_code=404, detail="Chat upload preparation not found")
 
-    chat_preparation_metadata = _get_chat_upload_preparation_metadata(
+    chat_preparation_metadata = parse_chat_upload_preparation_metadata(
         root_context.engine_metadata_json
     )
     accepted_files = (
@@ -699,13 +432,13 @@ async def seed_chat_attachment_context_service(
         if accepted_file is None:
             continue
 
-        ready_context_files.append(_chat_attachment_file_from_accepted_file(accepted_file))
+        ready_context_files.append(chat_attachment_file_from_accepted_file(accepted_file))
         entity_details = await catalog_service.get_source_entities(
             source_type="file",
             source_id=ready_file_id,
         )
         ready_context_tables.extend(
-            _chat_attachment_tables_from_catalog_details(
+            chat_attachment_tables_from_catalog_details(
                 file_id=ready_file_id,
                 entity_details=entity_details,
             )

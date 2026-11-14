@@ -25,45 +25,39 @@ export class ProjectService extends HttpApiService {
       filter?: string
    ): Promise<ApiResult<ProjectModel[]>> {
       void userId;
-      try {
+      return this.wrap(async () => {
          const result = await this.createHostClient().getProjects({ filter });
-         return ApiResult.success(result.items || []);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result.items || [];
+      });
    }
 
    async getProject(projectId: string): Promise<ApiResult<ProjectModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<ProjectModel>(
             `/project/${encodeURIComponent(projectId)}`
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async createProject(
       project: CreateProjectRequest
    ): Promise<ApiResult<ProjectModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<ProjectModel>("/project", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(project)
          });
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async updateProject(
       projectId: string,
       project: UpdateProjectRequest
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.requestJson<ProjectModel>(
             `/project/${encodeURIComponent(projectId)}`,
             {
@@ -72,10 +66,8 @@ export class ProjectService extends HttpApiService {
                body: JSON.stringify(project)
             }
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async getFilteredProjects(
@@ -87,7 +79,7 @@ export class ProjectService extends HttpApiService {
       includePrivate: boolean = true,
       includeDeleted: boolean = false
    ): Promise<ApiResult<PaginatedListOfProjectModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.createHostClient().getProjects({
             filter,
             roleFilters,
@@ -97,22 +89,18 @@ export class ProjectService extends HttpApiService {
             pageIndex,
             pageSize
          });
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getProjectByCode(
       projectCode: string
    ): Promise<ApiResult<ProjectModel>> {
-      try {
+      return this.wrap(async () => {
          const result =
             await this.createHostClient().getProjectByCode(projectCode);
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getProjectUsers(
@@ -151,28 +139,24 @@ export class ProjectService extends HttpApiService {
    }
 
    async deleteProject(projectId: string): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.requestJson<void>(
             `/project/${encodeURIComponent(projectId)}`,
             {
                method: "DELETE"
             }
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async getFoundationModels(): Promise<ApiResult<FoundationModel[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<FoundationModel[]>(
             this.buildPath("/project/foundation-models")
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    private createHostClient(): HostClient {

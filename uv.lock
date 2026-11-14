@@ -22,7 +22,6 @@ members = [
     "kontext-common",
     "kontext-data",
     "kontext-engine",
-    "kontext-execution",
     "kontext-file",
     "kontext-harness-agno",
     "kontext-job",
@@ -1776,8 +1775,8 @@ dependencies = [
     { name = "kontext-chat" },
     { name = "kontext-common" },
     { name = "kontext-data" },
-    { name = "kontext-execution" },
     { name = "kontext-file" },
+    { name = "kontext-job" },
     { name = "kontext-llm" },
     { name = "kontext-schema" },
     { name = "mistune" },
@@ -1804,8 +1803,8 @@ requires-dist = [
     { name = "kontext-common", marker = "extra == 'inprocess'", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
     { name = "kontext-data", marker = "extra == 'inprocess'", editable = "py/kontext-data" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-file", editable = "py/kontext-file" },
+    { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-llm", editable = "py/kontext-llm" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
     { name = "mistune", specifier = ">=3.4.0" },
@@ -1832,7 +1831,6 @@ dependencies = [
     { name = "kontext-common" },
     { name = "kontext-data" },
     { name = "kontext-engine" },
-    { name = "kontext-execution" },
     { name = "kontext-file" },
     { name = "kontext-harness-agno" },
     { name = "kontext-job", extra = ["catalog"] },
@@ -1871,7 +1869,6 @@ requires-dist = [
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
     { name = "kontext-engine", editable = "py/kontext-engine" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-file", editable = "py/kontext-file" },
     { name = "kontext-harness-agno", editable = "py/kontext-harness-agno" },
     { name = "kontext-job", extras = ["catalog"], editable = "py/kontext-job" },
@@ -1918,7 +1915,6 @@ dependencies = [
     { name = "fastembed" },
     { name = "kontext-common" },
     { name = "kontext-data" },
-    { name = "kontext-execution" },
     { name = "kontext-job" },
     { name = "kontext-okf" },
     { name = "kontext-schema" },
@@ -1950,7 +1946,6 @@ requires-dist = [
     { name = "fastembed", specifier = ">=0.4.2" },
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-okf", editable = "py/kontext-okf" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
@@ -1982,7 +1977,7 @@ dependencies = [
     { name = "kontext-auth" },
     { name = "kontext-common" },
     { name = "kontext-data" },
-    { name = "kontext-execution" },
+    { name = "kontext-job" },
     { name = "kontext-llm" },
     { name = "kontext-schema" },
 ]
@@ -1993,7 +1988,7 @@ requires-dist = [
     { name = "kontext-auth", editable = "py/kontext-auth" },
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
+    { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-llm", editable = "py/kontext-llm" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
 ]
@@ -2076,29 +2071,6 @@ requires-dist = [
 ]
 
 [[package]]
-name = "kontext-execution"
-version = "0.263.1"
-source = { editable = "py/kontext-execution" }
-dependencies = [
-    { name = "kontext-auth" },
-    { name = "kontext-common" },
-    { name = "kontext-data" },
-    { name = "kontext-job" },
-    { name = "kontext-kernel" },
-    { name = "kontext-schema" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "kontext-auth", editable = "py/kontext-auth" },
-    { name = "kontext-common", editable = "py/kontext-common" },
-    { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-job", editable = "py/kontext-job" },
-    { name = "kontext-kernel", editable = "py/kontext-kernel" },
-    { name = "kontext-schema", editable = "py/kontext-schema" },
-]
-
-[[package]]
 name = "kontext-file"
 version = "0.263.1"
 source = { editable = "py/kontext-file" }
@@ -2107,7 +2079,6 @@ dependencies = [
     { name = "kontext-catalog" },
     { name = "kontext-common" },
     { name = "kontext-data" },
-    { name = "kontext-execution" },
     { name = "kontext-job" },
     { name = "kontext-schema" },
     { name = "kontext-storage" },
@@ -2120,7 +2091,6 @@ requires-dist = [
     { name = "kontext-catalog", editable = "py/kontext-catalog" },
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
     { name = "kontext-storage", editable = "py/kontext-storage" },
@@ -2158,6 +2128,7 @@ dependencies = [
     { name = "kontext-auth" },
     { name = "kontext-common" },
     { name = "kontext-data" },
+    { name = "kontext-kernel" },
     { name = "kontext-schema" },
     { name = "openpyxl" },
     { name = "pydantic" },
@@ -2181,6 +2152,7 @@ requires-dist = [
     { name = "kontext-auth", editable = "py/kontext-auth" },
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
+    { name = "kontext-kernel", editable = "py/kontext-kernel" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
     { name = "lancedb", marker = "extra == 'catalog'", specifier = ">=0.39.0" },
     { name = "openpyxl", specifier = ">=3.1.0" },
@@ -2284,7 +2256,6 @@ dependencies = [
     { name = "kontext-catalog" },
     { name = "kontext-common" },
     { name = "kontext-data" },
-    { name = "kontext-execution" },
     { name = "kontext-job" },
     { name = "kontext-schema" },
 ]
@@ -2295,7 +2266,6 @@ requires-dist = [
     { name = "kontext-catalog", editable = "py/kontext-catalog" },
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-schema", editable = "py/kontext-schema" },
 ]
@@ -2311,7 +2281,6 @@ dependencies = [
     { name = "kontext-common" },
     { name = "kontext-data" },
     { name = "kontext-engine" },
-    { name = "kontext-execution" },
     { name = "kontext-file" },
     { name = "kontext-job", extra = ["catalog"] },
     { name = "kontext-kernel" },
@@ -2330,7 +2299,6 @@ requires-dist = [
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
     { name = "kontext-engine", editable = "py/kontext-engine" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-file", editable = "py/kontext-file" },
     { name = "kontext-job", extras = ["catalog"], editable = "py/kontext-job" },
     { name = "kontext-kernel", editable = "py/kontext-kernel" },
@@ -2370,7 +2338,7 @@ requires-dist = [
 [[package]]
 name = "kontext-studio"
 version = "0.263.1"
-source = { editable = "py/kontext-labs" }
+source = { editable = "py/kontext-studio" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "kontext-account" },
@@ -2380,7 +2348,6 @@ dependencies = [
     { name = "kontext-common" },
     { name = "kontext-data" },
     { name = "kontext-engine" },
-    { name = "kontext-execution" },
     { name = "kontext-harness-agno" },
     { name = "kontext-job" },
     { name = "kontext-kernel" },
@@ -2410,7 +2377,6 @@ requires-dist = [
     { name = "kontext-common", editable = "py/kontext-common" },
     { name = "kontext-data", editable = "py/kontext-data" },
     { name = "kontext-engine", editable = "py/kontext-engine" },
-    { name = "kontext-execution", editable = "py/kontext-execution" },
     { name = "kontext-harness-agno", editable = "py/kontext-harness-agno" },
     { name = "kontext-job", editable = "py/kontext-job" },
     { name = "kontext-kernel", editable = "py/kontext-kernel" },

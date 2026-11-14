@@ -53,11 +53,9 @@ export class AuthService extends HttpApiService {
    }
 
    async getHostBootstrap(): Promise<ApiResult<HostAuthBootstrap>> {
-      try {
-         return ApiResult.success(await this.createHostClient().bootstrap());
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+      return this.wrap(async () => {
+         return await this.createHostClient().bootstrap();
+      });
    }
 
    async refreshToken(
@@ -88,12 +86,10 @@ export class AuthService extends HttpApiService {
    }
 
    async logout(): Promise<ApiResult<boolean>> {
-      try {
+      return this.wrap(async () => {
          await this.createHostClient().logout();
-         return ApiResult.success(true);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return true;
+      });
    }
 
    private createHostClient(): HostClient {

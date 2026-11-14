@@ -1,7 +1,7 @@
 name: Publish TypeScript Packages
 
 # Publishing is driven by the `ts-packages-v*` git tag created by
-# `pnpm run version:labs` (`uv run cz bump`). No changesets PR flow: the bump
+# `pnpm run version:studio` (`uv run cz bump`). No changesets PR flow: the bump
 # commit and tag are created locally and pushed by a maintainer.
 #
 # The packages publish under the `@kontext-tech` scope, matching the repository
@@ -55,7 +55,7 @@ jobs:
         run: |
           expected="ts-packages-v$(node -p "require('./package.json').version")"
           if [ "$TAG_REF" != "$expected" ]; then
-            echo "::error::Tag $TAG_REF does not match the workspace version (expected $expected). Run 'pnpm run version:labs' and push the tag it creates."
+            echo "::error::Tag $TAG_REF does not match the workspace version (expected $expected). Run 'pnpm run version:studio' and push the tag it creates."
             exit 1
           fi
 

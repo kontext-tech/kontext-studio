@@ -25,48 +25,42 @@ export class CatalogService extends DataApiBaseService {
    async listProviders(
       projectId: string
    ): Promise<ApiResult<CatalogProviderDefinition[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/providers", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result as CatalogProviderDefinition[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as CatalogProviderDefinition[];
+      });
    }
 
    async listConnections(
       projectId: string
    ): Promise<ApiResult<CatalogConnection[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/connections", {
                params: { query: { projectId } }
             })
          );
-         return ApiResult.success(result as CatalogConnection[]);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as CatalogConnection[];
+      });
    }
 
    async createConnection(
       projectId: string,
       request: CatalogConnectionRequest
    ): Promise<ApiResult<CatalogConnection>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/catalog/connections", {
                params: { query: { projectId } },
                body: request
             })
          );
-         return ApiResult.success(result as CatalogConnection);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as CatalogConnection;
+      });
    }
 
    async updateConnection(
@@ -74,7 +68,7 @@ export class CatalogService extends DataApiBaseService {
       connectionId: string,
       request: CatalogConnectionRequest
    ): Promise<ApiResult<CatalogConnection>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.PUT("/catalog/connections/{connectionId}", {
                params: {
@@ -84,17 +78,15 @@ export class CatalogService extends DataApiBaseService {
                body: request
             })
          );
-         return ApiResult.success(result as CatalogConnection);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as CatalogConnection;
+      });
    }
 
    async deleteConnection(
       projectId: string,
       connectionId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/catalog/connections/{connectionId}", {
                params: {
@@ -103,17 +95,15 @@ export class CatalogService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 
    async validateConnection(
       projectId: string,
       connectionId: string
    ): Promise<ApiResult<CatalogConnectionValidationResult>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST(
                "/catalog/connections/{connectionId}/validate",
@@ -125,17 +115,15 @@ export class CatalogService extends DataApiBaseService {
                }
             )
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async syncConnection(
       projectId: string,
       connectionId: string
    ): Promise<ApiResult<CatalogSyncStatus>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/catalog/connections/{connectionId}/sync", {
                params: {
@@ -144,17 +132,15 @@ export class CatalogService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async listNamespaces(
       projectId: string,
       connectionId?: string
    ): Promise<ApiResult<CatalogNamespaceSummary[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/namespaces", {
                params: {
@@ -162,10 +148,8 @@ export class CatalogService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async listEntities(
@@ -173,7 +157,7 @@ export class CatalogService extends DataApiBaseService {
       connectionId?: string,
       namespaceName?: string
    ): Promise<ApiResult<CatalogEntitySummary[]>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/catalog/entities", {
                params: {
@@ -181,9 +165,7 @@ export class CatalogService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 }

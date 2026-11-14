@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "kontext-job"
 version = "0.263.1"
-description = "Job execution framework for Kontext"
+description = "Job framework and execution orchestration for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
@@ -23,6 +23,7 @@ dependencies = [
     "kontext-auth",
     "kontext-common",
     "kontext-data",
+    "kontext-kernel",
     "croniter>=6.0.0,<7.0.0",
     "duckdb>=2.0.0",
     # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp).

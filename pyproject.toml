@@ -13,12 +13,11 @@ members = [
     "py/kontext-common",
     "py/kontext-data",
     "py/kontext-engine",
-    "py/kontext-execution",
     "py/kontext-file",
     "py/kontext-harness-agno",
     "py/kontext-job",
     "py/kontext-kernel",
-    "py/kontext-labs",
+    "py/kontext-studio",
     "py/kontext-llm",
     "py/kontext-okf",
     "py/kontext-project",
@@ -39,7 +38,6 @@ kontext-chat = { workspace = true }
 kontext-common = { workspace = true }
 kontext-data = { workspace = true }
 kontext-engine = { workspace = true }
-kontext-execution = { workspace = true }
 kontext-file = { workspace = true }
 kontext-harness-agno = { workspace = true }
 kontext-job = { workspace = true }
@@ -100,12 +98,11 @@ version_files = [
     "py/kontext-common/pyproject.toml:version",
     "py/kontext-data/pyproject.toml:version",
     "py/kontext-engine/pyproject.toml:version",
-    "py/kontext-execution/pyproject.toml:version",
     "py/kontext-file/pyproject.toml:version",
     "py/kontext-harness-agno/pyproject.toml:version",
     "py/kontext-job/pyproject.toml:version",
     "py/kontext-kernel/pyproject.toml:version",
-    "py/kontext-labs/pyproject.toml:version",
+    "py/kontext-studio/pyproject.toml:version",
     "py/kontext-llm/pyproject.toml:version",
     "py/kontext-okf/pyproject.toml:version",
     "py/kontext-project/pyproject.toml:version",

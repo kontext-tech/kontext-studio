@@ -23,7 +23,7 @@ export class ChatUploadPreparationService extends DataApiBaseService {
       files: File[],
       allowOverwrite: boolean = false
    ): Promise<ApiResult<StartChatUploadPreparationResponse>> {
-      try {
+      return this.wrap(async () => {
          const formData = new FormData();
          files.forEach((file) => formData.append("files", file));
          const result = await this.request(
@@ -34,17 +34,15 @@ export class ChatUploadPreparationService extends DataApiBaseService {
                body: formData as unknown as { files: string[] }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getUploadPreparationStatus(
       projectId: string,
       runId: string
    ): Promise<ApiResult<ChatUploadPreparationStatus>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/ai/chat/upload-preparations/{runId}", {
                params: {
@@ -53,10 +51,8 @@ export class ChatUploadPreparationService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async seedChatAttachmentContext(
@@ -64,7 +60,7 @@ export class ChatUploadPreparationService extends DataApiBaseService {
       chatSessionId: string,
       uploadPreparationRunId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          const request: SeedChatAttachmentContextRequest = {
             uploadPreparationRunId
          };
@@ -80,9 +76,7 @@ export class ChatUploadPreparationService extends DataApiBaseService {
                }
             )
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 }

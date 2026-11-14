@@ -51,7 +51,7 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
             "-B",
             "-u",
             "-m",
-            "kontext.labs",
+            "kontext.studio",
             "desktop",
             "--preferred-port",
             "47800",

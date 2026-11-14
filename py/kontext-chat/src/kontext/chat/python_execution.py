@@ -15,7 +15,7 @@ from uuid import UUID, uuid4
 from kontext.common.constants import max_consecutive_kernel_failures
 from kontext.common.protocols import IChatSessionProtocol
 from kontext.data import ChatSessionDataService
-from kontext.execution import PythonExecutionService, PythonExecutionServiceResult
+from kontext.jobs import PythonExecutionService, PythonExecutionServiceResult
 from kontext.schema import (
     ArtifactType,
     ChatSessionArtifactModel,

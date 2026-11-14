@@ -278,7 +278,7 @@ export async function startServer({ apiPort, appPort } = {}) {
             "kontext-studio",
             "python",
             "-m",
-            "kontext.labs.local_worker"
+            "kontext.studio.local_worker"
          ],
          env: {
             ...sharedEnv,

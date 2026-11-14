@@ -46,7 +46,7 @@
       "check:generator-smoke": "pnpm --filter @kontext-tech/schema run check:generator-smoke",
       "generate:models": "pnpm --filter @kontext-tech/schema run generate:models",
       "refresh:api-schema": "pnpm --filter @kontext-tech/schema run refresh-api-schema",
-      "version:labs": "uv run cz bump",
+      "version:studio": "uv run cz bump",
       "docs:record": "node ./tools/docs-capture/run.mjs record"
    },
    "devDependencies": {

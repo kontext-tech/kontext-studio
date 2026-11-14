@@ -11,7 +11,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query, Request
 
 from kontext.auth import JobPermissions
-from kontext.execution.job_management import (
+from kontext.jobs.job_management import (
     create_job_service,
     delete_job_service,
     get_job_service,
@@ -21,7 +21,7 @@ from kontext.execution.job_management import (
     schedule_job_service,
     update_job_service,
 )
-from kontext.execution.job_management import (
+from kontext.jobs.job_management import (
     get_job_resource_service as load_job_resource,
 )
 from kontext.schema import (

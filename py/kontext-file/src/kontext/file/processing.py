@@ -20,13 +20,13 @@ from kontext.common.messaging import IQueueClient
 from kontext.common.project_scoped import ProjectScopedService
 from kontext.common.utils.enum_utils import safe_enum_conversion
 from kontext.common.utils.file_storage import is_system_managed_project_file_prefix
-from kontext.execution.scheduling import create_queued_job_run_and_maybe_dispatch
-from kontext.execution.workflows import (
+from kontext.jobs.job_run_dispatch import create_queued_job_run_and_maybe_dispatch
+from kontext.jobs.service import JobService
+from kontext.jobs.workflows import (
     WorkflowJobStepDefinition,
     WorkflowOrchestrationService,
     WorkflowStartRequest,
 )
-from kontext.jobs.service import JobService
 from kontext.schema import FileFormatType, JobTriggerType, TriggerActorModel
 
 from .helpers import should_trigger_profiling_job

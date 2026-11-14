@@ -113,7 +113,7 @@
    "python.analysis.include": [
       "py/kontext-agentic",
       "py/kontext-api",
-      "py/kontext-labs",
+      "py/kontext-studio",
       "py/kontext-job"
    ],
    "python.analysis.exclude": [
@@ -135,12 +135,11 @@
       "py/kontext-common/src",
       "py/kontext-data/src",
       "py/kontext-engine/src",
-      "py/kontext-execution/src",
       "py/kontext-file/src",
       "py/kontext-job/src",
       "py/kontext-agentic/src",
       "py/kontext-api/src",
-      "py/kontext-labs/src",
+      "py/kontext-studio/src",
       "py/kontext-llm/src",
       "py/kontext-okf/src",
       "py/kontext-project/src",

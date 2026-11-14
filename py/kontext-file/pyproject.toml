@@ -24,7 +24,6 @@ dependencies = [
     "kontext-catalog",
     "kontext-common",
     "kontext-data",
-    "kontext-execution",
     "kontext-job",
     "kontext-schema",
     "kontext-storage",

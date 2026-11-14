@@ -12,12 +12,10 @@ export class ModelCatalogService extends HttpApiService {
    }
 
    async getCatalog(): Promise<ApiResult<ModelCatalogEntry[]>> {
-      try {
+      return this.wrap(async () => {
          const result =
             await this.requestJson<ModelCatalogEntry[]>("/models/catalog");
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 }

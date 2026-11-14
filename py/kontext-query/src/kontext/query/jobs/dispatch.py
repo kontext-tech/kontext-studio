@@ -7,7 +7,7 @@ from uuid import UUID
 
 from kontext.common.jobs.trigger_actor import format_trigger_actor
 from kontext.common.messaging import IQueueClient
-from kontext.execution.scheduling import create_job_run_and_maybe_dispatch
+from kontext.jobs.job_run_dispatch import create_job_run_and_maybe_dispatch
 from kontext.schema import (
     JobTriggerType,
     TriggerActorModel,

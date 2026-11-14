@@ -14,7 +14,7 @@ The child harness is deliberately stdlib-only and must not import `kontext`
 ## What It Does Not Own
 
 - deployment composition or backend/provider *selection* (see `kontext-runtime`)
-- durable run lifecycle (see `kontext-execution`)
+- durable job-run lifecycle (see `kontext-job`)
 - the managed virtualenv that a kernel runs in (see `kontext-runtime`)
 
 Backend selection — choosing the kernel backend and resolving the managed

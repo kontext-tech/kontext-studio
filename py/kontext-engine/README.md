@@ -15,8 +15,8 @@ The provider chosen at runtime is `LocalRuntimeProvider`, which lives in
 
 - deployment-profile bootstrap or provider selection (see `kontext-runtime`)
 - query submission and session orchestration (see `kontext-query`)
-- durable run lifecycle, retries, cancellation, and run projection
-  (see `kontext-execution`)
+- durable job-run lifecycle, retries, cancellation, and run projection
+  (see `kontext-job`)
 - HTTP/SSE/WebSocket transport (see `kontext-api`)
 
 ## Dependencies
@@ -35,7 +35,7 @@ engine swappable (including for a future remote/cloud engine). The
 | Chooses how a deployment is wired | `kontext-runtime` |
 | Submits and tracks query sessions | `kontext-query` |
 | Performs compute inside a Python process | `kontext-engine` (this package) |
-| Tracks durable runs across transports and workers | `kontext-execution` |
+| Tracks durable runs across transports and workers | `kontext-job` |
 
 See [Python Package Boundaries](../../docs/development/python-package-boundaries.md)
 for the full responsibility matrix and the execution-stack decision tree.

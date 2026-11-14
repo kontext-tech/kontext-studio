@@ -162,7 +162,7 @@ const SECRET_PATTERNS = [
 export function sanitizeTranscript(messages, { apiKey, homeDir } = {}) {
    let text = JSON.stringify(messages);
    if (homeDir) text = text.split(homeDir).join("~");
-   text = text.split(repoRoot).join("~/kontext-labs");
+   text = text.split(repoRoot).join("~/kontext-studio");
    if (apiKey) text = text.split(apiKey).join("docs-fixture-key");
 
    for (const pattern of SECRET_PATTERNS) {

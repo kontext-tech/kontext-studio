@@ -11,7 +11,7 @@ from __future__ import annotations
 from uuid import UUID
 
 from kontext.chat import ChatExecutionTrackerProtocol
-from kontext.execution.lifecycle import ExecutionLifecycleService
+from kontext.jobs.lifecycle import ExecutionLifecycleService
 from kontext.schema import (
     ExecutionRunModel,
     SimpleRunEvent,

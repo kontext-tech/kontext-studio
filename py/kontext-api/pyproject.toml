@@ -33,7 +33,6 @@ dependencies = [
     "kontext-file",
     "kontext-harness-agno",
     "kontext-project",
-    "kontext-execution",
     "kontext-query",
     "kontext-engine",
     "kontext-runtime",

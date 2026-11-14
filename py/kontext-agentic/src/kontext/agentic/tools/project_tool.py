@@ -5,8 +5,8 @@ from uuid import UUID
 
 from kontext.agent.tools import tool_meta
 from kontext.common.protocols import AIToolkitServiceProviderProtocol
-from kontext.execution import ExecutionRunService
 from kontext.file.notebook.editor import NotebookEditor
+from kontext.jobs import ExecutionRunService
 from kontext.schema import CodeBlock, ProjectModel, ProjectResult
 
 from ..utils.guid_validation import validate_guid, validate_guids

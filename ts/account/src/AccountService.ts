@@ -18,7 +18,7 @@ export class AccountService extends HttpApiService {
    async updateUserProfile(
       updateUserProfileRequest: UpdateUserProfileRequest
    ): Promise<ApiResult<UserWithRolesModel>> {
-      try {
+      return this.wrap(async () => {
          const response = await this.requestJson<UserWithRolesModel>(
             "/account/profile",
             {
@@ -27,34 +27,28 @@ export class AccountService extends HttpApiService {
                body: JSON.stringify(updateUserProfileRequest)
             }
          );
-         return ApiResult.success(response);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return response;
+      });
    }
 
    async getPythonEnvironment(): Promise<ApiResult<PythonEnvironmentInfo>> {
-      try {
+      return this.wrap(async () => {
          const response = await this.requestJson<PythonEnvironmentInfo>(
             "/account/python-environment"
          );
-         return ApiResult.success(response);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return response;
+      });
    }
 
    async preparePythonEnvironment(): Promise<ApiResult<PythonEnvironmentInfo>> {
-      try {
+      return this.wrap(async () => {
          const response = await this.requestJson<PythonEnvironmentInfo>(
             "/account/python-environment/prepare",
             {
                method: "POST"
             }
          );
-         return ApiResult.success(response);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return response;
+      });
    }
 }

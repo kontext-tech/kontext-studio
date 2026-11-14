@@ -14,16 +14,13 @@ export class QueryService extends DataApiBaseService {
    async executeQuery(
       request: QueryExecRequest
    ): Promise<ApiResult<QueryResponse>> {
-      try {
+      return this.wrap(async () => {
          const response = await this.request(
             this.apiClient.POST("/query/execute", {
                body: request
             })
          );
-         return ApiResult.success(response as QueryResponse);
-      } catch (error) {
-         const apiError = await this.handleApiError(error);
-         return ApiResult.failure(apiError);
-      }
+         return response as QueryResponse;
+      });
    }
 }

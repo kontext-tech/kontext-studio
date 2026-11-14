@@ -282,7 +282,6 @@ class PythonJobRegistry:
         """Return the ordered list of packages scanned for job definitions."""
         default_packages = [
             "kontext.jobs.definitions",
-            "kontext.execution.job_definitions",
             "kontext.query.jobs",
             "kontext.catalog.jobs",
             "kontext.file.jobs",

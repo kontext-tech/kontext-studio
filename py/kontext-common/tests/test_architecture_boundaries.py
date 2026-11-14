@@ -16,11 +16,10 @@ TOP_LEVEL_MODULE_TO_PACKAGE = {
     "common": "kontext-common",
     "data": "kontext-data",
     "engine": "kontext-engine",
-    "execution": "kontext-execution",
     "file": "kontext-file",
     "jobs": "kontext-job",
     "kernel": "kontext-kernel",
-    "labs": "kontext-studio",
+    "studio": "kontext-studio",
     "llm": "kontext-llm",
     "okf": "kontext-okf",
     "project": "kontext-project",
@@ -129,6 +128,59 @@ def test_job_package_does_not_depend_on_file_package() -> None:
     assert "kontext-file" not in _collect_imports("kontext-job")
 
 
+# Subpackages allowed inside ``kontext-common``. Every entry pays for its
+# placement with a real cross-domain constraint; add one only with the same
+# justification, and prefer moving domain logic to its owning package:
+#
+# - ``artifacts``: provenance helpers used by agent contracts, agentic tools,
+#   file domain, and query.
+# - ``catalog``: connector specs read by catalog, data, engine, and query;
+#   query may not depend on the catalog package, so the specs cannot live there.
+# - ``constants``/``contracts``/``protocols``/``pydantic``/``utils``: pure
+#   contract and support layers every package relies on.
+# - ``jobs``: trigger actors, CRON and queue transport primitives shared by
+#   the framework, domain definitions, and the API.
+# - ``knowledge``: the neutral knowledge contract projected both by catalog
+#   and OKF (OKF must not import catalog).
+# - ``python_execution``: python-run policy shared by the kernel, which depends
+#   only on ``kontext-common``, plus agentic/execution/runtime.
+# - ``query``: session storage/compatibility helpers used by query, the
+#   engine (which may not import query), execution, and runtime.
+COMMON_SUBPACKAGES = frozenset(
+    {
+        "artifacts",
+        "catalog",
+        "constants",
+        "contracts",
+        "jobs",
+        "knowledge",
+        "protocols",
+        "python_execution",
+        "query",
+        "utils",
+    }
+)
+
+
+def test_common_contains_only_contract_and_shared_primitive_subpackages() -> None:
+    """Guard the leaf contract layer against becoming a second domain layer.
+
+    ``kontext-common`` is deliberately limited to types, protocols, constants
+    and support utilities (plus the cross-domain subpackages listed in
+    ``COMMON_SUBPACKAGES``). Growing domain logic here is how layering erodes,
+    because everything can already import this package.
+    """
+    common_src = PY_ROOT / "kontext-common" / "src" / "kontext" / "common"
+    present = {p.name for p in common_src.iterdir() if p.is_dir()}
+    unexpected = present - COMMON_SUBPACKAGES - {"__pycache__"}
+    assert not unexpected, (
+        "kontext-common gained new subpackage(s) outside the contract layer: "
+        + ", ".join(sorted(unexpected))
+        + ". Move domain logic to its owning package, or extend "
+        "COMMON_SUBPACKAGES with an explicit cross-domain justification."
+    )
+
+
 def test_common_is_a_leaf_contract_package() -> None:
     """Common is the shared contract leaf: it may only depend on the schema layer.
 
@@ -159,9 +211,10 @@ def test_query_does_not_depend_on_concrete_engine() -> None:
     assert "kontext-engine" not in _collect_imports("kontext-query")
 
 
-def test_execution_does_not_depend_on_query_or_engine() -> None:
-    assert "kontext-query" not in _collect_imports("kontext-execution")
-    assert "kontext-engine" not in _collect_imports("kontext-execution")
+def test_jobs_do_not_depend_on_query_or_engine() -> None:
+    """The merged jobs package must not pull orchestration targets into itself."""
+    assert "kontext-query" not in _collect_imports("kontext-job")
+    assert "kontext-engine" not in _collect_imports("kontext-job")
 
 
 def _cyclic_edges() -> set[tuple[str, str]]:
@@ -298,7 +351,7 @@ def test_only_the_composition_layer_imports_the_engine() -> None:
 # runtime provider to route through.
 KNOWN_EXTERNAL_KERNEL_OFFENDERS: frozenset[str] = frozenset(
     {
-        "py/kontext-execution/src/kontext/execution/runs.py",
+        "py/kontext-job/src/kontext/jobs/runs.py",
     }
 )
 
@@ -442,7 +495,6 @@ def test_only_the_harness_adapter_imports_a_harness_sdk_in_tests() -> None:
 # SQLite stack and breaks any hosted (API-backed) worker composition.
 JOB_DEFINITION_DIRS = (
     PY_ROOT / "kontext-job" / "src" / "kontext" / "jobs" / "definitions",
-    PY_ROOT / "kontext-execution" / "src" / "kontext" / "execution" / "job_definitions",
     PY_ROOT / "kontext-query" / "src" / "kontext" / "query" / "jobs",
     PY_ROOT / "kontext-catalog" / "src" / "kontext" / "catalog" / "jobs",
     PY_ROOT / "kontext-file" / "src" / "kontext" / "file" / "jobs",

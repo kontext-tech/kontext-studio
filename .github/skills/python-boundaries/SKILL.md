@@ -21,7 +21,7 @@ by an AST-based test:
 | `kontext-kernel` | separate-process Python execution topology | `kontext-common` only |
 | `kontext-engine` | query compute (DuckDB, live SQL) | never `query`/`catalog` |
 | `kontext-query` | query orchestration | resolves engines only via `QueryRuntimeProviderProtocol` |
-| `kontext-execution` | job definitions + run orchestration | never `query`/`engine` |
+| `kontext-job` | job framework + durable run orchestration | never `query`/`engine` |
 | `kontext-llm` | model resolution | never `runtime`/`account` |
 | `kontext-harness-agno` | Agno adapter plugin | `agent`/`common`/`llm`/`schema` + `agno`; never `agentic`/`data` |
 | `kontext-okf` | knowledge format | never `catalog` |
@@ -36,7 +36,7 @@ Additional rules:
   JobContext / provider ports.
 - Kernel imports outside the composition layers are shrink-only-allowlisted;
   the single sanctioned seam is the lazy, process-local
-  `terminate_running_kernel` in `py/kontext-execution/src/kontext/execution/runs.py`.
+  `terminate_running_kernel` in `py/kontext-job/src/kontext/jobs/runs.py`.
 
 ## Shrink-only allowlists
 

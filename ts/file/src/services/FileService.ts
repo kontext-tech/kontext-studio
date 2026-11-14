@@ -46,23 +46,16 @@ export class FileService
       fileId: string,
       projectId: string
    ): Promise<ApiResult<FileModel | null>> {
-      try {
-         const result = await this.request(
+      return this.wrapOptional(async () =>
+         this.request(
             this.apiClient.GET("/file/{fileId}", {
                params: {
                   path: { fileId },
                   query: { projectId }
                }
             })
-         );
-         return ApiResult.success(result);
-      } catch (error) {
-         if (this.getErrorStatus(error) === 404) {
-            return ApiResult.success(null);
-         }
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         )
+      );
    }
 
    async getPaginatedFiles(
@@ -75,7 +68,7 @@ export class FileService
       prefix?: string,
       includeSystemPrefixes?: boolean
    ): Promise<ApiResult<PaginatedFileResponse>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/file", {
                params: {
@@ -92,17 +85,14 @@ export class FileService
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return result;
+      });
    }
 
    async createFile(
       request: FileUploadRequest
    ): Promise<ApiResult<{ file: FileModel; location?: string }>> {
-      try {
+      return this.wrap(async () => {
          const formData = new FormData();
          formData.append("file", request.file);
          const { data, response } = await this.requestResponse(
@@ -118,20 +108,17 @@ export class FileService
             })
          );
          const location = response.headers.get("location") || undefined;
-         return ApiResult.success({
+         return {
             file: data.file!,
             location
-         });
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         };
+      });
    }
 
    async createMultipleFiles(
       request: MultipleFileUploadRequest
    ): Promise<ApiResult<CreateMultipleFilesResponse>> {
-      try {
+      return this.wrap(async () => {
          const formData = new FormData();
          request.files.forEach((file) => formData.append("files", file));
          const result = await this.request(
@@ -146,15 +133,12 @@ export class FileService
                body: formData as unknown as { files: string[] }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return result;
+      });
    }
 
    async updateFile(request: FileUpdateRequest): Promise<ApiResult<FileModel>> {
-      try {
+      return this.wrap(async () => {
          if (request.file) {
             const formData = new FormData();
             // The multipart filename is the file's new name and the content
@@ -167,16 +151,14 @@ export class FileService
                formData.append("file", request.file, request.name);
             }
 
-            return ApiResult.success(
-               await this.request(
-                  this.apiClient.PUT("/file/{fileId}/upload", {
-                     params: {
-                        path: { fileId: request.fileId },
-                        query: { projectId: request.projectId }
-                     },
-                     body: formData as unknown as { file: string }
-                  })
-               )
+            return await this.request(
+               this.apiClient.PUT("/file/{fileId}/upload", {
+                  params: {
+                     path: { fileId: request.fileId },
+                     query: { projectId: request.projectId }
+                  },
+                  body: formData as unknown as { file: string }
+               })
             );
          }
 
@@ -184,21 +166,16 @@ export class FileService
             throw new Error("No update performed");
          }
 
-         return ApiResult.success(
-            await this.request(
-               this.apiClient.PUT("/file/{fileId}", {
-                  params: {
-                     path: { fileId: request.fileId },
-                     query: { projectId: request.projectId }
-                  },
-                  body: { name: request.name }
-               })
-            )
+         return await this.request(
+            this.apiClient.PUT("/file/{fileId}", {
+               params: {
+                  path: { fileId: request.fileId },
+                  query: { projectId: request.projectId }
+               },
+               body: { name: request.name }
+            })
          );
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+      });
    }
 
    async uploadImage(
@@ -245,7 +222,9 @@ export class FileService
       codeOverride?: string,
       runId?: string
    ): Promise<ApiResult<PythonExecutionResult>> {
-      try {
+      // Notebook Python failures render in the block's output, so do not
+      // raise the global error modal.
+      return this.wrapInline(async () => {
          const result = await this.request(
             this.apiClient.POST(
                "/file/{fileId}/notebook/blocks/{blockId}/execute-python",
@@ -266,13 +245,8 @@ export class FileService
                }
             )
          );
-         return ApiResult.success(result as PythonExecutionResult);
-      } catch (error) {
-         // Notebook Python failures render in the block's output, so do not
-         // raise the global error modal.
-         const errorResult = await this.handleInlineApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return result as PythonExecutionResult;
+      });
    }
 
    async getPaginatedImageFiles(
@@ -373,7 +347,7 @@ export class FileService
       fileId: string,
       projectId: string
    ): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.request(
             this.apiClient.DELETE("/file/{fileId}", {
                params: {
@@ -382,11 +356,8 @@ export class FileService
                }
             })
          );
-         return ApiResult.success(undefined);
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return undefined;
+      });
    }
 
    getFileUrl(fileId: string): string {
@@ -401,7 +372,7 @@ export class FileService
       offset: number,
       limit: number
    ): Promise<ApiResult<InlineData>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/file/{fileId}/rows", {
                params: {
@@ -410,11 +381,8 @@ export class FileService
                }
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         const errorResult = await this.handleApiError(error);
-         return ApiResult.failure(errorResult);
-      }
+         return result;
+      });
    }
 
    async getDataTableFile(

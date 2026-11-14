@@ -16,8 +16,8 @@ from kontext.agent.tools import get_declared_tool_meta
 from kontext.agentic.tools.python_tool import PythonTools
 from kontext.common.jobs.trigger_actor import agent_actor
 from kontext.common.protocols import IFileServiceProtocol
-from kontext.execution import PythonExecutionServiceResult
 from kontext.file.notebook.editor import NotebookEditor
+from kontext.jobs import PythonExecutionServiceResult
 from kontext.schema import (
     ArtifactType,
     CodeBlock,
@@ -152,9 +152,11 @@ async def test_execute_python_code_runs_draft_execution_without_persisting_noteb
         assert payload["actions"][0]["payload"]["data"]["outputs"][0]["content"] == "ok"
         file_service_mock.update_notebook.assert_not_awaited()
 
-        execute_kwargs = (
-            tools.python_execution_service.execute_notebook_code_async.await_args.kwargs
+        notebook_exec_await_args = (
+            tools.python_execution_service.execute_notebook_code_async.await_args
         )
+        assert notebook_exec_await_args is not None
+        execute_kwargs = notebook_exec_await_args.kwargs
         assert execute_kwargs["project_id"] == sample_project.id
         assert execute_kwargs["notebook_id"] == notebook_id
         assert execute_kwargs["block_id"] == str(code_block.root.id)

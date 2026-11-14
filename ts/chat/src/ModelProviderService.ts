@@ -16,32 +16,28 @@ export class ModelProviderService extends HttpApiService {
    }
 
    async getModelProviders(): Promise<ApiResult<ModelConnection[]>> {
-      try {
+      return this.wrap(async () => {
          const result =
             await this.requestJson<ModelConnection[]>("/model-connections");
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async getModelProviderDefinitions(): Promise<
       ApiResult<ModelProviderDefinition[]>
    > {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<ModelProviderDefinition[]>(
             "/model-connections/providers"
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async createModelProvider(
       provider: ModelConnection
    ): Promise<ApiResult<ModelConnection>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<ModelConnection>(
             "/model-connections",
             {
@@ -50,17 +46,15 @@ export class ModelProviderService extends HttpApiService {
                body: JSON.stringify(provider)
             }
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async updateModelProvider(
       id: string,
       provider: ModelConnection
    ): Promise<ApiResult<ModelConnection>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.requestJson<ModelConnection>(
             `/model-connections/${id}`,
             {
@@ -69,20 +63,16 @@ export class ModelProviderService extends HttpApiService {
                body: JSON.stringify(provider)
             }
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 
    async deleteModelProvider(id: string): Promise<ApiResult<void>> {
-      try {
+      return this.wrap(async () => {
          await this.requestJson<void>(`/model-connections/${id}`, {
             method: "DELETE"
          });
-         return ApiResult.success(undefined);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return undefined;
+      });
    }
 }

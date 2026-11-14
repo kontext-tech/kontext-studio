@@ -26,7 +26,7 @@ export class ProjectEventService extends DataApiBaseService {
       eventTypes?: EventType[],
       daysLimit: number = 30
    ): Promise<ApiResult<PaginatedListOfEventModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.GET("/event", {
                params: {
@@ -40,9 +40,7 @@ export class ProjectEventService extends DataApiBaseService {
                }
             })
          );
-         return ApiResult.success(result as PaginatedListOfEventModel);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result as PaginatedListOfEventModel;
+      });
    }
 }

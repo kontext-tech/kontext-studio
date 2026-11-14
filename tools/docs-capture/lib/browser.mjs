@@ -163,7 +163,7 @@ export async function sanitizeScreenshot(page, { homeDir } = {}) {
                // Tracebacks can include the checkout path when the capture runs
                // from a clone. Never publish the developer's directory layout.
                if (checkout && value.includes(checkout)) {
-                  value = value.split(checkout).join("~/kontext-labs");
+                  value = value.split(checkout).join("~/kontext-studio");
                }
                value = value.replace(uuid, "00000000-0000-4000-8000-000000000000");
                if (value !== node.nodeValue) node.nodeValue = value;

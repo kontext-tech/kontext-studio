@@ -1,3 +1,4 @@
+import { ApiResult } from "../types";
 import type { ApiAuthContext, ApiErrorResult } from "../types";
 import {
    ApiRequestError,
@@ -102,6 +103,18 @@ export abstract class HttpApiService {
    };
 
    protected parseApiError = normalizeApiError;
+
+   /**
+    * Runs a request and wraps the outcome in an {@link ApiResult}, routing
+    * failures through the shared error handler (raises the global error UI).
+    */
+   protected async wrap<T>(call: () => Promise<T>): Promise<ApiResult<T>> {
+      try {
+         return ApiResult.success(await call());
+      } catch (error) {
+         return ApiResult.failure(await this.handleApiError(error));
+      }
+   }
 
    public updateAuthContext(authContext: ApiAuthContext): void {
       this.currentAuthContext = { ...authContext };

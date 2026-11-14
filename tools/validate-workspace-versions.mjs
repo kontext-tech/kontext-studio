@@ -357,7 +357,7 @@ if (violations.length > 0) {
    for (const violation of violations) {
       console.error(`- ${violation}`);
    }
-   console.error("\nRun `pnpm run version:labs` (`uv run cz bump`) to update all versions together.");
+   console.error("\nRun `pnpm run version:studio` (`uv run cz bump`) to update all versions together.");
    process.exit(1);
 }
 

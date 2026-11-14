@@ -22,7 +22,7 @@ export class ExecutionRunService extends DataApiBaseService {
       projectId: string,
       reason?: string
    ): Promise<ApiResult<ExecutionRunModel>> {
-      try {
+      return this.wrap(async () => {
          const result = await this.request(
             this.apiClient.POST("/runs/{runId}/cancel", {
                params: {
@@ -32,9 +32,7 @@ export class ExecutionRunService extends DataApiBaseService {
                body: reason ? { reason } : undefined
             })
          );
-         return ApiResult.success(result);
-      } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
-      }
+         return result;
+      });
    }
 }

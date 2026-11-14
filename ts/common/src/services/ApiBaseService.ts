@@ -1,6 +1,7 @@
 import type { Client, ClientOptions } from "openapi-fetch";
 import createClient from "openapi-fetch";
 import type { paths } from "@kontext-tech/schema/api";
+import { ApiResult } from "../types";
 import type { ApiAuthContext, ApiErrorResult } from "../types";
 import {
    ApiRequestError,
@@ -118,6 +119,53 @@ export abstract class ApiBaseService {
          );
       }
       return { data: data as T, response };
+   }
+
+   /**
+    * Runs a request and wraps the outcome in an {@link ApiResult}, routing
+    * failures through the shared error handler (raises the global error UI).
+    *
+    * Replaces the service-side
+    * `try { ...; return ApiResult.success(x); } catch { return ApiResult.failure(...) }`
+    * boilerplate with a single call.
+    */
+   protected async wrap<T>(call: () => Promise<T>): Promise<ApiResult<T>> {
+      try {
+         return ApiResult.success(await call());
+      } catch (error) {
+         return ApiResult.failure(await this.handleApiError(error));
+      }
+   }
+
+   /**
+    * Like {@link wrap}, but failures go through {@link handleInlineApiError}
+    * so ordinary errors are rendered by the caller instead of the global UI.
+    */
+   protected async wrapInline<T>(
+      call: () => Promise<T>
+   ): Promise<ApiResult<T>> {
+      try {
+         return ApiResult.success(await call());
+      } catch (error) {
+         return ApiResult.failure(await this.handleInlineApiError(error));
+      }
+   }
+
+   /**
+    * Like {@link wrap}, but a `404` response resolves to `null` instead of an
+    * error, for resource fetches whose absence is an ordinary outcome.
+    */
+   protected async wrapOptional<T>(
+      call: () => Promise<T>
+   ): Promise<ApiResult<T | null>> {
+      try {
+         return ApiResult.success(await call());
+      } catch (error) {
+         if (this.getErrorStatus(error) === 404) {
+            return ApiResult.success(null);
+         }
+         return ApiResult.failure(await this.handleApiError(error));
+      }
    }
 
    protected handleApiError = async (

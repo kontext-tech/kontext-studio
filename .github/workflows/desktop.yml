@@ -19,7 +19,7 @@ on:
     paths:
       - "desktop/**"
       - "scripts/uv/**"
-      - "py/kontext-labs/**"
+      - "py/kontext-studio/**"
       - "py/kontext-runtime/**"
       - "ts/file/**"
       - "package.json"
@@ -127,7 +127,7 @@ jobs:
           TMP=$(mktemp -d)
           HOME="$TMP" KONTEXT_LOCAL_WORKER_ENABLED=false \
             "$APP/Contents/Resources/python/bin/python3" -E -s -B -u \
-            -m kontext.labs desktop --preferred-port 0 --parent-pid $$ \
+            -m kontext.studio desktop --preferred-port 0 --parent-pid $$ \
             < /dev/zero > "$TMP/ready.log" 2>&1 &
           SERVER_PID=$!
           for _ in $(seq 1 300); do

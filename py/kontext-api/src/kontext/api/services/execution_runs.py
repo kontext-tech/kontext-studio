@@ -9,7 +9,7 @@ from fastapi import HTTPException
 
 from kontext.agentic.chat_handler import ChatHandler
 from kontext.data import ChatSessionTokenUsageDataService
-from kontext.execution import (
+from kontext.jobs import (
     ExecutionRunInputValidationError,
     ExecutionRunService,
     ResolvedExecutionRunInput,
