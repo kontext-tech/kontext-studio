@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kontext-auth"
-version = "0.263.1"
+version = "0.264.0"
 description = "Authentication, authorization, and permission primitives for Kontext"
 readme = "README.md"
 requires-python = ">=3.12"
