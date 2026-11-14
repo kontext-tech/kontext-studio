@@ -142,6 +142,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
@@ -255,8 +256,13 @@ jobs:
             "$PYTHON" -c \
             'import json,sys; print(json.load(sys.stdin)["port"])')
           curl -fsS "http://127.0.0.1:${PORT}/health" > /dev/null
-          kill -TERM "$SERVER_PID" 2>/dev/null || kill -W "$SERVER_PID" 2>/dev/null || true
-          wait "$SERVER_PID" 2>/dev/null || true
+          # An msys TERM does not reach native Windows python, and `wait`
+          # would block on the alive pipeline forever, so kill with a bound.
+          for _ in $(seq 1 15); do
+            kill -0 "$SERVER_PID" 2>/dev/null || break
+            sleep 2
+          done
+          kill -9 "$SERVER_PID" 2>/dev/null || kill -W -9 "$SERVER_PID" 2>/dev/null || true
       - name: Free assembly resources
         shell: bash
         run: rm -rf desktop/src-tauri/resources
