@@ -154,8 +154,7 @@ const ProjectNewChatContent = ({ project }: ProjectNewChatContentProps) => {
       if (!chatSession?.id) {
          const sessionName = `Chat - ${new Date().toLocaleString()}`;
          if (areAttachmentsStaged) {
-            await startPreparedChatSession({
-               deps: attachmentDeps,
+            await startPreparedChatSession(attachmentDeps, {
                sessionName,
                message,
                effectiveModelSelectionId,
@@ -212,7 +211,9 @@ const ProjectNewChatContent = ({ project }: ProjectNewChatContentProps) => {
    ].filter(Boolean);
    const scopeSummary = scopeSummaryParts.join(" / ");
    const attachmentButtonLabel =
-      stagedAttachmentCardItems.length > 0 ? "Attach more files" : "Attach files";
+      stagedAttachmentCardItems.length > 0
+         ? "Attach more files"
+         : "Attach files";
    const preparationBanner = isPreparingAttachments ? (
       <Flex align="center" gap={8} style={{ minHeight: 24 }}>
          <LoadingSpinner size="small" />

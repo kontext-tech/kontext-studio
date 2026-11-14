@@ -68,7 +68,9 @@ export interface ChatAttachmentDeps {
    clearActiveSession: () => void;
 }
 
-const getChatUploadableFileTypes = (configuration: ProjectModel["configuration"]) =>
+const getChatUploadableFileTypes = (
+   configuration: ProjectModel["configuration"]
+) =>
    configuration.allowedFileTypes.filter((fileType) =>
       CHAT_DATA_FILE_TYPES.has(fileType.fileFormatType)
    );
@@ -336,17 +338,15 @@ export const useChatAttachmentPreparation = (project: ProjectModel) => {
     * the staged attachments. Resolves when the session page navigation has
     * been issued; rejects (and sets `preparationNotice`) on failure.
     */
-   const startPreparedChatSession = async ({
-      deps,
-      ...args
-   }: StartPreparedChatSessionArgs & { deps: ChatAttachmentDeps }) => {
-      const {
+   const startPreparedChatSession = async (
+      deps: ChatAttachmentDeps,
+      {
          sessionName,
          message,
          effectiveModelSelectionId,
          pythonExecutionApprovalMode
-      } = args;
-
+      }: StartPreparedChatSessionArgs
+   ) => {
       let notice: PreparationNotice | null = null;
 
       setPreparationNotice(null);
@@ -381,9 +381,8 @@ export const useChatAttachmentPreparation = (project: ProjectModel) => {
          ) {
             setIsPreparingAttachments(false);
 
-            const shouldOverwrite = await confirmOverwriteAttachments(
-               overwriteConflicts
-            );
+            const shouldOverwrite =
+               await confirmOverwriteAttachments(overwriteConflicts);
             if (!shouldOverwrite) {
                notice = {
                   type: "warning",
@@ -422,12 +421,16 @@ export const useChatAttachmentPreparation = (project: ProjectModel) => {
             throw new Error(notice.description || notice.title);
          }
 
-         const newSession = await deps.createSessionFn(sessionName, effectiveModelSelectionId, {
-            defaultCatalogConnectionId: effectiveConnectionId,
-            ...(pythonExecutionApprovalMode
-               ? { pythonExecutionApprovalMode }
-               : {})
-         });
+         const newSession = await deps.createSessionFn(
+            sessionName,
+            effectiveModelSelectionId,
+            {
+               defaultCatalogConnectionId: effectiveConnectionId,
+               ...(pythonExecutionApprovalMode
+                  ? { pythonExecutionApprovalMode }
+                  : {})
+            }
+         );
          if (!newSession) {
             throw new Error("Failed to create chat session.");
          }

@@ -158,8 +158,7 @@ export const ChatScopeCustomizationModal = ({
    const visibleConnections = useMemo(
       () =>
          connections.filter(
-            (connection) =>
-               connection.providerKind === effectiveCatalogProvider
+            (connection) => connection.providerKind === effectiveCatalogProvider
          ),
       [connections, effectiveCatalogProvider]
    );
@@ -248,10 +247,7 @@ export const ChatScopeCustomizationModal = ({
                                  </Tag>
                               }
                               onClick={() => {
-                                 if (
-                                    connection.id &&
-                                    connection.isQueryReady
-                                 ) {
+                                 if (connection.id && connection.isQueryReady) {
                                     void selectConnection(connection.id);
                                     setIsPinTableOpen(false);
                                  }
@@ -284,10 +280,7 @@ export const ChatScopeCustomizationModal = ({
                      </Typography.Paragraph>
                   </div>
                   {(selectedNamespace || configuredNamespace) && (
-                     <Typography.Text
-                        type="secondary"
-                        style={{ fontSize: 12 }}
-                     >
+                     <Typography.Text type="secondary" style={{ fontSize: 12 }}>
                         {selectedNamespace
                            ? "Custom namespace selected"
                            : `Configured default available: ${configuredNamespace}`}

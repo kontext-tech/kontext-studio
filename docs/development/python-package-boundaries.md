@@ -25,14 +25,14 @@ Those layers are complementary, not competing:
 
 | Package | Primary responsibility | Should contain | Should not contain |
 | --- | --- | --- | --- |
-| `kontext-common` | Shared contracts and primitives | Protocols, enums, config helpers, shared runtime contracts (`contracts/`), Pydantic bases (`pydantic.py`), plus the cross-domain subpackages listed in `COMMON_SUBPACKAGES` (e.g. `catalog/` connector specs, `python_execution/` policy) — each entry carries its multi-package justification in `test_architecture_boundaries.py` | New domain logic without a cross-domain justification; ORM services, FastAPI routers, DuckDB code, harness integration |
+| `kontext-common` | Shared contracts and primitives | Protocols, enums, config helpers, contracts, Pydantic bases, and the `COMMON_SUBPACKAGES` cross-domain subpackages | Domain logic without a cross-domain justification; ORM services |
 | `kontext-auth` | Authentication and authorization | Auth managers, JWT validation, permissions, secret handling | Project/file/query domain logic |
 | `kontext-data` | Relational persistence | SQLAlchemy models, migrations, engine/session factory, repository-style data services, SQLite adapter | FastAPI transport logic, domain orchestration, query execution engines |
 | `kontext-storage` | Blob/file storage providers | Storage provider factories, filesystem/blob adapters, storage config | Relational models, API routers |
 | `kontext-file` | File, chart, and notebook domain logic | File services, notebook/chart editing, file-owned jobs | Generic query orchestration, auth concerns |
 | `kontext-project` | Project domain logic | Project services, project stats/events, project-owned jobs | Shared auth/config primitives |
 | `kontext-query` | Query sessions and query orchestration | Query submission, session services, SQL validation, session storage, the in-process query-session adapter | FastAPI routing, generic auth, importing `kontext-engine` |
-| `kontext-job` | Job framework and durable run orchestration | Job contracts, job context, scheduling, registry, job execution service, the shared job-definitions home, `ExecutionRun` projection/services, events/log shaping, run lifecycle helpers, worker coordination contracts | Concrete DuckDB engines, API bootstrap, central home for every domain-specific job definition (those live in their domain packages) |
+| `kontext-job` | Job framework and durable run orchestration | Job contracts, context, scheduling, registry, execution service, definitions home, run projection, events/logs, lifecycle | DuckDB engines, API bootstrap, home for domain jobs |
 | `kontext-engine` | In-process compute implementations | DuckDB engines, live-SQL engine, in-process chat/job adapters, in-process dispatchers | Deployment bootstrap, API transport, importing `kontext-query`/`kontext-catalog` |
 | `kontext-kernel` | Separate-process Python execution topology | Execution contracts, validation policy, child harness, wire protocol, kernel manager/pool, runner backends | Deployment composition, other Kontext domain deps, provider selection |
 | `kontext-runtime` | Deployment composition/bootstrap | Provider/backend selection, local process composition, managed Python environment, startup glue | Domain logic, heavy compute engines, API router logic |
@@ -309,5 +309,5 @@ is deployment-agnostic by design.
 ## Current Recommendations
 
 - Keep `kontext-runtime` thin and composition-focused.
-- Keep domain jobs in their owning domain packages, with `kontext-job` providing the framework/registry.
+- Keep domain jobs in their owning domain packages, with `kontext-job` providing the framework, registry, and durable-run orchestration.
 - Move runtime composition helpers out of `kontext-api` over time so API stays transport-focused.
