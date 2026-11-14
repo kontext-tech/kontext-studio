@@ -21,6 +21,21 @@ on:
         required: false
         default: true
         type: boolean
+      ref:
+        description: "Optional git ref to build instead of the v<version> tag (test build; nothing is attached to any release)"
+        required: false
+        default: ""
+        type: string
+      buildMacos:
+        description: "Build the macOS DMG"
+        required: false
+        default: true
+        type: boolean
+      buildWindows:
+        description: "Build the Windows installer"
+        required: false
+        default: true
+        type: boolean
   pull_request:
     paths:
       - "desktop/**"
@@ -91,29 +106,55 @@ jobs:
         shell: bash
         run: cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets -- -D warnings
 
+  matrix:
+    name: Select platforms
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - name: Select platforms
+        id: select
+        shell: bash
+        env:
+          MACOS: ${{ inputs.buildMacos }}
+          WINDOWS: ${{ inputs.buildWindows }}
+        run: |
+          set -euo pipefail
+          # macOS Intel would be unblocked by a lancedb x86_64 wheel; re-add
+          # a macos-15-intel entry alongside arm64 when that lands.
+          include="[]"
+          if [ "$MACOS" = "true" ] && [ "$WINDOWS" = "true" ]; then
+            include='[{"arch":"arm64","runner":"macos-15"},{"arch":"win-x64","runner":"windows-latest"}]'
+          elif [ "$MACOS" = "true" ]; then
+            include='[{"arch":"arm64","runner":"macos-15"}]'
+          elif [ "$WINDOWS" = "true" ]; then
+            include='[{"arch":"win-x64","runner":"windows-latest"}]'
+          else
+            echo "::error::Select at least one platform." >&2
+            exit 1
+          fi
+          echo "matrix=$(jq -nc --argjson include "$include" '{include: $include}')" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build ${{ matrix.arch }}
-    if: github.event_name == 'workflow_dispatch'
+    needs: matrix
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
+    timeout-minutes: 120
     strategy:
       fail-fast: false
-      matrix:
-        # macOS Intel is blocked: lancedb has no macOS x86_64 wheel.
-        # Windows wheels all exist; desktop code paths already carry cfg gates.
-        include:
-          - arch: arm64
-            runner: macos-15
-          - arch: win-x64
-            runner: windows-latest
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     env:
       CARGO_INCREMENTAL: "0"
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: v${{ inputs.version }}
+          ref: ${{ inputs.ref || format('v{0}', inputs.version) }}
       - name: Validate version
+        if: inputs.ref == ''
         shell: bash
         env:
           VERSION: ${{ inputs.version }}
@@ -193,22 +234,35 @@ jobs:
 
           PYTHON="desktop/src-tauri/resources/python/python.exe"
           TMP=$(mktemp -d)
-          KONTEXT_LOCAL_WORKER_ENABLED=false \
+          trap 'rm -rf "$TMP"' EXIT
+          # Mimic the desktop shell: stdin is a pipe that stays open. The
+          # --parent-pid path is real-app territory only (bash's MSYS pid is
+          # not a Windows pid, so passing it here makes the watchdog quit
+          # immediately).
+          tail -f /dev/null | KONTEXT_LOCAL_WORKER_ENABLED=false \
             "$PYTHON" -E -s -B -u -m kontext.studio desktop \
-            --preferred-port 0 --parent-pid $$ \
-            < /dev/zero > "$TMP/ready.log" 2>&1 &
+            --preferred-port 0 > "$TMP/ready.log" 2>&1 &
           SERVER_PID=$!
           for _ in $(seq 1 300); do
             grep -q '@@KONTEXT_READY@@' "$TMP/ready.log" && break
             sleep 0.2
           done
+          if ! grep -q '@@KONTEXT_READY@@' "$TMP/ready.log"; then
+            echo "Server did not become ready; last output:" >&2
+            tail -50 "$TMP/ready.log" >&2
+            exit 1
+          fi
           PORT=$(sed -n 's/^@@KONTEXT_READY@@//p' "$TMP/ready.log" | tail -1 | \
             "$PYTHON" -c \
             'import json,sys; print(json.load(sys.stdin)["port"])')
           curl -fsS "http://127.0.0.1:${PORT}/health" > /dev/null
-          kill -TERM "$SERVER_PID"
-          wait "$SERVER_PID"
-          rm -rf "$TMP"
+          # An msys TERM does not reach native Windows python, and `wait`
+          # would block on the alive pipeline forever, so kill with a bound.
+          for _ in $(seq 1 15); do
+            kill -0 "$SERVER_PID" 2>/dev/null || break
+            sleep 2
+          done
+          kill -9 "$SERVER_PID" 2>/dev/null || kill -W -9 "$SERVER_PID" 2>/dev/null || true
       - name: Free assembly resources
         shell: bash
         run: rm -rf desktop/src-tauri/resources
@@ -230,7 +284,7 @@ jobs:
   release:
     name: Attach installers to release
     needs: build
-    if: github.event_name == 'workflow_dispatch' && inputs.upload
+    if: github.event_name == 'workflow_dispatch' && inputs.upload && inputs.ref == ''
     runs-on: ubuntu-latest
     permissions:
       contents: write

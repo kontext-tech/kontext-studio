@@ -43,7 +43,7 @@ fi
 
 # Sync common public assets (logos, icons, manifests) to the app only.
 echo "🔄 Syncing app assets..."
-bash ./scripts/sync-app-assets.sh
+node ./scripts/sync-app-assets.mjs
 
 echo "🔄 Building remaining shared packages with topological workspace ordering..."
 pnpm -r \
