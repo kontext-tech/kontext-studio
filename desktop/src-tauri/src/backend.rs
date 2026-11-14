@@ -59,6 +59,9 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
             &std::process::id().to_string(),
         ])
         .env("KONTEXT_PYTHON_RUNTIME_WHEELHOUSE", &wheelhouse)
+        // Python's piped stdout defaults to a legacy Windows code page that
+        // cannot encode emoji log lines; force utf-8 on every platform.
+        .env("PYTHONUTF8", "1")
         .current_dir(home)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())

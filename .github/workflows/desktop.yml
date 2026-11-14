@@ -147,6 +147,7 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     env:
       CARGO_INCREMENTAL: "0"
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v7
         with:
@@ -232,6 +233,7 @@ jobs:
 
           PYTHON="desktop/src-tauri/resources/python/python.exe"
           TMP=$(mktemp -d)
+          trap 'rm -rf "$TMP"' EXIT
           KONTEXT_LOCAL_WORKER_ENABLED=false \
             "$PYTHON" -E -s -B -u -m kontext.studio desktop \
             --preferred-port 0 --parent-pid $$ \
@@ -241,6 +243,11 @@ jobs:
             grep -q '@@KONTEXT_READY@@' "$TMP/ready.log" && break
             sleep 0.2
           done
+          if ! grep -q '@@KONTEXT_READY@@' "$TMP/ready.log"; then
+            echo "Server did not become ready; last output:" >&2
+            tail -50 "$TMP/ready.log" >&2
+            exit 1
+          fi
           PORT=$(sed -n 's/^@@KONTEXT_READY@@//p' "$TMP/ready.log" | tail -1 | \
             "$PYTHON" -c \
             'import json,sys; print(json.load(sys.stdin)["port"])')
