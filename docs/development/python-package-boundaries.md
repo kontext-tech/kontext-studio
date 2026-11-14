@@ -25,7 +25,7 @@ Those layers are complementary, not competing:
 
 | Package | Primary responsibility | Should contain | Should not contain |
 | --- | --- | --- | --- |
-| `kontext-common` | Shared contracts and primitives | Protocols, enums, config helpers, shared runtime contracts (`contracts/`), Pydantic bases (`pydantic.py`) | ORM services, FastAPI routers, DuckDB code, harness integration |
+| `kontext-common` | Shared contracts and primitives | Protocols, enums, config helpers, shared runtime contracts (`contracts/`), Pydantic bases (`pydantic.py`), plus the cross-domain subpackages listed in `COMMON_SUBPACKAGES` (e.g. `catalog/` connector specs, `python_execution/` policy) — each entry carries its multi-package justification in `test_architecture_boundaries.py` | New domain logic without a cross-domain justification; ORM services, FastAPI routers, DuckDB code, harness integration |
 | `kontext-auth` | Authentication and authorization | Auth managers, JWT validation, permissions, secret handling | Project/file/query domain logic |
 | `kontext-data` | Relational persistence | SQLAlchemy models, migrations, engine/session factory, repository-style data services, SQLite adapter | FastAPI transport logic, domain orchestration, query execution engines |
 | `kontext-storage` | Blob/file storage providers | Storage provider factories, filesystem/blob adapters, storage config | Relational models, API routers |
