@@ -10,6 +10,7 @@ installation.
 from __future__ import annotations
 
 import argparse
+import platform
 import re
 import shutil
 import subprocess
@@ -220,13 +221,26 @@ def main() -> None:
 
     if args.build_app:
         print("🔨 Building frontend app with pnpm...")
-        subprocess.run(["pnpm", "--filter", "@kontext-tech/app", "build"], cwd=ROOT_DIR, check=True)
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise SystemExit("pnpm not found. Install it with corepack enable pnpm.")
+        if platform.system() == "Windows":
+            subprocess.run(
+                ["cmd", "/c", pnpm, "--filter", "@kontext-tech/app", "build"],
+                cwd=ROOT_DIR,
+                check=True,
+            )
+        else:
+            subprocess.run(
+                [pnpm, "--filter", "@kontext-tech/app", "build"], cwd=ROOT_DIR, check=True
+            )
 
     # Sync app assets to the labs package
     sync_script = ROOT_DIR / "scripts" / "sync-app-assets.sh"
     if sync_script.is_file():
         print("🔄 Running asset sync script...")
-        subprocess.run(["bash", str(sync_script)], cwd=ROOT_DIR, check=True)
+        # as_posix: Git Bash on Windows cannot parse backslash-separated paths.
+        subprocess.run(["bash", sync_script.as_posix()], cwd=ROOT_DIR, check=True)
 
     py_dir = ROOT_DIR / "py"
     labs_pyproject_path = py_dir / "kontext-studio" / "pyproject.toml"

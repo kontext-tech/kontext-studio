@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Desktop
 
-# Builds the macOS DMGs and attaches them to an existing v<version> release.
-# Dispatch this after the release exists; release.yml does that automatically.
+# Builds the macOS DMGs and the Windows installer and attaches them to an
+# existing v<version> release. Dispatch this after the release exists;
+# release.yml does that automatically.
 on:
   workflow_dispatch:
     inputs:
@@ -11,7 +12,7 @@ on:
         required: true
         type: string
       upload:
-        description: "Upload the DMGs to the GitHub Release"
+        description: "Upload the installers to the GitHub Release"
         required: false
         default: true
         type: boolean
@@ -62,8 +63,31 @@ jobs:
       - name: Frontend bridge lint
         run: pnpm exec eslint ts/file/src/utils/fileUtils.ts
 
+  windows-lint:
+    name: Windows Rust lint
+    if: github.event_name == 'pull_request'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.23.4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+      - name: Ensure placeholder resources
+        run: node desktop/scripts/ensure-resources.mjs
+      - name: Rust format
+        run: cargo fmt --manifest-path desktop/src-tauri/Cargo.toml -- --check
+      - name: Windows Rust lint
+        shell: bash
+        run: cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets -- -D warnings
+
   build:
-    name: Build macOS ${{ matrix.arch }}
+    name: Build ${{ matrix.arch }}
     if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ matrix.runner }}
     permissions:
@@ -71,10 +95,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Intel is blocked: lancedb has no macOS x86_64 wheel.
+        # macOS Intel is blocked: lancedb has no macOS x86_64 wheel.
+        # Windows wheels all exist; desktop code paths already carry cfg gates.
         include:
           - arch: arm64
             runner: macos-15
+          - arch: win-x64
+            runner: windows-latest
     env:
       CARGO_INCREMENTAL: "0"
     steps:
@@ -82,6 +109,7 @@ jobs:
         with:
           ref: v${{ inputs.version }}
       - name: Validate version
+        shell: bash
         env:
           VERSION: ${{ inputs.version }}
         run: |
@@ -116,9 +144,16 @@ jobs:
         run: pnpm run build:shared
       - name: Assemble bundled Python
         run: uv run python desktop/scripts/assemble.py --arch ${{ matrix.arch }}
-      - name: Build desktop app and DMG
-        run: pnpm run desktop:build
+      - name: Build desktop app and installer
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            pnpm run desktop:build
+          else
+            pnpm run desktop:build:windows
+          fi
       - name: Verify bundle
+        if: runner.os == 'macOS'
         run: |
           set -euo pipefail
           APP="desktop/src-tauri/target/release/bundle/macos/Kontext Studio.app"
@@ -141,9 +176,39 @@ jobs:
           kill -TERM "$SERVER_PID"
           wait "$SERVER_PID"
           rm -rf "$TMP"
+      - name: Verify Windows installer
+        if: runner.os == 'Windows'
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          EXE="dist/Kontext-Studio-${VERSION}-Windows-x64.exe"
+          test -f "$EXE"
+
+          PYTHON="desktop/src-tauri/resources/python/python.exe"
+          TMP=$(mktemp -d)
+          KONTEXT_LOCAL_WORKER_ENABLED=false \
+            "$PYTHON" -E -s -B -u -m kontext.studio desktop \
+            --preferred-port 0 --parent-pid $$ \
+            < /dev/zero > "$TMP/ready.log" 2>&1 &
+          SERVER_PID=$!
+          for _ in $(seq 1 300); do
+            grep -q '@@KONTEXT_READY@@' "$TMP/ready.log" && break
+            sleep 0.2
+          done
+          PORT=$(sed -n 's/^@@KONTEXT_READY@@//p' "$TMP/ready.log" | tail -1 | \
+            "$PYTHON" -c \
+            'import json,sys; print(json.load(sys.stdin)["port"])')
+          curl -fsS "http://127.0.0.1:${PORT}/health" > /dev/null
+          kill -TERM "$SERVER_PID"
+          wait "$SERVER_PID"
+          rm -rf "$TMP"
       - name: Free assembly resources
+        shell: bash
         run: rm -rf desktop/src-tauri/resources
       - name: Verify DMG
+        if: runner.os == 'macOS'
         env:
           VERSION: ${{ inputs.version }}
         run: |
@@ -154,11 +219,11 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: kontext-desktop-${{ matrix.arch }}
-          path: dist/*.dmg
+          path: ${{ matrix.arch == 'win-x64' && 'dist/*.exe' || 'dist/*.dmg' }}
           if-no-files-found: error
 
   release:
-    name: Attach DMGs to release
+    name: Attach installers to release
     needs: build
     if: github.event_name == 'workflow_dispatch' && inputs.upload
     runs-on: ubuntu-latest
@@ -172,14 +237,21 @@ jobs:
           merge-multiple: true
           path: dist
       - name: Write checksums
+        shell: bash
         run: |
           cd dist
-          sha256sum *.dmg > SHA256SUMS-desktop.txt
+          shopt -s nullglob
+          assets=(*.dmg *.exe)
+          sha256sum "${assets[@]}" > SHA256SUMS-desktop.txt
           cat SHA256SUMS-desktop.txt
       - name: Upload release assets
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ inputs.version }}
         run: |
-          gh release upload "v${VERSION}" dist/*.dmg dist/SHA256SUMS-desktop.txt \
+          cd dist
+          shopt -s nullglob
+          assets=(*.dmg *.exe)
+          gh release upload "v${VERSION}" "${assets[@]}" SHA256SUMS-desktop.txt \
             --clobber --repo "$GITHUB_REPOSITORY"
