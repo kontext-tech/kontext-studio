@@ -16,7 +16,7 @@
       }
    },
    "scripts": {
-      "build": "rm -rf dist tsconfig.tsbuildinfo && tsc --build --force && tsc-alias -p tsconfig.json",
+      "build": "node ../../scripts/clean-dist.mjs dist tsconfig.tsbuildinfo && tsc --build --force && tsc-alias -p tsconfig.json",
       "test": "jest",
       "lint": "eslint src/**/*.{ts,tsx}",
       "lint:fix": "eslint src/**/*.{ts,tsx} --fix"

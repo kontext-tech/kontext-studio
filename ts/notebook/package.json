@@ -18,7 +18,7 @@
       "./styles/*": "./dist/styles/*"
    },
    "scripts": {
-      "build": "rm -rf dist tsconfig.tsbuildinfo && tsc --build --force && tsc-alias -p tsconfig.json && mkdir -p dist/styles && cp -R src/styles/. dist/styles/",
+      "build": "node ../../scripts/clean-dist.mjs dist tsconfig.tsbuildinfo && tsc --build --force && tsc-alias -p tsconfig.json && node scripts/sync-styles.mjs",
       "test": "jest",
       "lint": "eslint src/**/*.{ts,tsx}",
       "lint:fix": "eslint src/**/*.{ts,tsx} --fix",

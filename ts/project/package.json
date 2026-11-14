@@ -14,7 +14,7 @@
       }
    },
    "scripts": {
-      "build": "rm -rf dist tsconfig.tsbuildinfo && pnpm run type-check && tsc --build",
+      "build": "node ../../scripts/clean-dist.mjs dist tsconfig.tsbuildinfo && pnpm run type-check && tsc --build",
       "type-check": "tsc --noEmit",
       "dev": "tsc --watch"
    },

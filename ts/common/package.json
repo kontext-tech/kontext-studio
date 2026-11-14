@@ -59,7 +59,7 @@
       "./resources/*": "./dist/resources/*"
    },
    "scripts": {
-      "build": "pnpm run type-check && tsc --build && mkdir -p dist/assets && cp src/assets/*.svg src/assets/*.png dist/assets/ && mkdir -p dist/resources && cp -R src/resources/* dist/resources/",
+      "build": "pnpm run type-check && tsc --build && node scripts/sync-assets.mjs",
       "type-check": "tsc --noEmit",
       "test": "jest",
       "dev": "tsc --watch",
