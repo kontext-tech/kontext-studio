@@ -35,6 +35,7 @@ export interface AppShellLayoutProps {
    contentPadding?: number | string;
    fullHeight?: boolean;
    footer?: ReactNode;
+   banner?: ReactNode;
 }
 
 const AppShellLayout: React.FC<AppShellLayoutProps> = ({
@@ -47,7 +48,8 @@ const AppShellLayout: React.FC<AppShellLayoutProps> = ({
    maxWidth = "100%",
    contentPadding = "auto",
    fullHeight = false,
-   footer
+   footer,
+   banner
 }) => {
    const { sideMenuCollapsed, setSideMenuCollapsed, toggleSideMenu } =
       useLayoutStore();
@@ -185,6 +187,7 @@ const AppShellLayout: React.FC<AppShellLayoutProps> = ({
                      minHeight: 0
                   }}
                >
+                  {banner}
                   <PageErrorBoundary>
                      <Outlet />
                   </PageErrorBoundary>
