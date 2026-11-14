@@ -21,6 +21,11 @@ on:
         required: false
         default: true
         type: boolean
+      ref:
+        description: "Optional git ref to build instead of the v<version> tag (test build; nothing is attached to any release)"
+        required: false
+        default: ""
+        type: string
   pull_request:
     paths:
       - "desktop/**"
@@ -112,8 +117,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: v${{ inputs.version }}
+          ref: ${{ inputs.ref || format('v{0}', inputs.version) }}
       - name: Validate version
+        if: inputs.ref == ''
         shell: bash
         env:
           VERSION: ${{ inputs.version }}
@@ -230,7 +236,7 @@ jobs:
   release:
     name: Attach installers to release
     needs: build
-    if: github.event_name == 'workflow_dispatch' && inputs.upload
+    if: github.event_name == 'workflow_dispatch' && inputs.upload && inputs.ref == ''
     runs-on: ubuntu-latest
     permissions:
       contents: write
