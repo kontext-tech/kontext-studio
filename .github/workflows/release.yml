@@ -65,6 +65,11 @@ on:
         required: false
         type: boolean
         default: false
+      windows_upload:
+        description: "Upload the Windows installer to the release (download it from the desktop workflow run instead when false)"
+        required: false
+        type: boolean
+        default: true
 
 run-name: "Release ${{ inputs.version || inputs.bump }} by @${{ github.actor }}"
 
@@ -391,13 +396,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_FOR_TAG_PUSH }}
           VERSION: ${{ needs.prepare.outputs.version }}
+          WINDOWS_UPLOAD: ${{ inputs.windows_upload }}
         run: |
           set -euo pipefail
           gh workflow run desktop.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref main \
             -f "version=$VERSION" \
-            -f upload=true
+            -f upload=true \
+            -f "windowsUpload=$WINDOWS_UPLOAD"
 
           for _ in $(seq 1 10); do
             RUN_ID="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow desktop.yml --limit 1 --json databaseId --jq '.[0].databaseId // empty' || true)"
