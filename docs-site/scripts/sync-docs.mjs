@@ -189,7 +189,7 @@ description: "Kontext is a local-first conversational analytics workspace. Chat 
 ${banner}template: splash
 hero:
   title: Kontext Studio Docs
-  tagline: Chat with your data. Answers you can re-run.
+  tagline: Chat with your data. Answers you can reproduce.
   actions:
     - text: ${primaryAction.text}
       link: ${primaryAction.link}
