@@ -100,9 +100,9 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
                 // legacy code page, and a strict read would end log capture at
                 // the first non-UTF-8 line.
                 let decoded = String::from_utf8_lossy(&buffer);
-                let line = decoded.trim_end_matches(|c| c == '\n' || c == '\r');
+                let line = decoded.trim_end_matches(['\n', '\r']);
                 let Some(json) = line.strip_prefix(READY_MARKER) else {
-                    append_log(&log_path, &line);
+                    append_log(&log_path, line);
                     continue;
                 };
                 let Ok(payload) = serde_json::from_str::<ReadyPayload>(json) else {
@@ -147,10 +147,7 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
                     Err(_) => break,
                 }
                 let decoded = String::from_utf8_lossy(&buffer);
-                append_log(
-                    &log_path,
-                    decoded.trim_end_matches(|c| c == '\n' || c == '\r'),
-                );
+                append_log(&log_path, decoded.trim_end_matches(['\n', '\r']));
             }
         });
     }
