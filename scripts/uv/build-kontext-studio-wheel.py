@@ -189,8 +189,9 @@ def main() -> None:
     # Windows consoles default to a legacy code page (cp1252) that cannot
     # encode the emoji in this script's log lines.
     for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8", errors="replace")
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
 
     parser = argparse.ArgumentParser(description="Build unified kontext-studio wheel distribution")
     parser.add_argument(
