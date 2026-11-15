@@ -52,6 +52,24 @@ export function usePythonEnvironment(options?: { enabled?: boolean }) {
       }
    });
 
+   const installPackages = useMutation({
+      mutationFn: async (specs: string[]) => {
+         const response = await accountService.installPythonPackages({ specs });
+
+         if (!response.succeed || !response.data) {
+            throw new Error(
+               response.error?.messages?.[0] ??
+                  "Failed to install Python packages."
+            );
+         }
+
+         return response.data;
+      },
+      onSuccess: (data) => {
+         queryClient.setQueryData(PYTHON_ENVIRONMENT_QUERY_KEY, data);
+      }
+   });
+
    return {
       environment: query.data ?? null,
       isLoading: query.isLoading,
@@ -60,6 +78,12 @@ export function usePythonEnvironment(options?: { enabled?: boolean }) {
          prepare.error instanceof Error ? prepare.error.message : null,
       isPreparing: prepare.isPending,
       refresh: () => query.refetch(),
-      prepare: prepare.mutateAsync
+      prepare: prepare.mutateAsync,
+      installPackages: installPackages.mutateAsync,
+      isInstalling: installPackages.isPending,
+      installErrorMessage:
+         installPackages.error instanceof Error
+            ? installPackages.error.message
+            : null
    };
 }

@@ -4216,12 +4216,17 @@
      },
      "spec": {
       "type": "string"
+     },
+     "userInstalled": {
+      "default": false,
+      "type": "boolean"
      }
     },
     "required": [
      "name",
      "version",
-     "spec"
+     "spec",
+     "userInstalled"
     ],
     "additionalProperties": false,
     "description": "Managed Python environment package"
@@ -4271,6 +4276,25 @@
     ],
     "additionalProperties": false,
     "description": "Managed Python environment metadata"
+   },
+   "InstallPythonPackagesRequest": {
+    "type": "object",
+    "properties": {
+     "specs": {
+      "minItems": 1,
+      "maxItems": 20,
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Distribution names, optionally with extras or an ==version pin"
+     }
+    },
+    "required": [
+     "specs"
+    ],
+    "additionalProperties": false,
+    "description": "Request to install extra packages into the managed Python runtime"
    },
    "ProblemTypes": {
     "type": "string",

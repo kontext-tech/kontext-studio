@@ -10,7 +10,9 @@ from kontext.kernel.contracts import DEFAULT_RUNTIME_PROFILE
 
 from .python_environment import (
     get_managed_python_environment_info,
+    install_user_python_packages,
     prepare_managed_python_environment,
+    sync_user_installed_packages,
 )
 
 _DEFAULT_RUNTIME_BACKEND = "kernel"
@@ -26,7 +28,9 @@ def create_python_runner_backend(
     Backend selection is composition, so it lives here rather than in the
     dependency-free contract layer. Only ``kernel`` is supported: Python
     executes in a separate ``kontext-kernel`` process, launched with the managed
-    interpreter for *runtime_profile*.
+    interpreter for *runtime_profile*. User-installed packages are re-synced
+    from the persisted registry here, so every process that spawns kernels sees
+    the current whitelist even after a restart.
     """
     if backend_name != _DEFAULT_RUNTIME_BACKEND:
         raise ValueError(f"Unsupported python runner backend: {backend_name}")
@@ -34,6 +38,8 @@ def create_python_runner_backend(
     from kontext.kernel.runner import KernelPythonRunnerBackend
 
     from .python_environment import resolve_managed_python_executable
+
+    sync_user_installed_packages(runtime_profile=runtime_profile)
 
     return KernelPythonRunnerBackend(
         python_executable=resolve_managed_python_executable(runtime_profile=runtime_profile)
@@ -43,5 +49,7 @@ def create_python_runner_backend(
 __all__ = [
     "create_python_runner_backend",
     "get_managed_python_environment_info",
+    "install_user_python_packages",
     "prepare_managed_python_environment",
+    "sync_user_installed_packages",
 ]

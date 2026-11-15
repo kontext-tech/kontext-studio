@@ -18,7 +18,7 @@ from typing import TYPE_CHECKING
 
 from kontext.agent import AgentDescriptor, AgentKind, AgentSpec, FrameworkToolkit
 from kontext.common.constants import AgentTaskProfile
-from kontext.common.python_execution.policy import WHITELISTED_MODULES
+from kontext.common.python_execution.policy import whitelisted_modules
 
 from ..tools.kontext_toolkit import ToolkitScope
 from ..tools.notebook_tool import NotebookTools
@@ -92,7 +92,7 @@ async def build_notebook_spec(
         "and embedded charts."
     )
     if allow_python:
-        allowed_libraries = ", ".join(sorted(WHITELISTED_MODULES))
+        allowed_libraries = ", ".join(sorted(whitelisted_modules()))
         default_role = (
             "Create and update notebook artifacts (.notebook) with narrative, data tables, "
             "embedded charts, and executed Python analysis blocks."
