@@ -27,3 +27,8 @@ Only use these steps for the copy you downloaded from:
 
 Your projects and settings live in ~/.kontext.
 Logs live in ~/Library/Logs/Kontext Studio.
+
+Installation and troubleshooting guide for all platforms
+(macOS and Windows):
+
+  https://docs.kontext.tech/user-guide/desktop-app/
