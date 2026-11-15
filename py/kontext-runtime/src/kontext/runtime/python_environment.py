@@ -41,7 +41,6 @@ _DEFAULT_PACKAGES = (
     "numpy==2.2.5",
     "pandas==2.2.3",
     "pyarrow==19.0.1",
-    "scikit-learn==1.6.1",
     "scipy==1.15.3",
     "statsmodels==0.14.4",
     "patsy==1.0.1",
@@ -49,6 +48,9 @@ _DEFAULT_PACKAGES = (
     # DuckDB needs pytz to return TIMESTAMPTZ values (e.g. current_timestamp).
     "pytz==2025.2",
     "matplotlib==3.10.1",
+    # scikit-learn is opt-in (KONTEXT_PYTHON_RUNTIME_PACKAGES): ordinary
+    # analysis does not need it, and its scipy dependency dominates the
+    # offline wheelhouse otherwise shared with statsmodels.
 )
 
 # One bootstrap at a time within a process; the venv build is not concurrency-safe.

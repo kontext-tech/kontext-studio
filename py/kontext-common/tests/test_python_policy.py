@@ -49,7 +49,6 @@ def test_unwhitelisted_import_is_still_rejected_in_shared_namespace() -> None:
         "numpy",
         "pyarrow",
         "duckdb",
-        "sklearn",
         "statsmodels",
         "scipy",
         "patsy",

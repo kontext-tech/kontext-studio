@@ -15,13 +15,14 @@ logger = logging.getLogger(__name__)
 # round: whitelisted-but-uninstalled imports die with ModuleNotFoundError, and
 # installed-but-unlisted imports are denied. The versions also feed the agent
 # prompt environment line, so they must stay accurate. Import-facing names:
-# ``scikit-learn`` provides top-level ``sklearn``; ``pytz`` ships only for
-# duckdb's TIMESTAMPTZ handling but is importable.
+# ``pytz`` ships only for duckdb's TIMESTAMPTZ handling but is importable.
+# ``scikit-learn`` is deliberately absent from the default set; a deployment
+# that adds it via ``KONTEXT_PYTHON_RUNTIME_PACKAGES`` must extend
+# ``MANAGED_VENV_PACKAGES`` (or the whitelist) alongside it.
 MANAGED_VENV_PACKAGES = (
     "numpy==2.2.5",
     "pandas==2.2.3",
     "pyarrow==19.0.1",
-    "scikit-learn==1.6.1",
     "scipy==1.15.3",
     "statsmodels==0.14.4",
     "patsy==1.0.1",
@@ -32,7 +33,7 @@ MANAGED_VENV_PACKAGES = (
 
 # PyPI distribution names that differ from their top-level import name. Public
 # so prompt builders can present pin-faithful display names.
-DISTRIBUTION_TO_IMPORT_NAME = {"scikit-learn": "sklearn"}
+DISTRIBUTION_TO_IMPORT_NAME: dict[str, str] = {}
 
 MANAGED_VENV_MODULES = frozenset(
     DISTRIBUTION_TO_IMPORT_NAME.get(spec.split("==", 1)[0], spec.split("==", 1)[0])
