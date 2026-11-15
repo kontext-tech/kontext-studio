@@ -115,7 +115,9 @@ export const PythonEnvironmentPackageSchema = z
    .object({
       name: z.string(),
       version: z.string(),
-      spec: z.string()
+      spec: z.string(),
+      /** True when the user installed the package on top of the shipped runtime. */
+      userInstalled: z.boolean().default(false)
    })
    .describe("Managed Python environment package");
 
@@ -127,6 +129,24 @@ export const PythonPackageSourceSchema = z.enum(["configured", "installed"]);
 
 export type PythonPackageSource = z.infer<typeof PythonPackageSourceSchema>;
 export const PythonPackageSource = PythonPackageSourceSchema.enum;
+
+export const InstallPythonPackagesRequestSchema = z
+   .object({
+      specs: z
+         .array(z.string())
+         .min(1)
+         .max(20)
+         .describe(
+            "Distribution names, optionally with extras or an ==version pin"
+         )
+   })
+   .describe(
+      "Request to install extra packages into the managed Python runtime"
+   );
+
+export type InstallPythonPackagesRequest = z.infer<
+   typeof InstallPythonPackagesRequestSchema
+>;
 
 export const PythonEnvironmentInfoSchema = z
    .object({

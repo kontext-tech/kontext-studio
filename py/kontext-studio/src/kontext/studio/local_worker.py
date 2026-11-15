@@ -431,7 +431,10 @@ async def run_local_worker(
         install_session_kernel_manager,
     )
     from kontext.kernel.sessions import SessionKernelManager
-    from kontext.runtime.python_environment import resolve_managed_python_executable
+    from kontext.runtime.python_environment import (
+        resolve_managed_python_executable,
+        sync_user_installed_packages,
+    )
 
     _shutdown = shutdown or asyncio.Event()
     _transport = transport or _build_claim_transport()
@@ -446,7 +449,10 @@ async def run_local_worker(
 
     # Own the session kernels for this supervisor process. Jobs resolve the
     # manager through the registry, so consecutive cells share a namespace.
-    # Kernels use the managed venv (numpy/pandas) when it exists.
+    # Kernels use the managed venv (numpy/pandas) when it exists, and the
+    # spawn-time whitelist must include packages the user installed in a
+    # previous server run.
+    sync_user_installed_packages()
     session_manager = get_session_kernel_manager() or SessionKernelManager(
         python_executable=resolve_managed_python_executable()
     )

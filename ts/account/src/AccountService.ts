@@ -1,6 +1,7 @@
 import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import { ApiResult, HttpApiService } from "@kontext-tech/common";
 import type {
+   InstallPythonPackagesRequest,
    PythonEnvironmentInfo,
    UpdateUserProfileRequest,
    UserWithRolesModel
@@ -46,6 +47,22 @@ export class AccountService extends HttpApiService {
             "/account/python-environment/prepare",
             {
                method: "POST"
+            }
+         );
+         return response;
+      });
+   }
+
+   async installPythonPackages(
+      request: InstallPythonPackagesRequest
+   ): Promise<ApiResult<PythonEnvironmentInfo>> {
+      return this.wrap(async () => {
+         const response = await this.requestJson<PythonEnvironmentInfo>(
+            "/account/python-environment/install",
+            {
+               method: "POST",
+               headers: { "Content-Type": "application/json" },
+               body: JSON.stringify(request)
             }
          );
          return response;

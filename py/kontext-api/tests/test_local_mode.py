@@ -293,6 +293,102 @@ def test_local_mode_exposes_runtime_account_endpoints_only(tmp_path):
     assert python_prepare_response.json()["initialized"] is True
 
 
+def test_local_mode_installs_extra_python_packages(tmp_path):
+    database_url = f"sqlite:///{tmp_path / 'kontext.db'}"
+
+    with (
+        patch.dict(
+            os.environ,
+            {"KONTEXT_LOCAL_MODE": "true", "ENVIRONMENT": "development"},
+            clear=True,
+        ),
+        patch(
+            "kontext.runtime.local.config.get_local_database_url",
+            return_value=database_url,
+        ),
+        patch(
+            "kontext.runtime.local.auth.get_local_jwt_secret",
+            return_value="test-local-secret",
+        ),
+    ):
+        _clear_db_caches()
+        try:
+            app = create_app()
+
+            def _reject_specs(specs):
+                raise ValueError(f"'{specs[0]}' is not a valid package spec.")
+
+            with (
+                patch(
+                    "kontext.api.routers.python_environment.install_user_python_packages",
+                    return_value=_fake_python_environment_info(initialized=True),
+                ) as install_mock,
+                TestClient(app) as client,
+            ):
+                access_token = _get_local_access_token(client)
+                install_response = client.post(
+                    "/account/python-environment/install",
+                    json={"specs": ["sympy==1.13.1"]},
+                    headers={"Authorization": f"Bearer {access_token}"},
+                )
+                empty_specs_response = client.post(
+                    "/account/python-environment/install",
+                    json={"specs": []},
+                    headers={"Authorization": f"Bearer {access_token}"},
+                )
+                unknown_field_response = client.post(
+                    "/account/python-environment/install",
+                    json={"specs": ["sympy"], "upgrade": True},
+                    headers={"Authorization": f"Bearer {access_token}"},
+                )
+
+            with (
+                patch(
+                    "kontext.api.routers.python_environment.install_user_python_packages",
+                    side_effect=_reject_specs,
+                ),
+                TestClient(app) as client,
+            ):
+                access_token = _get_local_access_token(client)
+                invalid_specs_response = client.post(
+                    "/account/python-environment/install",
+                    json={"specs": ["-r /tmp/pin.txt"]},
+                    headers={"Authorization": f"Bearer {access_token}"},
+                )
+
+            with (
+                patch(
+                    "kontext.api.routers.python_environment.install_user_python_packages",
+                    side_effect=RuntimeError("pip exploded"),
+                ),
+                TestClient(app) as client,
+            ):
+                access_token = _get_local_access_token(client)
+                failed_install_response = client.post(
+                    "/account/python-environment/install",
+                    json={"specs": ["sympy==1.13.1"]},
+                    headers={"Authorization": f"Bearer {access_token}"},
+                )
+        finally:
+            _clear_db_caches()
+
+    assert install_response.status_code == 200
+    assert install_response.json()["initialized"] is True
+    install_mock.assert_called_once_with(["sympy==1.13.1"])
+
+    assert empty_specs_response.status_code == 422
+    assert unknown_field_response.status_code == 422
+
+    assert invalid_specs_response.status_code == 400
+    assert "not a valid package spec" in invalid_specs_response.json()["detail"]
+
+    assert failed_install_response.status_code == 500
+    assert (
+        "Installing Python packages failed: pip exploded"
+        in failed_install_response.json()["detail"]
+    )
+
+
 def test_default_local_admin_owns_default_project_in_account_info(tmp_path):
     database_url = f"sqlite:///{tmp_path / 'kontext.db'}"
 

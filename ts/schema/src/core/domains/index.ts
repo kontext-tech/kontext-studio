@@ -358,6 +358,10 @@ export const CORE_DOMAIN_SCHEMAS: CoreDomainSchemaRegistration[] = [
       schema: Base.PythonEnvironmentPackageSchema
    },
    { id: "PythonEnvironmentInfo", schema: Base.PythonEnvironmentInfoSchema },
+   {
+      id: "InstallPythonPackagesRequest",
+      schema: Base.InstallPythonPackagesRequestSchema
+   },
    { id: "ProblemTypes", schema: Base.ProblemTypesSchema },
    { id: "FileFormatType", schema: Base.FileFormatTypeSchema },
    { id: "IFormFile", schema: Base.IFormFileSchema },

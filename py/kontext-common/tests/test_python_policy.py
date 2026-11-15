@@ -4,7 +4,50 @@ from __future__ import annotations
 
 import pytest
 
+import kontext.common.python_execution.policy as python_policy
 from kontext.common.python_execution.policy import validate_python_code
+
+
+@pytest.fixture(autouse=True)
+def _clean_user_installed_modules(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep the process-wide extension registry isolated between tests."""
+    monkeypatch.setattr(python_policy, "_USER_INSTALLED_MODULES", frozenset())
+
+
+def test_registered_user_modules_extend_the_effective_whitelist() -> None:
+    """A user install makes its importable module name valid pre-flight."""
+    assert python_policy.user_installed_modules() == frozenset()
+    assert "sympy" not in python_policy.whitelisted_modules()
+
+    registered = python_policy.set_user_installed_modules(["sympy"])
+
+    assert registered == python_policy.user_installed_modules() == frozenset({"sympy"})
+    assert "sympy" in python_policy.whitelisted_modules()
+    assert "sympy" not in python_policy.WHITELISTED_MODULES
+
+    is_valid, issues = validate_python_code("import sympy")
+
+    assert is_valid, issues
+
+
+def test_setting_user_modules_replaces_the_previous_extension() -> None:
+    """The persisted registry is the truth, so each sync fully replaces."""
+    python_policy.set_user_installed_modules(["sympy", "bs4"])
+
+    assert python_policy.set_user_installed_modules(["cv2"]) == frozenset({"cv2"})
+    assert python_policy.set_user_installed_modules([]) == frozenset()
+    assert python_policy.whitelisted_modules() == python_policy.WHITELISTED_MODULES
+
+
+def test_registration_ignores_denylisted_names() -> None:
+    """Installing a restricted distribution must never reopen its module."""
+    registered = python_policy.set_user_installed_modules(["requests", "sympy", "", "  "])
+
+    assert registered == frozenset({"sympy"})
+    is_valid, issues = validate_python_code("import requests")
+
+    assert not is_valid
+    assert any("Forbidden import" in issue for issue in issues)
 
 
 def test_alias_guidance_flags_missing_import_by_default() -> None:

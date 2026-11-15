@@ -51,6 +51,31 @@ def test_env_module_set_distinguishes_unconfigured_from_empty(
     assert harness._env_module_set("KONTEXT_WHITELISTED_MODULES") == frozenset({"json"})
 
 
+def test_supervisor_policy_env_tracks_user_installed_modules(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Whitelist extensions registered after import must reach kernel spawns.
+
+    The package installer extends the whitelist while a server process runs,
+    so the env handed to every new kernel child has to be computed from the
+    registry at spawn time, not from the import-time constant.
+    """
+    import os
+
+    from kontext.common.python_execution import policy as python_policy
+    from kontext.kernel import manager
+
+    monkeypatch.setattr(python_policy, "_USER_INSTALLED_MODULES", frozenset({"sympy"}))
+    monkeypatch.setattr(manager, "get_allowed_roots", lambda: [])
+
+    env = manager._supervisor_policy_env()
+
+    assert env[manager.WHITELISTED_MODULES_ENV] == os.pathsep.join(
+        sorted(python_policy.whitelisted_modules())
+    )
+    assert "sympy" in env[manager.WHITELISTED_MODULES_ENV].split(os.pathsep)
+
+
 async def _boot(tmp_path: Path) -> tuple[SessionKernelManager, SessionRunner]:
     manager = SessionKernelManager(workspace_root=tmp_path / "workspaces")
     await manager.start()

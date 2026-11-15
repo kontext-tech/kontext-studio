@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
-from pydantic import ConfigDict
+from typing import Annotated
+
+from pydantic import ConfigDict, Field
 
 from kontext.schema.base import SchemaModel
 
@@ -19,3 +21,4 @@ class PythonEnvironmentPackage(SchemaModel):
     name: str
     version: str
     spec: str
+    user_installed: Annotated[bool, Field(alias="userInstalled")] = False
