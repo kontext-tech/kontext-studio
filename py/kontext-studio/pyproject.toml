@@ -45,6 +45,11 @@ telemetry = [
     "opentelemetry-exporter-otlp-proto-http>=1.25.0",
     "opentelemetry-instrumentation-fastapi>=0.46b0",
 ]
+# Provider SDK extras, forwarded to the Agno harness adapter. The base
+# install stays lean; deployments serving those providers opt in here.
+bedrock = ["kontext-harness-agno[bedrock]"]
+gemini = ["kontext-harness-agno[gemini]"]
+mistral = ["kontext-harness-agno[mistral]"]
 
 [project.scripts]
 kontext = "kontext.studio.cli:cli"

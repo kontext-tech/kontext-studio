@@ -24,8 +24,17 @@ dependencies = [
     "kontext-common",
     "kontext-llm",
     "kontext-schema",
-    "agno[anthropic,aws,azure,google,lmstudio,mistral,ollama,openai]>=3.1.10",
+    # Core SDKs only: the OpenAI-compatible family (openai, azure, deepseek,
+    # openrouter, openai_compatible), Anthropic, and local Ollama/LM Studio.
+    # Bedrock, Gemini, and Mistral SDKs are opt-in extras so distributions
+    # ship lean; their factories degrade to a clear "install the extra" error.
+    "agno[anthropic,lmstudio,ollama,openai]>=3.1.10",
 ]
+
+[project.optional-dependencies]
+bedrock = ["agno[aws-bedrock]"]
+gemini = ["agno[google]"]
+mistral = ["agno[mistral]"]
 
 [project.urls]
 Repository = "https://github.com/kontext-tech/kontext-studio"
