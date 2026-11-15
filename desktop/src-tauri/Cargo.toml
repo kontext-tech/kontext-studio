@@ -1,6 +1,6 @@
 [package]
 name = "kontext-desktop"
-version = "0.264.0"
+version = "0.265.0"
 description = "Kontext Studio desktop shell"
 edition = "2021"
 rust-version = "1.77"
