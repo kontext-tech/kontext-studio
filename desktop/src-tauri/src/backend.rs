@@ -147,7 +147,10 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
                     Err(_) => break,
                 }
                 let decoded = String::from_utf8_lossy(&buffer);
-                append_log(&log_path, decoded.trim_end_matches(|c| c == '\n' || c == '\r'));
+                append_log(
+                    &log_path,
+                    decoded.trim_end_matches(|c| c == '\n' || c == '\r'),
+                );
             }
         });
     }
