@@ -48,7 +48,10 @@ export class AuthService extends HttpApiService {
          }
          return ApiResult.success(bootstrap.accessToken);
       } catch (error) {
-         return ApiResult.failure(await this.handleApiError(error));
+         // The bootstrap probe is an auth-status check: a 401 is the expected
+         // outcome before first-run setup or sign-in, and must not fire the
+         // global error toast. Callers handle the failure signal themselves.
+         return ApiResult.failure(await this.parseApiError(error));
       }
    }
 
