@@ -38,20 +38,28 @@ from .sqlite_compat import ensure_supported_sqlite
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
+# Pre-rendered FIGlet "slant" output for the local server banner, kept static
+# so the CLI does not need to ship a figure-printing dependency for one asset.
+_BANNER_ART = r"""
+    __ __            __            __
+   / //_/___  ____  / /____  _  __/ /_
+  / ,< / __ \/ __ \/ __/ _ \| |/_/ __/
+ / /| / /_/ / / / / /_/  __/>  </ /_
+/_/ |_\____/_/ /_/\__/\___/_/|_|\__/
+"""
+
 
 def _print_startup_banner() -> None:
     """Render a lightweight ASCII banner for the local server."""
     try:
-        import pyfiglet
         from rich.console import Console
         from rich.panel import Panel
         from rich.text import Text
 
         console = Console()
-        ascii_art = pyfiglet.figlet_format("Kontext", font="slant")
         console.print(
             Panel(
-                Text(ascii_art, style="bold cyan"),
+                Text(_BANNER_ART, style="bold cyan"),
                 title="Kontext",
                 subtitle="Local Console",
                 border_style="bright_blue",
