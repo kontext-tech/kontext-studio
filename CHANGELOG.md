@@ -1,3 +1,18 @@
+## ts-packages-v0.265.0 (2026-11-15)
+
+### Feat
+
+- **desktop**: dispatch test builds from any ref; fix Windows emoji crash (#38)
+
+### Fix
+
+- **studio**: make telemetry opt-in; pyright-clean stdio reconfigure (#41)
+- **ts**: make shared package build scripts cross-platform (#37)
+
+### Refactor
+
+- **py**: trim provider SDKs, bundle payload, and runtime diagnostics (#44)
+
 ## ts-packages-v0.264.0 (2026-11-14)
 
 ### Feat
