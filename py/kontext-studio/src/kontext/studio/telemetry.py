@@ -12,6 +12,7 @@ Behaviour
 
 Env vars honoured
 -----------------
+KONTEXT_TELEMETRY_ENABLED     Set to "true" to enable telemetry (default: off)
 OTEL_EXPORTER_OTLP_ENDPOINT   OTLP collector HTTP endpoint (optional)
 OTEL_SERVICE_NAME             Service name override (default: kontext-studio)
 OTEL_SDK_DISABLED             Set to "true" to skip all telemetry setup
@@ -30,13 +31,20 @@ def configure_telemetry(service_name: str = "kontext-studio") -> None:
     """
     Set up OpenTelemetry tracing for the console process.
 
-    Idempotent — safe to call multiple times; subsequent calls are no-ops.
+    Telemetry is opt-in: nothing is emitted unless
+    ``KONTEXT_TELEMETRY_ENABLED=true``. Idempotent — safe to call multiple
+    times; subsequent calls are no-ops.
 
     Args:
         service_name: Logical service name emitted with every span.
     """
-    if os.getenv("OTEL_SDK_DISABLED", "false").lower() == "true":
-        logger.debug("OTEL_SDK_DISABLED=true — skipping telemetry setup")
+    disabled = os.getenv("OTEL_SDK_DISABLED", "false").lower() == "true"
+    enabled = os.getenv("KONTEXT_TELEMETRY_ENABLED", "false").lower() == "true"
+    if disabled or not enabled:
+        if disabled:
+            logger.debug("OTEL_SDK_DISABLED=true — skipping telemetry setup")
+        else:
+            logger.debug("Telemetry disabled (KONTEXT_TELEMETRY_ENABLED is unset)")
         return
 
     try:

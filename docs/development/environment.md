@@ -178,6 +178,7 @@ AWS SDK variables used by Bedrock) are documented with the provider matrix in
 | `KONTEXT_LOG_FORMAT` | `json` | `json` or `plain`. |
 | `LOG_FORMAT` | `json` | Legacy alias. |
 | `UVICORN_ACCESS_LOG_FORMAT` | Unset | Override for the uvicorn access-log format. |
+| `KONTEXT_TELEMETRY_ENABLED` | `false` | Set `true` to opt in to OpenTelemetry tracing; telemetry is off by default. |
 | `OTEL_SDK_DISABLED` | `false` | Set `true` to skip telemetry setup entirely. |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | Unset | OTLP HTTP collector endpoint; unset keeps traces local. |
 | `OTEL_SERVICE_NAME` | `kontext-studio` | Telemetry service-name override. |
