@@ -8,19 +8,24 @@ Mounted only when the active profile advertises
 from __future__ import annotations
 
 import asyncio
+import logging
 
 from fastapi import APIRouter, Depends
 
 from kontext.account import UserProfile
 from kontext.common import SiteFeature
+from kontext.common.exceptions import BadRequestError, KontextError
 from kontext.runtime import (
     get_managed_python_environment_info,
+    install_user_python_packages,
     prepare_managed_python_environment,
 )
-from kontext.schema import PythonEnvironmentInfo
+from kontext.schema import InstallPythonPackagesRequest, PythonEnvironmentInfo
 
 from ..dependencies import require_site_feature
 from ..dependencies.local_auth import get_current_user
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/account",
@@ -47,4 +52,25 @@ async def prepare_python_environment(
     del current_user
     # Preparing the environment creates a venv and pip-installs packages, which
     # can take minutes; never run that on the event loop thread.
-    return await asyncio.to_thread(prepare_managed_python_environment)
+    try:
+        return await asyncio.to_thread(prepare_managed_python_environment)
+    except Exception as exc:
+        logger.exception("Managed python environment preparation failed")
+        raise KontextError(f"Preparing the Python environment failed: {exc}") from exc
+
+
+@router.post("/python-environment/install")
+async def install_python_packages(
+    payload: InstallPythonPackagesRequest,
+    current_user: UserProfile = _CURRENT_USER_DEP,
+) -> PythonEnvironmentInfo:
+    """Install extra packages into the managed venv (offline wheelhouse first)."""
+    del current_user
+    try:
+        # Like prepare, installation shells out to pip and can take minutes.
+        return await asyncio.to_thread(install_user_python_packages, payload.specs)
+    except ValueError as exc:
+        raise BadRequestError(str(exc)) from exc
+    except Exception as exc:
+        logger.exception("Managed python package installation failed")
+        raise KontextError(f"Installing Python packages failed: {exc}") from exc

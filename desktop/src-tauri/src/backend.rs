@@ -87,9 +87,22 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
         let log_path = log_path.clone();
         let ready_flag = ready.clone();
         thread::spawn(move || {
-            for line in BufReader::new(stdout).lines().map_while(Result::ok) {
+            let mut reader = BufReader::new(stdout);
+            let mut buffer: Vec<u8> = Vec::new();
+            loop {
+                buffer.clear();
+                match reader.read_until(b'\n', &mut buffer) {
+                    Ok(0) => break,
+                    Ok(_) => {}
+                    Err(_) => break,
+                }
+                // Decode lossily: child subprocesses (pip on Windows) write the
+                // legacy code page, and a strict read would end log capture at
+                // the first non-UTF-8 line.
+                let decoded = String::from_utf8_lossy(&buffer);
+                let line = decoded.trim_end_matches(['\n', '\r']);
                 let Some(json) = line.strip_prefix(READY_MARKER) else {
-                    append_log(&log_path, &line);
+                    append_log(&log_path, line);
                     continue;
                 };
                 let Ok(payload) = serde_json::from_str::<ReadyPayload>(json) else {
@@ -124,8 +137,17 @@ pub fn start(app: AppHandle, window: WebviewWindow) -> tauri::Result<()> {
     if let Some(stderr) = stderr {
         let log_path = log_path.clone();
         thread::spawn(move || {
-            for line in BufReader::new(stderr).lines().map_while(Result::ok) {
-                append_log(&log_path, &line);
+            let mut reader = BufReader::new(stderr);
+            let mut buffer: Vec<u8> = Vec::new();
+            loop {
+                buffer.clear();
+                match reader.read_until(b'\n', &mut buffer) {
+                    Ok(0) => break,
+                    Ok(_) => {}
+                    Err(_) => break,
+                }
+                let decoded = String::from_utf8_lossy(&buffer);
+                append_log(&log_path, decoded.trim_end_matches(['\n', '\r']));
             }
         });
     }

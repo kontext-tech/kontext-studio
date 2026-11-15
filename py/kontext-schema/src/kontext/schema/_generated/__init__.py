@@ -198,6 +198,7 @@ from .image_picker_block_data import ImagePickerBlockData
 from .import_okf_bundle_body import ImportOkfBundleBody
 from .inline_data import InlineData
 from .inline_data_metadata import InlineDataMetadata
+from .install_python_packages_request import InstallPythonPackagesRequest
 from .job_category import JobCategory
 from .job_dispatch_response import JobDispatchResponse
 from .job_execution_message import JobExecutionMessage
@@ -649,6 +650,7 @@ __all__ = [
     "ImportOkfBundleBody",
     "InlineData",
     "InlineDataMetadata",
+    "InstallPythonPackagesRequest",
     "JobCategory",
     "JobDispatchResponse",
     "JobExecutionMessage",

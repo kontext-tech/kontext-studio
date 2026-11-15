@@ -255,6 +255,13 @@ def _copy_notices(out_dir: Path) -> None:
 def _prune_and_compile(python: Path, site_packages: Path) -> None:
     for cache in site_packages.rglob("__pycache__"):
         shutil.rmtree(cache, ignore_errors=True)
+    # Test modules and standalone CLI executables are never imported by the
+    # bundled server; dropping them keeps the release smaller.
+    for tests_dir in list(site_packages.rglob("tests")):
+        if tests_dir.is_dir():
+            shutil.rmtree(tests_dir, ignore_errors=True)
+    for magika_cli in site_packages.glob("bin/magika*"):
+        magika_cli.unlink(missing_ok=True)
     _run([str(python), "-m", "compileall", "-q", str(site_packages)])
 
 

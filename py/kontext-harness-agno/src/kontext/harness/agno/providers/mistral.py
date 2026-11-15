@@ -11,7 +11,11 @@ def create_mistral_model(request: ModelRequest) -> Any:
     try:
         from agno.models.mistral import MistralChat
     except ImportError as exc:  # pragma: no cover - optional dependency
-        raise RuntimeError(f"Mistral provider requires additional dependencies: {exc}") from exc
+        raise RuntimeError(
+            "Mistral provider requires additional dependencies: install the "
+            "'mistral' provider extra (pip install 'kontext-studio[mistral]') "
+            f"and retry. Original error: {exc}"
+        ) from exc
 
     kwargs: dict[str, Any] = {
         "id": request.model_id,

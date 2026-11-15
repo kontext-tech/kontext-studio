@@ -24,7 +24,7 @@ from typing import Any
 from uuid import uuid4
 
 from kontext.common.constants.env_vars import StorageEnvVars
-from kontext.common.python_execution.policy import BLACKLISTED_MODULES, WHITELISTED_MODULES
+from kontext.common.python_execution.policy import BLACKLISTED_MODULES, whitelisted_modules
 from kontext.common.utils.path_policy import get_allowed_roots
 
 from .limits import (
@@ -630,7 +630,9 @@ def _supervisor_policy_env() -> dict[str, str]:
     """
     return {
         OPEN_ROOTS_ENV: os.pathsep.join(str(root) for root in get_allowed_roots()),
-        WHITELISTED_MODULES_ENV: os.pathsep.join(sorted(WHITELISTED_MODULES)),
+        # Read at spawn time: user-installed packages can extend the
+        # whitelist between one kernel boot and the next.
+        WHITELISTED_MODULES_ENV: os.pathsep.join(sorted(whitelisted_modules())),
         BLACKLISTED_MODULES_ENV: os.pathsep.join(sorted(BLACKLISTED_MODULES)),
     }
 

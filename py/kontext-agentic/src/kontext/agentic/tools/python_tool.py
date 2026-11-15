@@ -8,7 +8,7 @@ from kontext.agentic.utils.guid_validation import validate_guids
 from kontext.chat import execute_chat_session_python_script
 from kontext.common.jobs.trigger_actor import agent_actor
 from kontext.common.protocols import AIToolkitServiceProviderProtocol, IFileServiceProtocol
-from kontext.common.python_execution.policy import WHITELISTED_MODULES, validate_python_code
+from kontext.common.python_execution.policy import validate_python_code, whitelisted_modules
 from kontext.jobs import (
     NotebookPythonExecutionError,
     NotebookPythonExecutionService,
@@ -482,7 +482,7 @@ class PythonTools(_PythonToolkitBase):
     @tool_meta(display_name="Get Allowed Libraries", emit_tool_call=False)
     async def get_allowed_libraries(self) -> str:
         """List allowed Python libraries."""
-        return ", ".join(sorted(WHITELISTED_MODULES))
+        return ", ".join(sorted(whitelisted_modules()))
 
 
 class NotebookPythonTools(_PythonToolkitBase):

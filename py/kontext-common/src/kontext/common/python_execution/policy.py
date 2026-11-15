@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import logging
 import symtable
+from collections.abc import Iterable
 
 logger = logging.getLogger(__name__)
 
@@ -15,13 +16,14 @@ logger = logging.getLogger(__name__)
 # round: whitelisted-but-uninstalled imports die with ModuleNotFoundError, and
 # installed-but-unlisted imports are denied. The versions also feed the agent
 # prompt environment line, so they must stay accurate. Import-facing names:
-# ``scikit-learn`` provides top-level ``sklearn``; ``pytz`` ships only for
-# duckdb's TIMESTAMPTZ handling but is importable.
+# ``pytz`` ships only for duckdb's TIMESTAMPTZ handling but is importable.
+# ``scikit-learn`` is deliberately absent from the default set; a deployment
+# that adds it via ``KONTEXT_PYTHON_RUNTIME_PACKAGES`` must extend
+# ``MANAGED_VENV_PACKAGES`` (or the whitelist) alongside it.
 MANAGED_VENV_PACKAGES = (
     "numpy==2.2.5",
     "pandas==2.2.3",
     "pyarrow==19.0.1",
-    "scikit-learn==1.6.1",
     "scipy==1.15.3",
     "statsmodels==0.14.4",
     "patsy==1.0.1",
@@ -32,7 +34,7 @@ MANAGED_VENV_PACKAGES = (
 
 # PyPI distribution names that differ from their top-level import name. Public
 # so prompt builders can present pin-faithful display names.
-DISTRIBUTION_TO_IMPORT_NAME = {"scikit-learn": "sklearn"}
+DISTRIBUTION_TO_IMPORT_NAME: dict[str, str] = {}
 
 MANAGED_VENV_MODULES = frozenset(
     DISTRIBUTION_TO_IMPORT_NAME.get(spec.split("==", 1)[0], spec.split("==", 1)[0])
@@ -85,6 +87,49 @@ _SAFE_STDLIB_MODULES = frozenset(
 _PLATFORM_MODULES = frozenset({"kontext"})
 
 WHITELISTED_MODULES = MANAGED_VENV_MODULES | _SAFE_STDLIB_MODULES | _PLATFORM_MODULES
+
+# Import names of distributions a user installed into the managed venv *after*
+# bootstrapping (the ``/account/python-environment/install`` endpoint). Pure
+# process state: it starts empty and composition roots sync it from the
+# runtime's persisted registry before spawning kernels, so the pinned
+# ``MANAGED_VENV_PACKAGES`` manifest above stays the audited source of truth
+# for what ships.
+_USER_INSTALLED_MODULES: frozenset[str] = frozenset()
+
+
+def set_user_installed_modules(names: Iterable[str]) -> frozenset[str]:
+    """Replace the whitelist extension with *names*.
+
+    Replacement (not accumulation) matches the registry's lifetime: the venv
+    is the only source of truth for what is importable, and a bootstrap
+    rebuild destroys the persisted registry together with the venv, so a
+    stale extension must not survive it.
+    """
+    global _USER_INSTALLED_MODULES
+    # The denylist always wins, even over user installs: a distribution whose
+    # top-level module collides with a forbidden module never joins the
+    # whitelist here. validate_python_code and the kernel import gate both
+    # re-check BLACKLISTED_MODULES, so this is defense in depth.
+    _USER_INSTALLED_MODULES = (
+        frozenset(name.strip() for name in names if name and name.strip()) - BLACKLISTED_MODULES
+    )
+    return _USER_INSTALLED_MODULES
+
+
+def user_installed_modules() -> frozenset[str]:
+    """The import names registered via :func:`register_user_installed_modules`."""
+    return _USER_INSTALLED_MODULES
+
+
+def whitelisted_modules() -> frozenset[str]:
+    """The effective import whitelist: shipped manifest plus user extensions.
+
+    Reading time matters — the installed-registry can grow at runtime, so
+    consumers (prompt builders, kernel-spawn env construction) must call this
+    rather than snapshotting :data:`WHITELISTED_MODULES` at import time.
+    """
+    return WHITELISTED_MODULES | _USER_INSTALLED_MODULES
+
 
 BLACKLISTED_BUILTINS = {
     # Dynamic code creation and namespace/builtin tampering — the capability
@@ -229,6 +274,7 @@ def validate_python_code(code: str, *, shared_namespace: bool = False) -> tuple[
         logger.error("Failed to parse Python code: %s", exc)
         return False, [f"Parse Error: {exc}"]
 
+    effective_whitelist = whitelisted_modules()
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
@@ -237,7 +283,7 @@ def validate_python_code(code: str, *, shared_namespace: bool = False) -> tuple[
                     message = f"Forbidden import: '{alias.name}'"
                     hint = _BLACKLIST_HINTS.get(base_module)
                     issues.append(message if hint is None else f"{message} — {hint}")
-                elif base_module not in WHITELISTED_MODULES:
+                elif base_module not in effective_whitelist:
                     issues.append(
                         f"Module '{alias.name}' is not in the whitelist. Contact support if you need this library."
                     )
@@ -249,7 +295,7 @@ def validate_python_code(code: str, *, shared_namespace: bool = False) -> tuple[
                     message = f"Forbidden import from: '{node.module}'"
                     hint = _BLACKLIST_HINTS.get(base_module)
                     issues.append(message if hint is None else f"{message} — {hint}")
-                elif base_module not in WHITELISTED_MODULES:
+                elif base_module not in effective_whitelist:
                     issues.append(
                         f"Module '{node.module}' is not in the whitelist. Contact support if you need this library."
                     )

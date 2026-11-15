@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sys
+
 import pytest
 from agno.models.anthropic import Claude
 from agno.models.aws.bedrock import AwsBedrock
@@ -349,3 +351,55 @@ def test_lm_studio_keeps_hugging_face_model_id() -> None:
     )
 
     assert getattr(model, "id", None) == "qwen/qwen3-coder-30b"
+
+
+# Optional-SDK providers degrade to a clear install hint instead of an
+# ImportError; these tests stub the missing distributions into sys.modules
+# (a None entry raises ImportError on the next import) to exercise that path.
+def test_optional_sdk_providers_fail_loud_when_absent(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cases = [
+        (
+            "agno.models.aws.bedrock",
+            _resolved_model_config(
+                connection_kind="bedrock",
+                adapter_type="bedrock_native",
+                canonical_model_id="bedrock/amazon.nova-2-lite-v1:0",
+                provider_model_name="amazon.nova-2-lite-v1:0",
+                region="ap-southeast-2",
+            ),
+        ),
+        (
+            "agno.models.mistral",
+            _resolved_model_config(
+                connection_kind="mistral",
+                adapter_type="openai_compatible",
+                canonical_model_id="mistral/mistral-small-latest",
+                provider_model_name="mistral-small-latest",
+                endpoint_base_url="https://api.mistral.ai/v1",
+            ),
+        ),
+    ]
+
+    for blocked_module, resolved_config in cases:
+        monkeypatch.setitem(sys.modules, blocked_module, None)
+        with pytest.raises(RuntimeError, match=r"requires additional dependencies"):
+            create_model(resolved_config=resolved_config)
+
+
+def test_gemini_factory_fails_loud_without_google_genai(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delitem(sys.modules, "kontext.harness.agno.gemini_model", raising=False)
+    monkeypatch.setitem(sys.modules, "agno.models.google", None)
+
+    with pytest.raises(RuntimeError, match=r"kontext-studio\[gemini\]"):
+        create_model(
+            resolved_config=_resolved_model_config(
+                connection_kind="gemini",
+                adapter_type="gemini_native",
+                canonical_model_id="gemini/gemini-2.5-flash",
+                provider_model_name="gemini-2.5-flash",
+            )
+        )

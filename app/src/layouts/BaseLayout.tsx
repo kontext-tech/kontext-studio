@@ -1,7 +1,6 @@
 import AppHeader from "@/components/layout/AppHeader";
 import AppSidebarFooter from "@/components/layout/AppSidebarFooter";
 import AppSidebarTop from "@/components/layout/AppSidebarTop";
-import PythonEnvironmentBanner from "@/components/layout/PythonEnvironmentBanner";
 import { AppShellLayout, type AppShellLayoutProps } from "@kontext-tech/layout";
 import { useTheme } from "@kontext-tech/theme";
 import React, { type ReactNode } from "react";
@@ -75,8 +74,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
       centerContent,
       maxWidth,
       contentPadding,
-      fullHeight,
-      banner: <PythonEnvironmentBanner />
+      fullHeight
    };
 
    return <AppShellLayout {...sharedLayoutProps} />;

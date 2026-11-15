@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING
 
 from kontext.agent import AgentDescriptor, AgentKind, AgentSpec
 from kontext.common.constants import AgentTaskProfile
-from kontext.common.python_execution.policy import WHITELISTED_MODULES
+from kontext.common.python_execution.policy import whitelisted_modules
 
 from ..tools.catalog_tool import CatalogTools
 from ..tools.kontext_toolkit import ToolkitScope
@@ -74,7 +74,7 @@ async def build_python_spec(
 
     logger.info(f"Using pre-loaded project context for {project_id}")
     project_context_summary = generate_project_summary(project)
-    allowed_libraries = ", ".join(sorted(WHITELISTED_MODULES))
+    allowed_libraries = ", ".join(sorted(whitelisted_modules()))
     default_sample_limit = config.default_sample_limit
     workflow = [
         discovery_line,

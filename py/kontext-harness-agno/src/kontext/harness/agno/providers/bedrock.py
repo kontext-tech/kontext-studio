@@ -14,7 +14,11 @@ def create_bedrock_model(request: ModelRequest) -> Any:
     try:
         from agno.models.aws.bedrock import AwsBedrock
     except ImportError as exc:  # pragma: no cover - optional dependency
-        raise RuntimeError(f"Bedrock provider requires additional dependencies: {exc}") from exc
+        raise RuntimeError(
+            "Bedrock provider requires additional dependencies: install the "
+            "'bedrock' provider extra (pip install 'kontext-studio[bedrock]') "
+            f"and retry. Original error: {exc}"
+        ) from exc
 
     resolved = request.resolved_config
     credentials = request.credentials

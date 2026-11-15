@@ -64,6 +64,13 @@ dev = [
     "ruff==0.17.4",
     "pyright>=1.1.390,<2",
     "setuptools>=84.2.1",
+    # Optional provider SDKs (extras of kontext-harness-agno). Distributions
+    # install them only via the bedrock/gemini/mistral extras; the dev
+    # environment keeps them so the harness test suite exercises the real
+    # model classes.
+    "boto3>=1.40",
+    "google-genai>=1.52.0",
+    "mistralai>=2.0.0",
 ]
 
 # Committed-code generators. Kept out of `dev` so a normal `uv sync` does not

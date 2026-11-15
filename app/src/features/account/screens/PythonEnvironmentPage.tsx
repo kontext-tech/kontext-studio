@@ -1,7 +1,11 @@
 import PageContainer from "@/components/layout/SeoPageContainer";
 import { usePythonEnvironment } from "@/hooks/usePythonEnvironment";
 import { RouteNames } from "@/types";
-import { CodeOutlined, ReloadOutlined } from "@kontext-tech/icons";
+import {
+   CodeOutlined,
+   ImportOutlined,
+   ReloadOutlined
+} from "@kontext-tech/icons";
 import { useUiFeedback } from "@kontext-tech/ui";
 import {
    Alert,
@@ -12,6 +16,7 @@ import {
    Empty,
    Flex,
    Row,
+   Select,
    Space,
    Spin,
    Table,
@@ -19,7 +24,7 @@ import {
    Tag,
    Typography
 } from "antd";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const PythonEnvironmentPage = () => {
    const ui = useUiFeedback();
@@ -27,10 +32,15 @@ const PythonEnvironmentPage = () => {
       environment,
       isLoading,
       errorMessage,
+      prepareErrorMessage,
       isPreparing,
+      isInstalling,
+      installErrorMessage,
       refresh,
-      prepare
+      prepare,
+      installPackages
    } = usePythonEnvironment();
+   const [installSpecs, setInstallSpecs] = useState<string[]>([]);
 
    const handleRefresh = () => {
       void refresh();
@@ -45,6 +55,28 @@ const PythonEnvironmentPage = () => {
             error instanceof Error
                ? error.message
                : "Failed to prepare Python environment."
+         );
+      }
+   };
+
+   const handleInstall = async () => {
+      if (installSpecs.length === 0) {
+         return;
+      }
+      try {
+         const updatedEnvironment = await installPackages(installSpecs);
+         const extraCount = updatedEnvironment.packages.filter(
+            (pkg) => pkg.userInstalled
+         ).length;
+         ui.success(
+            `Packages installed successfully. The runtime now lists ${extraCount} extra ${extraCount === 1 ? "package" : "packages"}.`
+         );
+         setInstallSpecs([]);
+      } catch (error) {
+         ui.error(
+            error instanceof Error
+               ? error.message
+               : "Failed to install Python packages."
          );
       }
    };
@@ -67,6 +99,18 @@ const PythonEnvironmentPage = () => {
             title: "Spec",
             dataIndex: "spec",
             key: "spec"
+         },
+         {
+            title: "Origin",
+            dataIndex: "userInstalled",
+            key: "userInstalled",
+            width: 120,
+            render: (userInstalled: boolean) =>
+               userInstalled ? (
+                  <Tag color="purple">Extra</Tag>
+               ) : (
+                  <Tag>Shipped</Tag>
+               )
          }
       ],
       []
@@ -77,7 +121,7 @@ const PythonEnvironmentPage = () => {
          <Button
             icon={<ReloadOutlined />}
             onClick={() => void handleRefresh()}
-            disabled={isLoading || isPreparing}
+            disabled={isLoading || isPreparing || isInstalling}
          >
             Refresh
          </Button>
@@ -86,6 +130,7 @@ const PythonEnvironmentPage = () => {
                type="primary"
                icon={<CodeOutlined />}
                loading={isPreparing}
+               disabled={isInstalling}
                onClick={() => void handlePrepare()}
             >
                Prepare Environment
@@ -134,6 +179,24 @@ const PythonEnvironmentPage = () => {
                   >
                      {errorMessage && (
                         <Alert type="error" showIcon message={errorMessage} />
+                     )}
+
+                     {prepareErrorMessage && (
+                        <Alert
+                           type="error"
+                           showIcon
+                           message="Preparing the Python environment failed"
+                           description={prepareErrorMessage}
+                        />
+                     )}
+
+                     {installErrorMessage && (
+                        <Alert
+                           type="error"
+                           showIcon
+                           message="Installing Python packages failed"
+                           description={installErrorMessage}
+                        />
                      )}
 
                      {!environment.available && (
@@ -226,23 +289,73 @@ const PythonEnvironmentPage = () => {
                               key: "managed-packages",
                               label: "Managed Packages",
                               children: (
-                                 <Card
-                                    title="Managed Packages"
-                                    extra={
-                                       <Typography.Text type="secondary">
-                                          {environment.packages.length} packages
-                                       </Typography.Text>
-                                    }
+                                 <Space
+                                    direction="vertical"
+                                    size={16}
+                                    style={{ width: "100%" }}
                                  >
-                                    <Table
-                                       size="small"
-                                       pagination={false}
-                                       rowKey="name"
-                                       columns={packageColumns}
-                                       dataSource={environment.packages}
-                                       scroll={{ x: 560 }}
-                                    />
-                                 </Card>
+                                    <Card
+                                       title="Managed Packages"
+                                       extra={
+                                          <Typography.Text type="secondary">
+                                             {environment.packages.length}{" "}
+                                             packages
+                                          </Typography.Text>
+                                       }
+                                    >
+                                       <Table
+                                          size="small"
+                                          pagination={false}
+                                          rowKey="name"
+                                          columns={packageColumns}
+                                          dataSource={environment.packages}
+                                          scroll={{ x: 680 }}
+                                       />
+                                    </Card>
+                                    {environment.available && (
+                                       <Card title="Install Extra Packages">
+                                          <Typography.Paragraph
+                                             type="secondary"
+                                             style={{ marginTop: 0 }}
+                                          >
+                                             Install additional packages into
+                                             the managed runtime from the
+                                             bundled offline wheelhouse, falling
+                                             back to PyPI. Installed packages
+                                             join the notebook import whitelist
+                                             and are listed below; re-preparing
+                                             the environment removes them.
+                                          </Typography.Paragraph>
+                                          <Space.Compact
+                                             style={{ width: "100%" }}
+                                          >
+                                             <Select
+                                                mode="tags"
+                                                style={{ width: "100%" }}
+                                                placeholder="e.g. sympy==1.13.1 or beautifulsoup4"
+                                                value={installSpecs}
+                                                onChange={setInstallSpecs}
+                                                disabled={isInstalling}
+                                                tokenSeparators={[","]}
+                                             />
+                                             <Button
+                                                type="primary"
+                                                icon={<ImportOutlined />}
+                                                loading={isInstalling}
+                                                disabled={
+                                                   installSpecs.length === 0 ||
+                                                   isInstalling
+                                                }
+                                                onClick={() =>
+                                                   void handleInstall()
+                                                }
+                                             >
+                                                Install
+                                             </Button>
+                                          </Space.Compact>
+                                       </Card>
+                                    )}
+                                 </Space>
                               )
                            }
                         ]}
