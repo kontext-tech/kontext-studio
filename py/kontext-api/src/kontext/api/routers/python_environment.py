@@ -8,11 +8,13 @@ Mounted only when the active profile advertises
 from __future__ import annotations
 
 import asyncio
+import logging
 
 from fastapi import APIRouter, Depends
 
 from kontext.account import UserProfile
 from kontext.common import SiteFeature
+from kontext.common.exceptions import KontextError
 from kontext.runtime import (
     get_managed_python_environment_info,
     prepare_managed_python_environment,
@@ -21,6 +23,8 @@ from kontext.schema import PythonEnvironmentInfo
 
 from ..dependencies import require_site_feature
 from ..dependencies.local_auth import get_current_user
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/account",
@@ -47,4 +51,8 @@ async def prepare_python_environment(
     del current_user
     # Preparing the environment creates a venv and pip-installs packages, which
     # can take minutes; never run that on the event loop thread.
-    return await asyncio.to_thread(prepare_managed_python_environment)
+    try:
+        return await asyncio.to_thread(prepare_managed_python_environment)
+    except Exception as exc:
+        logger.exception("Managed python environment preparation failed")
+        raise KontextError(f"Preparing the Python environment failed: {exc}") from exc

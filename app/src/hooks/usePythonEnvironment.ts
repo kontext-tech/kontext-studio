@@ -56,6 +56,8 @@ export function usePythonEnvironment(options?: { enabled?: boolean }) {
       environment: query.data ?? null,
       isLoading: query.isLoading,
       errorMessage: query.error instanceof Error ? query.error.message : null,
+      prepareErrorMessage:
+         prepare.error instanceof Error ? prepare.error.message : null,
       isPreparing: prepare.isPending,
       refresh: () => query.refetch(),
       prepare: prepare.mutateAsync

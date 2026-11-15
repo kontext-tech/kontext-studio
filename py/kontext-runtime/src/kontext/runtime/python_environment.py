@@ -15,12 +15,14 @@ environment can be inspected and prepared without spawning anything.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import shutil
 import subprocess
 import sys
 import threading
+import time
 import venv
 from contextlib import suppress
 from dataclasses import dataclass
@@ -34,6 +36,8 @@ from kontext.schema import (
     PythonEnvironmentPackage,
     PythonPackageSource,
 )
+
+logger = logging.getLogger(__name__)
 
 _MANAGED_BACKEND_ID = "managed_cpython_local"
 _WHEELHOUSE_ENV = "KONTEXT_PYTHON_RUNTIME_WHEELHOUSE"
@@ -319,6 +323,24 @@ def resolve_managed_python_executable(
     return sys.executable
 
 
+def _ensure_bootstrap_logging() -> None:
+    """Make bootstrap progress visible even when the host lowers log levels.
+
+    The desktop profile runs its HTTP layer at WARNING, and progress records
+    from this module would be dropped before reaching the ``desktop.log`` the
+    UI points at for support. A dedicated INFO handler keeps the milestones
+    reportable in that bundle; regular servers are unaffected.
+    """
+    if logger.handlers:
+        return
+    handler = logging.StreamHandler()
+    handler.setFormatter(
+        logging.Formatter("%(asctime)s [python-environment] %(levelname)s %(message)s")
+    )
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+
+
 def ensure_managed_python_environment(
     runtime_profile: str = _DEFAULT_RUNTIME_PROFILE,
 ) -> ManagedEnvironment:
@@ -327,6 +349,8 @@ def ensure_managed_python_environment(
     Guarded by a process-wide lock and built in a temp directory then swapped in
     atomically, so a partially-built environment is never used.
     """
+    started_at = time.monotonic()
+    _ensure_bootstrap_logging()
     desired_state = _desired_environment_state(runtime_profile)
     environment = managed_environment_for_profile(
         runtime_profile,
@@ -336,17 +360,31 @@ def ensure_managed_python_environment(
 
     with _BOOTSTRAP_LOCK:
         if _is_environment_initialized(environment, desired_state):
+            logger.info(
+                "bootstrap skipped: env at %s already matches desired state",
+                runtime_root,
+            )
             return environment
 
         # Only needed for a fresh bootstrap; an existing venv keeps working
         # even if the bundled wheelhouse is removed or moved.
         wheelhouse = _runtime_wheelhouse()
+        packages = _runtime_packages_for_profile(runtime_profile)
+        logger.info(
+            "bootstrap start: profile=%s root=%s base_python=%s packages=%d wheelhouse=%s",
+            runtime_profile,
+            runtime_root,
+            desired_state["pythonVersion"],
+            len(packages),
+            wheelhouse if wheelhouse is not None else "network",
+        )
 
         tmp_root = runtime_root.with_name(f"{runtime_root.name}.tmp")
         shutil.rmtree(tmp_root, ignore_errors=True)
         tmp_root.mkdir(parents=True, exist_ok=True)
         tmp_env_dir = tmp_root / "venv"
 
+        logger.info("bootstrap: creating venv at %s", tmp_env_dir)
         _create_managed_venv(tmp_env_dir)
 
         tmp_python = _python_executable_path(tmp_env_dir)
@@ -378,7 +416,13 @@ def ensure_managed_python_environment(
         ]
         if wheelhouse is not None:
             install_command.extend(["--no-index", "--find-links", str(wheelhouse)])
-        install_command.extend(_runtime_packages_for_profile(runtime_profile))
+        install_command.extend(packages)
+        logger.info(
+            "bootstrap: installing %d packages via pip (%s; %.0fs elapsed so far)",
+            len(packages),
+            "offline wheelhouse" if wheelhouse is not None else "network",
+            time.monotonic() - started_at,
+        )
         subprocess.run(install_command, check=True)
 
         (tmp_root / "state.json").write_text(
@@ -388,6 +432,11 @@ def ensure_managed_python_environment(
         shutil.rmtree(runtime_root, ignore_errors=True)
         os.replace(tmp_root, runtime_root)
 
+    logger.info(
+        "bootstrap complete: env at %s ready (%.1fs)",
+        environment.root_dir,
+        time.monotonic() - started_at,
+    )
     return managed_environment_for_profile(
         runtime_profile,
         python_version=str(desired_state["pythonVersion"]),

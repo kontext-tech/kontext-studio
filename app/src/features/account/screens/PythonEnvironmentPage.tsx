@@ -27,6 +27,7 @@ const PythonEnvironmentPage = () => {
       environment,
       isLoading,
       errorMessage,
+      prepareErrorMessage,
       isPreparing,
       refresh,
       prepare
@@ -134,6 +135,15 @@ const PythonEnvironmentPage = () => {
                   >
                      {errorMessage && (
                         <Alert type="error" showIcon message={errorMessage} />
+                     )}
+
+                     {prepareErrorMessage && (
+                        <Alert
+                           type="error"
+                           showIcon
+                           message="Preparing the Python environment failed"
+                           description={prepareErrorMessage}
+                        />
                      )}
 
                      {!environment.available && (
