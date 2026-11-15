@@ -15,17 +15,13 @@ and download the file for your machine:
 | macOS Apple Silicon (M1 and later), macOS 13 Ventura or later | `Kontext-Studio-<version>-macOS-arm64.dmg` |
 | Windows x64, Windows 10 or later | `Kontext-Studio-<version>-Windows-x64.exe` |
 
-Only Apple Silicon Macs are supported in this beta. To check, choose  → About
-This Mac; the Chip row should say Apple M…. Intel Macs can use the
+macOS needs Apple Silicon (M1 or later) on macOS 13 Ventura or later. To
+check, choose Apple menu → About This Mac; the Chip row should say Apple M….
+Intel Macs can use the
 [command-line install](https://docs.kontext.tech/user-guide/install-and-start/)
-instead.
+instead. Windows needs 64-bit Windows 10 or later.
 
-Only Apple Silicon Macs are supported in this beta. To check, choose  → About
-This Mac; the Chip row should say Apple M…. Intel Macs can use the
-[command-line install](https://docs.kontext.tech/user-guide/install-and-start/)
-instead.
-
-## Install
+## Install on macOS
 
 1. Open the downloaded DMG.
 2. Drag **Kontext Studio** into **Applications**.
@@ -75,8 +71,8 @@ semantic search model may download data the first time you use them.
 | Projects, files, chats, settings | `~/.kontext` | `%USERPROFILE%\.kontext` |
 | Logs | `~/Library/Logs/Kontext Studio` | `%LOCALAPPDATA%\Kontext\logs` |
 
-The app and the command-line install share `~/.kontext`. Do not run both at the
-same time against the same workspace.
+The app and the command-line install share the same workspace folder. Do not
+run both at the same time against the same workspace.
 
 ## Update
 
