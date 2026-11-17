@@ -24,7 +24,7 @@ dependencies = [
     "kontext-common",
     "kontext-data",
     "kontext-kernel",
-    "croniter>=6.0.0,<7.0.0",
+    "croniter>=7.0.0,<8.0.0",
     "duckdb>=2.0.0",
     # DuckDB requires pytz to return TIMESTAMPTZ values (e.g. current_timestamp).
     "pytz>=2025.2",
