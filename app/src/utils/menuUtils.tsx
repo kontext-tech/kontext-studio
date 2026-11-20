@@ -65,7 +65,7 @@ const getMenuItem = (
  * rather than reading every entry:
  *  - Pinned top actions: Overview, New Chat
  *  - Workspace: Files, Data Sources, Jobs
- *  - Activity: Query Session History, Activity Log (admin / local mode only)
+ *  - Activity: Query Session History (admin / local mode only)
  *  - Settings: project configuration
  *
  * @param project project data
@@ -234,8 +234,7 @@ export const getProjectMenuItems = (
    if (canViewActivity) {
       middleItems.push(
          ...buildGroup("group-activity", "Activity", [
-            RouteNames.PROJECT_QUERY_SESSIONS,
-            RouteNames.PROJECT_EVENTS
+            RouteNames.PROJECT_QUERY_SESSIONS
          ])
       );
    }
