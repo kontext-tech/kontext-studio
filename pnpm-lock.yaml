@@ -78,9 +78,6 @@ importers:
       '@kontext-tech/common':
         specifier: workspace:*
         version: link:../ts/common
-      '@kontext-tech/event':
-        specifier: workspace:*
-        version: link:../ts/event
       '@kontext-tech/file':
         specifier: workspace:*
         version: link:../ts/file
@@ -481,37 +478,6 @@ importers:
       ts-jest:
         specifier: ^29.4.15
         version: 29.4.15(@babel/core@7.29.7)(@jest/transform@30.5.2)(@jest/types@30.5.1)(babel-jest@30.5.2(@babel/core@7.29.7))(jest-util@30.5.1)(jest@30.5.2(@types/node@26.6.6))(typescript@6.0.3)
-      typescript:
-        specifier: ~6.0.3
-        version: 6.0.3
-
-  ts/event:
-    dependencies:
-      '@kontext-tech/app-runtime':
-        specifier: workspace:*
-        version: link:../app-runtime
-      '@kontext-tech/common':
-        specifier: workspace:*
-        version: link:../common
-      '@kontext-tech/icons':
-        specifier: workspace:*
-        version: link:../icons
-      '@kontext-tech/identity':
-        specifier: workspace:*
-        version: link:../identity
-      '@kontext-tech/schema':
-        specifier: workspace:*
-        version: link:../schema
-      antd:
-        specifier: ^6.7.0
-        version: 6.7.0(date-fns@4.4.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      react:
-        specifier: ^19.3.1
-        version: 19.3.1
-    devDependencies:
-      '@types/react':
-        specifier: ^19.3.0
-        version: 19.3.0
       typescript:
         specifier: ~6.0.3
         version: 6.0.3

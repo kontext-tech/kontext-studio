@@ -34,8 +34,6 @@
          "@kontext-tech/theme/*": ["../ts/theme/src/*"],
          "@kontext-tech/ui": ["../ts/ui/src/index.ts"],
          "@kontext-tech/ui/*": ["../ts/ui/src/*"],
-         "@kontext-tech/event": ["../ts/event/src/index.ts"],
-         "@kontext-tech/event/*": ["../ts/event/src/*"],
          "@kontext-tech/job": ["../ts/job/src/index.ts"],
          "@kontext-tech/job/*": ["../ts/job/src/*"],
          "@kontext-tech/icons": ["../ts/icons/src/index.ts"],
