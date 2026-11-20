@@ -40,17 +40,18 @@ ready to inspect and re-run.
 
 ## Install
 
-### macOS desktop app
+### Desktop app
 
-Download the latest DMG from
-[GitHub Releases](https://github.com/kontext-tech/kontext-studio/releases/latest):
+Download the latest installer from
+[GitHub Releases](https://github.com/kontext-tech/kontext-studio/releases/latest)
+for your machine:
 
-- Apple Silicon: `Kontext-Studio-<version>-macOS-arm64.dmg`
+- macOS Apple Silicon: `Kontext-Studio-<version>-macOS-arm64.dmg`
+- Windows x64: `Kontext-Studio-<version>-Windows-x64.exe`
 
-The beta supports Apple Silicon Macs. Intel Macs can use the command-line
-install below. The app bundles Python and the analysis packages; no toolchain is
-required. The current build is an unsigned beta, so on first launch use System
-Settings → Privacy & Security → Open Anyway. See the
+Intel Macs can use the command-line install below. The app bundles Python and
+the analysis packages; no toolchain is required. First-launch notes for the
+unsigned beta (macOS) and Windows are in the
 [desktop guide](docs/user-guide/16-desktop-app.md).
 
 ### Command-line install
