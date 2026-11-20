@@ -27,7 +27,7 @@ example with copy-paste values; this page is the reference.
 | `KONTEXT_ALLOWED_HOSTS` | Widens the local Host allowlist (DNS-rebinding defense) | Keep the default loopback set. Add only hostnames this machine actually serves. |
 | `CORS_ALLOWED_ORIGINS` | Widens cross-origin access with credentials | Keep an explicit allowlist; avoid `*` on a credentialed deployment. |
 | `JWT_SECRET_KEY`, `KONTEXT_JWT_SECRET_KEY` | Signs and validates local tokens | Local mode generates `~/.kontext/local.key`. Set only to share a key with automation; use a strong random value. |
-| `KONTEXT_ACCESS_TOKEN`, `KONTEXT_REFRESH_TOKEN`, `KONTEXT_COOKIES` | CLI/interactive-auth credentials supplied through the environment | Treat as secrets; prefer interactive login. |
+| `KONTEXT_ACCESS_TOKEN`, `KONTEXT_REFRESH_TOKEN` | CLI/interactive-auth credentials supplied through the environment | Treat as secrets; prefer interactive login. |
 | `KONTEXT_INTERNAL_API_URL`, `INTERNAL_KONTEXT_API_URL` | Server-to-server target for auth flows | Point only at a trusted API; credentials are sent there. |
 | `KONTEXT_LOCAL_CONSOLE_AUTO_AUTH` | Skips the first-run setup prompt for the seeded profile | Test/automation only. Leave unset in normal use. |
 | `KONTEXT_ALLOWED_PATHS` | Extends filesystem access outside managed storage | List only directories that must be reachable; the managed storage path is always allowed. |
@@ -84,7 +84,6 @@ example with copy-paste values; this page is the reference.
 | `KONTEXT_PLATFORM_LOGOUT_URL` | `/logout` | Hosted-mode logout redirect; unused locally. |
 | `KONTEXT_ACCESS_TOKEN` | Unset | Bearer token input for CLI/interactive auth. |
 | `KONTEXT_REFRESH_TOKEN` | Unset | Refresh token input for CLI/interactive auth. |
-| `KONTEXT_COOKIES` | Unset | Reserved cookie-auth input; currently unused. |
 | `KONTEXT_AUTH_CALLBACK_PORT` | `8080` | Interactive-auth callback port. |
 | `KONTEXT_AUTH_TIMEOUT_SECONDS` | `300` | Interactive-auth timeout. |
 | `KONTEXT_AUTH_AUTO_OPEN_BROWSER` | `true` | Whether interactive auth opens a browser. |
@@ -109,7 +108,6 @@ example with copy-paste values; this page is the reference.
 | `KONTEXT_EMBEDDING_MODEL` | `BAAI/bge-small-en-v1.5` | Embedding model name. |
 | `KONTEXT_PROJECT_PERMISSION_MAP_PATH` | Empty | Override file for the project permission-to-role map; empty uses the bundled map. |
 | `PROJECT_PERMISSION_MAP_PATH` | Empty | Legacy alias for `KONTEXT_PROJECT_PERMISSION_MAP_PATH`. |
-| `KONTEXT_PROJECT_CACHE_DURATION_MINUTES` | Unset | Reserved project-cache override; currently unused. |
 
 ## Worker and execution
 
