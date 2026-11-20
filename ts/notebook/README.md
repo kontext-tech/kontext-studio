@@ -14,9 +14,6 @@ Shared React notebook library for Kontext.
 
 - app-specific service construction
 - route-level notebook loading and saving
-- the local demo app
-
-The standalone sample app now lives in `examples/notebook-demo`.
 
 ## Host Requirements
 
@@ -72,7 +69,4 @@ export function ExampleNotebook({ document }: { document: NotebookDocument }) {
 pnpm --filter @kontext-tech/notebook build
 pnpm --filter @kontext-tech/notebook test
 pnpm --filter @kontext-tech/notebook lint
-pnpm --filter notebook-demo dev
 ```
-
-Use the VS Code task `start: notebook demo` to launch the standalone demo app.

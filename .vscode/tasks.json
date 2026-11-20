@@ -143,17 +143,6 @@
          }
       },
       {
-         "label": "build: notebook demo",
-         "type": "shell",
-         "command": "pnpm run build:notebook-demo",
-         "group": "build",
-         "problemMatcher": [],
-         "detail": "Builds the standalone notebook demo.",
-         "options": {
-            "cwd": "${workspaceFolder}"
-         }
-      },
-      {
          "label": "generate: api-types",
          "type": "shell",
          "command": "pnpm run generate:api-types",
@@ -207,22 +196,6 @@
          "options": {
             "cwd": "${workspaceFolder}"
          }
-      },
-      {
-         "label": "start: notebook demo",
-         "type": "shell",
-         "command": "pnpm run dev:notebook",
-         "group": "build",
-         "problemMatcher": [],
-         "detail": "Starts the standalone notebook demo app.",
-         "options": {
-            "cwd": "${workspaceFolder}"
-         },
-         "presentation": {
-            "reveal": "always",
-            "panel": "new"
-         },
-         "isBackground": false
       },
       {
          "label": "start: docs site",

@@ -2,8 +2,7 @@
 
 The notebook system is a block-based document model for markdown, SQL, and
 Python blocks with embedded query results and charts. This page is a short
-orientation; the implementation lives in `ts/notebook` and the demo host in
-`examples/notebook-demo`.
+orientation; the implementation lives in `ts/notebook`.
 
 ## Document Model
 
@@ -37,11 +36,4 @@ injected execution engine; results are persisted back into blocks. There is no
 notebook-owned backend endpoint — query execution goes through the standard
 `kontext-api` routers (`POST /query/execute`, session and file routes).
 
-## Running the Demo
-
-```bash
-pnpm run build:shared
-pnpm run dev:notebook
-```
-
-See `examples/notebook-demo/README.md`.
+See `ts/notebook/README.md`.
