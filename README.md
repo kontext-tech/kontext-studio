@@ -120,8 +120,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow and
 - `ts/`: TypeScript packages published as `@kontext-tech/*`; `ts/schema` is the
   contract hub and `ts/schema/src/generated/` holds the committed API types.
 - `py/`: Python packages built as `kontext-*`.
-- `examples/`: development-only sample apps that consume the packages and are
-  not distributed (e.g. the notebook demo).
 - `tools/`: repo-level validators and local development helpers.
 - `docs/`: user guide and developer reference sources published to
   [docs.kontext.tech](https://docs.kontext.tech).

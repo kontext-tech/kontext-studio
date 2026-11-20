@@ -57,8 +57,7 @@ export default tseslint.config(
          "prefer-const": "error",
          "no-var": "error",
          // F9.13 (D-B): informational console noise is stripped from prod
-         // bundles; diagnostics belong in @kontext-tech/common `logger` —
-         // demo code under examples/ is exempt above.
+         // bundles; diagnostics belong in @kontext-tech/common `logger`.
          "no-console": [
             "error",
             {
@@ -68,15 +67,6 @@ export default tseslint.config(
       }
    },
 
-   {
-      // Notebook demo/mock code is standalone demo material where console
-      // output is a documented feature of the mock services; the no-console
-      // ratchet (below) applies to production packages and the app only.
-      files: ["examples/**/*.{ts,tsx}"],
-      rules: {
-         "no-console": "off"
-      }
-   },
    {
       files: ["ts/**/*.{ts,tsx}"],
       rules: {
@@ -168,9 +158,9 @@ export default tseslint.config(
       }
    },
 
-   // Node.js specific configuration for repo tooling and sample apps
+   // Node.js specific configuration for repo tooling
    {
-      files: ["tools/**/*.{ts,tsx}", "examples/**/*.{ts,tsx}"],
+      files: ["tools/**/*.{ts,tsx}"],
       languageOptions: {
          globals: {
             ...globals.node,
