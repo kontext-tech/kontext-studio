@@ -23,7 +23,7 @@
       "@kontext-tech/icons": "workspace:*",
       "@kontext-tech/theme": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "antd": "^6.7.0",
+      "antd": "^6.7.1",
       "react": "^19.3.1",
       "react-router-dom": "^7.18.5",
       "zustand": "^5.1.0"

@@ -32,7 +32,7 @@
    },
    "dependencies": {
       "@kontext-tech/common": "workspace:*",
-      "@tanstack/react-query": "^5.107.1",
+      "@tanstack/react-query": "^5.107.2",
       "react": "^19.3.1"
    },
    "devDependencies": {

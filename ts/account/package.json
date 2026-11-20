@@ -26,7 +26,7 @@
       "@kontext-tech/app-runtime": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "antd": "^6.7.0",
+      "antd": "^6.7.1",
       "react": "^19.3.1"
    },
    "devDependencies": {

@@ -21,7 +21,7 @@
    "dependencies": {
       "@kontext-tech/icons": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
-      "antd": "^6.7.0",
+      "antd": "^6.7.1",
       "react": "^19.3.1"
    },
    "devDependencies": {
