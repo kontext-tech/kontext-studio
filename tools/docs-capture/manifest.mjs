@@ -72,6 +72,5 @@ export const manifest = {
 
    PROJECTS: { kind: "excluded", reason: "internal-redirect" },
    CLIENT_LOGIN: { kind: "excluded", reason: "third-party" },
-   PROJECT_QUERY_SESSIONS: { kind: "excluded", reason: "admin-only" },
    NOT_FOUND: { kind: "excluded", reason: "not-found" }
 };

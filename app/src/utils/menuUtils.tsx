@@ -65,7 +65,6 @@ const getMenuItem = (
  * rather than reading every entry:
  *  - Pinned top actions: Overview, New Chat
  *  - Workspace: Files, Data Sources, Jobs
- *  - Activity: Query Session History (admin / local mode only)
  *  - Settings: project configuration
  *
  * @param project project data
@@ -75,7 +74,6 @@ const getMenuItem = (
  * @param recentChatSessions Recent chat sessions
  * @param totalChatSessions Total number of chat sessions
  * @param collapsed Whether the sidebar is collapsed
- * @param canViewActivity Whether the user can see audit/monitoring views
  * @returns Structured menu items
  */
 export const getProjectMenuItems = (
@@ -88,8 +86,7 @@ export const getProjectMenuItems = (
    context?: RoutingContextInfo,
    recentChatSessions: ChatSessionModel[] = [],
    _totalChatSessions: number = 0,
-   collapsed: boolean = false,
-   canViewActivity: boolean = false
+   collapsed: boolean = false
 ): ProjectMenuResult => {
    if (!project) {
       return { topItems: [], middleItems: [] };
@@ -230,16 +227,7 @@ export const getProjectMenuItems = (
       ])
    );
 
-   // 5. Activity / audit views (Middle) — only for admins and local mode
-   if (canViewActivity) {
-      middleItems.push(
-         ...buildGroup("group-activity", "Activity", [
-            RouteNames.PROJECT_QUERY_SESSIONS
-         ])
-      );
-   }
-
-   // 6. Settings (Middle, flat, after the work surfaces)
+   // 5. Settings (Middle, flat, after the work surfaces)
    if (hasRoutePermission(RouteNames.PROJECT_SETTINGS, routingContext)) {
       const settingsMenuItem = getMenuItem(
          RouteNames.PROJECT_SETTINGS,
