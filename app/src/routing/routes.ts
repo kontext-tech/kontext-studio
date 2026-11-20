@@ -5,7 +5,7 @@ import {
    type RouteConfig,
    type RoutingContextInfo
 } from "@/types";
-import { PERMISSION_CLAIMS, SYSTEM_ROLES } from "@kontext-tech/auth";
+import { PERMISSION_CLAIMS } from "@kontext-tech/auth";
 import { getSafeIconByName } from "@kontext-tech/icons";
 import { AccessLevel, ProjectFeature, SiteFeature } from "@kontext-tech/schema";
 import { withSuspense } from "@kontext-tech/ui";
@@ -58,9 +58,6 @@ const ProjectSettingsPage = lazy(
 );
 const ProjectJobsPage = lazy(
    () => import("../features/projects/screens/ProjectJobsPage")
-);
-const ProjectQuerySessionsPage = lazy(
-   () => import("../features/projects/screens/ProjectQuerySessionsPage")
 );
 const ChatSessionListPage = lazy(
    () => import("../features/chat/screens/ChatSessionListPage")
@@ -347,23 +344,6 @@ export const ROUTE_CONFIG: {
       element: () => withSuspense(ProjectJobsPage),
       isPublic: false,
       allowedPermissionClaims: [PERMISSION_CLAIMS.JOBS_READ]
-   },
-   [RouteNames.PROJECT_QUERY_SESSIONS]: {
-      path: (context: RoutingContextInfo) =>
-         `/project/${context.project?.projectCode}/queries`,
-      pathPattern: "/project/:projectCode/queries",
-      name: RouteNames.PROJECT_QUERY_SESSIONS,
-      key: (context: RoutingContextInfo) =>
-         `project-${context.project?.projectCode}-queries`,
-      parentKey: (context: RoutingContextInfo) =>
-         `project-${context.project?.projectCode}-console`,
-      label: "Query Session History",
-      icon: "HistoryOutlined",
-      layout: ProjectLayout,
-      element: () => withSuspense(ProjectQuerySessionsPage),
-      isPublic: false,
-      allowedSystemRoles: [SYSTEM_ROLES.ADMINISTRATOR],
-      allowedPermissionClaims: [PERMISSION_CLAIMS.QUERYSESSIONS_READ]
    },
    [RouteNames.PROJECT_FILE_DETAIL]: {
       path: (context: RoutingContextInfo) =>

@@ -1,5 +1,4 @@
 import { usePermissionContext } from "@/context/AppPermissionContext";
-import { useCanViewProjectActivity } from "@/hooks/useCanViewProjectActivity";
 import { useRoute } from "@/hooks/useRoute";
 import { getProjectMenuItems } from "@/utils/menuUtils";
 import { useChatSessionStore } from "@kontext-tech/chat";
@@ -30,7 +29,6 @@ const ProjectSideMenuContent = ({
    const { chatSessionId } = useParams();
    const { currentRoute } = useRoute();
    const { hasRoutePermission } = usePermissionContext();
-   const canViewActivity = useCanViewProjectActivity();
 
    const recentSessions = useChatSessionStore((state) => state.recentSessions);
    const totalSessions = useChatSessionStore((state) => state.totalSessions);
@@ -61,8 +59,7 @@ const ProjectSideMenuContent = ({
          routingContext,
          recentSessions,
          totalSessions,
-         collapsed,
-         canViewActivity
+         collapsed
       );
    }, [
       project,
@@ -70,8 +67,7 @@ const ProjectSideMenuContent = ({
       navigate,
       recentSessions,
       totalSessions,
-      collapsed,
-      canViewActivity
+      collapsed
    ]);
 
    // Determine active keys

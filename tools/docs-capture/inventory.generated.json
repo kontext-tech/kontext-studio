@@ -1,7 +1,7 @@
 {
   "generatedFrom": "app/src/routing/routes.ts",
-  "sourceHash": "2ed80faf27aa245b91784b29c03acc526bdee951794b9f860432963ecbbad765",
-  "routeCount": 24,
+  "sourceHash": "59181a523965f508694b7901d45d382483ec5fa01ccb06d13dab661dfdad77e7",
+  "routeCount": 23,
   "routes": [
     {
       "name": "LOGIN",
@@ -257,21 +257,6 @@
       "adminOnly": false,
       "permissions": [
         "JOBS_READ"
-      ],
-      "features": [],
-      "dynamic": true
-    },
-    {
-      "name": "PROJECT_QUERY_SESSIONS",
-      "pathPattern": "/project/:projectCode/queries",
-      "label": "Query Session History",
-      "layout": "ProjectLayout",
-      "public": false,
-      "hidden": false,
-      "sidebar": true,
-      "adminOnly": true,
-      "permissions": [
-        "QUERYSESSIONS_READ"
       ],
       "features": [],
       "dynamic": true
