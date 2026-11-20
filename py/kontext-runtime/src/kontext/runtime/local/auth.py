@@ -50,7 +50,6 @@ def get_local_permission_claims() -> list[str]:
     """Return the canonical local-mode permission claims."""
     from kontext.auth import (
         ChatSessionPermissions,
-        EventPermissions,
         FilePermissions,
         JobPermissions,
         ProjectPermissions,
@@ -76,8 +75,6 @@ def get_local_permission_claims() -> list[str]:
         JobPermissions.UPDATE,
         JobPermissions.DELETE,
         JobPermissions.EXECUTE,
-        EventPermissions.READ,
-        EventPermissions.CREATE,
         ProjectPermissions.READ,
         ProjectPermissions.UPDATE,
     ]

@@ -15,7 +15,6 @@ from kontext.api.dependencies.auth import (
 )
 from kontext.auth import (
     ChatSessionPermissions,
-    EventPermissions,
     FilePermissions,
     JobPermissions,
     JwtValidationError,
@@ -132,8 +131,6 @@ def test_all_local_permissions_match_canonical_permission_constants():
         JobPermissions.UPDATE,
         JobPermissions.DELETE,
         JobPermissions.EXECUTE,
-        EventPermissions.CREATE,
-        EventPermissions.READ,
         ProjectPermissions.READ,
         ProjectPermissions.UPDATE,
     }

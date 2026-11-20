@@ -301,14 +301,6 @@ def test_studio_upload_creates_run_and_worker_executes_it(tmp_path, monkeypatch)
                 assert query_history_payload["queries"]
                 assert query_history_payload["queries"][0]["createdAt"].endswith("Z")
 
-                events_response = client.get(
-                    f"/event?projectId={project_id}&pageIndex=1&pageSize=10&daysLimit=30",
-                    headers={"Authorization": f"Bearer {access_token}"},
-                )
-                assert events_response.status_code == 200
-                events_payload = events_response.json()
-                assert events_payload["items"]
-                assert events_payload["items"][0]["dateCreated"].endswith("Z")
         finally:
             _clear_runtime_caches()
 

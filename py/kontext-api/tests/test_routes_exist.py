@@ -42,8 +42,6 @@ def test_expected_routes_are_registered():
     assert f"{api_prefix}/ai/chat/upload-preparations" in paths
     assert f"{api_prefix}/ai/chat/upload-preparations/{{runId}}" in paths
     assert f"{api_prefix}/ai/chat/session/{{chatSessionId}}/attachment-context" in paths
-    # Events
-    assert f"{api_prefix}/event" in paths
 
 
 def test_expected_methods_for_endpoints():
@@ -69,4 +67,3 @@ def test_expected_methods_for_endpoints():
         "POST"
         in route_methods[f"{api_prefix}/ai/chat/session/{{chatSessionId}}/attachment-context"]
     )
-    assert "GET" in route_methods[f"{api_prefix}/event"]
