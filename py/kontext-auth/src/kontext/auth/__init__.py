@@ -18,7 +18,6 @@ from .authentication import (
 from .constants import JwtConstants, SystemRoles
 from .permissions import (
     ChatSessionPermissions,
-    EventPermissions,
     FilePermissions,
     JobPermissions,
     ProjectPermissions,
@@ -31,7 +30,6 @@ __all__ = [
     "AuthService",
     "AuthenticationError",
     "ChatSessionPermissions",
-    "EventPermissions",
     "FilePermissions",
     "InteractiveAuth",
     "InteractiveAuthConfig",

@@ -6,7 +6,6 @@ TARGET_ROUTERS = [
     "auth.py",
     "catalog.py",
     "chats.py",
-    "events.py",
     "files.py",
     "jobs.py",
     "job_runs.py",

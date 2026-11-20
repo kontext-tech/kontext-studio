@@ -144,7 +144,6 @@ def register_standard_api_routers(app: FastAPI) -> None:
     from .routers import (
         catalog,
         chats,
-        events,
         files,
         health,
         job_runs,
@@ -163,7 +162,6 @@ def register_standard_api_routers(app: FastAPI) -> None:
     app.include_router(query_sessions.router, prefix="/session", tags=["Data"])
     app.include_router(files.router, prefix="/file", tags=["Files"])
     app.include_router(project.router, prefix="/project", tags=["Projects"])
-    app.include_router(events.router, prefix="/event", tags=["Events"])
     app.include_router(jobs.router, prefix="/jobs", tags=["Jobs"])
     app.include_router(job_runs.router, prefix="/job-runs", tags=["Jobs"])
     app.include_router(runs.router, prefix="/runs", tags=["Runs"])
