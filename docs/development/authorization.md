@@ -41,7 +41,6 @@ live in [`kontext.auth.permissions`](../../py/kontext-auth/src/kontext/auth/perm
 | Jobs | `jobs.create`, `jobs.read`, `jobs.update`, `jobs.delete`, `jobs.execute` |
 | Query sessions | `querysessions.create`, `querysessions.read`, `querysessions.update`, `querysessions.delete`, `querysessions.execute` |
 | Chat sessions | `chatsessions.create`, `chatsessions.read`, `chatsessions.update`, `chatsessions.delete` |
-| Events | `events.create`, `events.read` |
 
 Files use `resources.*` rather than `files.*` for compatibility with existing
 tokens and the former .NET API claims.
@@ -71,11 +70,9 @@ Role-to-permission mapping
 | `jobs.read`, `jobs.update`, `jobs.delete`, `jobs.execute` | owner, admin |
 | `querysessions.*` | owner, admin, contributor |
 | `chatsessions.*` | owner, admin, contributor |
-| `events.read` | owner, admin |
 
-`projects.create` and `events.create` are system-wide claims only; they have no
-project-role mapping. A missing mapping means only the claim grants the
-permission.
+`projects.create` is a system-wide claim only; it has no project-role
+mapping. A missing mapping means only the claim grants the permission.
 
 ## Effective permission check
 

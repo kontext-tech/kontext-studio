@@ -1,6 +1,5 @@
 """Project domain exports."""
 
-from .events import list_project_events
 from .local import (
     create_project_service,
     delete_project_service,
@@ -25,7 +24,6 @@ __all__ = [
     "get_project_by_code_service",
     "get_project_service",
     "get_project_stats",
-    "list_project_events",
     "load_local_project_model",
     "update_project_service",
 ]

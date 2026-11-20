@@ -831,29 +831,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/event": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Project Events
-         * @description List events for a project with pagination.
-         *
-         *     Returns paginated list of events within the specified date range.
-         *     The project_id query parameter is required for authorization.
-         */
-        get: operations["ListProjectEvents"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/jobs": {
         parameters: {
             query?: never;
@@ -1702,18 +1679,6 @@ export interface components {
             error?: string | null;
         };
         /**
-         * BotInfo
-         * @description Bot Info model from Kontext API
-         */
-        BotInfo: {
-            /** Isbot */
-            isBot: boolean;
-            /** Bottype */
-            botType?: string | null;
-            /** Botname */
-            botName?: string | null;
-        };
-        /**
          * BoxChartConfig
          * @description Box chart config (flat object, chartType: 'box'). Required: title, height, xField, yField. Keys are camelCase (xField, never x/y).
          */
@@ -2394,12 +2359,6 @@ export interface components {
              */
             catalogRevision?: string | null;
         };
-        /**
-         * ChannelType
-         * @description Channel Type enum
-         * @enum {string}
-         */
-        ChannelType: "Other" | "Web" | "Mobile" | "Api";
         /**
          * ChartBatchResult
          * @description Result for batch chart retrieval
@@ -3881,42 +3840,6 @@ export interface components {
          * @enum {string}
          */
         DualAxesChartType: "interval" | "line" | "area";
-        /**
-         * EventModel
-         * @description Event Model
-         */
-        EventModel: {
-            /** Id */
-            id: string;
-            /** Title */
-            title?: string | null;
-            /** Content */
-            content?: string | null;
-            /** Userid */
-            userId?: string | null;
-            /** Projectid */
-            projectId?: string | null;
-            /** Contentid */
-            contentId?: string | null;
-            type: components["schemas"]["EventType"];
-            channelType: components["schemas"]["ChannelType"];
-            /** Ipaddress */
-            ipAddress?: string | null;
-            /** Path */
-            path?: string | null;
-            botInfo?: components["schemas"]["BotInfo"] | null;
-            /**
-             * Datecreated
-             * Format: date-time
-             */
-            dateCreated: string;
-        };
-        /**
-         * EventType
-         * @description Event Type enum - see ../enumMappings.ts for numeric database values
-         * @enum {string}
-         */
-        EventType: "Other" | "CreateProject" | "ModifyProject" | "ViewProject" | "ViewPage" | "Login" | "Register" | "ConfirmEmail" | "EditProfile" | "ChangePassword" | "Enable2FA" | "Disable2FA" | "EnableUser" | "DisableUser" | "CreateServiceAccount" | "EnableServiceAccount" | "DisableServiceAccount" | "AuthenticateServiceAccount" | "CreateServiceAccountKey" | "EnableServiceAccountKey" | "DisableServiceAccountKey" | "DeleteServiceAccountKey" | "CreateFile" | "CreateFiles" | "DeleteFile" | "UpdateFileSchema" | "ProcessFailedEvent" | "CreateCatalogEntity" | "UpdateCatalogEntity" | "DeleteCatalogEntity" | "SubscribeToGroup" | "UnsubscribeFromGroup" | "RequestCampaignEmailDelivery" | "SessionRefresh";
         /**
          * ExecuteJobNowRequest
          * @description Execute Job Now Request model from Kontext API
@@ -5872,25 +5795,6 @@ export interface components {
             pageSize: number;
             /** Totalpages */
             totalPages: number;
-        };
-        /**
-         * PaginatedListOfEventModel
-         * @description Paginated List Of Event Model model from Kontext API
-         */
-        PaginatedListOfEventModel: {
-            /**
-             * Items
-             * @default []
-             */
-            items: components["schemas"]["EventModel"][];
-            /** Totalcount */
-            totalCount: number;
-            /** Pageindex */
-            pageIndex: number;
-            /** Pagesize */
-            pageSize: number;
-            /** Totalpages */
-            totalPages?: number | null;
         };
         /**
          * PaginatedListOfExecutionRunModel
@@ -9160,46 +9064,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProjectStatsModel"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    ListProjectEvents: {
-        parameters: {
-            query: {
-                /** @description Project ID for authorization */
-                projectId: string;
-                /** @description Page number (1-indexed) */
-                pageIndex?: number;
-                /** @description Items per page */
-                pageSize?: number;
-                /** @description Comma-separated list of event types to filter */
-                eventTypes?: string | null;
-                /** @description Limit events to the last N days */
-                daysLimit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedListOfEventModel"];
                 };
             };
             /** @description Validation Error */

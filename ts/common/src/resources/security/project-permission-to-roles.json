@@ -23,7 +23,5 @@
    "chatsessions.create": ["owner", "admin", "contributor"],
    "chatsessions.read": ["owner", "admin", "contributor"],
    "chatsessions.update": ["owner", "admin", "contributor"],
-   "chatsessions.delete": ["owner", "admin", "contributor"],
-
-   "events.read": ["owner", "admin"]
+   "chatsessions.delete": ["owner", "admin", "contributor"]
 }

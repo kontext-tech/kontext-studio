@@ -2982,110 +2982,6 @@
         }
       }
     },
-    "/event": {
-      "get": {
-        "tags": [
-          "Events"
-        ],
-        "summary": "List Project Events",
-        "description": "List events for a project with pagination.\n\nReturns paginated list of events within the specified date range.\nThe project_id query parameter is required for authorization.",
-        "operationId": "ListProjectEvents",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "description": "Project ID for authorization",
-              "title": "Projectid"
-            },
-            "description": "Project ID for authorization"
-          },
-          {
-            "name": "pageIndex",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "description": "Page number (1-indexed)",
-              "default": 1,
-              "title": "Pageindex"
-            },
-            "description": "Page number (1-indexed)"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "description": "Items per page",
-              "default": 20,
-              "title": "Pagesize"
-            },
-            "description": "Items per page"
-          },
-          {
-            "name": "eventTypes",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "description": "Comma-separated list of event types to filter",
-              "title": "Eventtypes",
-              "type": "string",
-              "nullable": true
-            },
-            "description": "Comma-separated list of event types to filter"
-          },
-          {
-            "name": "daysLimit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 365,
-              "minimum": 1,
-              "description": "Limit events to the last N days",
-              "default": 30,
-              "title": "Dayslimit"
-            },
-            "description": "Limit events to the last N days"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedListOfEventModel"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/jobs": {
       "get": {
         "tags": [
@@ -6108,31 +6004,6 @@
         ],
         "title": "BaseToolResult"
       },
-      "BotInfo": {
-        "properties": {
-          "isBot": {
-            "type": "boolean",
-            "title": "Isbot"
-          },
-          "botType": {
-            "title": "Bottype",
-            "type": "string",
-            "nullable": true
-          },
-          "botName": {
-            "title": "Botname",
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "isBot"
-        ],
-        "title": "BotInfo",
-        "description": "Bot Info model from Kontext API"
-      },
       "BoxChartConfig": {
         "properties": {
           "chartType": {
@@ -7348,17 +7219,6 @@
         ],
         "title": "CatalogSyncStatus",
         "description": "Catalog sync status"
-      },
-      "ChannelType": {
-        "type": "string",
-        "enum": [
-          "Other",
-          "Web",
-          "Mobile",
-          "Api"
-        ],
-        "title": "ChannelType",
-        "description": "Channel Type enum"
       },
       "ChartBatchResult": {
         "properties": {
@@ -10025,123 +9885,6 @@
           "area"
         ],
         "title": "DualAxesChartType"
-      },
-      "EventModel": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
-            "title": "Id"
-          },
-          "title": {
-            "title": "Title",
-            "type": "string",
-            "nullable": true
-          },
-          "content": {
-            "title": "Content",
-            "type": "string",
-            "nullable": true
-          },
-          "userId": {
-            "title": "Userid",
-            "type": "string",
-            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
-            "nullable": true
-          },
-          "projectId": {
-            "title": "Projectid",
-            "type": "string",
-            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
-            "nullable": true
-          },
-          "contentId": {
-            "title": "Contentid",
-            "type": "string",
-            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
-            "nullable": true
-          },
-          "type": {
-            "$ref": "#/components/schemas/EventType"
-          },
-          "channelType": {
-            "$ref": "#/components/schemas/ChannelType"
-          },
-          "ipAddress": {
-            "title": "Ipaddress",
-            "type": "string",
-            "nullable": true
-          },
-          "path": {
-            "title": "Path",
-            "type": "string",
-            "nullable": true
-          },
-          "botInfo": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/BotInfo"
-              }
-            ],
-            "nullable": true
-          },
-          "dateCreated": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Datecreated"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "id",
-          "type",
-          "channelType",
-          "dateCreated"
-        ],
-        "title": "EventModel",
-        "description": "Event Model"
-      },
-      "EventType": {
-        "type": "string",
-        "enum": [
-          "Other",
-          "CreateProject",
-          "ModifyProject",
-          "ViewProject",
-          "ViewPage",
-          "Login",
-          "Register",
-          "ConfirmEmail",
-          "EditProfile",
-          "ChangePassword",
-          "Enable2FA",
-          "Disable2FA",
-          "EnableUser",
-          "DisableUser",
-          "CreateServiceAccount",
-          "EnableServiceAccount",
-          "DisableServiceAccount",
-          "AuthenticateServiceAccount",
-          "CreateServiceAccountKey",
-          "EnableServiceAccountKey",
-          "DisableServiceAccountKey",
-          "DeleteServiceAccountKey",
-          "CreateFile",
-          "CreateFiles",
-          "DeleteFile",
-          "UpdateFileSchema",
-          "ProcessFailedEvent",
-          "CreateCatalogEntity",
-          "UpdateCatalogEntity",
-          "DeleteCatalogEntity",
-          "SubscribeToGroup",
-          "UnsubscribeFromGroup",
-          "RequestCampaignEmailDelivery",
-          "SessionRefresh"
-        ],
-        "title": "EventType",
-        "description": "Event Type enum - see ../enumMappings.ts for numeric database values"
       },
       "ExecuteJobNowRequest": {
         "properties": {
@@ -13580,44 +13323,6 @@
           "totalPages"
         ],
         "title": "PaginatedFileResponse"
-      },
-      "PaginatedListOfEventModel": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/EventModel"
-            },
-            "type": "array",
-            "title": "Items",
-            "default": []
-          },
-          "totalCount": {
-            "type": "integer",
-            "title": "Totalcount"
-          },
-          "pageIndex": {
-            "type": "integer",
-            "title": "Pageindex"
-          },
-          "pageSize": {
-            "type": "integer",
-            "title": "Pagesize"
-          },
-          "totalPages": {
-            "title": "Totalpages",
-            "type": "integer",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "totalCount",
-          "pageIndex",
-          "pageSize"
-        ],
-        "title": "PaginatedListOfEventModel",
-        "description": "Paginated List Of Event Model model from Kontext API"
       },
       "PaginatedListOfExecutionRunModel": {
         "properties": {
