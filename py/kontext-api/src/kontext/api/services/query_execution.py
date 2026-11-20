@@ -11,7 +11,6 @@ from kontext.query import (
     QueryServiceError,
     execute_query_async,
     execute_query_sync,
-    get_session_query_history,
 )
 from kontext.schema import (
     DataRef,
@@ -152,18 +151,3 @@ async def execute_query_async_service(
         )
     except QueryServiceError as exc:
         raise domain_error_to_http(exc) from exc
-
-
-def get_session_query_history_service(
-    *,
-    project_id: str,
-    session_id: str,
-    page_index: int,
-    page_size: int,
-) -> dict[str, object]:
-    return get_session_query_history(
-        project_id=project_id,
-        session_id=session_id,
-        page_index=page_index,
-        page_size=page_size,
-    )

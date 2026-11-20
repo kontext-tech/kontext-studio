@@ -6,8 +6,6 @@ separating data access logic from API endpoint logic.
 
 from uuid import UUID, uuid4
 
-from sqlalchemy import desc, func, select
-
 from kontext.common.utils.datetime_utils import normalize_datetime_utc, utc_now
 from kontext.schema import CreateQueryRequest, QueryModel
 
@@ -91,36 +89,3 @@ class QueryHistoryDataService(ProjectDataService):
             self._make_detached(session, new_query)
 
             return _query_to_response(new_query)
-
-    def get_session_queries(
-        self, session_id: str, page_index: int, page_size: int
-    ) -> tuple[list[QueryModel], int]:
-        """Get queries for a session with pagination.
-
-        Args:
-            session_id: ID of the session
-            page_index: Page number (1-indexed)
-            page_size: Number of items per page
-
-        Returns:
-            Tuple of (list of queries, total count)
-        """
-        with self._session_scope(commit=False) as session:
-            stmt = select(Query).where(Query.session_id == UUID(session_id))
-
-            # Get total count
-            count_stmt = select(func.count()).select_from(stmt.subquery())
-            total_count = session.execute(count_stmt).scalar_one()
-
-            # Get paginated results
-            paginated_stmt = (
-                stmt.order_by(desc(Query.created_at))
-                .offset((page_index - 1) * page_size)
-                .limit(page_size)
-            )
-
-            queries = session.execute(paginated_stmt).scalars().all()
-            for q in queries:
-                self._make_detached(session, q)
-
-            return [_query_to_response(q) for q in queries], total_count
