@@ -32,13 +32,6 @@
          }
       },
       {
-         "name": "debug: notebook demo",
-         "type": "node-terminal",
-         "request": "launch",
-         "command": "pnpm run dev:notebook",
-         "cwd": "${workspaceFolder}"
-      },
-      {
          "name": "debug: python tests",
          "type": "debugpy",
          "request": "launch",

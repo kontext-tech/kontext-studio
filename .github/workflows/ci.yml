@@ -45,7 +45,6 @@ jobs:
               - "app/**"
               - "ts/**"
               - "tools/**"
-              - "examples/**"
               - "package.json"
               - "pnpm-lock.yaml"
               - "pnpm-workspace.yaml"
@@ -284,9 +283,6 @@ jobs:
         env:
           NODE_ENV: production
         run: pnpm --filter @kontext-tech/app build
-
-      - name: Build notebook demo
-        run: pnpm run build:notebook-demo
 
   python-lint:
     name: Python lint & typecheck

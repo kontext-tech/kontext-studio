@@ -38,7 +38,6 @@
       { "path": "./ts/schema" },
       { "path": "./ts/site" },
       { "path": "./ts/theme" },
-      { "path": "./ts/ui" },
-      { "path": "./examples/notebook-demo" }
+      { "path": "./ts/ui" }
    ]
 }

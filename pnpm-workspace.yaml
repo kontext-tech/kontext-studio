@@ -2,7 +2,6 @@ packages:
    - "ts/*"
    - "app"
    - "docs-site"
-   - "examples/*"
 
 # Force a single copy of CodeMirror's core packages.
 #

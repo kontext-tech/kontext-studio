@@ -12,7 +12,6 @@
    ],
    "eslint.workingDirectories": [
       "./app",
-      "./examples/notebook-demo",
       "./ts/account",
       "./ts/auth",
       "./ts/build-config",
