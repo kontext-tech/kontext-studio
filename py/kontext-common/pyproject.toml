@@ -20,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "croniter>=6.0.0,<7.0.0",
+    "croniter>=7.0.0,<8.0.0",
     "kontext-schema",
     "pydantic>=2.14.3,<3.0.0",
     "pydantic-settings>=2.16.3",
