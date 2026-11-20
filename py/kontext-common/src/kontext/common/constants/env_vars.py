@@ -14,9 +14,6 @@ class AuthEnvVars:
     ACCESS_TOKEN = "KONTEXT_ACCESS_TOKEN"
     REFRESH_TOKEN = "KONTEXT_REFRESH_TOKEN"
 
-    # Cookie Authentication
-    COOKIES = "KONTEXT_COOKIES"
-
     # Interactive Authentication
     AUTH_CALLBACK_PORT = "KONTEXT_AUTH_CALLBACK_PORT"
     AUTH_TIMEOUT_SECONDS = "KONTEXT_AUTH_TIMEOUT_SECONDS"
@@ -48,8 +45,6 @@ class ApiEnvVars:
     # Default Values
     DEFAULT_API_URL = "http://localhost:8101"
     DEFAULT_APP_URL = "http://localhost:8002"
-    # Cache Configuration
-    PROJECT_CACHE_DURATION_MINUTES = "KONTEXT_PROJECT_CACHE_DURATION_MINUTES"
 
 
 # Storage Environment Variables
@@ -89,9 +84,6 @@ class DatabaseEnvVars:
     Local mode uses SQLite (sqlite:///...); PostgreSQL is also supported, e.g.
     postgresql+psycopg://<user>:<pass>@<host>:5432/kontext_projectdb?sslmode=require
     """
-
-    KONTEXT_PROJECT_DATABASE_URL = "KONTEXT_PROJECT_DB_URL"
-    """Canonical KONTEXT_-prefixed spelling of ``PROJECT_DB_URL``."""
 
 
 # Model/Agent Environment Variables
@@ -205,7 +197,6 @@ ALL_ENV_VARS = {
     # Authentication
     AuthEnvVars.ACCESS_TOKEN: "Access token for bearer token authentication",
     AuthEnvVars.REFRESH_TOKEN: "Refresh token for token renewal",
-    AuthEnvVars.COOKIES: "Session cookies for cookie-based authentication",
     AuthEnvVars.AUTH_CALLBACK_PORT: "Port for interactive auth callback server",
     AuthEnvVars.AUTH_TIMEOUT_SECONDS: "Timeout for interactive authentication",
     AuthEnvVars.AUTH_AUTO_OPEN_BROWSER: ("Whether to auto-open browser for interactive auth"),
