@@ -20,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "fastapi[standard]>=0.162.1",
+    "fastapi[standard]>=0.162.7",
     "uvicorn[standard]>=0.54.0",
     "kontext-account",
     "kontext-agent",
@@ -58,7 +58,7 @@ kontext-api = "kontext.api.main:main"
 dev = [
     "ruff>=0.17.2",
     "pytest>=9.2.0",
-    "pytest-asyncio>=1.3.0",
+    "pytest-asyncio>=1.5.0",
     "httpx>=0.27.0",
 ]
 
