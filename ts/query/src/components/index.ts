@@ -9,7 +9,6 @@ export { QuerySessionInfo } from "./QuerySessionInfo";
 export type { QuerySessionInfoProps } from "./QuerySessionInfo";
 export { QuerySessionManager } from "./QuerySessionManager";
 export type { QuerySessionManagerProps } from "./QuerySessionManager";
-export { ProjectQuerySessionsPanel } from "./ProjectQuerySessionsPanel";
 export { default as QuerySessionStatusComponent } from "./QuerySessionStatus";
 export type { QuerySessionStatusProps } from "./QuerySessionStatus";
 export { default as SqlEditor } from "./SqlEditor";
