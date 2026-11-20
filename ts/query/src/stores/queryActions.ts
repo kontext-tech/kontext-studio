@@ -3,7 +3,6 @@ import { ServiceContainer } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
    QueryExecRequest,
-   QueryModel,
    QueryResponse,
    QuerySessionModel,
    SessionInitRequest,
@@ -57,12 +56,6 @@ export interface QuerySessionActions {
       authContext: ApiAuthContext,
       errorHandler?: (error: ApiErrorResult) => Promise<void>
    ) => Promise<{ succeed: boolean; error?: { messages?: string[] } }>;
-   getQueries: (
-      projectId: string,
-      sessionId: string,
-      authContext: ApiAuthContext,
-      errorHandler?: (error: ApiErrorResult) => Promise<void>
-   ) => Promise<QueryModel[] | null>;
    executeQuery: (
       request: QueryExecRequest,
       authContext: ApiAuthContext,
@@ -317,23 +310,6 @@ export function createQuerySessionActions(
                succeed: false,
                error: { messages: ["Failed to close session"] }
             };
-         }
-      },
-
-      getQueries: async (projectId, sessionId, authContext, errorHandler) => {
-         try {
-            const sessionService = getSessionService(authContext, errorHandler);
-            const result = await sessionService.getSessionQueryHistory(
-               projectId,
-               sessionId
-            );
-            // Extract queries from the paginated response
-            return result.succeed
-               ? (result.data?.queries as QueryModel[]) || []
-               : null;
-         } catch (error) {
-            console.error("Failed to get session queries:", error);
-            return null;
          }
       },
 

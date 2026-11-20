@@ -291,16 +291,6 @@ def test_studio_upload_creates_run_and_worker_executes_it(tmp_path, monkeypatch)
                 assert query_sessions_payload["items"]
                 assert str(query_session.id) == query_sessions_payload["items"][0]["id"]
                 assert query_sessions_payload["items"][0]["createdAt"].endswith("Z")
-
-                query_history_response = client.get(
-                    f"/query/sessions/{query_session.id}/history?projectId={project_id}&pageIndex=1&pageSize=10",
-                    headers={"Authorization": f"Bearer {access_token}"},
-                )
-                assert query_history_response.status_code == 200
-                query_history_payload = query_history_response.json()
-                assert query_history_payload["queries"]
-                assert query_history_payload["queries"][0]["createdAt"].endswith("Z")
-
         finally:
             _clear_runtime_caches()
 

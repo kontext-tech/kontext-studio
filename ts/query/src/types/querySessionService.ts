@@ -71,14 +71,4 @@ export interface QuerySessionServiceContract {
       pageIndex?: number,
       pageSize?: number
    ): Promise<ApiResult<PaginatedListOfQuerySessionModel>>;
-
-   /**
-    * Get query execution history for a session
-    */
-   getSessionQueryHistory(
-      projectId: string,
-      sessionId: string,
-      pageIndex?: number,
-      pageSize?: number
-   ): Promise<ApiResult<{ queries: unknown[]; total: number }>>;
 }

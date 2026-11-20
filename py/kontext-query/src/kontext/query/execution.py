@@ -172,22 +172,6 @@ async def execute_query_async(
     return _EXECUTION_LIFECYCLE.project_job_run(job_run)
 
 
-def get_session_query_history(
-    *,
-    project_id: str,
-    session_id: str,
-    page_index: int,
-    page_size: int,
-) -> dict[str, object]:
-    query_data_service = QueryHistoryDataService(project_id)
-    queries, total_count = query_data_service.get_session_queries(
-        session_id=session_id,
-        page_index=page_index,
-        page_size=page_size,
-    )
-    return {"queries": queries, "total": total_count}
-
-
 def _get_authorized_active_session(
     *,
     request: QueryExecRequest,

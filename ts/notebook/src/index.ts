@@ -1,7 +1,6 @@
 // Main components
 export { CustomMermaid } from "./components/mermaid";
 export { default as NotebookEditor } from "./components/NotebookEditor";
-export { default as NotebookPreview } from "./components/NotebookPreview";
 export { CreateNotebookModal } from "./components/CreateNotebookModal";
 export type { CreateNotebookModalProps } from "./components/CreateNotebookModal";
 export { default as NotebookSessionsSidebarTab } from "./components/NotebookSessionsSidebarTab";
@@ -21,11 +20,7 @@ export {
 } from "./context/NotebookServiceContext";
 
 // Hooks and stores for state management
-export { useExecuteCell } from "./hooks/useExecuteCell";
-export {
-   useNotebookDataReference,
-   useNotebookInlineData
-} from "./hooks/useInlineData";
+export { useNotebookDataReference } from "./hooks/useInlineData";
 export {
    useNotebookFileHelpers,
    useNotebookFileWorkflow,
@@ -44,12 +39,6 @@ export type {
    FileSystemBinding
 } from "./types/bindings";
 export * from "./types/notebook";
-
-// Utilities - Primary conversion API (modular system)
-export {
-   convertFromEditorJSFormat,
-   convertToEditorJSFormat
-} from "./utils/documentConverter";
 
 // Styles
 // Import the dark theme CSS in your app:
