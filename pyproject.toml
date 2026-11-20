@@ -124,7 +124,6 @@ version_files = [
     "ts/chart/package.json:version",
     "ts/chat/package.json:version",
     "ts/common/package.json:version",
-    "ts/event/package.json:version",
     "ts/file/package.json:version",
     "ts/host-api/package.json:version",
     "ts/icons/package.json:version",
