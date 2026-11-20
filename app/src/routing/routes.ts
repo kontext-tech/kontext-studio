@@ -62,9 +62,6 @@ const ProjectJobsPage = lazy(
 const ProjectQuerySessionsPage = lazy(
    () => import("../features/projects/screens/ProjectQuerySessionsPage")
 );
-const ProjectEventsPage = lazy(
-   () => import("../features/projects/screens/ProjectEventsPage")
-);
 const ChatSessionListPage = lazy(
    () => import("../features/chat/screens/ChatSessionListPage")
 );
@@ -367,23 +364,6 @@ export const ROUTE_CONFIG: {
       isPublic: false,
       allowedSystemRoles: [SYSTEM_ROLES.ADMINISTRATOR],
       allowedPermissionClaims: [PERMISSION_CLAIMS.QUERYSESSIONS_READ]
-   },
-   [RouteNames.PROJECT_EVENTS]: {
-      path: (context: RoutingContextInfo) =>
-         `/project/${context.project?.projectCode}/activity`,
-      pathPattern: "/project/:projectCode/activity",
-      name: RouteNames.PROJECT_EVENTS,
-      key: (context: RoutingContextInfo) =>
-         `project-${context.project?.projectCode}-activity`,
-      parentKey: (context: RoutingContextInfo) =>
-         `project-${context.project?.projectCode}-console`,
-      label: "Activity Log",
-      icon: "BellOutlined",
-      layout: ProjectLayout,
-      element: () => withSuspense(ProjectEventsPage),
-      isPublic: false,
-      allowedSystemRoles: [SYSTEM_ROLES.ADMINISTRATOR],
-      allowedPermissionClaims: [PERMISSION_CLAIMS.EVENTS_READ]
    },
    [RouteNames.PROJECT_FILE_DETAIL]: {
       path: (context: RoutingContextInfo) =>

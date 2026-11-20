@@ -24,7 +24,6 @@
       { "path": "./ts/chart" },
       { "path": "./ts/chat" },
       { "path": "./ts/common" },
-      { "path": "./ts/event" },
       { "path": "./ts/file" },
       { "path": "./ts/host-api" },
       { "path": "./ts/icons" },
