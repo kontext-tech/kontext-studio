@@ -12,8 +12,6 @@ export const PERMISSION_CLAIMS = {
    CHATSESSIONS_DELETE: "chatsessions.delete",
    CHATSESSIONS_READ: "chatsessions.read",
    CHATSESSIONS_UPDATE: "chatsessions.update",
-   EVENTS_CREATE: "events.create",
-   EVENTS_READ: "events.read",
    JOBS_CREATE: "jobs.create",
    JOBS_DELETE: "jobs.delete",
    JOBS_EXECUTE: "jobs.execute",
@@ -90,18 +88,6 @@ export const PERMISSION_CLAIM_METADATA = {
       value: "chatsessions.update",
       groupName: "ChatSession",
       description: "Permission to update chat sessions"
-   },
-   EVENTS_CREATE: {
-      name: "Create Events",
-      value: "events.create",
-      groupName: "Event",
-      description: "Permission to create events"
-   },
-   EVENTS_READ: {
-      name: "Read Events",
-      value: "events.read",
-      groupName: "Event",
-      description: "Permission to read events"
    },
    JOBS_CREATE: {
       name: "Create Jobs",

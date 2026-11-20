@@ -36,13 +36,6 @@ class ProjectPermissions:
     DELETE = "projects.delete"
 
 
-class EventPermissions:
-    """Event permission claim values."""
-
-    CREATE = "events.create"
-    READ = "events.read"
-
-
 class QuerySessionPermissions:
     """Query session permission claim values."""
 
