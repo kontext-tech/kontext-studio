@@ -139,26 +139,4 @@ export class QuerySessionService
          return result as PaginatedListOfQuerySessionModel;
       });
    }
-
-   /**
-    * Get query execution history for a session
-    */
-   async getSessionQueryHistory(
-      projectId: string,
-      sessionId: string,
-      pageIndex?: number,
-      pageSize?: number
-   ): Promise<ApiResult<{ queries: unknown[]; total: number }>> {
-      return this.wrap(async () => {
-         const result = await this.request(
-            this.apiClient.GET("/query/sessions/{sessionId}/history", {
-               params: {
-                  path: { sessionId },
-                  query: { projectId, pageIndex, pageSize }
-               }
-            })
-         );
-         return result as { queries: unknown[]; total: number };
-      });
-   }
 }

@@ -1,7 +1,6 @@
 import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
-   QueryModel,
    QuerySessionModel,
    UpdateQuerySessionRequest
 } from "@kontext-tech/schema";
@@ -93,12 +92,6 @@ interface QuerySessionStoreActions {
       authContext: ApiAuthContext,
       errorHandler?: (error: ApiErrorResult) => Promise<void>
    ) => Promise<{ succeed: boolean; error?: { messages?: string[] } }>;
-   getQueries: (
-      projectId: string,
-      sessionId: string,
-      authContext: ApiAuthContext,
-      errorHandler?: (error: ApiErrorResult) => Promise<void>
-   ) => Promise<QueryModel[] | null>;
    executeQuery: (
       request: QueryExecRequest,
       authContext: ApiAuthContext,

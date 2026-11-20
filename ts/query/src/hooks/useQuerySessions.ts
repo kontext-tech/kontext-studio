@@ -3,7 +3,6 @@ import type { ApiAuthContext, ApiErrorResult } from "@kontext-tech/common";
 import type {
    CreateQuerySessionRequest,
    QueryExecRequest,
-   QueryModel,
    QueryResponse,
    QuerySessionModel,
    TriggerActorModel,
@@ -66,7 +65,6 @@ export interface UseProjectQuerySessionsReturn {
    closeSession: (
       sessionId: string
    ) => Promise<{ succeed: boolean; error?: { messages?: string[] } }>;
-   getQueries: (sessionId: string) => Promise<QueryModel[] | null>;
    clearSessions: () => void;
 }
 
@@ -112,7 +110,6 @@ export const useProjectQuerySessions = (
    const storeCloseSession = useQuerySessionStore(
       (state) => state.closeSession
    );
-   const storeGetQueries = useQuerySessionStore((state) => state.getQueries);
    const storeClearSessionsFor = useQuerySessionStore(
       (state) => state.clearSessionsFor
    );
@@ -327,19 +324,6 @@ export const useProjectQuerySessions = (
       [projectId, storeCloseSession, authContext, errorHandler]
    );
 
-   const getQueries = useCallback(
-      async (sessionId: string): Promise<QueryModel[] | null> => {
-         if (!projectId || !sessionId) return null;
-         return storeGetQueries(
-            projectId,
-            sessionId,
-            authContext,
-            errorHandler
-         );
-      },
-      [projectId, storeGetQueries, authContext, errorHandler]
-   );
-
    const clearSessions = useCallback(() => {
       if (!projectId) return;
       storeClearSessionsFor(projectId);
@@ -371,7 +355,6 @@ export const useProjectQuerySessions = (
       updateSession,
       executeQuery,
       closeSession,
-      getQueries,
       clearSessions
    };
 };

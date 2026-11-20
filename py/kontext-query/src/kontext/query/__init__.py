@@ -6,7 +6,6 @@ from .errors import QueryServiceError
 from .execution import (
     execute_query_async,
     execute_query_sync,
-    get_session_query_history,
 )
 from .in_process_query_session_service import InProcessQuerySessionService
 from .sessions import (
@@ -35,7 +34,6 @@ __all__ = [
     "execute_query_sync",
     "get_project_schema_info",
     "get_query_session_resource",
-    "get_session_query_history",
     "initialize_session_async",
     "initialize_session_sync",
     "list_query_sessions",

@@ -418,33 +418,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/query/sessions/{sessionId}/history": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Session Query History
-         * @description Get query execution history for a session.
-         *
-         *     Returns a list of all queries executed in the specified session,
-         *     with pagination support. The project_id query parameter is required
-         *     for authorization.
-         *
-         *     Declared sync so FastAPI runs the blocking history lookup in its
-         *     threadpool instead of blocking the event loop.
-         */
-        get: operations["GetSessionQueryHistory"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/session": {
         parameters: {
             query?: never;
@@ -8376,44 +8349,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ExecutionRunModel"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    GetSessionQueryHistory: {
-        parameters: {
-            query: {
-                /** @description Project ID for authorization */
-                projectId: string;
-                /** @description Page number (1-indexed) */
-                pageIndex?: number;
-                /** @description Items per page */
-                pageSize?: number;
-            };
-            header?: never;
-            path: {
-                sessionId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

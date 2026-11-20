@@ -14,9 +14,9 @@ size limits for large result sets. Future improvements:
 """
 
 import logging
-from typing import Annotated, Any
+from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from kontext.auth import QuerySessionPermissions
 from kontext.common.messaging import IQueueClient
@@ -28,18 +28,13 @@ from kontext.schema import (
 )
 
 from ..dependencies import (
-    PAGE_INDEX_QUERY,
-    PAGE_SIZE_QUERY,
-    PROJECT_ID_QUERY,
     QUEUE_CLIENT_DEP,
-    SESSION_ID_PATH,
     AuthContext,
     create_auth_dependency,
 )
 from ..services.query_execution import (
     execute_query_async_service,
     execute_query_service,
-    get_session_query_history_service,
 )
 
 logger = logging.getLogger(__name__)
@@ -52,10 +47,6 @@ router = APIRouter()
 QUERY_EXECUTE_AUTH = create_auth_dependency(
     required_features=[ProjectFeature.DATALAKE],
     required_permissions=[QuerySessionPermissions.EXECUTE],
-)
-QUERY_READ_AUTH = create_auth_dependency(
-    required_features=[ProjectFeature.DATALAKE],
-    required_permissions=[QuerySessionPermissions.READ],
 )
 
 
@@ -98,33 +89,4 @@ async def execute_query_async(
         request=request,
         auth_context=auth_context,
         queue_client=queue_client,
-    )
-
-
-@router.get("/sessions/{sessionId}/history", operation_id="GetSessionQueryHistory")
-def get_session_query_history(
-    session_id: Annotated[str, SESSION_ID_PATH],
-    project_id: PROJECT_ID_QUERY,
-    auth_context: AuthContext[Any] = QUERY_READ_AUTH,
-    page_index: PAGE_INDEX_QUERY = 1,
-    page_size: PAGE_SIZE_QUERY = 20,
-):
-    """
-    Get query execution history for a session.
-
-    Returns a list of all queries executed in the specified session,
-    with pagination support. The project_id query parameter is required
-    for authorization.
-
-    Declared sync so FastAPI runs the blocking history lookup in its
-    threadpool instead of blocking the event loop.
-    """
-    _ = project_id  # Used for OpenAPI parameter generation and authorization
-    if not auth_context.project:
-        raise HTTPException(status_code=400, detail="Project context required")
-    return get_session_query_history_service(
-        project_id=str(auth_context.project.id),
-        session_id=session_id,
-        page_index=page_index,
-        page_size=page_size,
     )
