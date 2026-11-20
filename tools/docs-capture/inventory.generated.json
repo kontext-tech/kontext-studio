@@ -1,7 +1,7 @@
 {
   "generatedFrom": "app/src/routing/routes.ts",
-  "sourceHash": "14262753cfdb4fb043f4a048ae5a0dfb118ebb397f58b40466ff8c21a6a61ca3",
-  "routeCount": 25,
+  "sourceHash": "2ed80faf27aa245b91784b29c03acc526bdee951794b9f860432963ecbbad765",
+  "routeCount": 24,
   "routes": [
     {
       "name": "LOGIN",
@@ -272,21 +272,6 @@
       "adminOnly": true,
       "permissions": [
         "QUERYSESSIONS_READ"
-      ],
-      "features": [],
-      "dynamic": true
-    },
-    {
-      "name": "PROJECT_EVENTS",
-      "pathPattern": "/project/:projectCode/activity",
-      "label": "Activity Log",
-      "layout": "ProjectLayout",
-      "public": false,
-      "hidden": false,
-      "sidebar": true,
-      "adminOnly": true,
-      "permissions": [
-        "EVENTS_READ"
       ],
       "features": [],
       "dynamic": true
