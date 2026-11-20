@@ -40,12 +40,12 @@ export const pages = [
    },
    {
       slug: "16-desktop-app",
-      title: "Use the macOS desktop app",
+      title: "Use the desktop app",
       group: "get-started",
       order: 16,
       status: "published",
       summary:
-         "Download, install, and update the macOS app with a bundled Python runtime.",
+         "Download, install, and update the desktop app with a bundled Python runtime.",
       routes: []
    },
    {
