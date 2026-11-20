@@ -26,8 +26,8 @@
       "@kontext-tech/app-runtime": "workspace:*",
       "@kontext-tech/schema": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "antd": "^6.7.0",
-      "cronstrue": "^3.38.0",
+      "antd": "^6.7.1",
+      "cronstrue": "^3.41.0",
       "dayjs": "^1.11.23",
       "react": "^19.3.1"
    },
