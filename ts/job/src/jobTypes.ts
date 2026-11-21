@@ -1,5 +1,4 @@
 import type {
-   JobModel,
    JobRunModel,
    JobRunStatus,
    UnifiedJobParameterModel
@@ -20,15 +19,6 @@ export type FetchJobParametersByTypeFn = (
    jobType: string
 ) => Promise<UnifiedJobParameterModel[]>;
 
-export interface JobActionsProps {
-   job: JobModel;
-   ui: UiFeedback;
-   onEdit: (job: JobModel) => void;
-   onDelete: (jobId: string, jobName: string) => void;
-   onSchedule: (jobId: string, jobName: string) => void;
-   onDisableSchedule: (job: JobModel) => void;
-}
-
 export interface JobRunActionsProps {
    jobRun: JobRunModel;
    ui: UiFeedback;
@@ -43,11 +33,4 @@ export interface JobRunFilters {
    endDate?: Date;
    jobId?: string;
    projectId?: string;
-}
-
-export interface JobRunStatistics {
-   runningJobs: JobRunModel[];
-   failedJobs: JobRunModel[];
-   totalCount: number;
-   totalJobCount: number;
 }
