@@ -61,7 +61,7 @@ from .tool_results import (
     ToolResultEntry,
     ToolResultSidecar,
 )
-from .tool_schemas import render_spec_schema, render_tool_schema
+from .tool_schemas import render_tool_schema
 from .toolkits import (
     FrameworkToolkit,
     ToolCallable,
@@ -114,7 +114,6 @@ __all__ = [
     "link_artifact_to_session",
     "normalize_agent_kind",
     "register_framework_adapter",
-    "render_spec_schema",
     "render_tool_schema",
     "sanitize_chat_messages_for_client",
     "seed_harness_logger_env",
