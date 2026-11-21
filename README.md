@@ -1,6 +1,6 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="app/public/resources/logo-dark-small.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="app/public/resources/logo-dark.svg">
     <img src="app/public/resources/logo-small.svg" alt="Kontext Studio logo" width="72" height="72">
   </picture>
 </p>
