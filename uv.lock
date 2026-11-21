@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12, <3.15"
 resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'win32'",
@@ -1632,7 +1632,7 @@ wheels = [
 
 [[package]]
 name = "kontext-account"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-account" }
 dependencies = [
     { name = "kontext-common" },
@@ -1655,7 +1655,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-agent"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-agent" }
 dependencies = [
     { name = "docstring-parser" },
@@ -1672,7 +1672,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-agentic"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-agentic" }
 dependencies = [
     { name = "kontext-agent" },
@@ -1722,7 +1722,7 @@ provides-extras = ["inprocess", "dev"]
 
 [[package]]
 name = "kontext-api"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-api" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
@@ -1796,7 +1796,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "kontext-auth"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-auth" }
 dependencies = [
     { name = "kontext-common" },
@@ -1813,7 +1813,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-catalog"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-catalog" }
 dependencies = [
     { name = "duckdb" },
@@ -1875,7 +1875,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "kontext-chat"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-chat" }
 dependencies = [
     { name = "kontext-agent" },
@@ -1900,7 +1900,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-common"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-common" }
 dependencies = [
     { name = "croniter" },
@@ -1921,7 +1921,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-data"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-data" }
 dependencies = [
     { name = "kontext-agent" },
@@ -1940,7 +1940,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-engine"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-engine" }
 dependencies = [
     { name = "duckdb" },
@@ -1977,7 +1977,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-file"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-file" }
 dependencies = [
     { name = "kontext-auth" },
@@ -2004,7 +2004,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-harness-agno"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-harness-agno" }
 dependencies = [
     { name = "agno", extra = ["anthropic", "lmstudio", "ollama", "openai"] },
@@ -2040,7 +2040,7 @@ provides-extras = ["bedrock", "gemini", "mistral"]
 
 [[package]]
 name = "kontext-job"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-job" }
 dependencies = [
     { name = "duckdb" },
@@ -2084,7 +2084,7 @@ provides-extras = ["dev", "catalog"]
 
 [[package]]
 name = "kontext-kernel"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-kernel" }
 dependencies = [
     { name = "kontext-common" },
@@ -2095,7 +2095,7 @@ requires-dist = [{ name = "kontext-common", editable = "py/kontext-common" }]
 
 [[package]]
 name = "kontext-llm"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-llm" }
 dependencies = [
     { name = "kontext-common" },
@@ -2110,7 +2110,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-okf"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-okf" }
 dependencies = [
     { name = "kontext-common" },
@@ -2140,7 +2140,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "kontext-project"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-project" }
 dependencies = [
     { name = "kontext-account" },
@@ -2167,7 +2167,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-query"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-query" }
 dependencies = [
     { name = "kontext-auth" },
@@ -2190,7 +2190,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-runtime"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-runtime" }
 dependencies = [
     { name = "kontext-account" },
@@ -2229,7 +2229,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-schema"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-schema" }
 dependencies = [
     { name = "pydantic" },
@@ -2240,7 +2240,7 @@ requires-dist = [{ name = "pydantic", specifier = ">=2.14.3,<3.0.0" }]
 
 [[package]]
 name = "kontext-storage"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-storage" }
 dependencies = [
     { name = "kontext-common" },
@@ -2255,7 +2255,7 @@ requires-dist = [
 
 [[package]]
 name = "kontext-studio"
-version = "0.265.0"
+version = "0.265.1"
 source = { editable = "py/kontext-studio" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
@@ -2408,10 +2408,10 @@ resolution-markers = [
     "python_full_version < '3.13' and sys_platform == 'win32'",
 ]
 dependencies = [
-    { name = "click", marker = "sys_platform == 'win32'" },
-    { name = "numpy", marker = "sys_platform == 'win32'" },
-    { name = "onnxruntime", marker = "sys_platform == 'win32'" },
-    { name = "python-dotenv", marker = "sys_platform == 'win32'" },
+    { name = "click" },
+    { name = "numpy" },
+    { name = "onnxruntime" },
+    { name = "python-dotenv" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fe/b6/8fdd991142ad3e037179a494b153f463024e5a211ef3ad948b955c26b4de/magika-0.6.2.tar.gz", hash = "sha256:37eb6ae8020f6e68f231bc06052c0a0cbe8e6fa27492db345e8dc867dbceb067", size = 3036634, upload-time = "2025-05-02T14:54:18.88Z" }
 wheels = [
@@ -2429,10 +2429,10 @@ resolution-markers = [
     "python_full_version < '3.13' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "click", marker = "sys_platform != 'win32'" },
-    { name = "numpy", marker = "sys_platform != 'win32'" },
-    { name = "onnxruntime", marker = "sys_platform != 'win32'" },
-    { name = "python-dotenv", marker = "sys_platform != 'win32'" },
+    { name = "click" },
+    { name = "numpy" },
+    { name = "onnxruntime" },
+    { name = "python-dotenv" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a3/f3/3d1dcdd7b9c41d589f5cff252d32ed91cdf86ba84391cfc81d9d8773571d/magika-0.6.3.tar.gz", hash = "sha256:7cc52aa7359af861957043e2bf7265ed4741067251c104532765cd668c0c0cb1", size = 3042784, upload-time = "2025-10-30T15:22:34.499Z" }
 wheels = [

@@ -1,3 +1,9 @@
+## ts-packages-v0.265.1 (2026-11-21)
+
+### Refactor
+
+- remove orphaned project events read API (#61)
+
 ## ts-packages-v0.265.0 (2026-11-15)
 
 ### Feat
