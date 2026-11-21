@@ -326,12 +326,3 @@ def render_tool_schema(
         "description": resolved_description,
         "parameters": parameters,
     }
-
-
-def render_spec_schema(spec: ToolRuntimeSpec) -> ToolSchemaDocument:
-    """Render the runtime-facing schema a harness should advertise for a spec.
-
-    Honors the spec's declared metadata: `spec.strict` (strict parameters) and
-    `spec.description` (declared description, falling back to the docstring).
-    """
-    return render_tool_schema(spec.callable, strict=spec.strict, description=spec.description)

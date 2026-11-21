@@ -2043,7 +2043,6 @@ name = "kontext-job"
 version = "0.265.0"
 source = { editable = "py/kontext-job" }
 dependencies = [
-    { name = "croniter" },
     { name = "duckdb" },
     { name = "kontext-auth" },
     { name = "kontext-common" },
@@ -2067,7 +2066,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "croniter", specifier = ">=7.0.0,<8.0.0" },
     { name = "duckdb", specifier = ">=2.0.0" },
     { name = "kontext-auth", editable = "py/kontext-auth" },
     { name = "kontext-common", editable = "py/kontext-common" },
