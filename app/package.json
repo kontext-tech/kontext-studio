@@ -47,12 +47,12 @@
       "@kontext-tech/site": "workspace:*",
       "@kontext-tech/theme": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "@tanstack/react-query": "^5.107.2",
+      "@tanstack/react-query": "^5.108.2",
       "antd": "^6.7.1",
       "dayjs": "^1.11.23",
       "react": "^19.3.1",
       "react-dom": "^19.3.1",
-      "react-router-dom": "^7.18.5"
+      "react-router-dom": "^7.18.6"
    },
    "devDependencies": {
       "@kontext-tech/build-config": "workspace:*",
@@ -63,7 +63,7 @@
       "prettier": "^3.10.1",
       "rollup-plugin-visualizer": "^7.1.3",
       "sass-embedded": "^1.108.2",
-      "terser": "^5.51.2",
+      "terser": "^5.51.4",
       "typescript": "~6.0.3",
       "vite": "^8.3.8",
       "vite-plugin-compression2": "^2.5.4",

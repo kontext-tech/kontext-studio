@@ -78,7 +78,7 @@
    "dependencies": {
       "@kontext-tech/schema": "workspace:*",
       "date-fns": "^4.4.0",
-      "lucide": "1.74.0",
+      "lucide": "1.77.0",
       "openapi-fetch": "^0.17.0",
       "zustand": "^5.1.0"
    },

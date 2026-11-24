@@ -32,7 +32,7 @@
       "@ant-design/icons": "^6.3.4",
       "@kontext-tech/common": "workspace:*",
       "antd": "^6.7.1",
-      "lucide": "1.74.0",
+      "lucide": "1.77.0",
       "react": "^19.3.1"
    },
    "devDependencies": {
