@@ -53,7 +53,7 @@ kontext-storage = { workspace = true }
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.19.3,<5",
+    "commitizen>=4.19.4,<5",
     "fastapi[standard]>=0.162.7,<0.163.0",
     "starlette>=1.10.0,<1.11.0",
     "pytest>=9.2.0,<9.3.0",
@@ -61,7 +61,7 @@ dev = [
     "pytest-cov>=7.1.0,<8.0.0",
     # Single exact pin for Ruff. Pre-commit runs `uv run ruff`, so CI and the
     # hook resolve the same version from this file and the lockfile.
-    "ruff==0.17.5",
+    "ruff==0.17.6",
     "pyright>=1.1.390,<2",
     "setuptools>=84.2.1",
     # Optional provider SDKs (extras of kontext-harness-agno). Distributions
@@ -70,14 +70,14 @@ dev = [
     # model classes.
     "boto3>=1.40",
     "google-genai>=3.3.0",
-    "mistralai>=3.7.0",
+    "mistralai>=3.8.0",
 ]
 
 # Committed-code generators. Kept out of `dev` so a normal `uv sync` does not
 # install the codegen toolchain; the generation scripts opt in explicitly with
 # `uv run --group codegen`. The exact version is pinned by uv.lock.
 codegen = [
-    "datamodel-code-generator>=0.96.0,<0.97",
+    "datamodel-code-generator>=0.99.0,<0.100",
 ]
 
 [tool.commitizen]
