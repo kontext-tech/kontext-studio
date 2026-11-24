@@ -54,7 +54,7 @@ kontext-storage = { workspace = true }
 [dependency-groups]
 dev = [
     "commitizen>=4.19.3,<5",
-    "fastapi[standard]>=0.162.7,<0.163.0",
+    "fastapi[standard]>=0.165.0,<0.166.0",
     "starlette>=1.10.0,<1.11.0",
     "pytest>=9.2.0,<9.3.0",
     "pytest-asyncio>=1.5.0,<1.6.0",
