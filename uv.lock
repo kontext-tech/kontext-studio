@@ -1868,7 +1868,7 @@ requires-dist = [
     { name = "pytz", specifier = ">=2025.2" },
     { name = "sqlalchemy", specifier = ">=2.1.6" },
     { name = "tantivy", specifier = ">=0.27.0" },
-    { name = "teradatasql", specifier = ">=20.0.0.75" },
+    { name = "teradatasql", specifier = ">=20.0.0.76" },
     { name = "teradatasqlalchemy", specifier = ">=20.0.0.7" },
 ]
 provides-extras = ["dev"]
@@ -1971,7 +1971,7 @@ requires-dist = [
     { name = "pyodbc", specifier = ">=5.2.0" },
     { name = "pytz", specifier = ">=2026.6" },
     { name = "sqlalchemy", specifier = ">=2.1.8" },
-    { name = "teradatasql", specifier = ">=20.0.0.75" },
+    { name = "teradatasql", specifier = ">=20.0.0.76" },
     { name = "teradatasqlalchemy", specifier = ">=20.0.0.7" },
 ]
 
@@ -4427,13 +4427,13 @@ wheels = [
 
 [[package]]
 name = "teradatasql"
-version = "20.0.0.75"
+version = "20.0.0.76"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pycryptodome" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/4f/978d249052edaf23d43c5bc0ae2d03a8c2560f4487f7cee10b1ed31e5399/teradatasql-20.0.0.75-py3-none-any.whl", hash = "sha256:3ebc30d317564a09702569869ecbf00872d12802a5c746c05e7937260f14ce01", size = 127383218, upload-time = "2026-11-06T05:59:01.974Z" },
+    { url = "https://files.pythonhosted.org/packages/8e/e1/fcae142193f93af9a6fb099be23c6836012e9db2a0ac9cf49227482aa040/teradatasql-20.0.0.76-py3-none-any.whl", hash = "sha256:73a7beca05773466a9c4fe1be7c051d14b25816872d2f3738ca0ebc3b2371987", size = 127499599, upload-time = "2026-11-17T00:10:42.348Z" },
 ]
 
 [[package]]
