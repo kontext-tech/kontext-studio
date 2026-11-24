@@ -26,7 +26,7 @@
       "@kontext-tech/schema": "workspace:*",
       "@kontext-tech/site": "workspace:*",
       "@kontext-tech/ui": "workspace:*",
-      "@tanstack/react-query": "^5.107.2",
+      "@tanstack/react-query": "^5.108.2",
       "antd": "^6.7.1",
       "react": "^19.3.1"
    },

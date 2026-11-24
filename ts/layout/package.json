@@ -25,7 +25,7 @@
       "@kontext-tech/ui": "workspace:*",
       "antd": "^6.7.1",
       "react": "^19.3.1",
-      "react-router-dom": "^7.18.5",
+      "react-router-dom": "^7.18.6",
       "zustand": "^5.1.0"
    },
    "devDependencies": {
